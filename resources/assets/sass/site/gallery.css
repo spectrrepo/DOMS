@@ -1,0 +1,172 @@
+ul {
+    width: 100%;
+    margin-left: -38px;
+}
+.menu-item {
+    text-decoration: none;
+    list-style: none;
+    display: block;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    height: 29px;
+    padding-left: 16px;
+    padding-right: 10px;
+    line-height: 29px;
+}
+.menu-item:hover {
+    background: #333333;
+    color: white;
+}
+.search-submit {
+    height: 32px;
+    width: 16%;
+    border: 1px solid #cccccc;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: block;
+    float: left;
+    background: none;
+    border-left: none;
+    cursor: pointer;
+}
+.ungle-item {
+    float: right;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 28px;
+}
+.input-search {
+    width: 81%;
+    height: 32px;
+    border: 1px solid #cccccc;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    display: block;
+    float: left;
+}
+.sidebar {
+    width: 97%;
+}
+.conteiner {
+    width: 18.4%;
+    float: left;
+    position: fixed;
+    padding-left: 41px;
+}
+.main-wrapper {
+    clear: both;
+    margin-top: 50px;
+}
+
+/*#############################block news#####################################*/
+
+.b-news {
+    padding: 7px;
+}
+.news {
+    border: 1px solid #cccccc;
+    width: 93.4%;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+.b-photo-news {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    background: #9ecca4;
+    margin: 0 auto;
+    border-radius: 5px;
+    x;
+}
+.news-title {
+    border-bottom: 1px solid #cccccc;
+    width: 89%;
+    margin-top: 60px;
+    padding-bottom: 5px;
+}
+.b-text-news {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+.b-title-news {
+    color: #993399;
+}
+.b-descreption-news {
+    font-size: 11px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    line-height: 13px;
+}
+.b-date-news {
+    font-size: 11px;
+}
+
+/*###########################popup sort list##################################*/
+
+.sort-list {
+    display: none;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    background-color: rgba(51, 51, 51, 0.8);
+    position: fixed;
+    z-index: 100000;
+    border-radius: 5px;
+    margin-left: 20%;
+}
+.sub-list-item {
+    display: block;
+    float: left;
+    text-decoration: none;
+    list-style-type: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    padding: 5px;
+}
+.sub-list-item:hover {
+    background-color: rgba(125, 124, 124, 0.8);
+}
+ul.b-popup-item-list li {
+    text-decoration: none;
+    list-style: none;
+}
+.sort-list-item> i {
+    text-decoration: none;
+    list-style-type: none;
+    display: block;
+    float: left;
+    opacity: 0;
+    margin-left: 12px;
+    margin-top: 9px;
+    color: rgba(51, 51, 51, 0.8);
+}
+.sort-list-item:hover> i {
+    text-decoration: none;
+    list-style-type: none;
+    display: block;
+    opacity: 1;
+    float: left;
+    color: rgba(29, 181, 12, 0.3)
+}
+.b-popup-item-list {
+    display: block;
+    float: left;
+    color: white;
+    width: auto;
+}
+.close-popup-sort {
+    display: block;
+    float: right;
+    cursor: pointer;
+    color: white;
+    padding-left: 14px;
+    color: #afafaf;
+    transition: all 03s ease;
+}
+.close-popup-sort:hover {
+    color: white;
+}

@@ -1,0 +1,211 @@
+/*##################################################################################*/
+/*################################page whith slder##################################*/
+/*##################################################################################*/
+
+div.content div {
+  padding: auto;
+}
+/*####photo-slider####*/
+.col-slider-comment{
+  width:70%;
+  height:auto;
+  float: left;
+}
+.one-picture-place{
+  height: auto;
+  background: green;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  overflow: hidden;
+  background: white;
+  padding: 7px;
+}
+.b-photo-slider{
+  height: 500px;
+  background:#F5F5F5;
+}
+.photo-item{
+  height: 100%;
+  width: auto;
+  margin: 0px auto;
+  width: 400px;
+  background: rgb(144, 112, 139);
+}
+.control-slide{
+  height: auto;
+  width: 100%;
+  margin-top: -26%;
+  position: absolute;
+  font-size:32px;
+  color: white;
+  text-shadow: black 0px 0px 1px;
+}
+.btn-prew{
+  height: 32px;
+  cursor: pointer;
+  float: left;
+  margin-left: 20px;
+}
+.btn-next{
+  height: 32px;
+  cursor: pointer;
+  float: right;
+  margin-right: 40px;
+}
+.b-informstion{
+  height: 27px;
+  width: 100%;
+  margin-top: 12px;
+}
+.b-pretens{
+  float: left;
+  display: block;
+  width: 33.333%;
+}
+.num-page{
+  float: left;
+  display: block;
+  width: 33.333%;
+  text-align: center;
+}
+.status-photo{
+  float: left;
+  display: block;
+  width: 33.333%;
+  text-align: right;
+}
+.back-to-main,
+.full-scrn,
+.comment,
+.liked,
+.share,
+.view,
+.like{
+  display:block;
+  float: right;
+}
+.b-tooltip-visible{
+  margin-right: 6px;
+}
+.b-tooltip-visible> .wrap-tooltip-gallery{
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.tooltip-stat-gallery{
+  display: block;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  position: absolute;
+  padding: 3px;
+  text-align: center;
+  color: rgb(239, 240, 240);
+  margin-top: -30px;
+}
+.b-tooltip-visible:hover> .wrap-tooltip-gallery {
+  opacity: 1;
+}
+.large{
+  width: 178px;
+}
+.big{
+  width: 100px;
+}
+.ico-slider{
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+   /*###and comments###*/
+.b-comments{}
+.b-com-title{
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid #cccccc;
+  margin-top: 29px;
+  margin-bottom: 17px;
+  padding-bottom: 10px;
+}
+.b-all-comment{
+  height: auto;
+  width: 100%;
+  min-height: 70px;
+}
+.b-comment{
+  width: 89%;
+  float: left;
+  padding-left: 1%;
+}
+.input-comment{
+  display: block;
+  float: left;
+  border: 1px solid #cccccc;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  width: 96%;
+  padding: 3px;
+
+}
+.b-add-comment{
+  clear: both;
+  height: 28px;
+  margin-top: 55px;
+}
+.text{}
+.submit-comment{
+  display: block;
+  float: left;
+  border: 1px solid #cccccc;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius:5px;
+  background: none;
+  cursor: pointer;
+  border-left: none;
+  height: 28px;
+  width: 3%;
+}
+.b-photo-comment{
+  width: 10%;
+  height: 100px;
+  background: black;
+  float: left;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.b-name-comment{
+  cursor: pointer;
+  color: rgb(122, 42, 117);
+}
+.b-text-comment{}
+.b-date-comment{
+  color: #b8b3b0;
+}
+  /*###description photo###*/
+.col-descreption-photo{
+  width: 30%;
+  height:auto;
+  float: left;
+  padding-left: 42px;
+}
+.title-tag{
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid #cccccc;
+}
+.pole-tag{}
+.tag-item{
+  display: block;
+  float: left;
+  width: auto;
+  padding: 4px;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  margin: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.tag-item:hover{
+  background: #444444;
+  color:white;
+}
+  /*##view photo###*/
+.view-photo-slide{}

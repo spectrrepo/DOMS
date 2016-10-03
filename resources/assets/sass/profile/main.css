@@ -1,0 +1,240 @@
+/*############################################################################*/
+
+
+/*#############################profile page style#############################*/
+
+
+/*############################################################################*/
+
+
+/*############################################################################*/
+/*########################main-page-profile and config########################*/
+
+/*div.content div {
+    padding: 0;
+}*/
+
+/*#############block with personal informstion and photo###################*/
+
+.wrap-personal-information {
+    width: 60%;
+    clear: both;
+    height: 160px;
+}
+.b-photo-person {
+    width: 20%;
+    overflow: hidden;
+    border-radius: 5px;
+    float: left;
+    height: 100%;
+    background: green;
+    height: 160px;
+}
+.b-persobal-information {
+    width: 76%;
+    float: left;
+    margin-left: 3.5%;
+    height: 100%;
+    border-radius: 5px;
+    border: 1px solid #E5E5E5;
+}
+.b-name-person {
+    width: 33%;
+    float: left;
+    height: 100%;
+    text-align: center;
+}
+.b-role-person {
+    width: 33%;
+    float: left;
+    height: 100%;
+    text-align: center;
+}
+.b-contact-data {
+    width: 33%;
+    float: left;
+    height: 100%;
+    text-align: center;
+}
+.contact-item {
+    width: 100%;
+}
+.contact-item-name {
+    display: block;
+    float: left;
+    width: 50%;
+}
+.contact-item-value {
+    display: block;
+    float: left;
+    width: 50%;
+}
+.separate-title {
+    width: 60%;
+    height: 50px;
+    line-height: 70px;
+}
+
+/*########################block with news tape#############################*/
+
+.wrap-personal-news {
+    width: 60%;
+    height: auto;
+}
+.b-personal-news {
+    border: 1px solid #e5e5e5;
+    height: 1000px;
+    border-radius: 5px;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 20px;
+}
+.b-setting-switcher {
+    width: 100%;
+    height: 19px;
+}
+.switcher {
+    margin-left: -28px;
+}
+.item-swicher {
+    display: block;
+    float: left;
+    width: 90px;
+    height: 100%;
+    color: white;
+    cursor: pointer;
+    margin-left: 1px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.item-swicher:active {
+    display: block;
+    float: left;
+    width: 90px;
+    height: 100%;
+    color: white;
+    cursor: pointer;
+    margin-left: 1px;
+    background: grey;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.b-person-post {
+    width: 100%;
+}
+.col-news-min {
+    width: 10%;
+    float: left;
+    width: 14%;
+    height: 100px;
+    margin-top: 1%;
+}
+.b-portret-blogger {
+    width: 90%;
+    height: 90%;
+    margin: 0 auto;
+    text-align: center;
+    background: #cadede;
+    cursor: pointer;
+}
+.col-news-big {
+    width: 90%;
+    height: 100%;
+    float: left;
+    height: 100px;
+    width: 84%;
+    margin-left: 1%;
+    margin-top: 1%;
+}
+.b-name-redactor {
+    color: green;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+.b-post-body {
+    border-radius: 5px;
+    border: 1px solid #e5e5e5;
+    height: 300px;
+    padding: 5px;
+}
+.b-photo-post {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 10px;
+    background: gray;
+    height: 200px;
+    cursor: pointer;
+}
+.b-iformation {
+    bottom: 0px;
+    margin-top: 50px;
+    padding: 10px;
+    width: 100%;
+    height: 25px;
+}
+.b-date {
+    float: left;
+    margin-left: 10px;
+}
+.b-statistics {
+    float: right;
+    margin-right: 10px;
+}
+.b-item-stat {
+    float: left;
+    margin-left: 6px;
+    cursor: pointer;
+}
+.ico {
+    float: left;
+    display: block;
+    margin-top: 3px;
+    margin-right: 2px;
+}
+.num-stat {
+    float: left;
+    display: block;
+}
+.b-item-stat> .tooltip-stat {
+    position: absolute;
+    opacity: 0;
+    margin-left: -50px;
+    margin-top: -32px;
+    transition: all 0.3s ease;
+}
+.b-item-stat:hover> .tooltip-stat {
+    position: absolute;
+    opacity: 1;
+}
+.triangle-tooltip-stat {
+    width: 0;
+    height: 0;
+    display: block;
+    border-style: solid;
+    border-width: 10px 5px 0 5px;
+    border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
+    margin: 0 auto;
+}
+.text-tooltip-stat {
+    display: block;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: rgb(228, 228, 228);
+    border-radius: 3px;
+    padding: 2px;
+}
+.b-item-stat> .other-margin-tooltip1 {
+    margin-left: -97px;
+}
+.b-item-stat> .other-margin-tooltip2 {
+    margin-left: -62px;
+}
+.btn-dwnld-new {
+    text-align: center;
+    clear: both;
+    width: 60%;
+    height: 50px;
+    color: white;
+    line-height: 50px;
+    background-color: #333333;
+    cursor: pointer;
+}
