@@ -1,15 +1,10 @@
-@extends('main')
-
-@section('')
-<div class="site-wrapper">
-  <div class="main-wrapper">
-      <div class="conteiner">
-        @include('helper.sidebar_profile')
-      </div>
-  </div>
-  <div  class="content">
-        @section()
-        @show
-  </div>
-</div>
-@stop
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>qewqwe</h1>
+  </body>
+</html>
