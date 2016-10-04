@@ -170,3 +170,60 @@ ul.b-popup-item-list li {
 .close-popup-sort:hover {
     color: white;
 }
+/*############################################################################*/
+/*########################part site , in which photo##########################*/
+
+/*#######################main page , where all photo##########################*/
+.content {
+    width: 80%;
+    float: right;
+}
+.b-next-page {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 16px;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: .7;
+    padding: 30px;
+    cursor: pointer;
+    width: 100%;
+}
+.wrap-content {
+    padding-left: 35px;
+}
+.item-gallery{
+    padding: 5px;
+}
+.uk-panel-box {
+    overflow: hidden;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+}
+.content {
+    width: 75%;
+    padding-bottom: 40px;
+    margin-right: 35px;
+}
+div.content div div img {
+    width: 100%;
+    height: auto;
+}
+.b-next-page {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    line-height: 90px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 16px;
+    color: #ffffff;
+    opacity: .7;
+    padding: 30px;
+    cursor: pointer;
+}
