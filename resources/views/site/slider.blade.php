@@ -1,3 +1,6 @@
+
+@extends('layouts.site')
+@section('site-content')
 <div class="site-wrapper">
         <div class="main-wrapper">
             <div class="conteiner">
@@ -161,3 +164,4 @@
           </div>
       </div>
     </div>
+    @endsection

@@ -1,3 +1,5 @@
+@extends('layouts.site')
+@section('site-content')
 <div class="sort-list">
       <ul class="b-popup-item-list">
           <li class="sort-list-item"><span class="sub-list-item">Sort item</span><i class="uk-icon-justify uk-icon-check"></i></li>
@@ -72,3 +74,4 @@
       </div>
     </div>
   </div>
+@endsection

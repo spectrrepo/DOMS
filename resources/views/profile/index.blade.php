@@ -1,5 +1,5 @@
-@extend('')
-@section()
+@extends('layouts.profile')
+@section('profile-content')
 <div class="wrap-personal-information">
     <div class="b-photo-person">
         <img src="img/test_portret.jpg" alt="" />
@@ -99,3 +99,4 @@
   Загрузить ещё
 </div>
 </div>
+@endsection

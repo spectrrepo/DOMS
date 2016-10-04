@@ -1,3 +1,5 @@
+@extends('layouts.profile')
+@section('profile-content')
 <div class="big-col">
         <div class="help-text">Для удобства поиска твоего изображения на сайте заполни ка можно больше параметров</div>
         <div class="b-dwnld-img">
@@ -108,3 +110,4 @@
       </div>
     </div>
   </div>
+  @endsection

@@ -1,2 +1,124 @@
+@import url(profile/add_page.css);
+@import url(profile/main.css);
+@import url(site/gallery.css);
+@import url(site/slider.css);
+@font-face {
+  font-family: MainFont;
+  src: url(../font/pt-sans.ttf); }
+
+body {
+  background-color: #fcfcfc; }
+
+/*############################################################################*/
+/*###########################start and main page##############################*/
+/*############################################################################*/
+/*############################################################################*/
+/*######################footer and header and sidebar style###################*/
+/*###############################footer-header################################*/
+header, footer {
+  width: 100%;
+  height: 47px;
+  background: #333333;
+  color: white;
+  font-family: MainFont;
+  clear: both;
+  position: absolute;
+  bottom: 0;
+  left: 0; }
+
+header {
+  position: fixed;
+  top: 0;
+  z-index: 1000000000; }
+
+.logo {
+  margin-left: 50px;
+  padding-top: 5px;
+  height: 100%;
+  width: 20%;
+  float: left;
+  cursor: pointer; }
+
+.control {
+  width: 66.666%;
+  height: 100%;
+  float: left; }
+
+.main-item {
+  display: block;
+  float: left;
+  height: 100%;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  line-height: 44px;
+  width: 100px;
+  text-align: center; }
+
+.plus-photo {
+  display: block;
+  float: left;
+  height: 100%;
+  cursor: pointer;
+  line-height: 44px;
+  width: 50px;
+  text-align: center; }
+
+.main-item:hover, .plus-photo:hover {
+  background: #222222; }
+
+.logining-item {
+  display: block;
+  cursor: pointer;
+  text-align: right;
+  padding-left: 10px;
+  padding-right: 10px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease; }
+
+.logining-item:hover {
+  color: #993399; }
+
+.item-about {
+  height: 44px;
+  line-height: 39px;
+  display: block;
+  float: left;
+  cursor: pointer;
+  height: 47px;
+  line-height: 48px;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease; }
+
+.item-about:hover {
+  background: #222222; }
+
+.logining {
+  display: block;
+  float: right;
+  margin-right: 35px; }
+
+footer {
+  position: static; }
+
+body {
+  height: 100%; }
+
+html {
+  min-height: 100%;
+  position: relative; }
+
+.about {
+  width: 161px;
+  margin: 0 auto; }
+
+.site-wrapper {
+  margin-top: 75px;
+  height: auto;
+  width: 100%;
+  position: relative; }
 
 /*# sourceMappingURL=app.css.map */

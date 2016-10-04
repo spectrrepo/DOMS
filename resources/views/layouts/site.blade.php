@@ -1,15 +1,15 @@
-@extends('main')
+@extends('layouts.main')
 
-@section('')
+@section('common-content')
 <div class="site-wrapper">
   <div class="main-wrapper">
       <div class="conteiner">
-        @include('helper.sidebar_profile')
+        @include('../helpers.sidebar_main')
       </div>
   </div>
   <div  class="content">
-        @section()
+        @section('site-content')
         @show
   </div>
 </div>
-@stop
+@endsection

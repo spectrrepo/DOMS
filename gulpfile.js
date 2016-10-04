@@ -14,7 +14,7 @@ require('laravel-elixir-vue');
  */
 
 elixir(mix => {
-    mix.sass('app.scss')
+    mix.sass('app.scss', 'public/css/app.css')
       //  .coffee() /*TODO*/
        .copy('resources/assets/fonts/*.*', 'public/fonts/');
 });
