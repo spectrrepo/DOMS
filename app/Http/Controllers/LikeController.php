@@ -8,5 +8,10 @@ use App\Http\Requests;
 
 class LikeController extends Controller
 {
-    //
+    public function add(){
+        
+    }
+    public function delete(){
+
+    }
 }
