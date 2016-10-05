@@ -13,6 +13,6 @@
 
     @include('../helpers.footer')
 
-  <script type="text/javascript" src=""></script>
+  <script type="text/javascript" src="js/app.js"></script>
   </body>
 </html>
