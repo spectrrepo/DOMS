@@ -2,7 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="css/app.css">
+    <?php//TODO: добавить тернарную операцию ,
+    //      которая будет выбирать правильный
+    //      путь для нужного роута         ?>
+    <link rel="stylesheet" href="css/app.css"> 
     <title></title>
   </head>
   <body>
