@@ -13,21 +13,21 @@ class CreatePhotoTable extends Migration
      */
     public function up()
     {
-        Schema::create('Images', function (Blueprint $table)){
+        Schema::create('Images', function (Blueprint $table){
             $table->increments('id');
-            $table->('title');
-            $table->('description');
-            $table->('path_full');
-            $table->('path_min');
-            $table->('author_id');
-            $table->('user_upload_id');
-            $table->('colors');
-            $table->('variants');
-            $table->('style');
-            $table->('rooms');
-            $table->('update_to');
-            $table->('create_to');
-        }
+            $table->string('title')->nullable();
+            $table->text('description')->nullable();
+            $table->string('path_full');
+            $table->string('path_min');
+            $table->integer('author_id')->nullable()->unsigned();
+            $table->integer('user_upload_id')->unsigned();
+            $table->string('colors')->nullable();
+            $table->string('variants')->nullable();
+            $table->string('style')->nullable();
+            $table->string('rooms')->nullable();
+            $table->timestamp('update_to')->nullable();
+            $table->timestamp('create_to')->nullable();
+        });
     }
 
     /**

@@ -13,13 +13,13 @@ class CreateCommentTable extends Migration
      */
     public function up()
     {
-        Schema::create('Comments', function (Blueprint $table)){
+        Schema::create('Comments', function (Blueprint $table){
                 $table->increments('id');
-                $table->('post_id');
-                $table->('user_id');
-                $table->('text_comment');
-                $table->('date');
-        }
+                $table->integer('post_id')->unsigned();
+                $table->integer('user_id')->unsigned();
+                $table->text('text_comment');
+                $table->timestamp('date');
+        });
     }
 
     /**

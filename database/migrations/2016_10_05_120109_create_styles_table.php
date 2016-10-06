@@ -13,12 +13,12 @@ class CreateStylesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Styles', function (Blueprint $table)){
+        Schema::create('Styles', function (Blueprint $table){
                 $table->increments('id');
-                $table->('name');
-                $table->('description');
-                $table->('photo');
-        }
+                $table->string('name');
+                $table->text('description');
+                $table->string('photo');
+        });
     }
 
     /**

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ed9df8b872992035f068a7fe461a635a",
-    "content-hash": "76036da3b5b55b91dbe1e1affa01bf9e",
+    "hash": "bd711cb14b85653b399d4c9b1284e5bf",
+    "content-hash": "5a40f6e6e9a6a120e0160325f054ac68",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -433,6 +433,63 @@
                 "laravel"
             ],
             "time": "2016-10-04 16:05:47"
+        },
+        {
+            "name": "laravelbook/ardent",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-ardent/ardent.git",
+                "reference": "da468777ef471d7ceb211fef145a71ef43a24465"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-ardent/ardent/zipball/da468777ef471d7ceb211fef145a71ef43a24465",
+                "reference": "da468777ef471d7ceb211fef145a71ef43a24465",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "~5.1",
+                "illuminate/events": "~5.1",
+                "illuminate/hashing": "~5.1",
+                "illuminate/support": "~5.1",
+                "illuminate/validation": "~5.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LaravelArdent\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Santos",
+                    "email": "igorsantos07@gmail.com",
+                    "homepage": "http://igorsantos.com.br",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Max Ehsan",
+                    "role": "Original developer"
+                }
+            ],
+            "description": "Self-validating smart models for Laravel 5's Eloquent ORM",
+            "keywords": [
+                "Active Record",
+                "activerecord",
+                "database",
+                "eloquent",
+                "framework",
+                "laravel",
+                "orm",
+                "sql",
+                "validation"
+            ],
+            "time": "2016-02-02 22:36:39"
         },
         {
             "name": "league/flysystem",
@@ -2577,16 +2634,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.5.6",
+            "version": "5.5.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "146e0fe0bb7f44d1cefade0c93e86fe0b206dd79"
+                "reference": "3f67cee782c9abfaee5e32fd2f57cdd54bc257ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/146e0fe0bb7f44d1cefade0c93e86fe0b206dd79",
-                "reference": "146e0fe0bb7f44d1cefade0c93e86fe0b206dd79",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3f67cee782c9abfaee5e32fd2f57cdd54bc257ba",
+                "reference": "3f67cee782c9abfaee5e32fd2f57cdd54bc257ba",
                 "shasum": ""
             },
             "require": {
@@ -2656,7 +2713,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-10-03 07:48:45"
+            "time": "2016-10-03 13:04:15"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3441,7 +3498,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "laravelbook/ardent": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

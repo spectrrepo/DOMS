@@ -13,11 +13,11 @@ class CreateTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('Styles', function (Blueprint $table)){
+        Schema::create('Tags', function (Blueprint $table){
                 $table->increments('id');
-                $table->('post_id');
-                $table->('title');
-        }
+                $table->integer('post_id')->unsigned();
+                $table->string('title');
+        });
     }
 
     /**
@@ -27,7 +27,7 @@ class CreateTagsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('Styles');
+        Schema::drop('Tags');
 
     }
 }
