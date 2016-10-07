@@ -36,4 +36,13 @@ class LikeController extends Controller
     public function delete(){
 
     }
+
+    /**
+     * @param
+     *
+     * @return
+     */
+    public function index(){
+        
+    }
 }

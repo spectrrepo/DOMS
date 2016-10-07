@@ -19,34 +19,142 @@ class UserController extends Controller
 {
 
     /**
-     * @param
+     * Login Form
      *
-     * @return
-     *
+     * @return Response
      */
-    public function signOut () {
 
-    }
-
+    public function index()
+     {
+         return View::make('login.index'); //TODO: here need add my template for login form
+     }
 
     /**
-     * @param
+     * Registration form
      *
-     * @return
-     *
+     * @return Response
      */
-    public function signUp () {
-
+    public function register()
+    {
+        return View::make('login.register');
     }
-
 
     /**
-     * @param
+     * Registring new user and storing him to DB.
      *
-     * @return
-     *
+     * @return Response
      */
-    public function signIn () {
+    public function store()
+    {
+        // TODO: include library for work with validation
+        $rules = array(
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|alpha_num|between:4,50',
+            'username' => 'required|alpha_num|between:2,20|unique:users,username'
+        );
 
+        $validator = Validator::make(Input::all(), $rules);
+
+        if($validator->fails()){
+            return Redirect::back()->withInput()->withErrors($validator);
+        }
+        // TODO: change on my DB
+        $user = new User;
+        $user->email = Input::get('email');
+        $user->username = Input::get('username');
+        $user->password = Hash::make(Input::get('password'));
+        $user->save();
+
+        Auth::loginUsingId($user->id);
+
+        // TODO: change on my message
+        return Redirect::home()->with('message', 'Thank you for registration, now you can comment on offers!');
     }
+
+    /**
+     * Log in to site
+     *
+     * @return Response
+     */
+    public function login()
+    {
+        if (Auth::attempt(array('email' => Input::get('email'), 'password' => Input::get('password')), true) ||
+            Auth::attempt(array('username' => Input::get('email'), 'password' => Input::get('password')), true)) {
+                return Redirect::intended('dashboard');
+        }
+
+        return Redirect::back()->withInput(Input::except('password'))->with('message', 'Wrong creadentials!');
+    }
+
+    /**
+     * Log out from site.
+     *
+     * @return Response
+     */
+    public function logout()
+    {
+        Auth::logout();
+
+        return Redirect::home()->with('message', 'See you again!');
+    }
+
 }
+
+/**
+	 * Show reminder form.
+	 *
+	 * @return Response
+	 */
+	public function showReminderForm()
+	{
+		return View::make('auth.remind');
+	}
+
+
+	/**
+	 * Send reminder email.
+	 *
+	 * @return Response
+	 */
+	public function sendReminder()
+	{
+		$credentials = array('email' => Input::get('email'));
+
+		return Password::remind($credentials, function($message, $user)
+		{
+		    $message->subject('Password Reminder on Habra Offers');
+		});
+	}
+
+
+	/**
+	 * Show reset password form.
+	 *
+	 * @return Response
+	 */
+	public function showResetForm($token)
+	{
+		return View::make('auth.reset')->with('token', $token);
+	}
+
+
+	/**
+	 * Reset password.
+	 *
+	 * @return Response
+	 */
+	public function resetPassword($token)
+	{
+		$credentials = array('email' => Input::get('email'));
+
+		return Password::reset($credentials, function($user, $password)
+		{
+			$user->password = Hash::make($password);
+
+			$user->save();
+
+			Auth::loginUsingId($user->id);
+
+			return Redirect::home()->with('message', 'Your password has been successfully reseted.');
+	    });
+	}

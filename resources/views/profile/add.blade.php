@@ -3,6 +3,7 @@
 <div class="big-col">
         <div class="help-text">Для удобства поиска твоего изображения на сайте заполни ка можно больше параметров</div>
         <div class="b-dwnld-img">
+          {{ Form::open() }}
           <form class="" action="index.html" method="post">
             <input class="input-title-dwnld"type="text" name="name" placeholder="Заголовок">
             <div class="wrap-main-dwnld-photo" title="Добавить изображение">
@@ -13,51 +14,11 @@
             <textarea class="input-descreption"type="text" name="name" placeholder="Описание"></textarea>
             <div class="title-choose-color">Укажи основные цвета</div>
             <div class="color-place">
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
-                <div class="wrap-color-input">
-                    <input class="color-photo-choose" type="checkbox" name="name" value="">
-                </div>
+                @foreach ( $colors as $color)
+                    <div class="wrap-color-input" id="color_{{ $color->name }}">
+                        <input class="color-photo-choose" type="checkbox" name="{{ $color->name }}" value="">
+                    </div>
+                @endforeach
             </div>
             <div class="wrap-dwnld-photo">
                 <span class="add-photo-ico racurs-margin-ico uk-icon-justify uk-icon-camera"></span>
@@ -73,7 +34,6 @@
               <span class="save-text">Сохранить изменения</span>
               <span class="save-ico uk-icon-justify uk-icon-save"></span>
             </button>
-          </form>
         </div>
     </div>
     <div class="small-col">
@@ -81,15 +41,10 @@
         Стили
       </div>
       <div class="tags-list">
-        <span class="tags-list-item">Авнгард</span>
-        <span class="tags-list-item">Авнгард</span>
-        <span class="tags-list-item">Авнгард</span>
-        <span class="tags-list-item">Авнгард</span>
-        <span class="tags-list-item">Авнгард</span>
-        <span class="tags-list-item">Авнгард</span>
-        <span class="tags-list-item">Авнгард</span>
-        <span class="tags-list-item">Авнгард</span>
-        <span class="tags-list-item">Авнгард</span>
+        @foreach ( $styles as $style )
+          <span class="tags-list-item">{{ $style->title }}</span>
+          <input type="checkbox" name="" value=" {{ $style->id }} ">
+        @endforeach
       </div>
     </div>
     <div class="small-col">
@@ -97,17 +52,12 @@
         Помещения
       </div>
       <div class="tags-list">
-        <span class="tags-list-item">Гостинная</span>
-        <span class="tags-list-item">Гостинная</span>
-        <span class="tags-list-item">Гостинная</span>
-        <span class="tags-list-item">Гостинная</span>
-        <span class="tags-list-item">Гостинная</span>
-        <span class="tags-list-item">Гостинная</span>
-        <span class="tags-list-item">Гостинная</span>
-        <span class="tags-list-item">Гостинная</span>
-        <span class="tags-list-item">Гостинная</span>
-        <span class="tags-list-item">Гостинная</span>
+        @foreach ( $rooms as $room )
+          <span class="tags-list-item">{{ $room->title }}</span>
+          <input type="chexbox" name="name" value=" {{ $room->id }} ">
+        @endforeach
       </div>
     </div>
+    {{ Form:close() }}
   </div>
   @endsection

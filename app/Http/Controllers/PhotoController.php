@@ -47,4 +47,13 @@ class PhotoController extends Controller
     public function delete(){
 
     }
+
+    /**
+     * @param
+     *
+     * @return
+     */
+    public function edit(){
+        
+    }
 }

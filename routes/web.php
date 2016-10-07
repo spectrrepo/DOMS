@@ -29,3 +29,22 @@ Route::get('/profile', function () {
 Route::get('/profile/liked', function () {
     return view('profile.liked');
 });
+
+// TODO: read more about "Auth" class and him methods
+Route::group(array('before' => 'un_auth'), function()
+{
+    // TODO: add my controller
+    Route::get('/profile/add', array('as' = 'add_photo'));
+    Route::get('/profile/edit', array('as' = 'edit_profile'));
+    Route::get('/profile', array('as' = 'profile_main_page'));
+    Route::get('/profile/liked', array('as' = 'liked_user'));
+});
+
+// TODO: change this filter and add new filte with Redirect::to('login');
+Route::filter('un_auth', function()
+{
+        if (!Auth::guest()){
+            Auth::logout();
+        }
+});
+// TODO: add route for different ststus_profile

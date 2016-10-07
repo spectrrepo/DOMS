@@ -1,32 +1,34 @@
 @extends('layouts.profile')
 @section('profile-content')
+<!-- TODO: make that such condition for all elements and temlate, where have
+content , which view other for different users@if(Auth::user()->isManager()) -->
 <div class="wrap-personal-information">
     <div class="b-photo-person">
-        <img src="img/test_portret.jpg" alt="" />
+        <img src=" {{ $user->portret }} " alt="user_{{ $user->id }} " />
     </div>
     <div class="b-persobal-information">
         <div class="b-name-person">
-          Георгий
+          {{ $user->name }}
         </div>
         <div class="b-role-person">
-          Магазин
+          {{ $user-status }}
         </div>
         <div class="b-contact-data">
           <div class="contact-item">
               <span class="contact-item-name">email</span>
-              <span class="contact-item-value"></span>
+              <span class="contact-item-value"> {{ $user->email }} </span>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">skype</span>
-              <span class="contact-item-value"></span>
+              <span class="contact-item-value"> {{ $user->skype }} </span>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">телефон</span>
-              <span class="contact-item-value"></span>
+              <span class="contact-item-value"> {{ $user->phone }} </span>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">соц.сети</span>
-              <span class="contact-item-value"></span>
+              <span class="contact-item-value"> {{ $user->soc_net }} </span>
           </div>
         </div>
     </div>
