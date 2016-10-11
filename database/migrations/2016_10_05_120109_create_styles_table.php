@@ -18,6 +18,7 @@ class CreateStylesTable extends Migration
                 $table->string('name');
                 $table->text('description');
                 $table->string('photo');
+                $table->string('alt_text');
         });
     }
 

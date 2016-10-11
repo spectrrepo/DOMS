@@ -26,7 +26,7 @@ class CreateTableRooms extends Migration
       */
      public function down()
      {
-         Schema::drop('Tags');
+         Schema::drop('Rooms');
 
      }
 }

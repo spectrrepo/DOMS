@@ -19,7 +19,7 @@ class CreateUserTable extends Migration
             $table->string('name');
             $table->string('sex')->nullable();
             $table->integer('phone')->nullable()->unsigned();
-            $table->string('e-mail');
+            $table->string('e_mail');
             $table->string('status');
             $table->string('password');
             $table->string('skype')->nullable();

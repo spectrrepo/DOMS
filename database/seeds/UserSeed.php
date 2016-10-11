@@ -11,6 +11,63 @@ class UserSeed extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('Users')->delete();
+
+        $data = array(
+            array(
+                'id' => '1',
+                'name' => 'Георгий',
+                'sex' => 'm',
+                'e_mail' => 'ajsdlkasjd',
+                'status' => 'asdasd',
+                'password' => 'salkdalsadasd',
+                'skype' => 'asdasd',
+                'soc_net' => 'asdasd',
+                'portret' => 'asdasda',
+                'date_reg' => '98-12-31 11:30:45',
+                'date_update' => '98-12-31 11:30:45'
+            ),
+            array(
+                'id' => '2',
+                'name' => 'Георгий',
+                'sex' => 'm',
+                'e_mail' => 'ajsdlkasjd',
+                'status' => 'asdasd',
+                'password' => 'salkdalsadasd',
+                'skype' => 'asdasd',
+                'soc_net' => 'asdasd',
+                'portret' => 'asdasda',
+                'date_reg' => '98-12-31 11:30:45',
+                'date_update' => '98-12-31 11:30:45'
+            ),
+            array(
+                'id' => '3',
+                'name' => 'Георгий',
+                'sex' => 'm',
+                'e_mail' => 'ajsdlkasjd',
+                'status' => 'asdasd',
+                'password' => 'salkdalsadasd',
+                'skype' => 'asdasd',
+                'soc_net' => 'asdasd',
+                'portret' => 'asdasda',
+                'date_reg' => '98-12-31 11:30:45',
+                'date_update' => '98-12-31 11:30:45'
+            ),
+            array(
+                'id' => '4',
+                'name' => 'Георгий',
+                'sex' => 'm',
+                'e_mail' => 'ajsdlkasjd',
+                'status' => 'asdasd',
+                'password' => 'salkdalsadasd',
+                'skype' => 'asdasd',
+                'soc_net' => 'asdasd',
+                'portret' => 'asdasda',
+                'date_reg' => '98-12-31 11:30:45',
+                'date_update' => '98-12-31 11:30:45'
+            )
+        );
+
+        DB::table('Users')->insert($data);
     }
 }
