@@ -23,7 +23,6 @@ class Image extends Model
 		'company_id' => 'required|exists:companies,id',
 		'off' => 'required|numeric|min:1|max:100',
 		'image' => 'required|regex:/\/images\/\d{4}\/\d{2}\/\d{2}\/([A-z0-9]){30}\.jpg/',
-		// matches /images/2012/12/21/ThisIsTheEndOfTheWorldMaya2112.jpg
 		'expires' => 'required|date'
 	);
 
