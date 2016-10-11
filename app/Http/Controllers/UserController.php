@@ -6,6 +6,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\User;
+
+use App\Style;
+
+use App\Room;
+
+use App\Color;
+
 /**
  * The ResultMessage class holds a message that can be returned
  * as a result of a process. The message has a severity and
@@ -24,11 +32,24 @@ class UserController extends Controller
      * @return Response
      */
 
-    public function index()
+    public function index($id)
      {
-         return View::make('login.index'); //TODO: here need add my template for login form
+         $user = User::find($id);
+         return View('profile.index', ['user' => $user]);
      }
+     public function indexAdd($id)
+     {
+         $user = User::find($id);
 
+         $styles = Style::all();
+         $rooms = Room::all();
+         $colors = Color::all();
+
+         return View('profile.add', ['user' => $user,
+                                     'styles' => $styles,
+                                     'rooms' => $rooms,
+                                     'colors' => $colors ]);
+     }
     /**
      * Registration form
      *
@@ -98,8 +119,6 @@ class UserController extends Controller
         return Redirect::home()->with('message', 'See you again!');
     }
 
-}
-
 /**
 	 * Show reminder form.
 	 *
@@ -158,3 +177,4 @@ class UserController extends Controller
 			return Redirect::home()->with('message', 'Your password has been successfully reseted.');
 	    });
 	}
+}

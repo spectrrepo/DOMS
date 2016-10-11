@@ -1,4 +1,5 @@
 <header>
+    <!-- TODO: add link on the true page -->
     <div class="logo"><img src="img/logo-doms.png" alt="логотип DOM'S" /></div>
     <div class="control">
       <div class="main-item">Интерьеры</div>

@@ -19,7 +19,7 @@
                     idPhoto
                   </span>
                   <span class="num-page">
-                    100/1000
+                    {{ $image->id }}/ {{ $num_image }}
                   </span>
                   <span class="status-photo">
                     <span class="b-tooltip-visible  back-to-main">
@@ -56,7 +56,7 @@
                         <span class="triangle-tooltip-stat"></span>
                       </span>
                       <span class="ico-slider uk-icon-justify uk-icon-comments"></span>
-                      <span>3</span>
+                      <span>{{ $num_comment }}</span>
                     </span>
                     <span class="b-tooltip-visible like">
                       <span class="wrap-tooltip-gallery">
@@ -64,7 +64,7 @@
                         <span class="triangle-tooltip-stat"></span>
                       </span>
                       <span class="ico-slider uk-icon-justify uk-icon-heart"></span>
-                      <span>2</span>
+                      <span>{{ $num_like }}</span>
                     </span>
                     <span class="b-tooltip-visible view">
                       <span class="wrap-tooltip-gallery">
@@ -84,16 +84,16 @@
                 Коментарии
               </div>
               <div class="b-all-comment">
-                @foreach ( $comments as comment )
+                @foreach ( $comments as $comment )
 
                   <div class="b-comment">
                     <div class="b-photo-comment"></div>
                     <div class="b-comment">
                       <div class="b-name-comment">
-                        {{ $comment->name_user }}
+                        {{ $comment->user_id }}
                       </div>
                       <div class="b-text-comment">
-                        {{ $comment->text }}
+                        {{ $comment->text_comment }}
                       </div>
                       <div class="b-date-comment">
                         {{ $comment->date }}
@@ -117,12 +117,16 @@
               </div>
               <div class="pole-tag">
                 @foreach ( $tags as $tag )
+
                   <div class="tag-item">{{ $tag->title }}</div>
+
                 @endforeach
               </div>
               <div class="view-photo-slide">
-                foreach ( $views as $view )
-                    <img src=" {{ $view->path }} " alt=" {{ $view->alt }} " />
+                @foreach ( $views as $view )
+
+                    <img src=" {{ $view->id }} " alt=" {{ $view->date }} " />
+
                 @endforeach
               </div>
             </div>
