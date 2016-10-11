@@ -15,8 +15,8 @@
             <div class="title-choose-color">Укажи основные цвета</div>
             <div class="color-place">
                 @foreach ( $colors as $color)
-                    <div class="wrap-color-input" id="color_{{ $color->name }}">
-                        <input class="color-photo-choose" type="checkbox" name="{{ $color->name }}" value="">
+                    <div class="wrap-color-input" id="color_{{ $color->title }}">
+                        <input class="color-photo-choose" type="checkbox" name="{{ $color->id }}" value="">
                     </div>
                 @endforeach
             </div>

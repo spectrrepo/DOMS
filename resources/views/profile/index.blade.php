@@ -11,12 +11,12 @@ content , which view other for different users@if(Auth::user()->isManager()) -->
           {{ $user->name }}
         </div>
         <div class="b-role-person">
-          {{ $user-status }}
+          {{ $user->status }}
         </div>
         <div class="b-contact-data">
           <div class="contact-item">
               <span class="contact-item-name">email</span>
-              <span class="contact-item-value"> {{ $user->email }} </span>
+              <span class="contact-item-value">  </span>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">skype</span>
@@ -45,6 +45,7 @@ content , which view other for different users@if(Auth::user()->isManager()) -->
       </ul>
     </div>
     <div class="b-personal-news">
+        
         <div class="b-person-post">
           <div class="col-news-min">
               <div class="b-portret-blogger"><span style="line-height: 85px;font-size: 60px;"class="uk-icon-justify uk-icon-user"></span></div>

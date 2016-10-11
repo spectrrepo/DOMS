@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Comment;
+
 /**
  * The ResultMessage class holds a message that can be returned
  * as a result of a process. The message has a severity and
@@ -24,7 +26,8 @@ class CommentController extends Controller
      *
      */
     public function index(){
-        
+
+
     }
 
     /**
