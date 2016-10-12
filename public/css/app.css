@@ -6306,7 +6306,7 @@ a.uk-thumbnail:focus, a.uk-thumbnail:hover {
 
 @font-face {
   font-family: MainFont;
-  src: url(../font/pt-sans.ttf); }
+  src: url(font/pt-sans.ttf); }
 
 body {
   background-color: #fcfcfc; }
@@ -6414,7 +6414,7 @@ html {
   position: relative; }
 
 .about {
-  width: 161px;
+  width: 190px;
   margin: 0 auto; }
 
 .site-wrapper {
@@ -6899,10 +6899,11 @@ ul {
   width: 97%; }
 
 .conteiner {
-  width: 18.4%;
+  width: 20%;
   float: left;
   position: fixed;
-  padding-left: 41px; }
+  padding-left: 25px;
+  box-sizing: border-box; }
 
 .main-wrapper {
   clear: both;
@@ -7025,18 +7026,19 @@ ul.b-popup-item-list li {
   float: right; }
 
 .b-next-page {
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   text-align: center;
   text-transform: uppercase;
   font-size: 16px;
+  line-height: 40px;
   color: #ffffff;
-  background: rgba(0, 0, 0, 0.7);
+  background-color: #333333;
   opacity: .7;
   padding: 30px;
-  cursor: pointer;
-  width: 100%; }
+  cursor: pointer; }
 
 .wrap-content {
   padding-left: 35px; }
@@ -7216,7 +7218,8 @@ div.content div {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   width: 96%;
-  padding: 3px; }
+  padding: 3px;
+  box-sizing: border-box; }
 
 .b-add-comment {
   clear: both;

@@ -1,8 +1,8 @@
 <header>
     <!-- TODO: add link on the true page -->
-    <div class="logo"><img src="img/logo-doms.png" alt="логотип DOM'S" /></div>
+    <a href="{{URL::route('index')}}" class="logo"><img src="img/logo-doms.png" alt="логотип DOM'S" /></a>
     <div class="control">
-      <div class="main-item">Интерьеры</div>
+      <a href="{{URL::route('index')}}" class="main-item">Интерьеры</a>
       <div class="plus-photo"><span class="uk-icon-justify uk-icon-plus"></span ></div>
     </div>
     <div class="logining">

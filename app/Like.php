@@ -13,5 +13,5 @@ class Like extends Model
      */
 
      protected $table = 'Likes';
-
+     public $timestamps = false;
 }

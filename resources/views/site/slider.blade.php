@@ -7,12 +7,12 @@
               <div class="b-photo-slider">
                 <div class="photo-item"></div>
                 <div class="control-slide">
-                  <div class="btn-prew">
+                  <a href="/photo/{{$image->id - 1}}" class="btn-prew">
                     <span class="uk-icon-justify uk-icon-chevron-left"></span>
-                  </div>
-                  <div class="btn-next">
+                  </a>
+                  <a href="/photo/{{$image->id + 1}}" class="btn-next">
                     <span class="uk-icon-justify uk-icon-chevron-right"></span>
-                  </div>
+                  </a>
                 </div>
                 <div class="b-informstion">
                   <span class="b-pretens">
@@ -63,7 +63,7 @@
                         <span class="tooltip-stat-gallery">Понравилось</span>
                         <span class="triangle-tooltip-stat"></span>
                       </span>
-                      <span class="ico-slider uk-icon-justify uk-icon-heart"></span>
+                      <a href="/like" class="ico-slider uk-icon-justify uk-icon-heart"></a>
                       <span>{{ $num_like }}</span>
                     </span>
                     <span class="b-tooltip-visible view">
@@ -104,10 +104,12 @@
                 @endforeach
               </div>
               <div class="b-add-comment">
-                <input type="text" class="input-comment" placeholder="Комментировать">
-                <button class="submit-comment">
+                {{Form::open(array('url' => '/comment')) }}
+                <input type="text" name="comment" class="input-comment" placeholder="Комментировать">
+                <button class="submit-comment" type="submit">
                   <span class="uk-icon-justify uk-icon-plus"></span>
                 </button>
+                {{Form::close()}}
               </div>
             </div>
           </div>

@@ -7,9 +7,7 @@
         @include('../helpers.sidebar_main')
       </div>
   </div>
-  <div  class="content">
         @section('site-content')
         @show
-  </div>
 </div>
 @endsection

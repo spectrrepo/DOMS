@@ -38,6 +38,13 @@ class CommentController extends Controller
      */
     public function add(){
 
+        $comment = new Comment();
+
+        $comment->post_id = 2;
+        $comment->user_id = 2;
+        $comment->text_comment = $_POST['comment'];
+
+        $comment->save();
     }
 
     /**

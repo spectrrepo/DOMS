@@ -21,5 +21,5 @@ elixir(mix => {
         "uikit.min.js",
         "grid.js"
     ],'public/js/app.js')
-       .copy('resources/assets/fonts/*.*', 'public/fonts/');
+       .copy('resources/assets/fonts/*.*', 'public/css/fonts/');
 });

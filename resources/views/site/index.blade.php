@@ -10,9 +10,11 @@
         </div>
     </a>
   @endforeach
-
   <div class="b-next-page uk-width-1-1">
     Next page
+  </div>
+  <div class="clear">
+
   </div>
 </div>
 

@@ -8,7 +8,9 @@
         "php": ">=5.6.4",
         "laravel/framework": "5.3.*",
         "laravelbook/ardent": "dev-master",
-        "doctrine/dbal": "v2.4.2"
+        "doctrine/dbal": "v2.4.2",
+        "laravelcollective/html": "~5.0",
+        "codesleeve/laravel-stapler": "1.0.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

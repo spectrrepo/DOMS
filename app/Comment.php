@@ -13,4 +13,5 @@ class Comment extends Model
      */
 
      protected $table = 'Comments';
+     public $timestamps = false;
 }

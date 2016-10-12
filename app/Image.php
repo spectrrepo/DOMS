@@ -14,6 +14,6 @@ class Image extends Model
 
      protected $table = 'Images';
 
-     
+     public $timestamps = false;
 		//  TODO:change this rules and add rules for all models data
 }

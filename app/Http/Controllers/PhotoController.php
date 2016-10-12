@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 
 use App\Image;
@@ -54,7 +53,7 @@ class PhotoController extends Controller
         $views = View::where('post_id', '=', $id)->get();
         $comments = Comment::where('post_id', '=', $id)->get();
 
-        $num_image = count( Image::where('post_id', '=', $id)->get());
+        $num_image = count( Image::all());
         $num_like = count( Like::where('post_id', '=', $id)->get());
         $num_comment = count( Comment::where('post_id', '=', $id)->get());
 
@@ -75,7 +74,20 @@ class PhotoController extends Controller
      *
      */
     public function add(){
+        $image = new Image();
 
+        $image->title = $_POST["title"];
+        $image->description = $_POST["description"];
+        $image->path_full = 'asdad';
+        $image->path_min = 'asdas';
+        $image->author_id = 2;
+        $image->user_upload_id = 2;
+        $image->colors = $_POST["color"];
+        $image->variants = "asdd";
+        $image->style = $_POST["style"];
+        $image->rooms = $_POST["room"];
+
+        $image->save();
     }
 
     /**

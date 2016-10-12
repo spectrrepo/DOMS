@@ -12,13 +12,25 @@
 */
 //TODO: 3 category user in filter for profile pages
 
-Route::get('/', 'PhotoController@index');
-Route::get('/photo/{id}', 'PhotoController@indexItem');
+Route::get('/', array('as' => 'index',
+                      'uses' => 'PhotoController@index'));
+Route::get('/photo/{id}', array('uses' => 'PhotoController@indexItem'));
 
-Route::get('/profile/{id}/add', 'UserController@index');
-Route::get('/profile/{id}/edit', 'UserController@index');
-Route::get('/profile/{id}', 'UserController@index');
-Route::get('/profile/{id}/liked', 'UserController@index');
+Route::get('/profile/{id}/add', array('uses' => 'UserController@indexAdd'));
+Route::get('/profile/{id}/edit', array('uses' => 'UserController@index'));
+Route::get('/profile/{id}', array('uses' => 'UserController@index'));
+Route::get('/profile/{id}/liked', array('uses' => 'UserController@index'));
+
+
+Route::post('/add_photo', 'PhotoController@add');
+Route::post('/comment', 'CommentController@add');
+Route::get('/like', 'LikeController@add');
+// TODO:restfull controler add
+
+Route::get('/tags');
+Route::get('/style');
+Route::get('/colors');
+Route::get('/sort');
 
 // // TODO: read more about "Auth" class and him methods
 // Route::group(array('before' => 'un_auth'), function()
