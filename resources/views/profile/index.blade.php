@@ -1,7 +1,6 @@
 @extends('layouts.profile')
 @section('profile-content')
-<!-- TODO: make that such condition for all elements and temlate, where have
-content , which view other for different users@if(Auth::user()->isManager()) -->
+
 <div class="wrap-personal-information">
     <div class="b-photo-person">
         <img src=" {{ $user->portret }} " alt="user_{{ $user->id }} " />
@@ -16,7 +15,7 @@ content , which view other for different users@if(Auth::user()->isManager()) -->
         <div class="b-contact-data">
           <div class="contact-item">
               <span class="contact-item-name">email</span>
-              <span class="contact-item-value">  </span>
+              <span class="contact-item-value"> $user->e_mail </span>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">skype</span>
@@ -45,7 +44,7 @@ content , which view other for different users@if(Auth::user()->isManager()) -->
       </ul>
     </div>
     <div class="b-personal-news">
-        
+
         <div class="b-person-post">
           <div class="col-news-min">
               <div class="b-portret-blogger"><span style="line-height: 85px;font-size: 60px;"class="uk-icon-justify uk-icon-user"></span></div>

@@ -4,6 +4,7 @@
         <div class="help-text">Для удобства поиска твоего изображения на сайте заполни ка можно больше параметров</div>
         <div class="b-dwnld-img">
           {{ Form::open(array('url' => '/add_photo')) }}
+            <input type="hidden" name="user_upload_id" value="{{$id}}">
             <input class="input-title-dwnld"type="text" name="title" placeholder="Заголовок">
             <div class="wrap-main-dwnld-photo" title="Добавить изображение">
                 <span class="add-photo-ico uk-icon-justify uk-icon-camera"></span>

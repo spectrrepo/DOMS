@@ -33,7 +33,7 @@ class PhotoController extends Controller
      *
      */
     public function index(){
-
+    
         $images = Image::all();
         return view('site.index', ['images' => $images]);
 
@@ -80,8 +80,8 @@ class PhotoController extends Controller
         $image->description = $_POST["description"];
         $image->path_full = 'asdad';
         $image->path_min = 'asdas';
-        $image->author_id = 2;
-        $image->user_upload_id = 2;
+        $image->author_id = $_POST["user_upload_id"];
+        $image->user_upload_id = $_POST["user_upload_id"];
         $image->colors = $_POST["color"];
         $image->variants = "asdd";
         $image->style = $_POST["style"];
