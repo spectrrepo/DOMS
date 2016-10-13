@@ -5,7 +5,9 @@
             <div class="col-slider-comment">
             <div class="one-picture-place">
               <div class="b-photo-slider">
-                <div class="photo-item"></div>
+                <div class="photo-item">
+                          <img src="{{ $image->photo->url() }}" >
+                </div>
                 <div class="control-slide">
                   <a href="/photo/{{$image->id - 1}}" class="btn-prew">
                     <span class="uk-icon-justify uk-icon-chevron-left"></span>

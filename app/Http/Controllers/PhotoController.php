@@ -14,6 +14,8 @@ use App\Tag;
 use App\View;
 
 use App\Like;
+
+use Input;
 /**
  * The ResultMessage class holds a message that can be returned
  * as a result of a process. The message has a severity and
@@ -33,7 +35,7 @@ class PhotoController extends Controller
      *
      */
     public function index(){
-    
+
         $images = Image::all();
         return view('site.index', ['images' => $images]);
 
@@ -74,20 +76,8 @@ class PhotoController extends Controller
      *
      */
     public function add(){
-        $image = new Image();
 
-        $image->title = $_POST["title"];
-        $image->description = $_POST["description"];
-        $image->path_full = 'asdad';
-        $image->path_min = 'asdas';
-        $image->author_id = $_POST["user_upload_id"];
-        $image->user_upload_id = $_POST["user_upload_id"];
-        $image->colors = $_POST["color"];
-        $image->variants = "asdd";
-        $image->style = $_POST["style"];
-        $image->rooms = $_POST["room"];
-
-        $image->save();
+        $image = Image::create(Input::all());
     }
 
     /**

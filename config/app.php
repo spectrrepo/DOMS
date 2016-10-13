@@ -229,6 +229,7 @@ return [
         'Html' => Illuminate\Html\HtmlFacade::class,
         'Form' => Collective\Html\FormFacade::class,
         'HTML' => Collective\Html\HtmlFacade::class,
+        'Input'     => Illuminate\Support\Facades\Input::class,
 
     ],
 

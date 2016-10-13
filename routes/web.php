@@ -20,9 +20,12 @@ Route::get('/', array('as' => 'index',
 Route::get('/photo/{id}', array('uses' => 'PhotoController@indexItem'));
 Route::get('/profile/{id}', array('uses' => 'UserController@index'));
 
-Route::get('/profile/add', array('uses' => 'UserController@indexAdd'));
-Route::get('/profile/edit', array('uses' => 'UserController@indexAdd'));
-Route::get('/profile/liked', array('uses' => 'UserController@indexAdd'));
+Route::get('/profile/add/photo', array('as' => 'add',
+                                       'uses' => 'UserController@indexAdd'));
+Route::get('/profile/edit/user', array('as' => 'edit',
+                                       'uses' => 'UserController@indexAdd'));
+Route::get('/profile/liked/photo', array('as' => 'liked',
+                                         'uses' => 'UserController@indexAdd'));
 
 
 Route::post('/add_photo', 'PhotoController@add');
