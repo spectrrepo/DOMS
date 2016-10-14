@@ -11,7 +11,15 @@ class Image extends Model implements StaplerableInterface
 {
     use EloquentTrait;
 
-    protected $fillable = ['photo'];
+    protected $fillable = ['photo',
+                           'title',
+                           'description',
+                           'author_id',
+                           'user_upload_id',
+                           'colors',
+                           'variants',
+                           'style',
+                           'rooms' ];
 
     public function __construct(array $attributes = array()) {
         $this->hasAttachedFile('photo', [
@@ -32,5 +40,4 @@ class Image extends Model implements StaplerableInterface
      protected $table = 'Images';
 
      public $timestamps = false;
-		//  TODO:change this rules and add rules for all models data
 }

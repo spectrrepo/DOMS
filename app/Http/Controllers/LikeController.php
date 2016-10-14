@@ -28,8 +28,8 @@ class LikeController extends Controller
     public function add(){
         $like = new Like();
 
-        $like->post_id = 1;
-        $like->user_id = 1;
+        $like->post_id = $_POST['post_id'];
+        $like->user_id = $_POST['user_id'];
 
         $like->save();
     }

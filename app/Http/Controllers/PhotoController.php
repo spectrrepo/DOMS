@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use App\Http\Requests;
-
+use Illuminate\Support\Facades\DB;
 use App\Image;
 
 use App\Comment;
@@ -36,7 +37,7 @@ class PhotoController extends Controller
      */
     public function index(){
 
-        $images = Image::all();
+        $images = Image::simplePaginate(28);
         return view('site.index', ['images' => $images]);
 
     }
@@ -76,7 +77,6 @@ class PhotoController extends Controller
      *
      */
     public function add(){
-
         $image = Image::create(Input::all());
     }
 
@@ -86,16 +86,7 @@ class PhotoController extends Controller
      * @return
      *
      */
-    public function delete(){
-
-    }
-
-    /**
-     * @param
-     *
-     * @return
-     */
-    public function edit(){
+    public function sort(){
 
     }
 }

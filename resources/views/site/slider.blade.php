@@ -43,7 +43,11 @@
                         <span class="tooltip-stat-gallery">Избранное</span>
                         <span class="triangle-tooltip-stat"></span>
                       </span>
-                      <span class="ico-slider uk-icon-justify uk-icon-star"></span>
+                      {{ Form::open( array('url' => '/liked'))}}
+                      <input type="hidden" name="post_id" value="{{ $image->id }}">
+                      <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                      <button type="submit" class="ico-slider uk-icon-justify uk-icon-star"></button>
+                      {{ Form::close()}}
                     </span>
                     <span class="b-tooltip-visible share">
                       <span class="wrap-tooltip-gallery">
@@ -65,7 +69,11 @@
                         <span class="tooltip-stat-gallery">Понравилось</span>
                         <span class="triangle-tooltip-stat"></span>
                       </span>
-                      <a href="/like" class="ico-slider uk-icon-justify uk-icon-heart"></a>
+                      {{ Form::open(array('url' => '/like'))}}
+                      <input type="hidden" name="post_id" value="{{ $image->id }}">
+                      <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                      <button type="submit" class="ico-slider uk-icon-justify uk-icon-heart"></button>
+                      {{ Form::close()}}
                       <span>{{ $num_like }}</span>
                     </span>
                     <span class="b-tooltip-visible view">
@@ -89,11 +97,11 @@
                 @foreach ( $comments as $comment )
 
                   <div class="b-comment">
-                    <div class="b-photo-comment"></div>
+                    <a href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-photo-comment"></a>
                     <div class="b-comment">
-                      <div class="b-name-comment">
+                      <a href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-name-comment">
                         {{ $comment->user_id }}
-                      </div>
+                      </a>
                       <div class="b-text-comment">
                         {{ $comment->text_comment }}
                       </div>
@@ -105,14 +113,22 @@
 
                 @endforeach
               </div>
-              <div class="b-add-comment">
-                {{Form::open(array('url' => '/comment')) }}
-                <input type="text" name="comment" class="input-comment" placeholder="Комментировать">
-                <button class="submit-comment" type="submit">
-                  <span class="uk-icon-justify uk-icon-plus"></span>
-                </button>
-                {{Form::close()}}
-              </div>
+              @if (Auth::check())
+                        <div class="b-add-comment">
+                          {{Form::open(array('url' => '/comment')) }}
+                          <input type="text" name="comment" class="input-comment" placeholder="Комментировать">
+                          <input type="hidden" name="post_id" value="{{ $image->id }}">
+                          <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                          <button class="submit-comment" type="submit">
+                            <span class="uk-icon-justify uk-icon-plus"></span>
+                          </button>
+                          {{Form::close()}}
+                        </div>
+              @else
+                    <p>
+                    Только зарегистрированные пользователи могут оставить комментарий
+                    </p>
+              @endif
             </div>
           </div>
             <div class="col-descreption-photo">

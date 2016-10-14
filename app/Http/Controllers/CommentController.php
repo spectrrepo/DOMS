@@ -40,8 +40,8 @@ class CommentController extends Controller
 
         $comment = new Comment();
 
-        $comment->post_id = 2;
-        $comment->user_id = 2;
+        $comment->post_id = $_POST['post_id'];
+        $comment->user_id = $_POST['user_id'];
         $comment->text_comment = $_POST['comment'];
 
         $comment->save();

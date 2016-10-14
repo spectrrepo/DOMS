@@ -13,10 +13,13 @@ use App\Style;
 use App\Room;
 
 use App\Color;
+use App\Liked;
 
 use Auth;
 
 use Hash;
+use DB;
+use App\Image;
 
 // TODO: include library for work with validation
 // TODO: change on my DB
@@ -88,7 +91,7 @@ class UserController extends Controller
          $email = $_POST['email'];
          $password = $_POST['password'];
 
-         if (Auth::attempt(['e_mail' => $email, 'password' => $password]))
+         if (Auth::attempt(['e_mail' => $email, 'password' => $password],true))
          {
             return redirect()->intended();
          }else {
@@ -130,4 +133,66 @@ class UserController extends Controller
          Auth::logout();
          return redirect('/');
      }
+
+     /**
+      * Login Form
+      *
+      * @return Response
+      */
+     public function likedAdd()
+     {
+         $liked = new Liked();
+
+         $liked->post_id = $_POST['post_id'];
+         $liked->user_id = $_POST['user_id'];
+
+         $liked->save();
+
+      }
+      /**
+       * Login Form
+       *
+       * @return Response
+       */
+      public function likedIndex()
+      {
+          if (Auth::check()){
+             $images =  Image::join('Likeds','Images.id', '=', 'Likeds.post_id' )->where('Likeds.user_id', '=', '1')->get();
+             return view('profile.liked', ['images' => $images]);
+
+          }
+      }
+      /**
+       * Login Form
+       *
+       * @return Response
+       */
+       public function editUser ()
+       {
+           if (Auth::check()){
+               $user = User::find(Auth::id());
+               return view('profile.edit', ['user' => $user]);
+           }
+       }
+       /**
+        * Login Form
+        *
+        * @return Response
+        */
+       public function changeYourself()
+       {
+           $user = User::find(Auth::id());
+
+           $user->name = $_POST["name"];
+           $user->sex = $_POST["sex"];
+           $user->phone =  $_POST["phone"];
+           $user->e_mail = $_POST["e_mail"];
+           $user->status = $_POST["status"];
+           $user->skype = $_POST["skype"];
+           $user->soc_net = $_POST["soc_net"];
+           $user->portret = $_POST["portret"];
+
+           $user->save();
+       }
+
 }

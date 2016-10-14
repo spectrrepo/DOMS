@@ -5,8 +5,7 @@
 
   @foreach ( $images as $image)
       <a href="/photo/{{ $image->id }}" class="item-gallery" data-grid-prepared="true"style="position:absolute;">
-        <div class="uk-panel-box" style="height:290px;">
-            <img src="{{ $image->photo->url('max') }}" >
+        <div class="uk-panel-box" >
             <img src="{{ $image->photo->url('small') }}" >
         </div>
     </a>
@@ -17,6 +16,7 @@
   <div class="clear">
 
   </div>
+  {!! $images->render() !!}
 </div>
 
 @endsection

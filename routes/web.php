@@ -23,19 +23,19 @@ Route::get('/profile/{id}', array('uses' => 'UserController@index'));
 Route::get('/profile/add/photo', array('as' => 'add',
                                        'uses' => 'UserController@indexAdd'));
 Route::get('/profile/edit/user', array('as' => 'edit',
-                                       'uses' => 'UserController@indexAdd'));
+                                       'uses' => 'UserController@editUser'));
 Route::get('/profile/liked/photo', array('as' => 'liked',
-                                         'uses' => 'UserController@indexAdd'));
+                                         'uses' => 'UserController@likedIndex'));
 
 
 Route::post('/add_photo', 'PhotoController@add');
 Route::post('/comment', 'CommentController@add');
-Route::get('/like', 'LikeController@add');
+Route::post('/like', 'LikeController@add');
 // TODO:restfull controler add
 
 
-
-
+Route::post('/liked', 'UserController@likedAdd');
+Route::post('update/profile', 'UserController@changeYourself');
 
 // ------------------- TEST router ------------------>
 Route::get('/login', function()
@@ -50,11 +50,3 @@ Route::get('/logout', array('as' => 'logout',
 Route::post('/enter', 'UserController@login');
 Route::post('/reg', 'UserController@registration');
 // ---------------- END TEST router ---------------->
-
-
-
-
-Route::get('/tags');
-Route::get('/style');
-Route::get('/colors');
-Route::get('/sort');
