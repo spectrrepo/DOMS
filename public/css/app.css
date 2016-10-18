@@ -6314,6 +6314,9 @@ body {
 img {
   width: 100%; }
 
+.clear {
+  clear: both; }
+
 /*############################################################################*/
 /*###########################start and main page##############################*/
 /*############################################################################*/
@@ -6695,7 +6698,7 @@ html {
 
 .b-personal-news {
   border: 1px solid #e5e5e5;
-  height: 1000px;
+  height: auto;
   border-radius: 5px;
   border: 1px solid #e5e5e5;
   margin-bottom: 20px; }
@@ -6731,7 +6734,8 @@ html {
   border-top-right-radius: 5px; }
 
 .b-person-post {
-  width: 100%; }
+  width: 100%;
+  height: auto; }
 
 .col-news-min {
   width: 10%;
@@ -6750,9 +6754,8 @@ html {
 
 .col-news-big {
   width: 90%;
-  height: 100%;
   float: left;
-  height: 100px;
+  height: auto;
   width: 84%;
   margin-left: 1%;
   margin-top: 1%; }
@@ -6765,7 +6768,7 @@ html {
 .b-post-body {
   border-radius: 5px;
   border: 1px solid #e5e5e5;
-  height: 300px;
+  height: auto;
   padding: 5px; }
 
 .b-photo-post {
@@ -6773,7 +6776,7 @@ html {
   margin: 0 auto;
   margin-top: 10px;
   background: gray;
-  height: 200px;
+  height: auto;
   cursor: pointer; }
 
 .b-iformation {

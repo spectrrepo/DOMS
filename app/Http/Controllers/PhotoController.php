@@ -87,6 +87,6 @@ class PhotoController extends Controller
      *
      */
     public function sort(){
-
+        
     }
 }

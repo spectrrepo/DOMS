@@ -45,16 +45,33 @@ class UserController extends Controller
 
     public function index()
      {  if(Auth::check()){
+             $images =  Image::join('Likes', 'Images.id', '=', 'Likes.post_id')
+                             ->join('Likeds', 'Images.id', '=', 'Likes.post_id')
+                             ->join('Users', 'Likes.user_id', '=', 'Users.id')
+                             ->get();
              $id = Auth::id();
              $user = User::find($id);
              return View('profile.index', [ 'id' => $id,
-                                            'user' => $user]);
+                                            'user' => $user,
+                                            'images' => $images]);
         }else {
             return redirect('/login');
         }
 
      }
-
+     public function yourPhotoUpload ()
+     {
+         if(Auth::check()){
+             $id = Auth::id();
+             $user = User::find($id);
+             $userImages = Image::where('author_id', '=', Auth::id());
+             return View('profile.index_photo', [ 'id' => $id,
+                                                  'user' => $user,
+                                                  'userImages' => $userImages]);
+         }else {
+             return redirect('/login');
+         }
+     }
 
     /**
      * Login Form

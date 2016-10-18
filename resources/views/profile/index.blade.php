@@ -44,20 +44,20 @@
       </ul>
     </div>
     <div class="b-personal-news">
-
+      @foreach ($images as $image)
         <div class="b-person-post">
           <div class="col-news-min">
               <div class="b-portret-blogger"><span style="line-height: 85px;font-size: 60px;"class="uk-icon-justify uk-icon-user"></span></div>
           </div>
           <div class="col-news-big">
-              <div class="b-name-redactor">Павел Воля</div>
+              <div class="b-name-redactor">{{$image->name}}</div>
               <div class="b-post-body">
                 <div class="b-photo-post">
-                  <img src="" alt="" class="img-post">
+                  <img src="{{$image->photo->url()}}" class="img-post" alt="" />
                 </div>
                 <div class="b-iformation">
                   <div class="b-date">
-                    12 июля
+                    {{$image->date}}
                   </div>
                   <div class="b-statistics">
                     <div class="b-item-stat">
@@ -92,9 +92,14 @@
                     </div>
                   </div>
                 </div>
+                <div class="clear"></div>
               </div>
+              <div class="clear"></div>
           </div>
+          <div class="clear"></div>
     </div>
+    @endforeach
+    <div class="clear"></div>
     </div>
 </div>
 <div class="btn-dwnld-new">
