@@ -86,7 +86,15 @@ class PhotoController extends Controller
      * @return
      *
      */
-    public function sort(){
-        
+    public function sort( $rooms = "", $styles="", $colors = "", $sort = ""){
+        switch (variable) {
+            case 'value':
+                # code...
+                break;
+
+            default:
+                # code...
+                break;
+        }
     }
 }

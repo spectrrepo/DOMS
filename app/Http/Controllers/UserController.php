@@ -64,7 +64,7 @@ class UserController extends Controller
          if(Auth::check()){
              $id = Auth::id();
              $user = User::find($id);
-             $userImages = Image::where('author_id', '=', Auth::id());
+             $userImages = Image::where('author_id', '=', '1')->get();
              return View('profile.index_photo', [ 'id' => $id,
                                                   'user' => $user,
                                                   'userImages' => $userImages]);

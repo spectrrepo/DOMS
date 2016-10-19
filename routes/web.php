@@ -27,7 +27,7 @@ Route::get('/profile/edit/user', array('as' => 'edit',
 Route::get('/profile/liked/photo', array('as' => 'liked',
                                          'uses' => 'UserController@likedIndex'));
 
-Route::get('/profile/{id}/your_photo',array('uses' => 'UserController@yourPhotoUpload'));
+Route::get('/profile/{id}/your_photo', array('uses' => 'UserController@yourPhotoUpload'));
 Route::post('/add_photo', 'PhotoController@add');
 Route::post('/comment', 'CommentController@add');
 Route::post('/like', 'LikeController@add');

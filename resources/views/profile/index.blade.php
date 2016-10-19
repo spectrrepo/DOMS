@@ -39,8 +39,8 @@
 <div class="wrap-personal-news">
     <div class="b-setting-switcher">
       <ul class="switcher">
-        <li class="item-swicher">Обновления</li>
-        <li class="item-swicher">Фотографии</li>
+        <li class="item-swicher"><a href="{{ URL::to('/profile/'.Auth::id()) }}">Обновления</a></li>
+        <li class="item-swicher"><a href="{{ URL::to('/profile/'.Auth::id().'/your_photo') }}">Фотографии</a></li>
       </ul>
     </div>
     <div class="b-personal-news">
