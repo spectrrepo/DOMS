@@ -4,38 +4,39 @@
     {{ Form::open( array('url' => '/update/profile') ) }}
       <div class="b-photo-person">
           <img src=" {{ $user->portret }} " alt="user_{{ $user->id }} " />
-          <input type="text" name="portret" value="{{ $user->portret }}">
+          <input type="file" name="portret" value="{{ $user->portret }}">
+          <div class="">
+            <span></span>
+          </div>
       </div>
       <div class="b-persobal-information">
-          <div class="b-name-person">
-            <input type="text" name="name" value="{{ $user->name }}">
-          </div>
-          <div class="b-role-person">
-            <input type="text" name="status" value="{{ $user->status }}">
-          </div>
-          <div class="b-contact-data">
-            <input type="text" name="sex" value="{{ $user->sex }}">
-
-            <div class="contact-item">
-                <span class="contact-item-name">email</span>
-                <input type="text" name="e_mail" value="{{ $user->e_mail }}">
+          <div class="b-common-person-information">
+            <input class="input-name-pers" type="text" name="name" value="{{ $user->name }}">
+            <div class="wrap-sex">
+              <div class="b-item-sex left-item-sex">
+                <input class="opacity-radio" type="radio" name="name" value="">
+                <div class="sex-name">Мужской</div>
+              </div>
+              <div class="b-item-sex right-item-sex">
+                <input class="opacity-radio" type="radio" name="name" value="">
+                <div class="sex-name">Женский</div>
+              </div>
             </div>
-            <div class="contact-item">
-                <span class="contact-item-name">skype</span>
-                <input type="text" name="skype" value="{{ $user->skype }}">
-            <div class="contact-item">
-                <span class="contact-item-name">телефон</span>
-                <span class="contact-item-value"> {{ $user->skype }} </span>
-                <input type="text" name="skype" value="{{ $user->phone }}">
-            </div>
-            <div class="contact-item">
-                <span class="contact-item-name">соц.сети</span>
-                <input type="text" name="soc_net" value="{{ $user->soc_net }}">
-            </div>
+            <textarea class="about-user-text" name="name"></textarea>
           </div>
+          <div class="b-spec-info">
+            <span class="contact-item-name">email</span>
+            <input class="contact-item-value" type="text" name="e_mail" value="{{ $user->e_mail }}">
+            <span class="contact-item-name">skype</span>
+            <input class="contact-item-value" type="text"type="text" name="skype" value="{{ $user->skype }}">
+            <span class="contact-item-name">телефон</span>
+            <input class="contact-item-value" type="text" name="phone" value="{{ $user->phone }}">
+            <span class="contact-item-name">соц.сети</span>
+            <input class="contact-item-value" type="text"type="text" name="soc_net" value="{{ $user->soc_net }}">
+          </div>
+          {{Form::submit('Сохранить', array('class' => 'save-info-user'))}}
       </div>
       {{ Form::close() }}
   </div>
 
-    {{Form::submit('save')}}
 @endsection

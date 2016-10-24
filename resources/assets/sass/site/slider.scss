@@ -2,8 +2,14 @@
 /*################################page whith slder##################################*/
 /*##################################################################################*/
 
-div.content div {
-  padding: auto;
+.uk-panel-box {
+  padding: 7px;
+}
+.clear {
+    clear: both;
+    padding: 0px;
+    margin: 0px;
+    height: 0px;
 }
 /*####photo-slider####*/
 .col-slider-comment{
@@ -122,18 +128,18 @@ div.content div {
   display: block;
   border-bottom: 1px solid #cccccc;
   margin-top: 29px;
-  margin-bottom: 17px;
   padding-bottom: 10px;
 }
 .b-all-comment{
   height: auto;
   width: 100%;
-  min-height: 70px;
 }
 .b-comment{
   width: 89%;
   float: left;
   padding-left: 1%;
+  margin-top: 7px;
+  margin-bottom: 6px;
 }
 .input-comment{
   display: block;
@@ -141,7 +147,7 @@ div.content div {
   border: 1px solid #cccccc;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  width: 96%;
+  width: 95%;
   padding: 3px;
   box-sizing: border-box;
 
@@ -149,9 +155,7 @@ div.content div {
 .b-add-comment{
   clear: both;
   height: 28px;
-  margin-top: 55px;
 }
-.text{}
 .submit-comment{
   display: block;
   float: left;
@@ -162,7 +166,8 @@ div.content div {
   cursor: pointer;
   border-left: none;
   height: 28px;
-  width: 3%;
+  width: 5%;
+  box-sizing: border-box;
 }
 .b-photo-comment{
   width: 10%;

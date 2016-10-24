@@ -44,6 +44,8 @@ ul {
     border-bottom-left-radius: 5px;
     display: block;
     float: left;
+    box-sizing: border-box;
+    padding-left: 10px;
 }
 .sidebar {
     width: 97%;
@@ -174,10 +176,6 @@ ul.b-popup-item-list li {
 /*########################part site , in which photo##########################*/
 
 /*#######################main page , where all photo##########################*/
-.content {
-    width: 80%;
-    float: right;
-}
 .b-next-page {
     position: absolute;
     bottom: 0;
@@ -205,9 +203,10 @@ ul.b-popup-item-list li {
     border-radius: 5px;
 }
 .content {
-    width: 75%;
+    width: 78%;
     padding-bottom: 40px;
-    margin-right: 35px;
+    margin-right: 1%;
+    float: right;
 }
 div.content div div img {
     width: 100%;

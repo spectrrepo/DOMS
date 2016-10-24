@@ -10,17 +10,18 @@
             <div class="wrap-main-dwnld-photo" title="Добавить изображение">
                 <span class="add-photo-ico uk-icon-justify uk-icon-camera"></span>
                 <span class="add-photo-text">Добавить изображение</span>
-                <!-- <input class="dwnld-file-input" type="file" name="name" value=""> -->
-                <?= Form::file('photo') ?>
+                <?= Form::file('photo', array('class' => 'dwnld-file-input' )) ?>
             </div>
             <textarea class="input-descreption"type="text" name="description" placeholder="Описание"></textarea>
             <div class="title-choose-color">Укажи основные цвета</div>
             <div class="color-place">
                 @foreach ( $colors as $color)
-                    <div class="wrap-color-input" id="color_{{ $color->title }}">
-                        <input class="color-photo-choose" type="radio" name="color" value="{{ $color->id }}">
+                    <div class="wrap-color-input">
+                      <input class="color-photo-choose" type="radio" name="color" value="{{ $color->id }}" />
+                      <div class="b-color-input" id="color_{{ $color->title }}"></div>
                     </div>
                 @endforeach
+                <div class="clear"></div>
             </div>
             <div class="wrap-dwnld-photo">
                 <span class="add-photo-ico racurs-margin-ico uk-icon-justify uk-icon-camera"></span>
@@ -32,11 +33,10 @@
               <input class="input-tag-name" type="text" name="name" placeholder="Введите тег">
               <button class="btn-add-tag uk-icon-justify uk-icon-plus" type="button" name="button"></button>
             </div>
-            <?= Form::submit('save', array('class' => 'btn-dwld')) ?>
-            <!-- <button class="btn-dwnld" type="submit" name="button">
+            <button class="btn-dwnld" type="submit" name="button">
               <span class="save-text">Сохранить изменения</span>
               <span class="save-ico uk-icon-justify uk-icon-save"></span>
-            </button> -->
+            </button>
         </div>
     </div>
     <div class="small-col">
@@ -45,8 +45,12 @@
       </div>
       <div class="tags-list">
         @foreach ( $styles as $style )
-          <span class="tags-list-item">{{ $style->title }}</span>
-          <input type="radio" name="style" value=" {{ $style->id }} ">
+          <div class="wrap-tags-list-item">
+            <input class="opacity-radio" type="radio" name="style" value=" {{ $style->id }} ">
+            <div class="tags-list-item">
+              {{ $style->title }}
+            </div>
+          </div>
         @endforeach
       </div>
     </div>
@@ -56,8 +60,12 @@
       </div>
       <div class="tags-list">
         @foreach ( $rooms as $room )
-          <span class="tags-list-item">{{ $room->title }}</span>
-          <input type="radio" name="room" value=" {{ $room->id }} ">
+        <div class="wrap-tags-list-item">
+          <input class="opacity-radio" type="radio" name="style" value=" {{ $room->id }} ">
+          <div class="tags-list-item">
+            {{ $room->title }}
+          </div>
+        </div>
         @endforeach
       </div>
     </div>

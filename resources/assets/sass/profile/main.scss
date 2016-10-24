@@ -15,9 +15,13 @@
 }*/
 
 /*#############block with personal informstion and photo###################*/
-
+.liked-title {
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+    padding-bottom: 10px;
+}
 .wrap-personal-information {
-    width: 60%;
+    width: 73%;
     clear: both;
     height: 160px;
 }
@@ -29,6 +33,7 @@
     height: 100%;
     background: green;
     height: 160px;
+    box-sizing: border-box;
 }
 .b-persobal-information {
     width: 76%;
@@ -37,24 +42,28 @@
     height: 100%;
     border-radius: 5px;
     border: 1px solid #E5E5E5;
+    box-sizing: border-box;
 }
 .b-name-person {
     width: 33%;
     float: left;
     height: 100%;
     text-align: center;
+    box-sizing: border-box;
 }
 .b-role-person {
     width: 33%;
     float: left;
     height: 100%;
     text-align: center;
+    box-sizing: border-box;
 }
 .b-contact-data {
     width: 33%;
     float: left;
     height: 100%;
     text-align: center;
+    box-sizing: border-box;
 }
 .contact-item {
     width: 100%;
@@ -63,11 +72,13 @@
     display: block;
     float: left;
     width: 50%;
+    box-sizing: border-box;
 }
 .contact-item-value {
     display: block;
     float: left;
     width: 50%;
+    box-sizing: border-box;
 }
 .separate-title {
     width: 60%;
@@ -78,8 +89,9 @@
 /*########################block with news tape#############################*/
 
 .wrap-personal-news {
-    width: 60%;
+    width: 73.5%;
     height: auto;
+    box-sizing: border-box;
 }
 .b-personal-news {
     border: 1px solid #e5e5e5;
@@ -128,6 +140,7 @@
     width: 14%;
     height: 100px;
     margin-top: 1%;
+    box-sizing: border-box;
 }
 .b-portret-blogger {
     width: 90%;
@@ -144,6 +157,7 @@
     width: 84%;
     margin-left: 1%;
     margin-top: 1%;
+    box-sizing: border-box;
 }
 .b-name-redactor {
     color: green;
@@ -170,6 +184,8 @@
     padding: 10px;
     width: 100%;
     height: 25px;
+    box-sizing: border-box;
+    padding-bottom: 0px;
 }
 .b-date {
     float: left;

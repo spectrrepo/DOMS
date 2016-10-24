@@ -6314,9 +6314,6 @@ body {
 img {
   width: 100%; }
 
-.clear {
-  clear: both; }
-
 /*############################################################################*/
 /*###########################start and main page##############################*/
 /*############################################################################*/
@@ -6332,12 +6329,26 @@ header, footer {
   clear: both;
   position: absolute;
   bottom: 0;
-  left: 0; }
+  left: 0;
+  font: 400 14px/20px "Helvetica Neue",Helvetica,Arial,sans-serif; }
 
 header {
   position: fixed;
   top: 0;
   z-index: 1000000000; }
+
+header a {
+  color: white; }
+
+nav ul li a {
+  color: #333333;
+  width: 100%;
+  height: 100%;
+  display: block; }
+
+nav ul li a:hover {
+  color: white;
+  text-decoration: none; }
 
 .logo {
   margin-left: 50px;
@@ -6346,6 +6357,9 @@ header {
   width: 20%;
   float: left;
   cursor: pointer; }
+
+.logo img {
+  width: auto; }
 
 .control {
   width: 66.666%;
@@ -6484,7 +6498,19 @@ html {
 
 .color-place {
   width: 100%;
-  height: 210px; }
+  height: auto; }
+
+.b-color-input {
+  background: green;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  width: 100%;
+  height: 100%;
+  top: 0; }
+
+.b-color-input:hover {
+  border: 5px solid #666666;
+  box-sizing: border-box; }
 
 .wrap-color-input {
   width: 23%;
@@ -6494,13 +6520,19 @@ html {
   margin-bottom: 10px;
   border-radius: 5px;
   cursor: pointer;
-  background: green; }
+  position: relative; }
+
+.wrap-color-input input:checked + div {
+  border: 5px solid #666666;
+  box-sizing: border-box; }
 
 .color-photo-choose {
   width: 100%;
   height: 100%;
   opacity: 0;
-  cursor: pointer; }
+  cursor: pointer;
+  position: absolute;
+  z-index: 100; }
 
 .wrap-dwnld-photo {
   height: 140px;
@@ -6543,7 +6575,7 @@ html {
   line-height: 30px; }
 
 .input-tag-name {
-  height: 88%;
+  height: 99%;
   width: 85%;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -6577,7 +6609,8 @@ html {
   border: none;
   display: block;
   -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease; }
+  transition: all 0.3s ease;
+  font: 400 14px/20px "Helvetica Neue",Helvetica,Arial,sans-serif; }
 
 .btn-dwnld:hover {
   background: #666666; }
@@ -6587,7 +6620,8 @@ html {
   width: 10%;
   height: 200px;
   float: left;
-  margin-left: 1%; }
+  margin-left: 1%;
+  box-sizing: border-box; }
 
 .title-tag-list {
   margin-top: 10px; }
@@ -6597,7 +6631,12 @@ html {
   height: auto;
   border: 1px solid #dddddd;
   border-radius: 5px;
-  padding: 7px; }
+  padding: 7px;
+  box-sizing: border-box; }
+
+.wrap-tags-list-item {
+  position: relative;
+  cursor: pointer; }
 
 .tags-list-item {
   text-decoration: none;
@@ -6610,13 +6649,30 @@ html {
   padding-left: 16px;
   padding-right: 10px;
   line-height: 29px;
-  margin: 5px auto 0px;
-  width: 60%;
-  height: 30px; }
+  width: 100%;
+  height: 30px;
+  box-sizing: border-box;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  font-size: 12px; }
 
-.tags-list-item:hover {
+.wrap-tags-list-item input:checked + div {
   background: #333333;
   color: white; }
+
+.wrap-tags-list-item:hover .tags-list-item {
+  background: #333333;
+  color: white; }
+
+.opacity-radio {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  z-index: 100;
+  cursor: pointer; }
 
 .racurs-margin-ico {
   margin-top: 40px; }
@@ -6633,8 +6689,13 @@ html {
     padding: 0;
 }*/
 /*#############block with personal informstion and photo###################*/
+.liked-title {
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+  padding-bottom: 10px; }
+
 .wrap-personal-information {
-  width: 60%;
+  width: 73%;
   clear: both;
   height: 160px; }
 
@@ -6645,7 +6706,8 @@ html {
   float: left;
   height: 100%;
   background: green;
-  height: 160px; }
+  height: 160px;
+  box-sizing: border-box; }
 
 .b-persobal-information {
   width: 76%;
@@ -6653,25 +6715,29 @@ html {
   margin-left: 3.5%;
   height: 100%;
   border-radius: 5px;
-  border: 1px solid #E5E5E5; }
+  border: 1px solid #E5E5E5;
+  box-sizing: border-box; }
 
 .b-name-person {
   width: 33%;
   float: left;
   height: 100%;
-  text-align: center; }
+  text-align: center;
+  box-sizing: border-box; }
 
 .b-role-person {
   width: 33%;
   float: left;
   height: 100%;
-  text-align: center; }
+  text-align: center;
+  box-sizing: border-box; }
 
 .b-contact-data {
   width: 33%;
   float: left;
   height: 100%;
-  text-align: center; }
+  text-align: center;
+  box-sizing: border-box; }
 
 .contact-item {
   width: 100%; }
@@ -6679,12 +6745,14 @@ html {
 .contact-item-name {
   display: block;
   float: left;
-  width: 50%; }
+  width: 50%;
+  box-sizing: border-box; }
 
 .contact-item-value {
   display: block;
   float: left;
-  width: 50%; }
+  width: 50%;
+  box-sizing: border-box; }
 
 .separate-title {
   width: 60%;
@@ -6693,8 +6761,9 @@ html {
 
 /*########################block with news tape#############################*/
 .wrap-personal-news {
-  width: 60%;
-  height: auto; }
+  width: 73.5%;
+  height: auto;
+  box-sizing: border-box; }
 
 .b-personal-news {
   border: 1px solid #e5e5e5;
@@ -6742,7 +6811,8 @@ html {
   float: left;
   width: 14%;
   height: 100px;
-  margin-top: 1%; }
+  margin-top: 1%;
+  box-sizing: border-box; }
 
 .b-portret-blogger {
   width: 90%;
@@ -6758,7 +6828,8 @@ html {
   height: auto;
   width: 84%;
   margin-left: 1%;
-  margin-top: 1%; }
+  margin-top: 1%;
+  box-sizing: border-box; }
 
 .b-name-redactor {
   color: green;
@@ -6784,7 +6855,9 @@ html {
   margin-top: 50px;
   padding: 10px;
   width: 100%;
-  height: 25px; }
+  height: 25px;
+  box-sizing: border-box;
+  padding-bottom: 0px; }
 
 .b-date {
   float: left;
@@ -6900,7 +6973,9 @@ ul {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   display: block;
-  float: left; }
+  float: left;
+  box-sizing: border-box;
+  padding-left: 10px; }
 
 .sidebar {
   width: 97%; }
@@ -7028,10 +7103,6 @@ ul.b-popup-item-list li {
 /*############################################################################*/
 /*########################part site , in which photo##########################*/
 /*#######################main page , where all photo##########################*/
-.content {
-  width: 80%;
-  float: right; }
-
 .b-next-page {
   position: absolute;
   bottom: 0;
@@ -7059,9 +7130,10 @@ ul.b-popup-item-list li {
   border-radius: 5px; }
 
 .content {
-  width: 75%;
+  width: 78%;
   padding-bottom: 40px;
-  margin-right: 35px; }
+  margin-right: 1%;
+  float: right; }
 
 div.content div div img {
   width: 100%;
@@ -7085,8 +7157,14 @@ div.content div div img {
 /*##################################################################################*/
 /*################################page whith slder##################################*/
 /*##################################################################################*/
-div.content div {
-  padding: auto; }
+.uk-panel-box {
+  padding: 7px; }
+
+.clear {
+  clear: both;
+  padding: 0px;
+  margin: 0px;
+  height: 0px; }
 
 /*####photo-slider####*/
 .col-slider-comment {
@@ -7205,18 +7283,18 @@ div.content div {
   display: block;
   border-bottom: 1px solid #cccccc;
   margin-top: 29px;
-  margin-bottom: 17px;
   padding-bottom: 10px; }
 
 .b-all-comment {
   height: auto;
-  width: 100%;
-  min-height: 70px; }
+  width: 100%; }
 
 .b-comment {
   width: 89%;
   float: left;
-  padding-left: 1%; }
+  padding-left: 1%;
+  margin-top: 7px;
+  margin-bottom: 6px; }
 
 .input-comment {
   display: block;
@@ -7224,14 +7302,13 @@ div.content div {
   border: 1px solid #cccccc;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  width: 96%;
+  width: 95%;
   padding: 3px;
   box-sizing: border-box; }
 
 .b-add-comment {
   clear: both;
-  height: 28px;
-  margin-top: 55px; }
+  height: 28px; }
 
 .submit-comment {
   display: block;
@@ -7243,7 +7320,8 @@ div.content div {
   cursor: pointer;
   border-left: none;
   height: 28px;
-  width: 3%; }
+  width: 5%;
+  box-sizing: border-box; }
 
 .b-photo-comment {
   width: 10%;
@@ -7289,5 +7367,94 @@ div.content div {
   color: white; }
 
 /*##view photo###*/
+.b-common-person-information {
+  width: 70%;
+  float: left;
+  box-sizing: border-box;
+  padding: 10px;
+  padding-left: 18px;
+  padding-right: 40px; }
+
+.input-name-pers {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  display: block;
+  box-sizing: border-box;
+  padding: 5px;
+  background: white;
+  float: left;
+  width: 50%; }
+
+.wrap-sex {
+  float: left;
+  width: 30%;
+  height: 32px;
+  margin-left: 35px; }
+
+.b-item-sex {
+  float: left;
+  position: relative;
+  width: 50%;
+  height: 100%;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  cursor: pointer; }
+
+.left-item-sex {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px; }
+
+.right-item-sex {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-left: none; }
+
+.about-user-text {
+  resize: none;
+  width: 100%;
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 5px;
+  height: 120px;
+  margin-top: 10px; }
+
+.b-spec-info {
+  float: left;
+  width: 25%;
+  box-sizing: border-box;
+  padding-right: 20px;
+  padding-top: 10px; }
+
+.sex-name {
+  height: 100%;
+  width: 100%;
+  line-height: 30px;
+  box-sizing: border-box;
+  padding-left: 10px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease; }
+
+.b-item-sex:hover .sex-name {
+  background: #EDEDED;
+  color: #666; }
+
+.b-item-sex input:checked + div {
+  background: #666666;
+  color: white; }
+
+.save-info-user {
+  border: 1px solid #cccccc;
+  background-color: #666666;
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 15px;
+  border-radius: 5px;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  float: right;
+  margin-top: 24px;
+  width: 100px;
+  height: 25px;
+  cursor: pointer; }
 
 /*# sourceMappingURL=app.css.map */

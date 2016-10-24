@@ -56,9 +56,20 @@
 }
 .color-place{
   width: 100%;
-  height: 210px;
+  height: auto;
 }
-.wrap-color-input{
+.b-color-input{
+  background: green;
+  transition: all 0.3s ease;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+.b-color-input:hover {
+  border: 5px solid #666666;
+  box-sizing: border-box;
+}
+.wrap-color-input {
   width: 23%;
   height: 40px;
   float: left;
@@ -66,13 +77,19 @@
   margin-bottom: 10px;
   border-radius: 5px;
   cursor: pointer;
-  background: green;
+  position: relative;
+}
+.wrap-color-input input:checked + div {
+  border: 5px solid #666666;
+  box-sizing: border-box;
 }
 .color-photo-choose{
   width: 100%;
   height: 100%;
   opacity: 0;
   cursor: pointer;
+  position: absolute;
+  z-index: 100;
 }
 .wrap-dwnld-photo{
   height: 140px;
@@ -116,7 +133,7 @@
   line-height: 30px;
 }
 .input-tag-name{
-  height: 88%;
+  height: 99%;
   width:85%;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -150,18 +167,18 @@
   border: none;
   display: block;
   transition: all 0.3s ease;
+  font: 400 14px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 .btn-dwnld:hover{
   background: #666666;
 }
-.save-text{}
-.save-ico{}
 /*###################tags columns whith kategory image########################*/
 .small-col{
   width: 10%;
   height: 200px;
   float: left;
   margin-left: 1%;
+  box-sizing: border-box;
 }
 .title-tag-list{
   margin-top: 10px;
@@ -172,6 +189,11 @@
   border: 1px solid #dddddd;
   border-radius: 5px;
   padding: 7px;
+  box-sizing: border-box;
+}
+.wrap-tags-list-item {
+  position: relative;
+  cursor: pointer;
 }
 .tags-list-item{
   text-decoration: none;
@@ -183,13 +205,30 @@
   padding-left: 16px;
   padding-right: 10px;
   line-height: 29px;
-  margin: 5px auto 0px;
-  width: 60%;
+  width: 100%;
   height: 30px;
+  box-sizing: border-box;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  font-size: 12px;
 }
-.tags-list-item:hover{
+.wrap-tags-list-item input:checked + div {
   background: #333333;
   color: white;
+}
+.wrap-tags-list-item:hover .tags-list-item{
+  background: #333333;
+  color: white;
+}
+.opacity-radio {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  z-index: 100;
+  cursor:pointer;
 }
 .racurs-margin-ico{
   margin-top: 40px;
