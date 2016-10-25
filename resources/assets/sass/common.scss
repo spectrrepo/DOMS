@@ -46,6 +46,10 @@ header {
 header a {
     color: white;
 }
+header a:hover {
+    color: white;
+    text-decoration: none;
+}
 nav ul li a {
     color: #333333;
     width: 100%;

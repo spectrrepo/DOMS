@@ -142,12 +142,22 @@
 
                 @endforeach
               </div>
+              <div class="clear"></div>
+              <div class="title-tag">
+               Ракурсы
+              </div>
               <div class="view-photo-slide">
+                <div class="b-change-photo">
                 @foreach ( $views as $view )
 
                     <img src=" {{ $view->id }} " alt=" {{ $view->date }} " />
 
                 @endforeach
+                </div>
+                <div class="nav-slider">
+                    <span class="slider-nav-prev uk-icon-justify uk-icon-angle-left"></span>
+                    <span class="slider-nav-next uk-icon-justify uk-icon-angle-right"></span>
+                </div>
               </div>
             </div>
           </div>

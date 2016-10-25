@@ -36,6 +36,20 @@
   margin: 0px auto;
   width: 400px;
   background: rgb(144, 112, 139);
+  height: 100%;
+  width: auto;
+  margin: 0px auto;
+  width: 400px;
+  background: #90708b;
+  position: relative;
+  vertical-align: middle;
+  display: inline-block;
+}
+.photo-item:before{
+  content: '';
+  height: 100%;
+  vertical-align: middle;
+  display: inline-block;
 }
 .control-slide{
   height: auto;
@@ -214,4 +228,29 @@
   color:white;
 }
   /*##view photo###*/
-.view-photo-slide{}
+.view-photo-slide{
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+.b-change-photo {
+  width: 80%;
+  height: auto;
+  margin: 0 auto;
+  text-align: center;
+}
+.nav-slider {
+  font-size: 48px;
+  text-shadow: 1px 1px 2px black, 0 0 1em black;
+  color: white;
+}
+.slider-nav-prev,
+.slider-nav-next {
+  cursor: pointer;
+}
+.slider-nav-next {
+  right: 0;
+  position: absolute;
+}

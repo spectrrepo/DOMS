@@ -176,21 +176,6 @@ ul.b-popup-item-list li {
 /*########################part site , in which photo##########################*/
 
 /*#######################main page , where all photo##########################*/
-.b-next-page {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 16px;
-    line-height: 40px;
-    color: #ffffff;
-    background-color: #333333;
-    opacity: .7;
-    padding: 30px;
-    cursor: pointer;
-}
 .wrap-content {
     padding-left: 35px;
 }
@@ -207,6 +192,7 @@ ul.b-popup-item-list li {
     padding-bottom: 40px;
     margin-right: 1%;
     float: right;
+    position: relative;
 }
 div.content div div img {
     width: 100%;
@@ -214,11 +200,9 @@ div.content div div img {
 }
 .b-next-page {
     position: absolute;
-    bottom: 0;
+    bottom: 110px;
     left: 0;
     right: 0;
-    height: 100px;
-    line-height: 90px;
     text-align: center;
     text-transform: uppercase;
     font-size: 16px;
@@ -226,4 +210,5 @@ div.content div div img {
     opacity: .7;
     padding: 30px;
     cursor: pointer;
+    background: rgba(0,0,0,1);
 }

@@ -1,10 +1,16 @@
-//  common
+// ====================================================== //
+// ==================== common popups =================== //
+// ====================================================== //
+
+// ======================= common ======================= //
 .overlay {}
 .modal {}
 .close {}
-// about
 
-// feedback
+// ======================== about ======================= //
+
+
+// ======================= feedback ===================== //
 .title-link {}
 .b-soc-set-round {}
 .round-fb {}
@@ -14,14 +20,16 @@
 .right {}
 .textarea-feedback {}
 .feedback-submit {}
-// forget password
 
-// login
+// ===================== forget password ================ //
+
+// ========================== login ===================== //
 .title {}
 .b-soc-log {}
 .fb {}
 .vk {}
-// registration
+
+// ====================== registration ================== //
 .title-reg {}
 .b-soc-net-login {}
 .title-text {}
@@ -42,3 +50,94 @@
 .b-img {}
 .name-status {}
 .description-status {}
+
+// ====================================================== //
+// =================== sidebar popups =================== //
+// ====================================================== //
+
+
+// ======================= common ======================= //
+.sidebar-modal{
+  height: auto;
+  width: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  z-index: 1000;
+  left: 20%;
+}
+.close{
+  position: absolute;
+  top: 0;
+  right: 0px;
+  display: block;
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  font-size: 17px;
+}
+.white-close{
+  color: white;
+}
+.choose-ico{
+  color: rgba(119, 246, 0, 0.2);
+  font-size: 20px;
+  float: left;
+  opacity: 0;
+  transition: 0.3s ease all;
+}
+.item-moodal-sidebar{
+  list-style: none;
+}
+.item-moodal-sidebar:hover > .choose-ico {
+  opacity: 1;
+}
+
+// ======================= style ======================== //
+.styles-modal{
+  width: 60%
+}
+.styles-space{
+  width: 80%;
+}
+.item-styles {
+  width: 50%;
+}
+.item-modal-text{
+  color: white;
+  padding: 4px;
+  padding-left: 7px;
+  padding-right: 7px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  float: left;
+}
+.item-modal-text:hover {
+  background: rgba(129, 126, 126, 0.7);
+}
+.b-preview-style{
+  width: 20%;
+}
+.style-description{}
+
+// ======================== colors ====================== //
+.colors-space{}
+.colors-space-item{
+  height: 35px;
+  width: 35px;
+  margin: 3%;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.colors-space-item:hover {
+  -webkit-box-shadow: 0px 0px 14px 3px rgba(255,255,255,1);
+  -moz-box-shadow: 0px 0px 14px 3px rgba(255,255,255,1);
+  box-shadow: 0px 0px 14px 3px rgba(255,255,255,1);
+}
+.colors-space-item:hover > .choose-ico {
+  opacity: 1;
+}

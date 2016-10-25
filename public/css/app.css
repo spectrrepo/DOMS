@@ -6340,6 +6340,10 @@ header {
 header a {
   color: white; }
 
+header a:hover {
+  color: white;
+  text-decoration: none; }
+
 nav ul li a {
   color: #333333;
   width: 100%;
@@ -7103,21 +7107,6 @@ ul.b-popup-item-list li {
 /*############################################################################*/
 /*########################part site , in which photo##########################*/
 /*#######################main page , where all photo##########################*/
-.b-next-page {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 16px;
-  line-height: 40px;
-  color: #ffffff;
-  background-color: #333333;
-  opacity: .7;
-  padding: 30px;
-  cursor: pointer; }
-
 .wrap-content {
   padding-left: 35px; }
 
@@ -7133,7 +7122,8 @@ ul.b-popup-item-list li {
   width: 78%;
   padding-bottom: 40px;
   margin-right: 1%;
-  float: right; }
+  float: right;
+  position: relative; }
 
 div.content div div img {
   width: 100%;
@@ -7141,18 +7131,17 @@ div.content div div img {
 
 .b-next-page {
   position: absolute;
-  bottom: 0;
+  bottom: 110px;
   left: 0;
   right: 0;
-  height: 100px;
-  line-height: 90px;
   text-align: center;
   text-transform: uppercase;
   font-size: 16px;
   color: #ffffff;
   opacity: .7;
   padding: 30px;
-  cursor: pointer; }
+  cursor: pointer;
+  background: black; }
 
 /*##################################################################################*/
 /*################################page whith slder##################################*/
@@ -7190,7 +7179,21 @@ div.content div div img {
   width: auto;
   margin: 0px auto;
   width: 400px;
-  background: #90708b; }
+  background: #90708b;
+  height: 100%;
+  width: auto;
+  margin: 0px auto;
+  width: 400px;
+  background: #90708b;
+  position: relative;
+  vertical-align: middle;
+  display: inline-block; }
+
+.photo-item:before {
+  content: '';
+  height: 100%;
+  vertical-align: middle;
+  display: inline-block; }
 
 .control-slide {
   height: auto;
@@ -7367,6 +7370,32 @@ div.content div div img {
   color: white; }
 
 /*##view photo###*/
+.view-photo-slide {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  border-radius: 5px; }
+
+.b-change-photo {
+  width: 80%;
+  height: auto;
+  margin: 0 auto;
+  text-align: center; }
+
+.nav-slider {
+  font-size: 48px;
+  text-shadow: 1px 1px 2px black, 0 0 1em black;
+  color: white; }
+
+.slider-nav-prev,
+.slider-nav-next {
+  cursor: pointer; }
+
+.slider-nav-next {
+  right: 0;
+  position: absolute; }
+
 .b-common-person-information {
   width: 70%;
   float: left;
@@ -7456,5 +7485,83 @@ div.content div div img {
   width: 100px;
   height: 25px;
   cursor: pointer; }
+
+.sidebar-modal {
+  height: auto;
+  width: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  z-index: 1000;
+  left: 20%; }
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  display: block;
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  font-size: 17px; }
+
+.white-close {
+  color: white; }
+
+.choose-ico {
+  color: rgba(119, 246, 0, 0.2);
+  font-size: 20px;
+  float: left;
+  opacity: 0;
+  -webkit-transition: 0.3s ease all;
+  transition: 0.3s ease all; }
+
+.item-moodal-sidebar {
+  list-style: none; }
+
+.item-moodal-sidebar:hover > .choose-ico {
+  opacity: 1; }
+
+.styles-modal {
+  width: 60%; }
+
+.styles-space {
+  width: 80%; }
+
+.item-styles {
+  width: 50%; }
+
+.item-modal-text {
+  color: white;
+  padding: 4px;
+  padding-left: 7px;
+  padding-right: 7px;
+  text-align: left;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  float: left; }
+
+.item-modal-text:hover {
+  background: rgba(129, 126, 126, 0.7); }
+
+.b-preview-style {
+  width: 20%; }
+
+.colors-space-item {
+  height: 35px;
+  width: 35px;
+  margin: 3%;
+  box-sizing: border-box;
+  cursor: pointer; }
+
+.colors-space-item:hover {
+  box-shadow: 0px 0px 14px 3px white; }
+
+.colors-space-item:hover > .choose-ico {
+  opacity: 1; }
 
 /*# sourceMappingURL=app.css.map */
