@@ -10,4 +10,6 @@
           </div>
       </a>
     @endforeach
+    <div class="clear"></div>
+  </div>
 @endsection

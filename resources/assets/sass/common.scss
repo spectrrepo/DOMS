@@ -131,13 +131,14 @@ nav ul li a:hover {
     margin-right: 35px;
 }
 footer {
-    position: static;
+    position: absolute;
 }
 body {
     height: 100%;
 }
 html {
     min-height: 100%;
+    height: auto;
     position: relative;
 }
 .about {

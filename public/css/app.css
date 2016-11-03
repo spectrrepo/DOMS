@@ -6428,13 +6428,14 @@ nav ul li a:hover {
   margin-right: 35px; }
 
 footer {
-  position: static; }
+  position: absolute; }
 
 body {
   height: 100%; }
 
 html {
   min-height: 100%;
+  height: auto;
   position: relative; }
 
 .about {
@@ -7125,10 +7126,6 @@ ul.b-popup-item-list li {
   float: right;
   position: relative; }
 
-div.content div div img {
-  width: 100%;
-  height: auto; }
-
 .b-next-page {
   position: absolute;
   bottom: 110px;
@@ -7172,18 +7169,20 @@ div.content div div img {
 
 .b-photo-slider {
   height: 500px;
-  background: #F5F5F5; }
+  background: #F5F5F5;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  overflow: hidden; }
 
 .photo-item {
   height: 100%;
   width: auto;
   margin: 0px auto;
-  width: 400px;
   background: #90708b;
   height: 100%;
   width: auto;
   margin: 0px auto;
-  width: 400px;
   background: #90708b;
   position: relative;
   vertical-align: middle;
@@ -7194,6 +7193,15 @@ div.content div div img {
   height: 100%;
   vertical-align: middle;
   display: inline-block; }
+
+.img-slider {
+  max-height: 100%;
+  vertical-align: middle;
+  display: inline-block;
+  max-width: 100%;
+  font-size: 1rem;
+  box-sizing: border-box;
+  height: auto; }
 
 .control-slide {
   height: auto;
