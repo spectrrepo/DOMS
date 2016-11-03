@@ -12,10 +12,10 @@
       <input type="text" name="phone" value="">
       <input type="text" name="password" value="">
       <h3>Choose your status</h3>
-      <input type="radio" name="status" value="">
-      <input type="radio" name="status" value="">
-      <input type="radio" name="status" value="">
-      <input type="radio" name="status" value="">
+      <input type="radio" name="status" value="1">
+      <input type="radio" name="status" value="3">
+      <input type="radio" name="status" value="2">
+      <input type="radio" name="status" value="6">
       <input type="submit">
     {{ Form::close()}}
     <a href="/login">Ввойти?</a>

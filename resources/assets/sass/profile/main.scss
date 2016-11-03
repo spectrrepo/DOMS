@@ -31,9 +31,27 @@
     border-radius: 5px;
     float: left;
     height: 100%;
-    background: green;
+    background: #F4F4F4;
     height: 160px;
     box-sizing: border-box;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+}
+.b-photo-person input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+.b-photo-person img {
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
 }
 .b-persobal-information {
     width: 76%;
@@ -47,16 +65,26 @@
 .b-name-person {
     width: 33%;
     float: left;
-    height: 100%;
-    text-align: center;
+    text-align: left;
+    padding: 10px;
     box-sizing: border-box;
+    height: 41px;
 }
 .b-role-person {
+    text-align: left;
+    padding: 10px;
     width: 33%;
     float: left;
-    height: 100%;
-    text-align: center;
+    height: 41px;
     box-sizing: border-box;
+}
+.b-about-person {
+    width: 66%;
+    height: 119px;
+    float: left;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: left;
 }
 .b-contact-data {
     width: 33%;
@@ -64,6 +92,9 @@
     height: 100%;
     text-align: center;
     box-sizing: border-box;
+    padding: 10px;
+    margin-top: -41px;
+    text-align: left;
 }
 .contact-item {
     width: 100%;
@@ -99,29 +130,41 @@
     border-radius: 5px;
     border: 1px solid #e5e5e5;
     margin-bottom: 20px;
+    padding-bottom: 13px;
 }
 .b-setting-switcher {
     width: 100%;
-    height: 19px;
+    height: auto;
 }
 .switcher {
     margin-left: -28px;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 .item-swicher {
     display: block;
     float: left;
-    width: 90px;
+    width: auto;
     height: 100%;
     color: black;
     cursor: pointer;
     margin-left: 1px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    box-sizing: border-box;
+    padding: 5px;
 }
-.item-swicher:active {
+.item-swicher a {
+    color: #666666;
+}
+.item-swicher:hover a{
+    color: white;
+    text-decoration: none;
+}
+.item-switcher-active,
+.item-swicher:hover {
     display: block;
     float: left;
-    width: 90px;
     height: 100%;
     color: white;
     cursor: pointer;
@@ -129,6 +172,9 @@
     background: grey;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+}
+.item-switcher-active a {
+    color: white;
 }
 .b-person-post {
     width: 100%;
@@ -143,8 +189,8 @@
     box-sizing: border-box;
 }
 .b-portret-blogger {
-    width: 90%;
-    height: 90%;
+    width: 90px;
+    height: 85px;
     margin: 0 auto;
     text-align: center;
     background: #cadede;
@@ -247,7 +293,7 @@
 .btn-dwnld-new {
     text-align: center;
     clear: both;
-    width: 60%;
+    width: 73.5%;
     height: 50px;
     color: white;
     line-height: 50px;

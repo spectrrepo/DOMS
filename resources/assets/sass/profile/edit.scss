@@ -16,13 +16,31 @@
   float: left;
   width: 50%;
 }
+.hover-effect-person {
+  text-align: center;
+  font-size: 26px;
+  color: white;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  transition: all ease 0.3s;
+  top: 0;
+  left: 0;
+  line-height: 150px;
+  background: rgba(0, 0, 0, 0.4);
+}
+.b-photo-person:hover > div.hover-effect-person {
+  opacity: 1;
+}
 .wrap-sex {
   float: left;
-  width: 30%;
+  width: 33%;
   height: 32px;
   margin-left: 35px;
 }
 .b-item-sex {
+  text-align: center;
   float: left;
   position: relative;
   width: 50%;
@@ -46,12 +64,12 @@
   border: 1px solid #ccc;
   background: white;
   border-radius: 5px;
-  height: 120px;
+  height: 92px;
   margin-top: 10px;
 }
 .b-spec-info {
   float: left;
-  width: 25%;
+  width: 30%;
   box-sizing: border-box;
   padding-right: 20px;
   padding-top: 10px;
@@ -63,6 +81,7 @@
   box-sizing: border-box;
   padding-left: 10px;
   transition: all 0.3s ease;
+  font-size: 13px;
 }
 .b-item-sex:hover .sex-name {
   background: #EDEDED;
@@ -87,8 +106,29 @@
   -o-transition: all 0.4s ease;
   transition: all 0.4s ease;
   float: right;
-  margin-top: 24px;
   width: 100px;
   height: 25px;
   cursor: pointer;
+  margin-top: 10px;
+  margin-right: 38px;
+}
+.edit-line-profile {
+  border-bottom: 1px solid #E5E5E5;
+  padding-bottom: 15px;
+}
+.edit-personal-info {
+  height: 160px;
+}
+.edit-name-item {
+  width: 36%;
+  line-height: 25px;
+}
+.edit-value-item {
+  width: 64%;
+  height: 25px;
+  background: white;
+  border: 1px solid #D8D7D7;
+  margin-bottom: 2px;
+  border-radius: 5px;
+  padding: 3px;
 }

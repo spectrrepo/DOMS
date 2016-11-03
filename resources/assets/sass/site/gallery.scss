@@ -191,12 +191,16 @@ ul.b-popup-item-list li {
     width: 78%;
     padding-bottom: 40px;
     margin-right: 1%;
+    margin-bottom: 40px;
     float: right;
     position: relative;
 }
+.content-your-photo {
+    width:100%;
+}
 .b-next-page {
     position: absolute;
-    bottom: 110px;
+    bottom: 45px;
     left: 0;
     right: 0;
     text-align: center;

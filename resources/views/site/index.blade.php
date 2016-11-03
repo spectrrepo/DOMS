@@ -1,6 +1,5 @@
 @extends('layouts.site')
 @section('site-content')
-@include('popups.sidebar.sort')
 <div class="content">
   <div class="uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights" data-uk-grid>
 
@@ -14,7 +13,7 @@
     <div class="clear"></div>
   </div>
   <div class="b-next-page">
-    Next page
+    Следущая страница
   </div>
   {!! $images->render() !!}
 </div>

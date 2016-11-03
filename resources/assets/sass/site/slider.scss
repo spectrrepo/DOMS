@@ -27,29 +27,19 @@
   padding: 7px;
 }
 .b-photo-slider{
-  height: 500px;
-  background:#F5F5F5;
+  height: auto;
   margin: 0;
   padding: 0;
   text-align: center;
   overflow: hidden;
+  position: relative;
 }
 .photo-item{
+  background: #F4F4F4;
   height: 100%;
   width: auto;
   margin: 0px auto;
-  background: rgb(144, 112, 139);
-  height: 100%;
-  width: auto;
-  margin: 0px auto;
-  background: #90708b;
   position: relative;
-  vertical-align: middle;
-  display: inline-block;
-}
-.photo-item:before{
-  content: '';
-  height: 100%;
   vertical-align: middle;
   display: inline-block;
 }
@@ -76,12 +66,14 @@
   cursor: pointer;
   float: left;
   margin-left: 20px;
+  color: white;
 }
 .btn-next{
   height: 32px;
   cursor: pointer;
   float: right;
-  margin-right: 40px;
+  margin-right: 20px;
+  color: white;
 }
 .b-informstion{
   height: 27px;
@@ -121,6 +113,7 @@
 .b-tooltip-visible> .wrap-tooltip-gallery{
   opacity: 0;
   transition: all 0.3s ease;
+  position: absolute;
 }
 .tooltip-stat-gallery{
   display: block;
@@ -145,6 +138,8 @@
   height: 20px;
   width: 20px;
   cursor: pointer;
+  border: none;
+  background: none;
 }
    /*###and comments###*/
 .b-comments{}
@@ -175,11 +170,12 @@
   width: 95%;
   padding: 3px;
   box-sizing: border-box;
-
+  background: white;
 }
 .b-add-comment{
   clear: both;
   height: 28px;
+  margin-top: 20px;
 }
 .submit-comment{
   display: block;
@@ -222,6 +218,9 @@
   display: block;
   border-bottom: 1px solid #cccccc;
 }
+.margin-title-tag {
+  margin-top: 20px;
+}
 .pole-tag{}
 .tag-item{
   display: block;
@@ -245,21 +244,24 @@
   border: 1px solid #ccc;
   margin-top: 10px;
   border-radius: 5px;
+  position: relative;
 }
 .b-change-photo {
   width: 80%;
-  height: auto;
+  height: 150px;
+  padding: 10px;
+  box-sizing: border-box;
   margin: 0 auto;
   text-align: center;
-}
-.nav-slider {
-  font-size: 48px;
-  text-shadow: 1px 1px 2px black, 0 0 1em black;
-  color: white;
 }
 .slider-nav-prev,
 .slider-nav-next {
   cursor: pointer;
+  font-size: 48px;
+  text-shadow: 1px 1px 2px black, 0 0 1em black;
+  color: white;
+  top: 52px;
+  position: absolute;
 }
 .slider-nav-next {
   right: 0;

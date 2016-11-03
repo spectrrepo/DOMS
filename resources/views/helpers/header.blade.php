@@ -8,5 +8,8 @@
     <div class="logining">
       <a href="{{ URL::to('profile/'.Auth::id()) }}" class="logining-item">Виктор</a>
       <a href="{{URL::route('logout')}}" class="logining-item">Выход</a>
+      <div class="login-portret">
+          <img src="{{}}" alt="" />
+      </div>
     </div>
 </header>

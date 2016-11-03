@@ -6309,7 +6309,7 @@ a.uk-thumbnail:focus, a.uk-thumbnail:hover {
   src: url(font/pt-sans.ttf); }
 
 body {
-  background-color: #fcfcfc; }
+  background: url(../img/fon.jpg); }
 
 img {
   width: 100%; }
@@ -6331,6 +6331,9 @@ header, footer {
   bottom: 0;
   left: 0;
   font: 400 14px/20px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+
+a {
+  color: #993399; }
 
 header {
   position: fixed;
@@ -6405,6 +6408,16 @@ nav ul li a:hover {
 .logining-item:hover {
   color: #993399; }
 
+.login-portret {
+  width: 32px;
+  height: 32px;
+  background: white;
+  float: left;
+  position: absolute;
+  top: 7px;
+  z-index: 100000000000000000000000000000000000000000000000;
+  right: 6px; }
+
 .item-about {
   height: 44px;
   line-height: 39px;
@@ -6470,10 +6483,13 @@ html {
   height: 28px;
   display: block;
   border: 1px solid #dddddd;
-  color: #dddddd;
+  color: #6b6868;
   border-radius: 5px;
   margin-bottom: 16px;
-  margin-top: 10px; }
+  margin-top: 10px;
+  box-sizing: border-box;
+  padding: 5px;
+  background: white; }
 
 .wrap-main-dwnld-photo {
   width: 100%;
@@ -6481,7 +6497,8 @@ html {
   cursor: pointer;
   border: 1px dashed #cccccc;
   color: #666666;
-  margin-bottom: 16px; }
+  margin-bottom: 16px;
+  position: relative; }
 
 .dwnld-file-input {
   width: 100%;
@@ -6495,7 +6512,10 @@ html {
   height: 50px;
   border-radius: 5px;
   margin-bottom: 16px;
-  resize: none; }
+  resize: none;
+  box-sizing: border-box;
+  padding: 5px;
+  background: white; }
 
 .title-choose-color {
   width: 100%;
@@ -6521,11 +6541,13 @@ html {
   width: 23%;
   height: 40px;
   float: left;
-  margin-right: 2%;
-  margin-bottom: 10px;
   border-radius: 5px;
   cursor: pointer;
-  position: relative; }
+  position: relative;
+  overflow: hidden;
+  margin: 1%;
+  border: 1px solid #ccc;
+  box-sizing: border-box; }
 
 .wrap-color-input input:checked + div {
   border: 5px solid #666666;
@@ -6544,7 +6566,8 @@ html {
   width: 100%;
   border: 1px dashed #cccccc;
   cursor: pointer;
-  color: #666666; }
+  color: #666666;
+  position: relative; }
 
 .input-dwnld-view-photo {
   width: 100%;
@@ -6557,7 +6580,7 @@ html {
   display: block;
   position: absolute;
   text-align: center;
-  width: 45%;
+  width: 100%;
   margin-top: 70px; }
 
 .add-photo-text {
@@ -6566,7 +6589,7 @@ html {
   text-align: center;
   position: absolute;
   margin-top: 122px;
-  width: 45%; }
+  width: 100%; }
 
 .wrap-add-tag {
   height: 30px;
@@ -6651,13 +6674,12 @@ html {
   border-radius: 5px;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  padding-left: 16px;
-  padding-right: 10px;
-  line-height: 29px;
+  padding-left: 5px;
+  padding-right: 5px;
+  line-height: 20px;
   width: 100%;
   height: 30px;
   box-sizing: border-box;
-  top: 0;
   height: 100%;
   width: 100%;
   font-size: 12px; }
@@ -6710,9 +6732,27 @@ html {
   border-radius: 5px;
   float: left;
   height: 100%;
-  background: green;
+  background: #F4F4F4;
   height: 160px;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  position: relative;
+  text-align: center;
+  vertical-align: middle; }
+
+.b-photo-person input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer; }
+
+.b-photo-person img {
+  height: auto;
+  max-height: 100%;
+  max-width: 100%;
+  width: auto; }
 
 .b-persobal-information {
   width: 76%;
@@ -6726,23 +6766,36 @@ html {
 .b-name-person {
   width: 33%;
   float: left;
-  height: 100%;
-  text-align: center;
-  box-sizing: border-box; }
+  text-align: left;
+  padding: 10px;
+  box-sizing: border-box;
+  height: 41px; }
 
 .b-role-person {
+  text-align: left;
+  padding: 10px;
   width: 33%;
   float: left;
-  height: 100%;
-  text-align: center;
+  height: 41px;
   box-sizing: border-box; }
+
+.b-about-person {
+  width: 66%;
+  height: 119px;
+  float: left;
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: left; }
 
 .b-contact-data {
   width: 33%;
   float: left;
   height: 100%;
   text-align: center;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  padding: 10px;
+  margin-top: -41px;
+  text-align: left; }
 
 .contact-item {
   width: 100%; }
@@ -6775,30 +6828,42 @@ html {
   height: auto;
   border-radius: 5px;
   border: 1px solid #e5e5e5;
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+  padding-bottom: 13px; }
 
 .b-setting-switcher {
   width: 100%;
-  height: 19px; }
+  height: auto; }
 
 .switcher {
-  margin-left: -28px; }
+  margin-left: -28px;
+  padding-bottom: 0;
+  margin-bottom: 0; }
 
 .item-swicher {
   display: block;
   float: left;
-  width: 90px;
+  width: auto;
   height: 100%;
   color: black;
   cursor: pointer;
   margin-left: 1px;
   border-top-left-radius: 5px;
-  border-top-right-radius: 5px; }
+  border-top-right-radius: 5px;
+  box-sizing: border-box;
+  padding: 5px; }
 
-.item-swicher:active {
+.item-swicher a {
+  color: #666666; }
+
+.item-swicher:hover a {
+  color: white;
+  text-decoration: none; }
+
+.item-switcher-active,
+.item-swicher:hover {
   display: block;
   float: left;
-  width: 90px;
   height: 100%;
   color: white;
   cursor: pointer;
@@ -6806,6 +6871,9 @@ html {
   background: grey;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px; }
+
+.item-switcher-active a {
+  color: white; }
 
 .b-person-post {
   width: 100%;
@@ -6820,8 +6888,8 @@ html {
   box-sizing: border-box; }
 
 .b-portret-blogger {
-  width: 90%;
-  height: 90%;
+  width: 90px;
+  height: 85px;
   margin: 0 auto;
   text-align: center;
   background: #cadede;
@@ -6925,7 +6993,7 @@ html {
 .btn-dwnld-new {
   text-align: center;
   clear: both;
-  width: 60%;
+  width: 73.5%;
   height: 50px;
   color: white;
   line-height: 50px;
@@ -7123,12 +7191,16 @@ ul.b-popup-item-list li {
   width: 78%;
   padding-bottom: 40px;
   margin-right: 1%;
+  margin-bottom: 40px;
   float: right;
   position: relative; }
 
+.content-your-photo {
+  width: 100%; }
+
 .b-next-page {
   position: absolute;
-  bottom: 110px;
+  bottom: 45px;
   left: 0;
   right: 0;
   text-align: center;
@@ -7168,29 +7240,19 @@ ul.b-popup-item-list li {
   padding: 7px; }
 
 .b-photo-slider {
-  height: 500px;
-  background: #F5F5F5;
+  height: auto;
   margin: 0;
   padding: 0;
   text-align: center;
-  overflow: hidden; }
+  overflow: hidden;
+  position: relative; }
 
 .photo-item {
+  background: #F4F4F4;
   height: 100%;
   width: auto;
   margin: 0px auto;
-  background: #90708b;
-  height: 100%;
-  width: auto;
-  margin: 0px auto;
-  background: #90708b;
   position: relative;
-  vertical-align: middle;
-  display: inline-block; }
-
-.photo-item:before {
-  content: '';
-  height: 100%;
   vertical-align: middle;
   display: inline-block; }
 
@@ -7216,13 +7278,15 @@ ul.b-popup-item-list li {
   height: 32px;
   cursor: pointer;
   float: left;
-  margin-left: 20px; }
+  margin-left: 20px;
+  color: white; }
 
 .btn-next {
   height: 32px;
   cursor: pointer;
   float: right;
-  margin-right: 40px; }
+  margin-right: 20px;
+  color: white; }
 
 .b-informstion {
   height: 27px;
@@ -7286,7 +7350,9 @@ ul.b-popup-item-list li {
 .ico-slider {
   height: 20px;
   width: 20px;
-  cursor: pointer; }
+  cursor: pointer;
+  border: none;
+  background: none; }
 
 /*###and comments###*/
 .b-com-title {
@@ -7315,11 +7381,13 @@ ul.b-popup-item-list li {
   border-bottom-left-radius: 5px;
   width: 95%;
   padding: 3px;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  background: white; }
 
 .b-add-comment {
   clear: both;
-  height: 28px; }
+  height: 28px;
+  margin-top: 20px; }
 
 .submit-comment {
   display: block;
@@ -7361,6 +7429,9 @@ ul.b-popup-item-list li {
   display: block;
   border-bottom: 1px solid #cccccc; }
 
+.margin-title-tag {
+  margin-top: 20px; }
+
 .tag-item {
   display: block;
   float: left;
@@ -7383,22 +7454,25 @@ ul.b-popup-item-list li {
   height: auto;
   border: 1px solid #ccc;
   margin-top: 10px;
-  border-radius: 5px; }
+  border-radius: 5px;
+  position: relative; }
 
 .b-change-photo {
   width: 80%;
-  height: auto;
+  height: 150px;
+  padding: 10px;
+  box-sizing: border-box;
   margin: 0 auto;
   text-align: center; }
 
-.nav-slider {
-  font-size: 48px;
-  text-shadow: 1px 1px 2px black, 0 0 1em black;
-  color: white; }
-
 .slider-nav-prev,
 .slider-nav-next {
-  cursor: pointer; }
+  cursor: pointer;
+  font-size: 48px;
+  text-shadow: 1px 1px 2px black, 0 0 1em black;
+  color: white;
+  top: 52px;
+  position: absolute; }
 
 .slider-nav-next {
   right: 0;
@@ -7422,13 +7496,32 @@ ul.b-popup-item-list li {
   float: left;
   width: 50%; }
 
+.hover-effect-person {
+  text-align: center;
+  font-size: 26px;
+  color: white;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  -webkit-transition: all ease 0.3s;
+  transition: all ease 0.3s;
+  top: 0;
+  left: 0;
+  line-height: 150px;
+  background: rgba(0, 0, 0, 0.4); }
+
+.b-photo-person:hover > div.hover-effect-person {
+  opacity: 1; }
+
 .wrap-sex {
   float: left;
-  width: 30%;
+  width: 33%;
   height: 32px;
   margin-left: 35px; }
 
 .b-item-sex {
+  text-align: center;
   float: left;
   position: relative;
   width: 50%;
@@ -7452,12 +7545,12 @@ ul.b-popup-item-list li {
   border: 1px solid #ccc;
   background: white;
   border-radius: 5px;
-  height: 120px;
+  height: 92px;
   margin-top: 10px; }
 
 .b-spec-info {
   float: left;
-  width: 25%;
+  width: 30%;
   box-sizing: border-box;
   padding-right: 20px;
   padding-top: 10px; }
@@ -7469,7 +7562,8 @@ ul.b-popup-item-list li {
   box-sizing: border-box;
   padding-left: 10px;
   -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease; }
+  transition: all 0.3s ease;
+  font-size: 13px; }
 
 .b-item-sex:hover .sex-name {
   background: #EDEDED;
@@ -7489,10 +7583,31 @@ ul.b-popup-item-list li {
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
   float: right;
-  margin-top: 24px;
   width: 100px;
   height: 25px;
-  cursor: pointer; }
+  cursor: pointer;
+  margin-top: 10px;
+  margin-right: 38px; }
+
+.edit-line-profile {
+  border-bottom: 1px solid #E5E5E5;
+  padding-bottom: 15px; }
+
+.edit-personal-info {
+  height: 160px; }
+
+.edit-name-item {
+  width: 36%;
+  line-height: 25px; }
+
+.edit-value-item {
+  width: 64%;
+  height: 25px;
+  background: white;
+  border: 1px solid #D8D7D7;
+  margin-bottom: 2px;
+  border-radius: 5px;
+  padding: 3px; }
 
 .sidebar-modal {
   height: auto;

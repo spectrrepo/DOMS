@@ -1,22 +1,77 @@
 
-<div class="sort-list">
-      <ul class="b-popup-item-list">
-          <li class="sort-list-item"><span class="sub-list-item">Sort item</span><i class="uk-icon-justify uk-icon-check"></i></li>
-          <li class="sort-list-item"><span class="sub-list-item">Sort item</span><i class="uk-icon-justify uk-icon-check"></i></li>
-          <li class="sort-list-item"><span class="sub-list-item">Sort item</span><i class="uk-icon-justify uk-icon-check"></i></li>
-          <li class="sort-list-item"><span class="sub-list-item">Sort item</span><i class="uk-icon-justify uk-icon-check"></i></li>
-          <li class="sort-list-item"><span class="sub-list-item">Sort item</span><i class="uk-icon-justify uk-icon-check"></i></li>
-      </ul>
-      <div class="close-popup-sort">
-          <span class="uk-icon-justify uk-icon-close"></span>
-      </div>
-  </div>
 <nav class="sidebar">
     <ul>
-        <li id="popup-category" class="menu-item">Помещения<span class="ungle-item uk-icon-justify uk-icon-angle-right"></span ></li>
-        <li id="popup-category" class="menu-item">Стили<span class="ungle-item uk-icon-justify uk-icon-angle-right"></span ></li>
-        <li id="popup-category" class="menu-item">Цвета<span class="ungle-item uk-icon-justify uk-icon-angle-right"></span ></li>
-        <li id="popup-category" class="menu-item">Сортировка<span class="ungle-item uk-icon-justify uk-icon-angle-right"></span ></li>
+        <li class="menu-item">
+           Помещения
+           <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
+           <div class"sidebar-modal">
+             <span class="close white-close uk-icon-justify uk-icon-remove"></span>
+             <ul>
+               @foreach ( $rooms as $room )
+               <li class="item-moodal-sidebar">
+                 <span class="item-modal-text"></span>
+                 <span class="choose-ico"></span>
+               </li>
+               @endforeach
+             </ul>
+           </div>
+        </li>
+        <li class="menu-item">
+           Стили
+           <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
+           <div class="sidebar-modal styles-modal">
+             <span class="close white-close uk-icon-justify uk-icon-remove"></span>
+             <ul class="styles-space">
+             @foreach ( $styles as $style )
+               <li class="item-moodal-sidebar item-styles">
+                 <span class="item-modal-text">{{ $style->name }}</span>
+                 <span class="choose-ico uk-icon-justify uk-icon-check"></span>
+                 <div class="clear"></div>
+               </li>
+             @endforeach
+             </ul>
+             <div class="b-preview-style">
+               <img src="" alt="" />
+               <p class="style-description">
+               </p>
+             </div>
+           </div>
+        </li>
+        <li class="menu-item">
+           Цвета
+           <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
+           <div class="sidebar-modal">
+             <span class="close white-close uk-icon-justify uk-icon-remove"></span>
+               <ul class="colors-space">
+               @foreach ($colors as $color)
+                 <li class="colors-space-item" style="background:{{ $color->RGB }};">
+                   <span class="choose-ico uk-icon-justify uk-icon-check"></span>
+                 </li>
+               @endforeach
+               </ul>
+           </div>
+        </li>
+        <li class="menu-item">
+           Сортировка
+           <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
+           <div class="sidebar-modal">
+             <span class="close white-close uk-icon-justify uk-icon-remove"></span>
+             <ul>
+               <li class="item-moodal-sidebar">
+                 <span class="item-modal-text">Новое</span>
+                 <span class="chose-ico"></span>
+               </li>
+               <li class="item-moodal-sidebar">
+                 <span class="item-modal-text">Популярное</span>
+                 <span class="chose-ico"></span>
+               </li>
+               <li class="item-moodal-sidebar">
+                 <span class="item-modal-text">Рекомендованное</span>
+                 <span class="chose-ico"></span>
+               </li>
+             </ul>
+           </div>
+        </li>
     </ul>
     <div class="search">
       <form action="">

@@ -35,7 +35,7 @@ Route::post('/like', 'LikeController@add');
 
 
 Route::post('/liked', 'UserController@likedAdd');
-Route::post('update/profile', 'UserController@changeYourself');
+Route::post('/update/profile', 'UserController@changeYourself');
 
 // ------------------- TEST router ------------------>
 Route::get('/login', function()

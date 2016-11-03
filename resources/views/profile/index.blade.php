@@ -3,7 +3,7 @@
 
 <div class="wrap-personal-information">
     <div class="b-photo-person">
-        <img src=" {{ $user->portret }} " alt="user_{{ $user->id }} " />
+        <img src=" {{ $user->avatar->url('max') }} " alt="user_{{ $user->id }} " />
     </div>
     <div class="b-persobal-information">
         <div class="b-name-person">
@@ -12,10 +12,13 @@
         <div class="b-role-person">
           {{ $user->status }}
         </div>
+        <div class="b-about-person">
+          fdjgfsdjgl
+        </div>
         <div class="b-contact-data">
           <div class="contact-item">
               <span class="contact-item-name">email</span>
-              <span class="contact-item-value"> $user->e_mail </span>
+              <span class="contact-item-value"> {{ $user->e_mail }} </span>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">skype</span>
@@ -39,18 +42,19 @@
 <div class="wrap-personal-news">
     <div class="b-setting-switcher">
       <ul class="switcher">
-        <li class="item-swicher"><a href="{{ URL::to('/profile/'.Auth::id()) }}">Обновления</a></li>
-        <li class="item-swicher"><a href="{{ URL::to('/profile/'.Auth::id().'/your_photo') }}">Фотографии</a></li>
+        <li class="item-swicher{{  substr_count(URL::current(), '/profile/') ? ' item-switcher-active': ' none' }}"><a href="{{ URL::to('/profile/'.Auth::id()) }}">Обновления</a></li>
+        <li class="item-swicher{{  substr_count(URL::current(), '/your_photo') ? ' item-switcher-active': ' none' }}"><a href="{{ URL::to('/profile/'.Auth::id().'/your_photo') }}">Фотографии</a></li>
+        <div class="clear"></div>
       </ul>
     </div>
     <div class="b-personal-news">
       @foreach ($images as $image)
         <div class="b-person-post">
           <div class="col-news-min">
-              <div class="b-portret-blogger"><span style="line-height: 85px;font-size: 60px;"class="uk-icon-justify uk-icon-user"></span></div>
+              <div class="b-portret-blogger"><img src="" alt="" /></span></div>
           </div>
           <div class="col-news-big">
-              <div class="b-name-redactor">{{$image->name}}</div>
+              <div class="b-name-redactor"><a href="/profile/{{$image->id}}">{{$image->name}}</a></div>
               <div class="b-post-body">
                 <div class="b-photo-post">
                   <img src="{{$image->photo->url()}}" class="img-post" alt="" />

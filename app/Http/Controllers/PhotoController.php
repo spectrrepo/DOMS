@@ -16,6 +16,10 @@ use App\View;
 
 use App\Like;
 
+use App\Color;
+use App\Style;
+use App\Room;
+
 use Input;
 /**
  * The ResultMessage class holds a message that can be returned
@@ -35,10 +39,18 @@ class PhotoController extends Controller
      * @return
      *
      */
-    public function index(){
+     public function index ()
+     {
+     $colors = Color::all();
+     $styles = Style::all();
+     $rooms = Room::all();
 
-        $images = Image::simplePaginate(28);
-        return view('site.index', ['images' => $images]);
+     $images = Image::simplePaginate(28);
+     return view('site.index', ['colors' => $colors,
+                                'styles' => $styles,
+                                'rooms' =>  $rooms,
+                                'images' => $images]);
+
 
     }
 
@@ -52,6 +64,10 @@ class PhotoController extends Controller
 
         $image = Image::find($id);
 
+        $colors = Color::all();
+        $styles = Style::all();
+        $rooms = Room::all();
+
         $tags = Tag::where('post_id', '=', $id)->get();
         $views = View::where('post_id', '=', $id)->get();
         $comments = Comment::where('post_id', '=', $id)->get();
@@ -60,7 +76,10 @@ class PhotoController extends Controller
         $num_like = count( Like::where('post_id', '=', $id)->get());
         $num_comment = count( Comment::where('post_id', '=', $id)->get());
 
-        return view('site.slider', ['image' => $image,
+        return view('site.slider', ['colors' => $colors,
+                                    'styles' => $styles,
+                                    'rooms' =>  $rooms,
+                                   'image' => $image,
                                     'comments' => $comments,
                                     'tags' => $tags,
                                     'views' => $views,

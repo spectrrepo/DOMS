@@ -1,7 +1,7 @@
 
 @extends('layouts.site')
 @section('site-content')
-          <div class="content  uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights" data-uk-grid>
+          <div class="content  uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights">
             <div class="col-slider-comment">
             <div class="one-picture-place">
               <div class="b-photo-slider">
@@ -69,7 +69,7 @@
                         <span class="tooltip-stat-gallery">Понравилось</span>
                         <span class="triangle-tooltip-stat"></span>
                       </span>
-                      {{ Form::open(array('url' => '/like'))}}
+                      {{ Form::open(array('url' => '/like', 'style' => 'float:left'))}}
                       <input type="hidden" name="post_id" value="{{ $image->id }}">
                       <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                       <button type="submit" class="ico-slider uk-icon-justify uk-icon-heart"></button>
@@ -143,7 +143,7 @@
                 @endforeach
               </div>
               <div class="clear"></div>
-              <div class="title-tag">
+              <div class="title-tag margin-title-tag">
                Ракурсы
               </div>
               <div class="view-photo-slide">
@@ -154,11 +154,10 @@
 
                 @endforeach
                 </div>
-                <div class="nav-slider">
-                    <span class="slider-nav-prev uk-icon-justify uk-icon-angle-left"></span>
-                    <span class="slider-nav-next uk-icon-justify uk-icon-angle-right"></span>
-                </div>
+                <span class="slider-nav-prev uk-icon-justify uk-icon-angle-left"></span>
+                <span class="slider-nav-next uk-icon-justify uk-icon-angle-right"></span>
               </div>
             </div>
+            <div class="clear"></div>
           </div>
     @endsection
