@@ -13,6 +13,11 @@
 
     @include('../helpers.footer')
 
+    @include('../popups.about')
+    @include('../popups.feedback')
+    @include('../popups.forgetpswd')
+    @include('../popups.login')
+    @include('../popups.registration')
   <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
   </body>
 </html>

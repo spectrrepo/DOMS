@@ -13,6 +13,7 @@ ul {
     padding-left: 16px;
     padding-right: 10px;
     line-height: 29px;
+    position: relative;
 }
 .menu-item:hover {
     background: #333333;
@@ -56,6 +57,7 @@ ul {
     position: fixed;
     padding-left: 25px;
     box-sizing: border-box;
+    z-index: 10000000;
 }
 .main-wrapper {
     clear: both;

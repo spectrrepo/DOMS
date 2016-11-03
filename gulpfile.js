@@ -19,7 +19,8 @@ elixir(mix => {
       .scripts([
         "jquery.min.js",
         "uikit.min.js",
-        "grid.js"
+        "grid.js",
+        "popup.js"
     ],'public/js/app.js')
        .copy('resources/assets/fonts/*.*', 'public/css/fonts/');
 });

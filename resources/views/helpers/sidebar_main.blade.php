@@ -2,22 +2,23 @@
 <nav class="sidebar">
     <ul>
         <li class="menu-item">
-           Помещения
+           <span class="click-ready">Помещения</span>
            <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
-           <div class"sidebar-modal">
+           <div class="sidebar-modal rooms">
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
              <ul>
                @foreach ( $rooms as $room )
                <li class="item-moodal-sidebar">
-                 <span class="item-modal-text"></span>
-                 <span class="choose-ico"></span>
+                 <span class="item-modal-text"> {{ $room->title }} </span>
+                 <span class="choose-ico uk-icon-justify uk-icon-check"></span>
+                 <div class="clear"></div>
                </li>
                @endforeach
              </ul>
            </div>
         </li>
         <li class="menu-item">
-           Стили
+           <span class="click-ready">Стили</span>
            <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
            <div class="sidebar-modal styles-modal">
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
@@ -38,7 +39,7 @@
            </div>
         </li>
         <li class="menu-item">
-           Цвета
+           <span class="click-ready">Цвета</span>
            <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
            <div class="sidebar-modal">
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
@@ -48,26 +49,30 @@
                    <span class="choose-ico uk-icon-justify uk-icon-check"></span>
                  </li>
                @endforeach
+               <div class="clear"></div>
                </ul>
            </div>
         </li>
         <li class="menu-item">
-           Сортировка
+           <span class="click-ready">Сортировка</span>
            <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
-           <div class="sidebar-modal">
+           <div class="sidebar-modal sort">
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
              <ul>
                <li class="item-moodal-sidebar">
                  <span class="item-modal-text">Новое</span>
-                 <span class="chose-ico"></span>
+                 <span class="choose-ico uk-icon-justify uk-icon-check"></span>
+                 <div class="clear"></div>
                </li>
                <li class="item-moodal-sidebar">
                  <span class="item-modal-text">Популярное</span>
-                 <span class="chose-ico"></span>
+                 <span class="choose-ico uk-icon-justify uk-icon-check"></span>
+                 <div class="clear"></div>
                </li>
                <li class="item-moodal-sidebar">
                  <span class="item-modal-text">Рекомендованное</span>
-                 <span class="chose-ico"></span>
+                 <span class="choose-ico uk-icon-justify uk-icon-check"></span>
+                 <div class="clear"></div>
                </li>
              </ul>
            </div>
