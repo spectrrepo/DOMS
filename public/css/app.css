@@ -7012,15 +7012,11 @@ ul {
   border-radius: 5px;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  height: 29px;
   padding-left: 16px;
   padding-right: 10px;
   line-height: 29px;
-  position: relative; }
-
-.menu-item:hover {
-  background: #333333;
-  color: white; }
+  position: relative;
+  height: auto; }
 
 .search-submit {
   height: 32px;
@@ -7626,7 +7622,8 @@ ul.b-popup-item-list li {
   background: white;
   padding: 20px;
   margin: 0 auto;
-  margin-top: 50px; }
+  margin-top: 50px;
+  position: relative; }
 
 .close {
   position: absolute;
@@ -7641,23 +7638,42 @@ ul.b-popup-item-list li {
   box-shadow: 0 0 25px #000; }
 
 .modal-feedback-center {
-  width: 60%;
+  width: 50%;
   margin: 0 auto; }
+
+.title-link {
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center; }
 
 .b-soc-set-round {
   width: auto;
   padding-top: 30px;
-  padding-bottom: 30px; }
+  padding-bottom: 30px;
+  text-align: right; }
 
-.round-fb {
-  border-radius: 100%;
-  width: 35px;
-  height: 35px; }
-
+.round-fb,
 .round-vk {
   border-radius: 100%;
   width: 35px;
-  height: 35px; }
+  height: 35px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 37px;
+  color: white; }
+
+.round-fb {
+  background-color: #2d4e91; }
+
+.round-vk {
+  background-color: #3e6793; }
+
+.round-vk:hover,
+.round-fb:hover {
+  background: white;
+  color: black; }
 
 .input-feedback {
   width: 46%;
@@ -7675,7 +7691,8 @@ ul.b-popup-item-list li {
   margin-top: 8px;
   height: 200px;
   border: 1px solid #ccc;
-  border-radius: 3px; }
+  border-radius: 3px;
+  resize: none; }
 
 .feedback-submit {
   float: right;
@@ -7685,7 +7702,11 @@ ul.b-popup-item-list li {
   border-radius: 5px;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
-  background-color: #333333; }
+  background-color: #333333;
+  margin-top: 15px; }
+
+.feedback-submit:hover {
+  background: #6c6b6b; }
 
 .title {
   text-align: center;
@@ -7712,6 +7733,10 @@ ul.b-popup-item-list li {
   color: white;
   border-radius: 3px; }
 
+.modal-reg {
+  width: 70%;
+  height: auto; }
+
 .title-reg {
   text-align: center; }
 
@@ -7723,12 +7748,7 @@ ul.b-popup-item-list li {
   width: 100%;
   text-align: center; }
 
-.fb {
-  border-radius: 4px;
-  float: left;
-  width: 50px;
-  height: 50px; }
-
+.fb,
 .vk {
   border-radius: 4px;
   float: left;
@@ -7747,7 +7767,15 @@ ul.b-popup-item-list li {
   text-align: left;
   padding-bottom: 15px;
   width: 100%;
+  clear: both;
+  display: block; }
+
+.bottom-line {
   border-bottom: 1px solid #ccc; }
+
+.wrap-reg-inp {
+  float: left;
+  width: 50%; }
 
 .label {
   display: block;
@@ -7755,7 +7783,7 @@ ul.b-popup-item-list li {
   padding: 0; }
 
 .input-reg {
-  width: 48%;
+  width: 98%;
   border: 1px solid #ccc; }
 
 .b-choose-status {
@@ -7763,13 +7791,17 @@ ul.b-popup-item-list li {
 
 .title-reg {
   width: 100%;
-  text-align: center; }
+  text-align: center;
+  display: block;
+  clear: both; }
 
 .b-item-status {
   width: 25%;
   box-sizing: border-box;
   height: auto;
-  position: relative; }
+  position: relative;
+  float: left;
+  padding: 20px; }
 
 .radio-opacity {
   position: absolute;
@@ -7785,6 +7817,7 @@ ul.b-popup-item-list li {
   text-align: center; }
 
 .name-status {
+  display: block;
   text-align: center;
   width: 100%;
   padding-bottom: 10px; }
@@ -7816,6 +7849,10 @@ ul.b-popup-item-list li {
   float: left;
   width: 100%;
   position: absolute; }
+
+.click-ready:hover {
+  background: #333333;
+  color: white; }
 
 .close {
   position: absolute;
@@ -7861,7 +7898,8 @@ ul.b-popup-item-list li {
   position: relative;
   overflow: hidden;
   background-color: #ffffff;
-  border-radius: 5px; }
+  border-radius: 5px;
+  width: 100%; }
 
 .name-sort-item {
   margin: 0;

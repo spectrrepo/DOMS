@@ -1,11 +1,12 @@
 <div class="overlay">
-  <div class="modal">
-    <span class="close"></span>
+  <div class="modal modal-reg">
+    <span class="close uk-icon-justify uk-icon-remove"></span>
     <span class="title-reg">Регистрация</span>
+    <div class="clear"></div>
     <div class="b-soc-net-login">
       <span class="title-text">Войти через социальные сети</span>
-      <span class="fb"></span>
-      <span class="vk"></span>
+      <span class="uk-icon-justify uk-icon-facebook-f fb"></span>
+      <span class="uk-icon-justify uk-icon-vk vk"></span>
       <span class="not-wor-text">
         Не беспокойтесь, мы никогда не сделаем пост без вашего разрешения
       </span>
@@ -14,29 +15,30 @@
     {{ Form::open() }}
     <div class="b-form-inputs">
       <span class="title-text bottom-line">Или зарегистрироваться через адрес электронной почты</span>
-      <div class="wrap-left-inp">
+      <div class="wrap-reg-inp">
         <span class="label">Имя</span>
         <input class="input-reg" type="text" name="name" value="">
       </div>
-      <div class="wrap-left-inp">
-        <span class="label">Адрес элестронной почты</span>
-        <input class="input-reg" type="text" name="name" value="">
-      </div>
-      <div class="wrap-left-inp">
+      <div class="wrap-reg-inp">
         <span class="label">Телефон</span>
         <input class="input-reg" type="text" name="name" value="">
       </div>
-      <div class="wrap-left-inp">
+      <div class="wrap-reg-inp">
+        <span class="label">Адрес элестронной почты</span>
+        <input class="input-reg" type="text" name="name" value="">
+      </div>
+      <div class="wrap-reg-inp">
         <span class="label">Пароль</span>
         <input class="input-reg" type="text" name="name" value="">
       </div>
     </div>
     <div class="b-choose-status">
       <span class="title-reg">Статус пользователя</span>
+      <div class="clear"></div>
       <div class="b-item-status">
         <input class="radio-opacity" type="radio" name="name" value="">
         <div class="b-img">
-          <img src="" alt="" />
+          <img src="/img/item-status-reg/item-reg.png" alt="иконка пользователя DOMS" />
         </div>
         <span class="name-status">Пользователь</span>
         <p class="description-status">
@@ -49,7 +51,7 @@
       <div class="b-item-status">
         <input class="radio-opacity" type="radio" name="name" value="">
         <div class="b-img">
-          <img src="" alt="" />
+          <img src="/img/item-status-reg/item-reg-2.png" alt="иконка мастера DOMS" />
         </div>
         <span class="name-status">Мастер</span>
         <p class="description-status">
@@ -61,7 +63,7 @@
       <div class="b-item-status">
         <input class="radio-opacity" type="radio" name="name" value="">
         <div class="b-img">
-          <img src="" alt="" />
+          <img src="/img/item-status-reg/item-reg-3.png" alt="иконка дизайнера DOMS" />
         </div>
         <span class="name-status">Дизайнер</span>
         <p class="description-status">
@@ -73,7 +75,7 @@
       <div class="b-item-status">
         <input class="radio-opacity" type="radio" name="name" value="">
         <div class="b-img">
-          <img src="" alt="" />
+          <img src="/img/item-status-reg/item-reg-4.png" alt="иконка магазина DOMS" />
         </div>
         <span class="name-status">Магазин</span>
         <p class="description-status">
@@ -83,6 +85,6 @@
       </div>
       <div class="clear"></div>
     </div>
-    <input type="submit" name="name" value="">
+    <input type="submit" name="name" value="Зарегистрироваться">
   </div>
 </div>

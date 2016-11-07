@@ -1,6 +1,6 @@
 <div class="overlay">
   <div class="modal">
-    <span class="close"></span>
+    <span class="close uk-icon-justify uk-icon-remove"></span>
     <span>Восстановление пароля</span>
     <p>
       Введите адрес электронной почты Вашего аккаунта

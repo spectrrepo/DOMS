@@ -1,8 +1,8 @@
-<div class="overlay">
+<div class="overlay" id="popup-feedback">
   <div class="modal modal-feedback">
-    <span class="close"></span>
-    <span class="title-link">Контакты</span>
+    <span class="popup-close close uk-icon-justify uk-icon-remove"></span>
     <div class="modal-feedback-center">
+      <span class="title-link">Контакты</span>
       <p>
         По вопросам сотрудничества пишите нам на адрес
         <a href="mailto:domspectr@gmail.com">domspectr@gmail.com</a>
@@ -10,8 +10,8 @@
       </p>
       <div class="clear"></div>
       <div class="b-soc-set-round">
-        <span class="round-fb"></span>
-        <span class="round-vk"></span>
+        <span class="uk-icon-justify uk-icon-facebook-f round-fb"></span>
+        <span class="uk-icon-justify uk-icon-vk round-vk"></span>
       </div>
       <div class="clear"></div>
       {{ Form::open() }}
@@ -21,6 +21,7 @@
       <textarea class="textarea-feedback" name="name" rows="8" cols="40"></textarea>
       <input class="feedback-submit" type="button" name="name" value="Отправить сообщение">
       {{ Form::close() }}
+      <div class="clear"></div>
     </div>
   </div>
 </div>

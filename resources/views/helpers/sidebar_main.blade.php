@@ -8,7 +8,7 @@
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
              <ul>
                @foreach ( $rooms as $room )
-               <li class="item-moodal-sidebar">
+               <li class="item-moodal-sidebar" data-id=" {{ $room->id }} ">
                  <span class="item-modal-text"> {{ $room->title }} </span>
                  <span class="choose-ico uk-icon-justify uk-icon-check"></span>
                  <div class="clear"></div>
@@ -16,6 +16,7 @@
                @endforeach
              </ul>
            </div>
+           <div class="clear"></div>
         </li>
         <li class="menu-item">
            <span class="click-ready">Стили</span>
@@ -37,6 +38,7 @@
                </p>
              </div>
            </div>
+           <div class="clear"></div>
         </li>
         <li class="menu-item">
            <span class="click-ready">Цвета</span>
@@ -52,6 +54,7 @@
                <div class="clear"></div>
                </ul>
            </div>
+           <div class="clear"></div>
         </li>
         <li class="menu-item">
            <span class="click-ready">Сортировка</span>
@@ -76,6 +79,7 @@
                </li>
              </ul>
            </div>
+           <div class="clear"></div>
         </li>
     </ul>
     <div class="search">

@@ -9,15 +9,11 @@ ul {
     cursor: pointer;
     border-radius: 5px;
     transition: all 0.3s ease;
-    height: 29px;
     padding-left: 16px;
     padding-right: 10px;
     line-height: 29px;
     position: relative;
-}
-.menu-item:hover {
-    background: #333333;
-    color: white;
+    height: auto;
 }
 .search-submit {
     height: 32px;
