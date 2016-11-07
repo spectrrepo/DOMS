@@ -10,7 +10,7 @@
             <div class="wrap-main-dwnld-photo" title="Добавить изображение">
                 <span class="add-photo-ico uk-icon-justify uk-icon-camera"></span>
                 <span class="add-photo-text">Добавить изображение</span>
-                <?= Form::file('photo', array('class' => 'dwnld-file-input' )) ?>
+                <input id="main-file" class="dwnld-file-input" type="file" name="files" multiple>
             </div>
             <textarea class="input-descreption"type="text" name="description" placeholder="Описание"></textarea>
             <div class="title-choose-color">Укажи основные цвета</div>
@@ -23,10 +23,10 @@
                 @endforeach
                 <div class="clear"></div>
             </div>
-            <div class="wrap-dwnld-photo">
+            <div id="wrap-d" class="wrap-dwnld-photo">
                 <span class="add-photo-ico racurs-margin-ico uk-icon-justify uk-icon-camera"></span>
                 <span class="add-photo-text racurs-margin-text">Добавить ракурсы</span>
-                <input class="input-dwnld-view-photo" type="file" name="name" value="">
+                <input id="files" class="input-dwnld-view-photo" type="file" name="files" multiple>
             </div>
             <div class="wrap-add-tag">
               <div class="label-tag-input">Теги</div>

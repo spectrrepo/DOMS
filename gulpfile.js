@@ -19,8 +19,10 @@ elixir(mix => {
       .scripts([
         "jquery.min.js",
         "uikit.min.js",
+        "owl.carousel.js",
         "grid.js",
-        "popup.js"
+        "popup.js",
+        "upload.js"
     ],'public/js/app.js')
        .copy('resources/assets/fonts/*.*', 'public/css/fonts/');
 });

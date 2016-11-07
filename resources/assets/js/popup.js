@@ -77,4 +77,15 @@ var erw = 1;
     $('.popup-close').on('click', function() {
       $('.overlay').css({'display':'none'});
     });
+
+    $("#owl-demo").owlCarousel({
+
+        navigation : true,
+        slideSpeed : 300,
+        paginationSpeed : 400,
+        singleItem : true,
+        navigationText : false,
+        pagination : false,
+
+    });
 });
