@@ -1,5 +1,5 @@
 <div class="overlay">
-  <div class="modal">
+  <div class="modal modal-forget">
     <span class="close uk-icon-justify uk-icon-remove"></span>
     <span>Восстановление пароля</span>
     <p>
@@ -7,7 +7,8 @@
     </p>
     {{ Form::open() }}
     <input type="text" name="name" value="">
-    <input type="submit" name="name" value="">
+    <button class="uk-icon-justify uk-icon-reply" type="submit" name="name">
+    </button>
     {{ Form::close() }}
   </div>
 </div>

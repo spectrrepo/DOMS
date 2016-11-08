@@ -8,8 +8,10 @@
     <div class="logining">
       <a href="{{ URL::to('profile/'.Auth::id()) }}" class="logining-item">Виктор</a>
       <a href="{{URL::route('logout')}}" class="logining-item">Выход</a>
+      @if ( Auth::check())
       <div class="login-portret">
-          <img src="{{}}" alt="" />
+          <img src="{{ Auth::id() }}" alt="" />
       </div>
+      @endif
     </div>
 </header>

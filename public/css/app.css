@@ -6555,7 +6555,8 @@ html {
 
 .wrap-main-dwnld-photo {
   width: 100%;
-  height: 220px;
+  height: auto;
+  min-height: 220px;
   cursor: pointer;
   border: 1px dashed #cccccc;
   color: #666666;
@@ -6566,7 +6567,10 @@ html {
   width: 100%;
   height: 100%;
   opacity: 0;
-  cursor: pointer; }
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0; }
 
 .input-descreption {
   border: 1px solid #dddddd;
@@ -6612,6 +6616,14 @@ html {
   box-sizing: border-box; }
 
 .wrap-color-input input:checked + div {
+  border: 5px solid #666666;
+  box-sizing: border-box; }
+
+.wrap-color-input div.b-color-input {
+  -webkit-transition: all ease 0.3s;
+  transition: all ease 0.3s; }
+
+.wrap-color-input:hover div.b-color-input {
   border: 5px solid #666666;
   box-sizing: border-box; }
 
@@ -6768,6 +6780,18 @@ html {
 
 .racurs-margin-text {
   margin-top: 93px; }
+
+#wrap-d span {
+  display: block;
+  width: 30%;
+  box-sizing: border-box;
+  padding: 20px;
+  float: left; }
+
+#wrap-d span.add-photo-ico,
+#wrap-d span.add-photo-text {
+  display: inline;
+  width: 100%; }
 
 /*############################################################################*/
 /*#############################profile page style#############################*/
@@ -7694,6 +7718,22 @@ ul.b-popup-item-list li {
   right: 0;
   cursor: pointer; }
 
+.modal-about {
+  width: 65%;
+  height: auto;
+  background: rgba(0, 0, 0, 0.5); }
+
+.b-img-about {
+  width: 30%;
+  float: left; }
+
+.img-about {
+  width: 100%; }
+
+.text-about {
+  width: 70%;
+  float: left; }
+
 .modal-feedback {
   width: 65%;
   height: auto;
@@ -7771,9 +7811,17 @@ ul.b-popup-item-list li {
 .feedback-submit:hover {
   background: #6c6b6b; }
 
+.modal-forget {
+  width: 300px; }
+
+.modal-login {
+  width: 300px; }
+
 .title {
   text-align: center;
-  width: 100%; }
+  width: 100%;
+  display: block;
+  text-transform: uppercase; }
 
 .b-soc-log {
   width: 100%;
@@ -7796,6 +7844,33 @@ ul.b-popup-item-list li {
   color: white;
   border-radius: 3px; }
 
+.modal-login-inp {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px; }
+
+.modal-login-sbmt {
+  width: 50%;
+  box-sizing: border-box;
+  float: right;
+  background: #666666;
+  color: white;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 8px; }
+
+.modal-login-sbmt:hover {
+  background: #828181; }
+
 .modal-reg {
   width: 70%;
   height: auto; }
@@ -7816,7 +7891,9 @@ ul.b-popup-item-list li {
   border-radius: 4px;
   float: left;
   width: 50px;
-  height: 50px; }
+  height: 50px;
+  font-size: 24px;
+  line-height: 50px; }
 
 .not-wor-text {
   float: left;

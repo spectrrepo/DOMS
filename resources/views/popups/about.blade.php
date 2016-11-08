@@ -1,5 +1,5 @@
 <div class="overlay" id="popup-about">
-  <div class="modal">
+  <div class="modal modal-about">
     <span class="popup-close close uk-icon-justify uk-icon-remove"></span>
     <h1>DOMS - портал идей для дизайна интерьеров</h1>
     <div class="slider owl-carousel" id="owl-demo">

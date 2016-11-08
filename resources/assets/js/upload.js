@@ -17,18 +17,20 @@ $( document ).ready(function() {
           return function(e) {
             // Render thumbnail.
             var span = document.createElement('span');
-            span.innerHTML = ['<img class="thumb" src="', e.target.result,
+            span.innerHTML = ['<img class="img-full-width" src="', e.target.result,
                               '" title="', escape(theFile.name), '"/>'].join('');
-            document.getElementById('wrap-main-dwnld-photo').insertBefore(span, null);
+            document.getElementById('main-wrap-photo').insertBefore(span, null);
           };
         })(f);
 
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
       }
+      $('#main-wrap-photo').children('.add-photo-ico').css({'display' : 'none'});
+      $('#main-wrap-photo').children('.add-photo-text').css({'display' : 'none'});
     }
 
-    document.getElementById('main-file').addEventListener('change', handleFileOneSelect, false);
+    document.getElementById('file').addEventListener('change', handleFileOneSelect, false);
 
 // function for download views
   function handleFileSelect(evt) {

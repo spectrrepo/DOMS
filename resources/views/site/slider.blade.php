@@ -29,7 +29,7 @@
                         <span class="tooltip-stat-gallery">Плитка</span>
                         <span class="triangle-tooltip-stat"></span>
                       </span>
-                      <span class="ico-slider uk-icon-justify uk-icon-th-large"></span>
+                      <a href="{{URL::route('index')}}" class="ico-slider uk-icon-justify uk-icon-th-large"></a>
                     </span>
                     <span class="b-tooltip-visible full-scrn">
                       <span class="wrap-tooltip-gallery">
@@ -149,8 +149,35 @@
               <div class="view-photo-slide">
                 <div class="b-change-photo">
                 @foreach ( $views as $view )
+                  <div class="owl-demo" id="owl-demo">
+                    <div class="item">
+                              <img src=" {{ $view->id }} " alt=" {{ $view->date }} " />
+                              <p>
+                               Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                               sed do eiusmod tempor incididunt ut labore et dolore magna
+                               aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                               ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                               Duis aute irure dolor in reprehenderit in voluptate velit
+                               esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                               occaecat cupidatat non proident, sunt in culpa qui officia
+                               deserunt mollit anim id est laborum.
+                              </p>
+                    </div>
+                    <div class="item">
+                              <img src=" {{ $view->id }} " alt=" {{ $view->date }} " />
+                              <p>
+                               Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                               sed do eiusmod tempor incididunt ut labore et dolore magna
+                               aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                               ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                               Duis aute irure dolor in reprehenderit in voluptate velit
+                               esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                               occaecat cupidatat non proident, sunt in culpa qui officia
+                               deserunt mollit anim id est laborum.
+                              </p>
+                    </div>
 
-                    <img src=" {{ $view->id }} " alt=" {{ $view->date }} " />
+                  </div>
 
                 @endforeach
                 </div>
