@@ -7098,7 +7098,6 @@ ul {
   border-radius: 5px;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  padding-left: 16px;
   padding-right: 10px;
   line-height: 29px;
   position: relative;
@@ -7988,7 +7987,11 @@ ul.b-popup-item-list li {
   display: block;
   float: left;
   width: 100%;
-  position: absolute; }
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding-left: 16px;
+  padding-right: 10px; }
 
 .click-ready:hover {
   background: #333333;

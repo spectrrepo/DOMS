@@ -10,7 +10,7 @@
             <div id="main-wrap-photo" class="wrap-main-dwnld-photo" title="Добавить изображение">
                 <span class="add-photo-ico uk-icon-justify uk-icon-camera"></span>
                 <span class="add-photo-text">Добавить изображение</span>
-                <input id="file" class="dwnld-file-input" type="file" name="photo" multiple>
+                <input id="file" class="dwnld-file-input" type="file" name="photo">
             </div>
             <textarea class="input-descreption"type="text" name="description" placeholder="Описание"></textarea>
             <div class="title-choose-color">Укажи основные цвета</div>

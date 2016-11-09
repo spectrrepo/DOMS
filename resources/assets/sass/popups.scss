@@ -319,6 +319,10 @@
   float: left;
   width: 100%;
   position: absolute;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding-left: 16px;
+  padding-right: 10px;
 }
 .click-ready:hover {
   background: #333333;

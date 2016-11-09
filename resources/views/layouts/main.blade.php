@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <title></title>
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
   </head>
   <body>
     @include('../helpers.header')
@@ -18,6 +19,5 @@
     @include('../popups.forgetpswd')
     @include('../popups.login')
     @include('../popups.registration')
-  <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
   </body>
 </html>

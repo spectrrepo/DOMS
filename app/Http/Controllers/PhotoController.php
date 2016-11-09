@@ -41,16 +41,16 @@ class PhotoController extends Controller
      */
      public function index ()
      {
-     $colors = Color::all();
-     $styles = Style::all();
-     $rooms = Room::all();
 
-     $images = Image::simplePaginate(28);
-     return view('site.index', ['colors' => $colors,
-                                'styles' => $styles,
-                                'rooms' =>  $rooms,
-                                'images' => $images]);
+       $colors = Color::all();
+       $styles = Style::all();
+       $rooms = Room::all();
 
+       $images = Image::simplePaginate(28);
+       return view('site.index', ['colors' => $colors,
+                                  'styles' => $styles,
+                                  'rooms' =>  $rooms,
+                                  'images' => $images]);
 
     }
 

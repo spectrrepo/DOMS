@@ -2203,6 +2203,7 @@ $( document ).ready(function() {
     }
 
     document.getElementById('files').addEventListener('change', handleFileSelect, false);
+    
 });
 
 //# sourceMappingURL=app.js.map

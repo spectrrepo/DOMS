@@ -10,7 +10,7 @@
       <a href="{{URL::route('logout')}}" class="logining-item">Выход</a>
       @if ( Auth::check())
       <div class="login-portret">
-          <img src="{{ Auth::id() }}" alt="" />
+          <img src="{{ Auth::user()->avatar->url() }}" alt="" />
       </div>
       @endif
     </div>
