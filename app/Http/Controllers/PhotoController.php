@@ -39,21 +39,35 @@ class PhotoController extends Controller
      * @return
      *
      */
-     public function index ()
+     public function index ($filter = false)
      {
 
        $colors = Color::all();
        $styles = Style::all();
        $rooms = Room::all();
+       $images = Image::skip(0)->take(28)->get();
 
-       $images = Image::simplePaginate(28);
        return view('site.index', ['colors' => $colors,
                                   'styles' => $styles,
                                   'rooms' =>  $rooms,
                                   'images' => $images]);
 
     }
-
+    public function loadSomePhoto ($lastPhoto) {
+        $images = Image::skip($lastPhoto)->take(4)->get();
+        return $images;
+    }
+    /**
+     * @param
+     *
+     * @return
+     *
+     */
+     public function indexAddPage(){
+         $lastId = $_POST['lastId'];
+         $ajaxImage = Image::skip($lastId)->take(28)->get();
+         return $ajaxImage;
+     }
     /**
      * @param
      *
@@ -61,9 +75,10 @@ class PhotoController extends Controller
      *
      */
     public function indexItem($id){
-
+        $id = $id-1;
         $image = Image::find($id);
-
+        // $image.id = $image.id;
+        $images = Image::skip($image->id)->take(8)->get();
         $colors = Color::all();
         $styles = Style::all();
         $rooms = Room::all();
@@ -79,7 +94,8 @@ class PhotoController extends Controller
         return view('site.slider', ['colors' => $colors,
                                     'styles' => $styles,
                                     'rooms' =>  $rooms,
-                                   'image' => $image,
+                                    'images' => $images,
+                                    'image' => $image,
                                     'comments' => $comments,
                                     'tags' => $tags,
                                     'views' => $views,

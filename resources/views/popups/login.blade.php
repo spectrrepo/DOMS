@@ -8,9 +8,9 @@
     </div>
     <div class="clear"></div>
     {{ Form::open()}}
-    <input class="modal-login-inp" type="text" name="name" value="">
-    <input class="modal-login-inp" type="password" name="name" value="">
-    <span  class="forget-link"></span>
+    <input class="modal-login-inp" type="text" name="name" placeholder="E-mail">
+    <input class="modal-login-inp" type="password" name="name" placeholder="Пароль">
+    <span  class="forget-link">Забыли пароль?</span>
     <input class="modal-login-sbmt" type="submit" name="name" value="Войти">
     {{ Form::close()}}
     <div class="clear"></div>

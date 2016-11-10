@@ -22,7 +22,11 @@ elixir(mix => {
         "owl.carousel.js",
         "grid.js",
         "popup.js",
-        "upload.js"
+        "upload.js",
+        "ajax-pagination.js",
+        "ajax-comment.js",
+        "ajax-like.js",
+        "ajax-slider.js"
     ],'public/js/app.js')
        .copy('resources/assets/fonts/*.*', 'public/css/fonts/');
 });

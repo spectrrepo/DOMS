@@ -45,6 +45,8 @@ class CommentController extends Controller
         $comment->text_comment = $_POST['comment'];
 
         $comment->save();
+        $allComment = Comment::where('post_id', $_POST['post_id'])->get();
+        return $allComment;
     }
 
     /**

@@ -33,10 +33,11 @@ Route::post('/comment', 'CommentController@add');
 Route::post('/like', 'LikeController@add');
 // TODO:restfull controler add
 
-
+Route::post('/pagination_index', 'PhotoController@indexAddPage');
 Route::post('/liked', 'UserController@likedAdd');
 Route::post('/update/profile', 'UserController@changeYourself');
 
+Route::post('/load_slider_images');
 // ------------------- TEST router ------------------>
 Route::get('/login', function()
 {

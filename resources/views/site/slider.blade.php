@@ -5,14 +5,26 @@
             <div class="col-slider-comment">
             <div class="one-picture-place">
               <div class="b-photo-slider">
-                          <div class="photo-item">
-                                    <img class="img-slider" src="{{ $image->photo->url() }}" />
-                          </div>
+                        @foreach ($images as $image_el)
+                              @if ($image_el->id == $image->id)
+                                    <div class="photo-item active-slide" data-id="{{ $image->id }}">
+                                              <img class="img-slider" src="{{ $image_el->photo->url() }}" />
+                                    </div>
+                              @elseif ($image_el->id < $image->id)
+                                    <div class="photo-item left-slide" data-id="{{ $image_el->id }}">
+                                              <img class="img-slider" src="{{ $image_el->photo->url() }}" />
+                                    </div>
+                              @else
+                                    <div class="photo-item right-slide" data-id="{{ $image_el->id }}">
+                                              <img class="img-slider" src="{{ $image_el->photo->url() }}" />
+                                    </div>
+                              @endif
+                        @endforeach
                 <div class="control-slide">
-                  <a href="/photo/{{$image->id - 1}}" class="btn-prew">
+                  <a class="btn-prew">
                     <span class="uk-icon-justify uk-icon-chevron-left"></span>
                   </a>
-                  <a href="/photo/{{$image->id + 1}}" class="btn-next">
+                  <a class="btn-next">
                     <span class="uk-icon-justify uk-icon-chevron-right"></span>
                   </a>
                 </div>
@@ -115,14 +127,12 @@
               </div>
               @if (Auth::check())
                         <div class="b-add-comment">
-                          {{Form::open(array('url' => '/comment')) }}
                           <input type="text" name="comment" class="input-comment" placeholder="Комментировать">
                           <input type="hidden" name="post_id" value="{{ $image->id }}">
                           <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                          <button class="submit-comment" type="submit">
+                          <button class="submit-comment">
                             <span class="uk-icon-justify uk-icon-plus"></span>
                           </button>
-                          {{Form::close()}}
                         </div>
               @else
                     <p>

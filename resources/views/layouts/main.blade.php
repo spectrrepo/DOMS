@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <meta name="_token" content="<?php echo csrf_token(); ?>">
     <title></title>
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
   </head>

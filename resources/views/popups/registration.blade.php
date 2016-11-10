@@ -20,11 +20,11 @@
         <input class="input-reg" type="text" name="name" value="">
       </div>
       <div class="wrap-reg-inp">
-        <span class="label">Телефон</span>
+        <span class="label">Адрес электронной почты</span>
         <input class="input-reg" type="text" name="name" value="">
       </div>
       <div class="wrap-reg-inp">
-        <span class="label">Адрес элестронной почты</span>
+        <span class="label">Телефон</span>
         <input class="input-reg" type="text" name="name" value="">
       </div>
       <div class="wrap-reg-inp">
@@ -85,6 +85,6 @@
       </div>
       <div class="clear"></div>
     </div>
-    <input type="submit" name="name" value="Зарегистрироваться">
+    <input class="registr-submit" type="submit" name="name" value="Зарегистрироваться">
   </div>
 </div>
