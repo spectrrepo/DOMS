@@ -1,4 +1,4 @@
-<div class="overlay">
+<div class="overlay" id="passwd-popup">
   <div class="modal modal-forget">
     <span class="close uk-icon-justify uk-icon-remove"></span>
     <span class="recover-title">Восстановление пароля</span>

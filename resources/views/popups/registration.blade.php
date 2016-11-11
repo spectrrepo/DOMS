@@ -1,4 +1,4 @@
-<div class="overlay">
+<div class="overlay" id="popup-registr">
   <div class="modal modal-reg">
     <span class="close uk-icon-justify uk-icon-remove"></span>
     <span class="title-reg">Регистрация</span>
@@ -36,9 +36,10 @@
       <span class="title-reg">Статус пользователя</span>
       <div class="clear"></div>
       <div class="b-item-status">
-        <input class="radio-opacity" type="radio" name="name" value="">
+        <input class="radio-opacity" type="radio" name="name">
         <div class="b-img">
           <img src="/img/item-status-reg/item-reg.png" alt="иконка пользователя DOMS" />
+          <span class="check-status-reg uk-icon-justify uk-icon-check"></span>
         </div>
         <span class="name-status">Пользователь</span>
         <p class="description-status">
@@ -49,9 +50,10 @@
         </p>
       </div>
       <div class="b-item-status">
-        <input class="radio-opacity" type="radio" name="name" value="">
+        <input class="radio-opacity" type="radio" name="name">
         <div class="b-img">
           <img src="/img/item-status-reg/item-reg-2.png" alt="иконка мастера DOMS" />
+          <span class="check-status-reg uk-icon-justify uk-icon-check"></span>
         </div>
         <span class="name-status">Мастер</span>
         <p class="description-status">
@@ -61,9 +63,10 @@
         </p>
       </div>
       <div class="b-item-status">
-        <input class="radio-opacity" type="radio" name="name" value="">
+        <input class="radio-opacity" type="radio" name="name">
         <div class="b-img">
           <img src="/img/item-status-reg/item-reg-3.png" alt="иконка дизайнера DOMS" />
+          <span class="check-status-reg uk-icon-justify uk-icon-check"></span>
         </div>
         <span class="name-status">Дизайнер</span>
         <p class="description-status">
@@ -73,9 +76,10 @@
         </p>
       </div>
       <div class="b-item-status">
-        <input class="radio-opacity" type="radio" name="name" value="">
+        <input class="radio-opacity" type="radio" name="name">
         <div class="b-img">
           <img src="/img/item-status-reg/item-reg-4.png" alt="иконка магазина DOMS" />
+          <span class="check-status-reg uk-icon-justify uk-icon-check"></span>
         </div>
         <span class="name-status">Магазин</span>
         <p class="description-status">

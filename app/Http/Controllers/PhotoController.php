@@ -75,10 +75,9 @@ class PhotoController extends Controller
      *
      */
     public function indexItem($id){
-        $id = $id-1;
         $image = Image::find($id);
         // $image.id = $image.id;
-        $images = Image::skip($image->id)->take(8)->get();
+        $images = Image::skip($image->id - 1)->take(8)->get();
         $colors = Color::all();
         $styles = Style::all();
         $rooms = Room::all();

@@ -32,12 +32,12 @@
             <span class="contact-item-name edit-name-item">соц.сети</span>
             <input class="contact-item-value edit-value-item" type="text"type="text" name="soc_net" value="{{ $user->soc_net }}">
           </div>
-          <input type="submit" class="save-info-user">
+          <input type="submit" class="save-info-user" value="Сохранить">
       {{ Form::close() }}
     </div>
   </div>
   <script type="text/javascript">
-  
+
   function FileSelect(evt) {
       var files = evt.target.files; // FileList object
 

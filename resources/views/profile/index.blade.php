@@ -19,18 +19,22 @@
           <div class="contact-item">
               <span class="contact-item-name">email</span>
               <span class="contact-item-value"> {{ $user->e_mail }} </span>
+              <div class="clear"></div>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">skype</span>
               <span class="contact-item-value"> {{ $user->skype }} </span>
+              <div class="clear"></div>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">телефон</span>
               <span class="contact-item-value"> {{ $user->phone }} </span>
+              <div class="clear"></div>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">соц.сети</span>
               <span class="contact-item-value"> {{ $user->soc_net }} </span>
+              <div class="clear"></div>
           </div>
         </div>
     </div>

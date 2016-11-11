@@ -33,6 +33,7 @@ ul {
     line-height: 28px;
 }
 .input-search {
+    background: white;
     width: 81%;
     height: 32px;
     border: 1px solid #cccccc;
@@ -42,6 +43,10 @@ ul {
     float: left;
     box-sizing: border-box;
     padding-left: 10px;
+    transition: all 0.3s ease;
+}
+.input-search:focus {
+    border: 1px solid #81afd5;
 }
 .sidebar {
     width: 97%;

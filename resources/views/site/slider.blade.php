@@ -5,21 +5,23 @@
             <div class="col-slider-comment">
             <div class="one-picture-place">
               <div class="b-photo-slider">
-                        @foreach ($images as $image_el)
-                              @if ($image_el->id == $image->id)
-                                    <div class="photo-item active-slide" data-id="{{ $image->id }}">
-                                              <img class="img-slider" src="{{ $image_el->photo->url() }}" />
-                                    </div>
-                              @elseif ($image_el->id < $image->id)
-                                    <div class="photo-item left-slide" data-id="{{ $image_el->id }}">
-                                              <img class="img-slider" src="{{ $image_el->photo->url() }}" />
-                                    </div>
-                              @else
-                                    <div class="photo-item right-slide" data-id="{{ $image_el->id }}">
-                                              <img class="img-slider" src="{{ $image_el->photo->url() }}" />
-                                    </div>
-                              @endif
-                        @endforeach
+                       <div class="wrap-slider">
+                                  @foreach ($images as $image_el)
+                                        @if ($image_el->id == $image->id)
+                                              <div class="photo-item active-slide" data-id="{{ $image->id }}">
+                                                        <img class="img-slider" src="{{ $image_el->photo->url() }}" />
+                                              </div>
+                                        @elseif ($image_el->id < $image->id)
+                                              <div class="photo-item left-slide" data-id="{{ $image_el->id }}">
+                                                        <img class="img-slider" src="{{ $image_el->photo->url() }}" />
+                                              </div>
+                                        @else
+                                              <div class="photo-item right-slide" data-id="{{ $image_el->id }}">
+                                                        <img class="img-slider" src="{{ $image_el->photo->url() }}" />
+                                              </div>
+                                        @endif
+                                  @endforeach
+                        </div>
                 <div class="control-slide">
                   <a class="btn-prew">
                     <span class="uk-icon-justify uk-icon-chevron-left"></span>
@@ -158,10 +160,9 @@
               </div>
               <div class="view-photo-slide">
                 <div class="b-change-photo">
-                @foreach ( $views as $view )
                   <div class="owl-demo" id="owl-demo">
                     <div class="item">
-                              <img src=" {{ $view->id }} " alt=" {{ $view->date }} " />
+                              <img src="" alt="" />
                               <p>
                                Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                                sed do eiusmod tempor incididunt ut labore et dolore magna
@@ -174,7 +175,7 @@
                               </p>
                     </div>
                     <div class="item">
-                              <img src=" {{ $view->id }} " alt=" {{ $view->date }} " />
+                              <img src="" alt=" " />
                               <p>
                                Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                                sed do eiusmod tempor incididunt ut labore et dolore magna
@@ -189,10 +190,7 @@
 
                   </div>
 
-                @endforeach
                 </div>
-                <span class="slider-nav-prev uk-icon-justify uk-icon-angle-left"></span>
-                <span class="slider-nav-next uk-icon-justify uk-icon-angle-right"></span>
               </div>
             </div>
             <div class="clear"></div>

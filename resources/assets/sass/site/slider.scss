@@ -4,6 +4,7 @@
 
 .uk-panel-box {
   padding: 7px;
+  background: white;
 }
 .clear {
     clear: both;
@@ -55,12 +56,14 @@
 .control-slide{
   height: auto;
   width: 100%;
-  margin-top: -26%;
+  top: 0;
+  left: 0;
   position: absolute;
   font-size:32px;
   color: white;
   text-shadow: black 0px 0px 1px;
   z-index: 1000;
+  height: 100%
 }
 .left-slide {
   left: -100%;
@@ -81,18 +84,39 @@
   position: absolute;
 }
 .btn-prew{
-  height: 32px;
   cursor: pointer;
   float: left;
   margin-left: 20px;
   color: white;
+  height: 100%;
+  position: relative;
+  width: 50px;
 }
 .btn-next{
-  height: 32px;
   cursor: pointer;
   float: right;
   margin-right: 20px;
   color: white;
+  height: 100%;
+  position: relative;
+  width: 50px;
+}
+a.btn-next span,
+a.btn-prew span {
+  width: 1em;
+  text-align: center;
+  display: block;
+  height: 50px;
+  width: 50px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.wrap-slider {
+  min-height: 300px;
 }
 .b-informstion{
   height: 27px;
@@ -272,17 +296,4 @@
   box-sizing: border-box;
   margin: 0 auto;
   text-align: center;
-}
-.slider-nav-prev,
-.slider-nav-next {
-  cursor: pointer;
-  font-size: 48px;
-  text-shadow: 1px 1px 2px black, 0 0 1em black;
-  color: white;
-  top: 52px;
-  position: absolute;
-}
-.slider-nav-next {
-  right: 0;
-  position: absolute;
 }

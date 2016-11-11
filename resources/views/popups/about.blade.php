@@ -1,13 +1,13 @@
 <div class="overlay" id="popup-about">
   <div class="modal modal-about">
-    <span class="popup-close close uk-icon-justify uk-icon-remove"></span>
-    <h1>DOMS - портал идей для дизайна интерьеров</h1>
+    <span class="popup-close close uk-icon-justify uk-icon-remove white-close"></span>
+    <h1 class="about-popup-title">DOMS - портал идей для дизайна интерьеров</h1>
     <div class="slider owl-carousel" id="owl-demo">
       <div class="item">
         <div class="b-img-about">
           <img class="img-about" src="/img/about-slider/slide-1.png" alt="дизайнер у компьютера DOMS" />
         </div>
-        <div class="text-about">
+        <div class="text-about top33carousel">
           Процесс регистрации у нас простой,
           очень быстрый и самое главное – бесплатный!
           И это только начало, друзья, ведь у нас с
@@ -34,7 +34,7 @@
         <div class="b-img-about">
           <img class="img-about" src="/img/about-slider/slide-3.png" alt="дизайнер с заказами DOMS" />
         </div>
-        <div class="text-about">
+        <div class="text-about top33carousel">
           Можно собирать в свой профиль понравившиеся картинки с различными интерьерными идеями
           и в любой момент обращаться к ним в разделе «Избранное».
           Есть возможность делиться со своими друзьями в социальных сетях понравившимися работами.
@@ -57,7 +57,7 @@
         <div class="b-img-about">
           <img class="img-about" src="/img/about-slider/slide-5.png" alt="welcome!!!!" />
         </div>
-        <div class="text-about">
+        <div class="text-about top55carousel">
           Добро пожаловать на ресурс, с самым крупным фото-хранилищем идей для уюта в вашем жилье!
         </div>
       </div>

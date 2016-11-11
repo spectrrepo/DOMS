@@ -5,6 +5,9 @@
 body {
     background: url(../img/fon.jpg);
 }
+html {
+    background: url(../img/fon.jpg);
+}
 img {
     width: 100%;
 }
@@ -40,6 +43,10 @@ header, footer {
 }
 a {
     color: #993399;
+}
+a:hover {
+    text-decoration: none;
+    color: #333333;
 }
 header {
     position: fixed;

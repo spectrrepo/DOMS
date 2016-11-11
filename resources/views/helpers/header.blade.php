@@ -9,9 +9,10 @@
       <a href="{{ URL::to('profile/'.Auth::id()) }}" class="logining-item">Виктор</a>
       <a href="{{URL::route('logout')}}" class="logining-item">Выход</a>
       @if ( Auth::check())
-      <div class="login-portret">
-          <img src="{{ Auth::user()->avatar->url() }}" alt="" />
-      </div>
+      <a href="{{ URL::to('profile/'.Auth::id()) }}">
+          <div class="login-portret" style="background:url({{ Auth::user()->avatar->url() }}) center no-repeat; background-size:cover;">
+          </div>
+      </a>
       @endif
     </div>
 </header>
