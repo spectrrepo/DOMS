@@ -164,6 +164,7 @@ class UserController extends Controller
          $liked->user_id = $_POST['user_id'];
 
          $liked->save();
+         return "true";
 
       }
       /**

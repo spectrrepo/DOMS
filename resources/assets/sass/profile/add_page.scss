@@ -260,11 +260,34 @@
   display: block;
   width: 30%;
   box-sizing: border-box;
-  padding: 20px;
+  margin: 20px;
   float: left;
+  position: relative;
 }
 #wrap-d span.add-photo-ico,
 #wrap-d span.add-photo-text{
   display: inline;
   width: 100%;
+  position: absolute;
+  margin: none;
+}
+#wrap-d .b-hover-add-view {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  color: white;
+  cursor: not-allowed;
+  font-size: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: all 0.3s ease;
+  margin: 0;
+  padding: 50%;
+}
+#wrap-d .b-hover-add-view:hover {
+  opacity: 1;
 }

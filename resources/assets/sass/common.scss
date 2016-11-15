@@ -82,7 +82,7 @@ nav ul li a:hover {
     width: auto;
 }
 .control {
-    width: 66.666%;
+    width: 45.666%;
     height: 100%;
     float: left;
 }
@@ -119,6 +119,12 @@ nav ul li a:hover {
 .logining-item:hover {
     color: #993399;
 }
+.active-like {
+  color: #ff3300;
+}
+.active-favorite {
+  color: #ffcc00;
+}
 .login-portret {
     width: 32px;
     height: 32px;
@@ -148,7 +154,7 @@ nav ul li a:hover {
 .logining {
     display: block;
     float: right;
-    margin-right: 35px;
+    margin-right: 23px;
 }
 footer {
     position: absolute;

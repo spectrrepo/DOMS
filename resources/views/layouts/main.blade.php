@@ -4,7 +4,9 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <meta name="_token" content="<?php echo csrf_token(); ?>">
-    <title></title>
+    <title>
+      DOMS - портал идей для дизайна интерьеров
+    </title>
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
   </head>
   <body>
@@ -20,5 +22,6 @@
     @include('../popups.forgetpswd')
     @include('../popups.login')
     @include('../popups.registration')
+
   </body>
 </html>

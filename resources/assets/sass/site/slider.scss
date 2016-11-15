@@ -44,6 +44,16 @@
   vertical-align: middle;
   display: inline-block;
 }
+.item {
+  height: 133px;
+  text-align: center;
+}
+.item img {
+  height: auto;
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
 .img-slider {
   max-height: 100%;
   vertical-align: middle;
@@ -117,6 +127,8 @@ a.btn-prew span {
 }
 .wrap-slider {
   min-height: 300px;
+  position: relative;
+  overflow: hidden;
 }
 .b-informstion{
   height: 27px;
@@ -126,18 +138,18 @@ a.btn-prew span {
 .b-pretens{
   float: left;
   display: block;
-  width: 33.333%;
+  width: 45%;
 }
 .num-page{
   float: left;
   display: block;
-  width: 33.333%;
+  width: 10%;
   text-align: center;
 }
 .status-photo{
   float: left;
   display: block;
-  width: 33.333%;
+  width: 45%;
   text-align: right;
 }
 .back-to-main,
@@ -150,6 +162,7 @@ a.btn-prew span {
   display:block;
   float: right;
 }
+
 .b-tooltip-visible{
   margin-right: 6px;
 }

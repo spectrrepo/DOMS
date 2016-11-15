@@ -73,7 +73,16 @@ var erw = 1;
     $('#foot-feedback').on('click', function() {
       $('#popup-feedback').css({'display':'block'});
     });
-
+    $('#login').on('click', function() {
+      $('#login-popup').css({'display':'block'});
+    });
+    $('#registration').on('click', function() {
+      $('#popup-registr').css({'display':'block'});
+    });
+    $('#recover-pswd').on('click', function () {
+      $('.overlay').css({'display':'none'});
+      $('#passwd-popup').css({'display':'block'});
+    });
     $('.popup-close').on('click', function() {
       $('.overlay').css({'display':'none'});
     });
@@ -88,4 +97,10 @@ var erw = 1;
         pagination : false,
 
     });
+    /*
+     *  Simple image gallery. Uses default settings
+     */
+
+     $('.fancybox').fancybox();
+
 });

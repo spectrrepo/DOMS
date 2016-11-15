@@ -263,10 +263,31 @@
     margin-left: -50px;
     margin-top: -32px;
     transition: all 0.3s ease;
+    z-index: 100;
 }
 .b-item-stat:hover> .tooltip-stat {
     position: absolute;
     opacity: 1;
+}
+.margin-like-tooltip {
+  margin-left: -61px;
+}
+.b-item-stat > .margin-liked-tooltip {
+  margin-left: -46px;
+  margin-top: -33px;
+}
+.b-item-stat > .margin-num-comment-tooltip {
+  margin-left: -105px;
+  margin-top: -36px;
+}
+.b-item-stat > .margin-share-tooltip {
+    margin-left: -55px;
+}
+.b-item-stat > .margin-full-scr-tooltip {
+    margin-left: -78px;
+}
+.b-item-stat > .margin-callback-tooltip {
+    margin-left: -56px;
 }
 .triangle-tooltip-stat {
     width: 0;
@@ -276,6 +297,12 @@
     border-width: 10px 5px 0 5px;
     border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
     margin: 0 auto;
+}
+.triangle-full-scr {
+    margin-left: 63px;
+}
+.triangle-callback {
+    margin-left: 41px;
 }
 .text-tooltip-stat {
     display: block;

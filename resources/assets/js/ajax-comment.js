@@ -16,25 +16,22 @@ $( document ).ready(function() {
           url:'http://localhost:8000/comment',
 
           success: function (data) {
-                $('.b-all-comment').empty();
-                data.forEach( function(item, i, data) {
 
                   $('<div class="b-comment">' +
-                    '<a href="http://localhost:8000/profile/'+item.id +'" class="b-photo-comment">' +
+                    '<a href="http://localhost:8000/profile/'+data.user_id +'" class="b-photo-comment">' +
                     '<img class="img-full-width" src="'+'">' +
                     '</a>' +
                     '<div class="b-comment">' +
-                      '<a href="http://localhost:8000/profile/'+item.id +'" class="b-name-comment"> ' +
-                         item.name +
+                      '<a href="http://localhost:8000/profile/'+data.user_id +'" class="b-name-comment"> ' +
+                        data.user_id +
                       '</a>' +
                       '<div class="b-text-comment">' +
-                        item.text +
+                        data.text_comment +
                       '</div>' +
                       '<div class="b-date-comment">' +
                       '</div>'+
                     '</div>'+
                   '</div>').appendTo('.b-all-comment');
-                });
 
           }
       });

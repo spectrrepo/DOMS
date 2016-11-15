@@ -1,7 +1,6 @@
 $( document ).ready(function() {
-  $('.submit-comment').on('click', function() {
+  $('div.like').on('click', function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
-          comment = $('.input-comment').val(),
           post_id = $('input[name=post_id]').val(),
           user_id = $('input[name=user_id]').val();
 
@@ -9,15 +8,14 @@ $( document ).ready(function() {
           type:'POST',
           data: {
                     '_token'  : csrftoken,
-                    'comment' : comment,
                     'post_id' : post_id,
                     'user_id' : user_id
           },
-          url:'http://localhost:8000/comment',
+          url:'http://localhost:8000/like',
 
           success: function (data) {
-                $('.b-all-comment').empty();
-                $().appendTo('.b-all-comment');
+                $('#value-like').text(data);
+                $('.uk-icon-heart').addClass('active-like');
           }
       });
   });

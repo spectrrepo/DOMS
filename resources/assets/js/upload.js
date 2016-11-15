@@ -52,7 +52,8 @@ $( document ).ready(function() {
             // Render thumbnail.
             var span = document.createElement('span');
             span.innerHTML = ['<img class="thumb" src="', e.target.result,
-                              '" title="', escape(theFile.name), '"/>'].join('');
+                              '" title="', escape(theFile.name), '"/>'+
+                              '<span class="b-hover-add-view uk-icon-justify uk-icon-remove"></span>'].join('');
             document.getElementById('wrap-d').insertBefore(span, null);
           };
         })(f);
@@ -63,5 +64,5 @@ $( document ).ready(function() {
     }
 
     document.getElementById('files').addEventListener('change', handleFileSelect, false);
-    
+
 });

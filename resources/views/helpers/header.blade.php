@@ -6,13 +6,16 @@
       <a href="{{ URL::route('add') }}" class="plus-photo"><span class="uk-icon-justify uk-icon-plus"></span ></a>
     </div>
     <div class="logining">
-      <a href="{{ URL::to('profile/'.Auth::id()) }}" class="logining-item">Виктор</a>
-      <a href="{{URL::route('logout')}}" class="logining-item">Выход</a>
       @if ( Auth::check())
+      <a href="{{ URL::to('profile/'.Auth::id()) }}" class="logining-item">{{ Auth::user()->name }}</a>
+      <a href="{{URL::route('logout')}}" class="logining-item">Выход</a>
       <a href="{{ URL::to('profile/'.Auth::id()) }}">
           <div class="login-portret" style="background:url({{ Auth::user()->avatar->url() }}) center no-repeat; background-size:cover;">
           </div>
       </a>
+      @else
+       <a id="login" class="logining-item">Вход</a>
+       <a id="registration" class="logining-item">Регистрация</a>
       @endif
     </div>
 </header>

@@ -32,6 +32,8 @@ class LikeController extends Controller
         $like->user_id = $_POST['user_id'];
 
         $like->save();
+        $countLike = count( Like::where('post_id', '=', $_POST['post_id'])->get());
+        return $countLike;
     }
 
     /**

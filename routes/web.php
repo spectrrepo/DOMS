@@ -37,7 +37,8 @@ Route::post('/pagination_index', 'PhotoController@indexAddPage');
 Route::post('/liked', 'UserController@likedAdd');
 Route::post('/update/profile', 'UserController@changeYourself');
 
-Route::post('/load_slider_images');
+Route::post('/load_left_images', 'PhotoController@loadLeftPhoto');
+Route::post('/load_right_images', 'PhotoController@loadRightPhoto');
 // ------------------- TEST router ------------------>
 Route::get('/login', function()
 {

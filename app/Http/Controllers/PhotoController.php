@@ -19,7 +19,6 @@ use App\Like;
 use App\Color;
 use App\Style;
 use App\Room;
-
 use Input;
 /**
  * The ResultMessage class holds a message that can be returned
@@ -53,8 +52,14 @@ class PhotoController extends Controller
                                   'images' => $images]);
 
     }
-    public function loadSomePhoto ($lastPhoto) {
-        $images = Image::skip($lastPhoto)->take(4)->get();
+    public function loadLeftPhoto () {
+        $lastPhoto = $_POST['lastPhoto'];
+        $images = Image::skip($lastPhoto)->take(3)->get();
+        return $images;
+    }
+    public function loadRightPhoto () {
+        $lastPhoto = $_POST['lastPhoto'];
+        $images = Image::skip($lastPhoto)->take(3)->get();
         return $images;
     }
     /**
@@ -77,7 +82,8 @@ class PhotoController extends Controller
     public function indexItem($id){
         $image = Image::find($id);
         // $image.id = $image.id;
-        $images = Image::skip($image->id - 1)->take(8)->get();
+
+        $images = Image::skip($image->id - 1)->take(3)->get();
         $colors = Color::all();
         $styles = Style::all();
         $rooms = Room::all();
@@ -90,6 +96,9 @@ class PhotoController extends Controller
         $num_like = count( Like::where('post_id', '=', $id)->get());
         $num_comment = count( Comment::where('post_id', '=', $id)->get());
 
+        $new_count = $image->views_count + 1;
+        $image->views_count = $new_count;
+        $image->save();
         return view('site.slider', ['colors' => $colors,
                                     'styles' => $styles,
                                     'rooms' =>  $rooms,

@@ -1,6 +1,6 @@
 <div class="overlay" id="popup-registr">
   <div class="modal modal-reg">
-    <span class="close uk-icon-justify uk-icon-remove"></span>
+    <span class="close uk-icon-justify uk-icon-remove popup-close"></span>
     <span class="title-reg">Регистрация</span>
     <div class="clear"></div>
     <div class="b-soc-net-login">
@@ -12,31 +12,31 @@
       </span>
       <div class="clear"></div>
     </div>
-    {{ Form::open() }}
+    {{ Form::open(array('url' => '/reg')) }}
     <div class="b-form-inputs">
       <span class="title-text bottom-line">Или зарегистрироваться через адрес электронной почты</span>
       <div class="wrap-reg-inp">
         <span class="label">Имя</span>
-        <input class="input-reg" type="text" name="name" value="">
+        <input class="input-reg" type="text" name="name" >
       </div>
       <div class="wrap-reg-inp">
         <span class="label">Адрес электронной почты</span>
-        <input class="input-reg" type="text" name="name" value="">
+        <input class="input-reg" type="text" name="email" >
       </div>
       <div class="wrap-reg-inp">
         <span class="label">Телефон</span>
-        <input class="input-reg" type="text" name="name" value="">
+        <input class="input-reg" type="text" name="phone" >
       </div>
       <div class="wrap-reg-inp">
         <span class="label">Пароль</span>
-        <input class="input-reg" type="text" name="name" value="">
+        <input class="input-reg" type="text" name="password" >
       </div>
     </div>
     <div class="b-choose-status">
       <span class="title-reg">Статус пользователя</span>
       <div class="clear"></div>
       <div class="b-item-status">
-        <input class="radio-opacity" type="radio" name="name">
+        <input class="radio-opacity" type="radio" name="status" value="user">
         <div class="b-img">
           <img src="/img/item-status-reg/item-reg.png" alt="иконка пользователя DOMS" />
           <span class="check-status-reg uk-icon-justify uk-icon-check"></span>
@@ -50,7 +50,7 @@
         </p>
       </div>
       <div class="b-item-status">
-        <input class="radio-opacity" type="radio" name="name">
+        <input class="radio-opacity" type="radio" name="status" value="master">
         <div class="b-img">
           <img src="/img/item-status-reg/item-reg-2.png" alt="иконка мастера DOMS" />
           <span class="check-status-reg uk-icon-justify uk-icon-check"></span>
@@ -63,7 +63,7 @@
         </p>
       </div>
       <div class="b-item-status">
-        <input class="radio-opacity" type="radio" name="name">
+        <input class="radio-opacity" type="radio" name="status" value="designer">
         <div class="b-img">
           <img src="/img/item-status-reg/item-reg-3.png" alt="иконка дизайнера DOMS" />
           <span class="check-status-reg uk-icon-justify uk-icon-check"></span>
@@ -76,7 +76,7 @@
         </p>
       </div>
       <div class="b-item-status">
-        <input class="radio-opacity" type="radio" name="name">
+        <input class="radio-opacity" type="radio" name="status" value="shop">
         <div class="b-img">
           <img src="/img/item-status-reg/item-reg-4.png" alt="иконка магазина DOMS" />
           <span class="check-status-reg uk-icon-justify uk-icon-check"></span>
@@ -89,6 +89,6 @@
       </div>
       <div class="clear"></div>
     </div>
-    <input class="registr-submit" type="submit" name="name" value="Зарегистрироваться">
+    <input class="registr-submit" type="submit">
   </div>
 </div>
