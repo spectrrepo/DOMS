@@ -15,7 +15,7 @@ use App\Tag;
 use App\View;
 
 use App\Like;
-
+use App\User;
 use App\Color;
 use App\Style;
 use App\Room;
@@ -38,13 +38,13 @@ class PhotoController extends Controller
      * @return
      *
      */
-     public function index ($filter = false)
+     public function index ($room = 'true', $style = 'true', $color = 'true')
      {
 
        $colors = Color::all();
        $styles = Style::all();
        $rooms = Room::all();
-       $images = Image::skip(0)->take(28)->get();
+       $images = DB::select('select * from Images where true');
 
        return view('site.index', ['colors' => $colors,
                                   'styles' => $styles,
@@ -82,7 +82,7 @@ class PhotoController extends Controller
     public function indexItem($id){
         $image = Image::find($id);
         // $image.id = $image.id;
-
+        $user = User::find($image->author_id);
         $images = Image::skip($image->id - 1)->take(3)->get();
         $colors = Color::all();
         $styles = Style::all();
@@ -99,7 +99,8 @@ class PhotoController extends Controller
         $new_count = $image->views_count + 1;
         $image->views_count = $new_count;
         $image->save();
-        return view('site.slider', ['colors' => $colors,
+        return view('site.slider', ['user' => $user,
+                                    'colors' => $colors,
                                     'styles' => $styles,
                                     'rooms' =>  $rooms,
                                     'images' => $images,
@@ -120,24 +121,27 @@ class PhotoController extends Controller
      *
      */
     public function add(){
-        $image = Image::create(Input::all());
+
+        $image = new Image();
+
+        $image->photo = $_FILES['photo'];
+        $image->title = $_POST['title'];
+        $image->description = $_POST['description'];
+        $image->author_id = $_POST['author_id'];
+        $image->user_upload_id = $_POST['user_upload_id'];
+
+        $image->colors = $_POST['color'];
+        $image->rooms = $_POST['room'];
+        $image->style = $_POST['style'];
+        $image->variants = 'djskf';
+        $image->save();
+
+        $addInfo = Image::where('author_id', '=', $_POST['author_id'])
+                        ->orderBy('update_to', 'desc')
+                        ->first();
+        $updateIinfo = Image::find($addInfo->id);
+        $updateIinfo->full_path = $updateIinfo->photo->url('max');
+        $updateIinfo->min_path = $updateIinfo->photo->url('small');
     }
 
-    /**
-     * @param
-     *
-     * @return
-     *
-     */
-    public function sort( $rooms = "", $styles="", $colors = "", $sort = ""){
-        switch (variable) {
-            case 'value':
-                # code...
-                break;
-
-            default:
-                # code...
-                break;
-        }
-    }
 }

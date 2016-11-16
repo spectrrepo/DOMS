@@ -6,7 +6,7 @@
     @foreach ( $images as $image)
         <a href="/photo/{{ $image->id }}" class="item-gallery" data-grid-prepared="true"style="position:absolute;">
           <div class="uk-panel-box" >
-              <img src="{{ $image->photo->url('small') }}" >
+              <img src="{{ $image->min_path }}" >
           </div>
       </a>
     @endforeach

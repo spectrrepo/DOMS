@@ -167,6 +167,14 @@ class UserController extends Controller
          return "true";
 
       }
+
+      public function likedDelete()
+      {
+        $liked = Liked::where('post_id', '=', $_POST['post_id'])
+                      ->where('user_id', '=', $_POST['user_id']);
+        $liked->delete();
+        return "true";
+      }
       /**
        * Login Form
        *

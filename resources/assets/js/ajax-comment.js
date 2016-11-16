@@ -29,6 +29,7 @@ $( document ).ready(function() {
                         data.text_comment +
                       '</div>' +
                       '<div class="b-date-comment">' +
+                        data.date +
                       '</div>'+
                     '</div>'+
                   '</div>').appendTo('.b-all-comment');

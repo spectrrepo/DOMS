@@ -15,8 +15,7 @@
 // TODO: change this filter and add new filte with Redirect::to('login');
 // TODO: add route for different ststus_profile
 
-Route::get('/', array('as' => 'index',
-                      'uses' => 'PhotoController@index'));
+Route::get('/{color?}', 'PhotoController@index');
 Route::get('/photo/{id}', array('uses' => 'PhotoController@indexItem'));
 Route::get('/profile/{id}', array('uses' => 'UserController@index'));
 

@@ -43,7 +43,10 @@ class LikeController extends Controller
      *
      */
     public function delete(){
-
+        $like = Like::where('post_id', '=', $_POST['post_id'])
+                    ->where('user_id', '=', $_POST['user_id']);
+        $like->delete();
+        return true;
     }
 
     /**

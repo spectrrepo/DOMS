@@ -8,7 +8,7 @@
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
              <ul>
                @foreach ( $rooms as $room )
-               <li class="item-moodal-sidebar" data-id=" {{ $room->id }} ">
+               <li class="item-moodal-sidebar" data-type="room" >
                  <span class="item-modal-text"> {{ $room->title }} </span>
                  <span class="choose-ico uk-icon-justify uk-icon-check"></span>
                  <div class="clear"></div>
@@ -25,7 +25,7 @@
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
              <ul class="styles-space">
              @foreach ( $styles as $style )
-               <li class="item-moodal-sidebar item-styles">
+               <li class="item-moodal-sidebar item-styles" data-type="style">
                  <span class="item-modal-text">{{ $style->name }}</span>
                  <span class="choose-ico uk-icon-justify uk-icon-check"></span>
                  <div class="clear"></div>
@@ -47,7 +47,7 @@
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
                <ul class="colors-space">
                @foreach ($colors as $color)
-                 <li class="colors-space-item" style="background:{{ $color->RGB }};">
+                 <li class="colors-space-item" data-type="color" style="background:{{ $color->RGB }};">
                    <span class="choose-ico uk-icon-justify uk-icon-check"></span>
                  </li>
                @endforeach
@@ -62,17 +62,17 @@
            <div class="sidebar-modal sort">
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
              <ul>
-               <li class="item-moodal-sidebar">
+               <li class="item-moodal-sidebar" data-type="sort" >
                  <span class="item-modal-text">Новое</span>
                  <span class="choose-ico uk-icon-justify uk-icon-check"></span>
                  <div class="clear"></div>
                </li>
-               <li class="item-moodal-sidebar">
+               <li class="item-moodal-sidebar" data-type="sort">
                  <span class="item-modal-text">Популярное</span>
                  <span class="choose-ico uk-icon-justify uk-icon-check"></span>
                  <div class="clear"></div>
                </li>
-               <li class="item-moodal-sidebar">
+               <li class="item-moodal-sidebar" data-type="sort">
                  <span class="item-modal-text">Рекомендованное</span>
                  <span class="choose-ico uk-icon-justify uk-icon-check"></span>
                  <div class="clear"></div>

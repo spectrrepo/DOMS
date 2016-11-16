@@ -40,14 +40,28 @@
                         </div>
                 <div class="b-informstion">
                   <span class="b-pretens">
-                    idPhoto
+                    <a href="/profile/{{ $user->id }}">
+                      <span class="author-portret">
+                         <img src=" {{ $user->avatar->url('small')}} " alt="" />
+                      </span>
+                      <span class="author-name">{{ $user->name}}</span>
+                    </a>
+                    <div class="b-item-stat pretense-tool">
+                      <span class="b-pretense">?</span>
+                      <span class="tooltip-stat margin-full-scr-tooltip">
+                        <span class="text-tooltip-stat">
+                         Заявить права
+                        </span>
+                        <span class="triangle-tooltip-stat triangle-full-scr"></span>
+                      </span>
+                    </div>
                   </span>
                   <span class="num-page">
                     <span id="current-position"> {{ $image->id }} </span>/ {{ $num_image }}
                   </span>
                   <span class="status-photo">
                     <div class="b-item-stat back-to-main">
-                      <a href="{{URL::route('index')}}" class="ico-slider uk-icon-justify uk-icon-th-large"></a>
+                      <a  class="ico-slider uk-icon-justify uk-icon-th-large"></a>
                       <span class="tooltip-stat margin-callback-tooltip">
                         <span class="text-tooltip-stat">
                          Плитка
@@ -56,7 +70,7 @@
                       </span>
                     </div>
                     <div class="b-item-stat full-scrn">
-                      <a class="ico-slider uk-icon-justify uk-icon-arrows-alt fancybox" href="{{ $image->photo->url() }}" data-fancybox-group="main"></a>
+                      <a class="ico-slider uk-icon-justify uk-icon-arrows-alt fancybox"  data-fancybox-group="main"></a>
                       <span class="tooltip-stat margin-full-scr-tooltip">
                         <span class="text-tooltip-stat">
                          На весь экран
@@ -138,7 +152,7 @@
                         {{ $comment->text_comment }}
                       </div>
                       <div class="b-date-comment">
-                        {{ $comment->date }}
+                        {{ $comment->date->format('d M Y H:i') }}
                       </div>
                     </div>
                   </div>

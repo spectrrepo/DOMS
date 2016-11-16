@@ -2066,50 +2066,61 @@ var erw = 1;
   $('li.item-moodal-sidebar').on('click', function () {
     var id = $('.item-moodal-sidebar').data('id');
     var title = $(this).children('.item-modal-text').text();
-    if ($('.menu-item').children('li.choose-sort-item:last-child').data('erw') === 3){
+    if ($(this).attr('data-erw2') !== undefined && $(this).attr('data-erw2') !== false) {
 
-        $('.menu-item').children('[data-erw = 1]').remove();
-        $('.menu-item').children('[data-erw = 2]').attr('data-erw', 1);
-        $('.menu-item').find('li.choose-sort-item:last-child')
-                       .attr('data-erw', 2);
-        $('.menu-item').find('active-choose-ico:first-child')
-                       .removeClass('active-choose-ico');
-
-        $('[data-erw2 = 1]').children('.choose-ico')
-                            .removeClass('active-choose-ico');
-        $('[data-erw2 = 1]').removeAttr('data-erw2');
-        $('[data-erw2 = 2]').attr('data-erw2', 1);
-        $('[data-erw2 = 3]').attr('data-erw2', 2);
-
-        $(this).attr('data-erw2', 3);
-        $(this).children('.choose-ico').toggleClass('active-choose-ico');
-
-        $('<li class="choose-sort-item" data-erw="'+3+'" data-id="'+id+'">'+
-            '<span class="name-sort-item">'+title+'</span>' +
-            '<i class="close-sort-item">x</i>' +
-        '</li>').appendTo('.active-item-click');
-
+      $(this).children('.choose-ico').removeClass('active-choose-ico');
+      $(this).removeAttr('data-erw2');
+      $(this).closest('.menu-item').children('.choose-sort-item[data-erw='+$(this).data('erw2')+']').remove();
+      erw -= 1;
     } else {
-      $(this).children('.choose-ico').toggleClass('active-choose-ico');
-      $(this).attr('data-erw2', erw);
+      if ($('.choose-sort-item[data-erw = 3]').length === 1){
+            // $('.menu-item').children('[data-erw   choose-ico');
 
-      $('<li class="choose-sort-item" data-erw="'+erw+'" data-id="'+id+'">'+
-          '<span class="name-sort-item">'+title+'</span>' +
-          '<i class="close-sort-item">x</i>' +
-      '</li>').appendTo('.active-item-click');
-      erw += 1;
+          $('[data-erw2 = 1]').children('.choose-ico')
+                              .removeClass('active-choose-ico');
+          $('[data-erw2 = 1]').removeAttr('data-erw2');
+          $('[data-erw2 = 2]').attr('data-erw2', 1);
+          $('[data-erw2 = 3]').attr('data-erw2', 2);
+
+          $(this).closest('.menu-item').children('.choose-sort-item').first().remove();
+          $(this).closest('.menu-item').children('.choose-sort-item').attr('data-erw', 1);
+          $(this).closest('.menu-item').children('.choose-sort-item').attr('data-erw', 2);
+
+          $(this).attr('data-erw2', 3);
+          $(this).children('.choose-ico').toggleClass('active-choose-ico');
+
+          $('<li class="choose-sort-item" data-erw="'+3+'" data-type="'+$(this).data('type')+'">'+
+              '<span class="name-sort-item">'+title+'</span>' +
+              '<i class="close-sort-item">x</i>' +
+          '</li>').appendTo('.active-item-click');
+
+      } else {
+        $(this).children('.choose-ico').toggleClass('active-choose-ico');
+        $(this).attr('data-erw2', erw);
+        if ($('.choose-sort-item').data('erw') === $(this).data('erw2')) {
+          $('.choose-sort-item[data-erw = '+$(this).data('erw2')+']').remove();
+        }else {
+          $('<li class="choose-sort-item" data-erw="'+erw+'" data-type="'+$(this).data('type')+'">'+
+              '<span class="name-sort-item">'+title+'</span>' +
+              '<i class="close-sort-item">x</i>' +
+          '</li>').appendTo('.active-item-click');
+          erw += 1;
+        }
+      }
     }
+
+
       $('li.choose-sort-item').click(function () {
         if ($(this).data('erw') === 1) {
-          $('[data-erw2 = 1]').children('.active-choose-ico').removeClass('.active-choose-ico');
+          $('.item-moodal-sidebar[data-erw2 = 1]').children('.active-choose-ico').removeClass('.active-choose-ico');
           $(this).remove();
         }
         else if ($(this).data('erw') === 2) {
-          $('[data-erw2 = 2]').children('.active-choose-ico').removeClass('.active-choose-ico');
+          $('.item-moodal-sidebar[data-erw2 = 2]').children('.active-choose-ico').removeClass('.active-choose-ico');
           $(this).remove();
         }
         else{
-          $('[data-erw2 = 3]').children('.active-choose-ico').removeClass('.active-choose-ico');
+          $('.item-moodal-sidebar[data-erw2 = 3]').children('.active-choose-ico').removeClass('.active-choose-ico');
           $(this).remove();
         }
       });
@@ -2279,6 +2290,7 @@ $( document ).ready(function() {
                         data.text_comment +
                       '</div>' +
                       '<div class="b-date-comment">' +
+                        data.date +
                       '</div>'+
                     '</div>'+
                   '</div>').appendTo('.b-all-comment');

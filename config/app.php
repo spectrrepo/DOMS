@@ -173,6 +173,8 @@ return [
         /*
          * Application Service Providers...
          */
+        // Laravelrus\LocalizedCarbon\LocalizedCarbonServiceProvider::class,
+
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
@@ -230,6 +232,9 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'HTML' => Collective\Html\HtmlFacade::class,
         'Input'     => Illuminate\Support\Facades\Input::class,
+        'LocalizedCarbon'  => Laravelrus\LocalizedCarbon\LocalizedCarbon::class,
+        'DiffFormatter'    => Laravelrus\LocalizedCarbon\DiffFactoryFacade::class,
+
 
     ],
 

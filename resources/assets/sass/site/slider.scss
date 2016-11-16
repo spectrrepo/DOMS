@@ -197,6 +197,32 @@ a.btn-prew span {
   border: none;
   background: none;
 }
+.b-pretense {
+  color: #993399;
+  border: 1px solid #cccccc;
+  padding: 0 5px;
+  margin: 0 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  float: left;
+}
+.pretense-tool {
+  float: left;
+}
+.author-portret {
+  float: left;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  border-radius: 3px;
+}
+.author-name {
+  float: left;
+  margin-left: 6px;
+  line-height: 28px;
+  height: 20px;
+}
    /*###and comments###*/
 .b-comments{}
 .b-com-title{
