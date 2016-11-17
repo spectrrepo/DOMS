@@ -17,7 +17,7 @@
             <div class="color-place">
                 @foreach ( $colors as $color)
                     <div class="wrap-color-input">
-                      <input class="color-photo-choose" type="checkbox" name="color" value="{{ $color->id }}" />
+                      <input class="color-photo-choose" type="checkbox" name="color[]" value="{{ $color->id }}" />
                       <div class="b-color-input" id="color_{{ $color->title }}" style="background:{{ $color->RGB}}"></div>
                     </div>
                 @endforeach
@@ -27,7 +27,7 @@
               <div class="wrap-dwnld-photo">
                   <span class="add-photo-ico racurs-margin-ico uk-icon-justify uk-icon-camera"></span>
                   <span class="add-photo-text racurs-margin-text">Добавить ракурсы</span>
-                  <input id="files" class="input-dwnld-view-photo" type="file" name="files" multiple>
+                  <input id="files" class="input-dwnld-view-photo" type="file" name="files[]" multiple>
               </div>
             </div>
             <div class="clear"></div>
@@ -49,7 +49,7 @@
       <div class="tags-list">
         @foreach ( $styles as $style )
           <div class="wrap-tags-list-item">
-            <input class="opacity-radio" type="checkbox" name="style" value=" {{ $style->id }} ">
+            <input class="opacity-radio" type="checkbox" name="style[]" value="{{ $style->id }}">
             <div class="tags-list-item">
               {{ $style->name }}
             </div>
@@ -64,7 +64,7 @@
       <div class="tags-list">
         @foreach ( $rooms as $room )
         <div class="wrap-tags-list-item">
-          <input class="opacity-radio" type="checkbox" name="room" value=" {{ $room->id }} ">
+          <input class="opacity-radio" type="checkbox" name="room[]" value="{{ $room->id }}">
           <div class="tags-list-item">
             {{ $room->title }}
           </div>

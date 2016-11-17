@@ -33,26 +33,6 @@ class Image extends Model implements StaplerableInterface
     }
     // neeed scope for main controller
 
-    public function scopeColor($query, $colors){
-         return $query->where('colors', '=', $colors);
-    }
-
-    public function scopeStyle($query, $styles){
-
-         return $query->where('style', '=', $styles);
-
-    }
-
-    public function scopeRoom($query, $rooms){
-
-         return $query->where('rooms', '=', $rooms);
-
-    }
-
-    public function scopeSort($query, $sort)
-    {
-        # code...
-    }
     /**
      * table DB using model
      *
