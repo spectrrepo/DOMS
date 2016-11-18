@@ -15,10 +15,6 @@ class CreateViewsTable extends Migration
     {
         Schema::create('Views', function (Blueprint $table){
                 $table->increments('id');
-                $table->string('path_min');
-                $table->string('path_full');
-                $table->string('alt_text');
-                $table->integer('post_id')->unsigned();
                 $table->integer('user_id')->unsigned();
                 $table->timestamp('date');
         });
