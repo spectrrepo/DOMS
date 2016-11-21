@@ -13,8 +13,10 @@ class AddColumnImages extends Migration
      */
     public function up()
     { Schema::table('Images', function(Blueprint $table) {
+
           $table->timestamp('update_to')->nullable();
           $table->timestamp('create_to')->nullable();
+
       });
     }
 

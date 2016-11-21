@@ -139,7 +139,7 @@ class UserController extends Controller
          $user->save();
 
          Auth::attempt(['e_mail' => $email, 'password' => $password]);
-         return redirect('/');
+         return redirect()->back();
      }
 
      /**
@@ -156,7 +156,10 @@ class UserController extends Controller
      /**
       * Login Form
       *
-      * @return Response
+      * @return Re@extends('layouts.profile')
+@section('profile-content')
+@endsection
+sponse
       */
      public function likedAdd()
      {
@@ -223,4 +226,29 @@ class UserController extends Controller
            return redirect()->back();
        }
 
+    //    moderator
+       public function addNewsPage()
+       {
+           return view('moderator.add_news');
+       }
+       public function editRoomsPage()
+       {
+           return view('moderator.edit_rooms');
+       }
+       public function editStylesPage()
+       {
+           return view('moderator.edit_styles');
+       }
+       public function editTagsPage()
+       {
+           return view('moderator.edit_tags');
+       }
+       public function confirmationsPage()
+       {
+           return view('moderator.wait_confirmation');
+       }
+       public function confirmationItemPage()
+       {
+           return view('moderator.wait_confirmation_item');
+       }
 }

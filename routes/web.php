@@ -18,6 +18,7 @@
 Route::get('/room=[{room?}],styles=[{style?}],colors=[{color?}],sort=[{sort?}]', 'PhotoController@index');
 Route::get('/photo/{id}', array('uses' => 'PhotoController@indexItem'));
 Route::get('/profile/{id}', array('uses' => 'UserController@index'));
+Route::get('/news', array('uses' => 'NewsController@Index'));
 
 Route::get('/profile/add/photo', array('as' => 'add',
                                        'uses' => 'UserController@indexAdd'));
@@ -25,12 +26,18 @@ Route::get('/profile/edit/user', array('as' => 'edit',
                                        'uses' => 'UserController@editUser'));
 Route::get('/profile/liked/photo', array('as' => 'liked',
                                          'uses' => 'UserController@likedIndex'));
-
 Route::get('/profile/{id}/your_photo', array('uses' => 'UserController@yourPhotoUpload'));
+
+Route::get('/profile/admin/verification', array('uses' => 'UserController@confirmationsPage'));
+Route::get('/profile/admin/tags_edit', array('uses' => 'UserController@editTagsPage'));
+Route::get('/profile/admin/styles_edit', array('uses' => 'UserController@editStylesPage'));
+Route::get('/profile/admin/rooms_edit', array('uses' => 'UserController@editRoomsPage'));
+Route::get('/profile/admin/add_news', array('uses' => 'UserController@addNewsPage'));
+Route::get('/profile/admin/verification/{id}', array('uses' => 'UserController@confirmationItemPage'));
+
 Route::post('/add_photo', 'PhotoController@add');
 Route::post('/comment', 'CommentController@add');
 Route::post('/like', 'LikeController@add');
-// TODO:restfull controler add
 
 Route::post('/pagination_index', 'PhotoController@indexAddPage');
 Route::post('/liked', 'UserController@likedAdd');

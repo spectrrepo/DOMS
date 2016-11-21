@@ -1,0 +1,40 @@
+.news-item {
+  width: 100%;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  padding: 5px;
+  border-radius: 3px;
+}
+.wrap-news-item {
+  width: 25%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.item-news-title {
+  color: #993399;
+  display: block;
+  margin-top: 10px;
+}
+
+.modal-news {
+  width: 65%;
+  height: 80%;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  z-index: 200000000;
+  border-radius: 5px;
+}
+.scroll-place-modal-news {
+  overflow-y: scroll;
+  width: 90%;
+  height: 90%;
+  margin: 0 auto;
+  margin-top: 5%;
+
+}

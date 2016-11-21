@@ -12,7 +12,9 @@
         "laravelcollective/html": "~5.0",
         "codesleeve/laravel-stapler": "1.0.*",
         "laravelrus/localized-carbon": "1.*",
-        "nesbot/carbon": "~1.21"
+        "nesbot/carbon": "~1.21",
+        "socialiteproviders/vkontakte": "^2.0",
+        "laravel/socialite": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

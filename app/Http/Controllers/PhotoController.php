@@ -233,3 +233,4 @@ class PhotoController extends Controller
     }
 
 }
+}
