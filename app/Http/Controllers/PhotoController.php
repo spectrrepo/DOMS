@@ -204,7 +204,22 @@ class PhotoController extends Controller
               $view->save();
               var_dump($view->photo);
               $variantRes .= 'x'.', ';
+        foreach (Input::file('files') as $variantItem) {
+            $view = new View();
+            $view->photo = $variantItem;
+            $view->user_id = $_POST["author_id"];
+            $view->save();
+            $addViewInfo = View::where('user_id', '=', $_POST['author_id'])
+                                ->orderBy('id', 'desc')
+                                ->first();
+            $updateViewInfo = View::find($addViewInfo->id);
+            $variantRes .= $addViewInfo->id.',';
+            $updateViewInfo->path_min = $updateViewInfo->photo->url('small');
+            $updateViewInfo->path_full = $updateViewInfo->photo->url();
+            $updateViewInfo->save();
+
         }
+        $image->variants = $variantRes;
         $image->save();
 
         $addInfo = Image::where('author_id', '=', $_POST['author_id'])
@@ -214,6 +229,7 @@ class PhotoController extends Controller
         $updateIinfo->full_path = $updateIinfo->photo->url('max');
         $updateIinfo->min_path = $updateIinfo->photo->url('small');
         $updateIinfo->save();
+        return redirect()->back();
     }
 
 }
