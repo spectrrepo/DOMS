@@ -10,6 +10,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait;
 class Image extends Model implements StaplerableInterface
 {
     use EloquentTrait;
+    protected $dates = ['update_to'];
 
     protected $fillable = ['photo',
                            'title',

@@ -20,6 +20,8 @@ use App\Color;
 use App\Style;
 use App\Room;
 use Input;
+use Carbon\Carbon;
+
 /**
  * The ResultMessage class holds a message that can be returned
  * as a result of a process. The message has a severity and
@@ -38,7 +40,7 @@ class PhotoController extends Controller
      * @return
      *
      */
-     public function index ($room = 0, $style = 0, $color = 0, $sort = 0)
+     public function index ($room = 0, $style = 0, $color = 0, $sort = "")
      {
        if ($room != 0 ) {
            $roomSort = 'rooms = '.$room;
@@ -63,7 +65,7 @@ class PhotoController extends Controller
          }elseif ($sort == 'new') {
              $sortSort = 'order by id desc';
          }else {
-             $sortSort = true;
+             $sortSort = 'and 1';
          }
 
        }else{
@@ -112,8 +114,8 @@ class PhotoController extends Controller
      */
     public function indexItem($id){
         $image = Image::find($id);
-        // $image.id = $image.id;
-        $user = User::find($image->author_id);
+        $idy = $image->author_id;
+        $user = User::find($idy);
         $images = Image::skip($image->id - 1)->take(3)->get();
         $colors = Color::all();
         $styles = Style::all();
@@ -194,17 +196,14 @@ class PhotoController extends Controller
             $image->style = $style;
         }
 
-        $variant = $_FILES["files"];
+        // $variant = $_FILES["files"];
         $variantRes = "";
-        if (is_array($variant)) {
-            foreach ($variant as $variantItem) {
-                $view = new View();
-
-                $view->photo = $variantItem;
-                $variantRes .= 'x'.', ';
-            }
-        }else {
-
+        foreach (Input::file('files') as $variantItem) {
+              $view = new View();
+              $view->photo = $variantItem;
+              $view->save();
+              var_dump($view->photo);
+              $variantRes .= 'x'.', ';
         }
         $image->save();
 

@@ -27,8 +27,6 @@ class CreateImagesTable extends Migration {
             $table->string('variants')->nullable();
             $table->string('style')->nullable();
             $table->string('rooms')->nullable();
-            $table->timestamp('update_to')->nullable();
-            $table->timestamp('create_to')->nullable();
         });
 
     }

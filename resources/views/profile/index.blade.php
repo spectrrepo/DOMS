@@ -65,7 +65,7 @@
                 </div>
                 <div class="b-iformation">
                   <div class="b-date">
-                    {{$image->date->format('d M Y H:i')}}
+                    {{$image->update_to->format('d M Y H:i')}}
                   </div>
                   <div class="b-statistics">
                     <div class="b-item-stat">
