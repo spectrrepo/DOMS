@@ -220,6 +220,7 @@ class UserController extends Controller
            $user->avatar = $_FILES["avatar"];
 
            $user->save();
+           return redirect()->back();
        }
 
 }
