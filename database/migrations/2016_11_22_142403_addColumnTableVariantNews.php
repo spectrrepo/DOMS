@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnTableImage extends Migration
+class AddColumnTableVariantNews extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddColumnTableImage extends Migration
      */
     public function up()
     {
-        Schema::table('Images', function(Blueprint $table) {
+        Schema::table('News', function(Blueprint $table) {
 
-            $table->boolean('verified');
+            $table->string('variants');
 
         });
     }
@@ -27,7 +27,7 @@ class AddColumnTableImage extends Migration
      */
     public function down()
     {
-        Schema::table('Images', function(Blueprint $table) {
+        Schema::table('News', function(Blueprint $table) {
 
             $table->dropColumn('verified');
 

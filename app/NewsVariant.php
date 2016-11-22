@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Codesleeve\Stapler\ORM\EloquentTrait;
 
-class News extends Model implements StaplerableInterface
+class NewsVariant extends Model implements StaplerableInterface
 {
      use EloquentTrait;
     /**
@@ -15,18 +15,17 @@ class News extends Model implements StaplerableInterface
      *
      * @var string
      */
-    protected $fillable = ['news'];
+    protected $fillable = ['news_variant'];
     public $timestamps = false;
 
     public function __construct(array $attributes = array()) {
-        $this->hasAttachedFile('news', [
+        $this->hasAttachedFile('news_variant', [
             'styles' => [
                 'max'   => '800x800',
-                'small' => '300x300'
             ]
         ]);
 
         parent::__construct($attributes);
     }
-     protected $table = 'News';
+     protected $table = 'News_variant_photo';
 }

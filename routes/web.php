@@ -15,6 +15,9 @@
 // TODO: change this filter and add new filte with Redirect::to('login');
 // TODO: add route for different ststus_profile
 
+Route::get('/', function(){
+    return redirect('/room=[0],styles=[0],colors=[0],sort=[""]');
+});
 Route::get('/room=[{room?}],styles=[{style?}],colors=[{color?}],sort=[{sort?}]', 'PhotoController@index');
 Route::get('/photo/{id}', array('uses' => 'PhotoController@indexItem'));
 Route::get('/profile/{id}', array('uses' => 'UserController@index'));
@@ -28,13 +31,19 @@ Route::get('/profile/liked/photo', array('as' => 'liked',
                                          'uses' => 'UserController@likedIndex'));
 Route::get('/profile/{id}/your_photo', array('uses' => 'UserController@yourPhotoUpload'));
 
-Route::get('/profile/admin/verification', array('uses' => 'UserController@confirmationsPage'));
-Route::get('/profile/admin/tags_edit', array('uses' => 'UserController@editTagsPage'));
-Route::get('/profile/admin/styles_edit', array('uses' => 'UserController@editStylesPage'));
-Route::get('/profile/admin/rooms_edit', array('uses' => 'UserController@editRoomsPage'));
-Route::get('/profile/admin/add_news', array('uses' => 'UserController@addNewsPage'));
+Route::get('/profile/admin/verification', array('as' => 'verified',
+                                                'uses' => 'UserController@confirmationsPage'));
+Route::get('/profile/admin/tags_edit', array('as' => 'tags_edit',
+                                             'uses' => 'UserController@editTagsPage'));
+Route::get('/profile/admin/styles_edit', array('as' => 'styles_edit',
+                                               'uses' => 'UserController@editStylesPage'));
+Route::get('/profile/admin/rooms_edit', array('as' => 'rooms_edit',
+                                              'uses' => 'UserController@editRoomsPage'));
+Route::get('/profile/admin/add_news', array('as' => 'news',
+                                            'uses' => 'UserController@addNewsPage'));
 Route::get('/profile/admin/verification/{id}', array('uses' => 'UserController@confirmationItemPage'));
 
+Route::post('/add_news', 'NewsController@addNews');
 Route::post('/add_photo', 'PhotoController@add');
 Route::post('/comment', 'CommentController@add');
 Route::post('/like', 'LikeController@add');

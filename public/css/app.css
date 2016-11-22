@@ -7179,6 +7179,91 @@ html {
   background-color: #333333;
   cursor: pointer; }
 
+.item-admin-row {
+  width: 100%;
+  height: 90px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease; }
+
+.item-admin-row:hover {
+  background: #ccc; }
+
+.cell-item-admin {
+  float: left;
+  width: 20%;
+  height: 100%;
+  text-align: center; }
+
+.id-cell {
+  line-height: 90px;
+  width: 8%; }
+
+.img-cell {
+  box-sizing: border-box;
+  padding: 20px; }
+
+.title-cell {
+  width: 62%;
+  line-height: 90px; }
+
+.img-inside-cell {
+  max-height: 100%;
+  max-width: 100%;
+  height: auto;
+  width: auto; }
+
+.cell-for-btn {
+  width: 5%; }
+
+.btn-cell {
+  margin-top: 37px;
+  font-size: 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease; }
+
+.btn-cell:hover {
+  color: blue; }
+
+ul.pagination li {
+  list-style: none;
+  float: left;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  line-height: 40px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease; }
+
+ul.pagination li:hover {
+  background: #ccc; }
+
+ul.pagination li.active {
+  color: white;
+  background: cadetblue; }
+
+ul.pagination li a {
+  width: 100%;
+  height: 100%;
+  display: block; }
+
+.add-btn-admin {
+  display: block;
+  width: 100%;
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  background: #efeded;
+  font-size: 18px;
+  color: #636363; }
+
 ul {
   width: 100%;
   margin-left: -38px; }

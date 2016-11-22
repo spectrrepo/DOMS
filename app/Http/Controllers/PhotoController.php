@@ -162,7 +162,7 @@ class PhotoController extends Controller
         $image->description = $_POST['description'];
         $image->author_id = $_POST['author_id'];
         $image->user_upload_id = $_POST['user_upload_id'];
-
+        $image->verified = false;
         $color = $_POST['color'];
         $colorRes = "";
         if (is_array($color)) {
@@ -198,13 +198,7 @@ class PhotoController extends Controller
 
         // $variant = $_FILES["files"];
         $variantRes = "";
-        foreach (Input::file('files') as $variantItem) {
-              $view = new View();
-              $view->photo = $variantItem;
-              $view->save();
-              var_dump($view->photo);
-              $variantRes .= 'x'.', ';
-        foreach (Input::file('files') as $variantItem) {
+            foreach (Input::file('files') as $variantItem) {
             $view = new View();
             $view->photo = $variantItem;
             $view->user_id = $_POST["author_id"];
@@ -232,5 +226,5 @@ class PhotoController extends Controller
         return redirect()->back();
     }
 
-}
+
 }

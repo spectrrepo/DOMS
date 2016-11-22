@@ -15,10 +15,16 @@ class CreateTableNews extends Migration
     {
         Schema::create('News', function (Blueprint $table){
                 $table->increments('id');
-                $table->string('title');
-                $table->('description');
-                $table->('full_description');
-                $table->('short_description');
+                $table->string('title')->nullable();
+                $table->text('description')->nullable();
+                $table->text('full_description')->nullable();
+                $table->string('news_file_name')->nullable();
+                $table->integer('news_file_size')->nullable();
+                $table->string('news_content_type')->nullable();
+                $table->timestamp('news_updated_at')->nullable();
+                $table->string('file_path_full')->nullable();
+                $table->string('file_path_min')->nullable();
+                $table->timestamp('date')->nullable();
         });
     }
 

@@ -11,7 +11,7 @@ use App\User;
 use App\Style;
 
 use App\Room;
-
+use App\Tag;
 use App\Color;
 use App\Liked;
 
@@ -157,9 +157,6 @@ class UserController extends Controller
       * Login Form
       *
       * @return Re@extends('layouts.profile')
-@section('profile-content')
-@endsection
-sponse
       */
      public function likedAdd()
      {
@@ -233,22 +230,27 @@ sponse
        }
        public function editRoomsPage()
        {
-           return view('moderator.edit_rooms');
+           $rooms = Room::paginate(10);
+           return view('moderator.edit_rooms', ['rooms' => $rooms]);
        }
        public function editStylesPage()
        {
-           return view('moderator.edit_styles');
+           $styles = Style::paginate(10);
+           return view('moderator.edit_styles', ['styles' => $styles]);
        }
        public function editTagsPage()
        {
-           return view('moderator.edit_tags');
+           $tags = Tag::paginate(10);
+           return view('moderator.edit_tags', ['tags' => $tags]);
        }
        public function confirmationsPage()
        {
-           return view('moderator.wait_confirmation');
+           $images = Image::where('verified', '=', false)->paginate(10);
+           return view('moderator.wait_confirmation', ['images' => $images]);
        }
-       public function confirmationItemPage()
+       public function confirmationItemPage($id)
        {
-           return view('moderator.wait_confirmation_item');
+           $image = Image::find($id)->get();
+           return view('moderator.wait_confirmation_item', ['image' => $image]);
        }
 }
