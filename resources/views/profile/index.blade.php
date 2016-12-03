@@ -46,8 +46,8 @@
 <div class="wrap-personal-news">
     <div class="b-setting-switcher">
       <ul class="switcher">
-        <li class="item-swicher{{  substr_count(URL::current(), '/profile/') ? ' item-switcher-active': ' none' }}"><a href="{{ URL::to('/profile/'.Auth::id()) }}">Обновления</a></li>
-        <li class="item-swicher{{  substr_count(URL::current(), '/your_photo') ? ' item-switcher-active': ' none' }}"><a href="{{ URL::to('/profile/'.Auth::id().'/your_photo') }}">Фотографии</a></li>
+        <li class="item-swicher{{ substr_count(URL::current(), '/profile/') ? ' item-switcher-active': ' none' }}"><a href="{{ URL::to('/profile/'.Auth::id()) }}">Обновления</a></li>
+        <li class="item-swicher{{ substr_count(URL::current(), '/your_photo') ? ' item-switcher-active': ' none' }}"><a href="{{ URL::to('/profile/'.Auth::id().'/your_photo') }}">Фотографии</a></li>
         <div class="clear"></div>
       </ul>
     </div>
@@ -61,11 +61,11 @@
               <div class="b-name-redactor"><a href="/profile/{{$image->id}}">{{$image->name}}</a></div>
               <div class="b-post-body">
                 <div class="b-photo-post">
-                  <img src="{{$image->photo->url()}}" class="img-post" alt="" />
+                  <img src="{{$image->full_path}}" class="img-post" alt="" />
                 </div>
                 <div class="b-iformation">
                   <div class="b-date">
-                    {{$image->update_to->format('d M Y H:i')}}
+                    {{$image->photo_updated_at->format('dd M Y')}}
                   </div>
                   <div class="b-statistics">
                     <div class="b-item-stat">

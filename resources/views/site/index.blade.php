@@ -9,10 +9,14 @@
           </div>
       </a>
     @endforeach
-    <div class="clear"></div>
   </div>
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" name="lastId" value="10">
+
+    <input type="hidden" name="sortSort" value="{{ $sortSort }}">
+    <input type="hidden" name="styleSort" value="{{ $styleSort }}">
+    <input type="hidden" name="roomSort" value="{{ $roomSort }}">
+    <input type="hidden" name="colorSort" value="{{ $colorSort }}">
     <div class="b-next-page">
       Следущая страница
     </div>

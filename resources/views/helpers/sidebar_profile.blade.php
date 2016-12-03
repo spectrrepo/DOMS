@@ -8,5 +8,6 @@
     <li class="menu-item-profile"><a href="{{ URL::route('rooms_edit') }}">Элементы сортировки</a></li>
     <li class="menu-item-profile"><a href="{{ URL::route('verified') }}">Изображения</a></li>
     <li class="menu-item-profile"><a href="{{ URL::route('news') }}">Новости</a></li>
+
   </ul>
 </nav>

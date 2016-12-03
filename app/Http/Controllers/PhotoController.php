@@ -7,7 +7,7 @@ use Illuminate\Pagination\Paginator;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use App\Image;
-
+use App\News;
 use App\Comment;
 
 use App\Tag;
@@ -15,6 +15,7 @@ use App\Tag;
 use App\View;
 
 use App\Like;
+use App\Liked;
 use App\User;
 use App\Color;
 use App\Style;
@@ -22,6 +23,7 @@ use App\Room;
 use Input;
 use Carbon\Carbon;
 
+use Auth;
 /**
  * The ResultMessage class holds a message that can be returned
  * as a result of a process. The message has a severity and
@@ -40,32 +42,59 @@ class PhotoController extends Controller
      * @return
      *
      */
-     public function index ($room = 0, $style = 0, $color = 0, $sort = "")
+     public function index ($room = 0, $style = 0, $color = 0, $sort = 0)
      {
        if ($room != 0 ) {
-           $roomSort = 'rooms = '.$room;
+           $roomArray = explode(',',$room);
+           $roomSort = "";
+           foreach ($roomArray as $roomArrayItem) {
+               if ($roomArrayItem !== end($roomArray)) {
+                   $roomSort .= ' rooms regexp ( '.$roomArrayItem.') and';
+               }
+               else {
+                   $roomSort .= ' rooms regexp ( '.$roomArrayItem.')';
+               }
+           }
        }else{
-           $roomSort = true;
+           $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
        }
        if ($style != 0 ) {
-           $styleSort = 'style = '.$style;
+           $styleArray = explode(',',$style);
+           $styleSort = "";
+           foreach ($styleArray as $styleArrayItem) {
+               if ($styleArrayItem !== end($styleArray)) {
+                   $styleSort .= ' style regexp ( '.$styleArrayItem.') and';
+               }
+               else {
+                   $styleSort .= ' style regexp ( '.$styleArrayItem.')';
+               }
+           }
        }else{
-           $styleSort = true;
+           $styleSort = "style regexp '[a-zA-Z0-9_]'";
        }
        if ($color != 0 ) {
-           $colorSort = 'colors = '.$color;
+           $colorArray = explode(',',$color);
+           $colorSort = "";
+           foreach ($colorArray as $colorArrayItem) {
+               if ($colorArrayItem !== end($colorArray)) {
+                   $colorSort .= ' colors regexp ( '.$colorArrayItem.') and';
+               }
+               else {
+                   $colorSort .= ' colors regexp ( '.$colorArrayItem.')';
+               }
+           }
        }else{
-           $colorSort = true;
+           $colorSort = "colors regexp '[a-zA-Z0-9_]'";
        }
-       if ($sort != "" ) {
+       if ($sort != 0 ) {
          if ($sort == 'popular') {
-             $sortSort = 'order by views_count desc';
+             $sortSort = 'views_count';
          }elseif ($sort == 'recommended') {
-             $sortSort = 'order by id desc';
+             $sortSort = 'id';
          }elseif ($sort == 'new') {
-             $sortSort = 'order by id desc';
+             $sortSort = 'id';
          }else {
-             $sortSort = 'and 1';
+             $sortSort = '';
          }
 
        }else{
@@ -74,15 +103,27 @@ class PhotoController extends Controller
        $colors = Color::all();
        $styles = Style::all();
        $rooms = Room::all();
-       if ($sort != ""){
-           $images = DB::select('select * from Images where '.$roomSort.' and '.$styleSort.' and '.$colorSort.' '.$sortSort);
+       $news = News::orderBy('id','desc')->first();
+       if ($sort != 0){
+           $images = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                            ->take(3)
+                            ->orderBy($sortSort, 'desc')
+                            ->get();
        }else {
-           $images = DB::select('select * from Images where '.$roomSort.' and '.$styleSort.' and '.$colorSort);
+           $images = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                            ->take(3)
+                            ->get();
+           $sortSort = false;
        }
-       return view('site.index', ['colors' => $colors,
+       return view('site.index', ['news' => $news,
+                                  'colors' => $colors,
                                   'styles' => $styles,
                                   'rooms' =>  $rooms,
-                                  'images' => $images]);
+                                  'images' => $images,
+                                  'roomSort' => $roomSort,
+                                  'colorSort' => $colorSort,
+                                  'styleSort' => $styleSort,
+                                  'sortSort' => $sortSort]);
 
     }
     public function loadLeftPhoto () {
@@ -103,7 +144,24 @@ class PhotoController extends Controller
      */
      public function indexAddPage(){
          $lastId = $_POST['lastId'];
-         $ajaxImage = Image::skip($lastId)->take(28)->get();
+         $sortSort = $_POST['sortSort'];
+         $roomSort = $_POST['roomSort'];
+         $styleSort = $_POST['styleSort'];
+         $colorSort = $_POST['colorSort'];
+
+         if ($sortSort != 0) {
+              $ajaxImage = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                               ->skip($lastId)
+                               ->take(3)
+                               ->orderBy($sortSort, 'desc')
+                               ->get();
+         }else {
+              $ajaxImage = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                               ->skip($lastId)
+                               ->take(3)
+                               ->get();
+         }
+
          return $ajaxImage;
      }
     /**
@@ -112,11 +170,99 @@ class PhotoController extends Controller
      * @return
      *
      */
-    public function indexItem($id){
-        $image = Image::find($id);
-        $idy = $image->author_id;
-        $user = User::find($idy);
-        $images = Image::skip($image->id - 1)->take(3)->get();
+    public function indexItem($id, $room = 0, $style = 0, $color = 0, $sort = 0){
+
+         if ($room != 0 ) {
+            $roomArray = explode(',',$room);
+            $roomSort = "";
+            foreach ($roomArray as $roomArrayItem) {
+                if ($roomArrayItem !== end($roomArray)) {
+                    $roomSort .= ' rooms regexp ( '.$roomArrayItem.') and';
+                }
+                else {
+                    $roomSort .= ' rooms regexp ( '.$roomArrayItem.')';
+                }
+            }
+        }else{
+            $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
+        }
+        if ($style != 0 ) {
+            $styleArray = explode(',',$style);
+            $styleSort = "";
+            foreach ($styleArray as $styleArrayItem) {
+                if ($styleArrayItem !== end($styleArray)) {
+                    $styleSort .= ' style regexp ( '.$styleArrayItem.') and';
+                }
+                else {
+                    $styleSort .= ' style regexp ( '.$styleArrayItem.')';
+                }
+            }
+        }else{
+            $styleSort = "style regexp '[a-zA-Z0-9_]'";
+        }
+        if ($color != 0 ) {
+            $colorArray = explode(',',$color);
+            $colorSort = "";
+            foreach ($colorArray as $colorArrayItem) {
+                if ($colorArrayItem !== end($colorArray)) {
+                    $colorSort .= ' colors regexp ( '.$colorArrayItem.') and';
+                }
+                else {
+                    $colorSort .= ' colors regexp ( '.$colorArrayItem.')';
+                }
+            }
+        }else{
+            $colorSort = "colors regexp '[a-zA-Z0-9_]'";
+        }
+        if ($sort != 0 ) {
+          if ($sort == 'popular') {
+              $sortSort = 'views_count';
+          }elseif ($sort == 'recommended') {
+              $sortSort = 'id';
+          }elseif ($sort == 'new') {
+              $sortSort = 'id';
+          }else {
+              $sortSort = '';
+          }
+
+        }else{
+          $sortSort = true;
+        }
+
+        if ($sort != 0){
+            $images = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                           ->where('id','>=', $id)
+                           ->take(3)
+                           ->orderBy($sortSort, 'desc')
+                           ->get();
+            $image = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                          ->where('id','=', $id)
+                          ->first();
+        }else {
+            $images = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                           ->where('id','>=', $id)
+                           ->take(3)
+                           ->get();
+            $image = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                          ->where('id','=', $id)
+                          ->first();
+        }
+
+        if (!empty($image)) {
+             $image = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                           ->where('id','>', $id)
+                           ->first();
+             if (!empty($image)) {
+                  $image = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                                ->where('id','<', $id)
+                                ->first();
+             }else{
+                  $image = false;
+                  dd($image);
+             }
+        }
+        $needImage = Image::find($id);
+        $user = User::find($needImage->author_id);
         $colors = Color::all();
         $styles = Style::all();
         $rooms = Room::all();
@@ -129,10 +275,32 @@ class PhotoController extends Controller
         $num_like = count( Like::where('post_id', '=', $id)->get());
         $num_comment = count( Comment::where('post_id', '=', $id)->get());
 
+        $likeThisUser = Like::where('user_id', '=', Auth::id() )
+                            ->where('post_id', '=', $id)
+                            ->get()
+                            ->toArray();
+        if (!empty($likeThisUser)) {
+             $colorLike = true;
+        }else {
+             $colorLike = false;
+        }
+        $likedThisUser = Liked::where('user_id', '=', Auth::id() )
+                              ->where('post_id', '=', $id)
+                              ->get()
+                              ->toArray();
+        if (!empty($likedThisUser)) {
+            $colorLiked = true;
+        }else {
+            $colorLiked = false;
+        }
         $new_count = $image->views_count + 1;
         $image->views_count = $new_count;
         $image->save();
-        return view('site.slider', ['user' => $user,
+        
+        $news = News::orderBy('id','desc')->first();
+
+        return view('site.slider', ['news' => $news,
+                                    'user' => $user,
                                     'colors' => $colors,
                                     'styles' => $styles,
                                     'rooms' =>  $rooms,
@@ -143,7 +311,9 @@ class PhotoController extends Controller
                                     'views' => $views,
                                     'num_image' => $num_image,
                                     'num_like' => $num_like,
-                                    'num_comment' => $num_comment]);
+                                    'num_comment' => $num_comment,
+                                    'colorLike' => $colorLike,
+                                    'colorLiked' => $colorLiked]);
 
     }
 
@@ -157,12 +327,86 @@ class PhotoController extends Controller
 
         $image = new Image();
 
+        $lastId = Image::orderBy('id', 'desc')->first();
         $image->photo = $_FILES['photo'];
         $image->title = $_POST['title'];
         $image->description = $_POST['description'];
         $image->author_id = $_POST['author_id'];
         $image->user_upload_id = $_POST['user_upload_id'];
         $image->verified = false;
+        $color = $_POST['color'];
+        $colorRes = " ";
+        if (is_array($color)) {
+            foreach ($color as $colorItem) {
+                $colorRes .=$colorItem.', ';
+            }
+            $image->colors = $colorRes;
+        }else{
+            $image->colors = $color;
+        }
+
+        $room = $_POST['room'];
+        $roomRes = " ";
+        if (is_array($room)) {
+            foreach ($room as $roomItem) {
+                $roomRes .=$roomItem.', ';
+            }
+            $image->rooms = $roomRes;
+        }else{
+            $image->rooms = $room;
+        }
+
+        $style = $_POST['style'];
+        $styleRes = " ";
+        if (is_array($style)) {
+            foreach ($style as $styleItem) {
+                $styleRes .=$styleItem.', ';
+            }
+            $image->style = $styleRes;
+        }else{
+            $image->style = $style;
+        }
+
+        // $variant = $_FILES["files"];
+        $variantRes = " ";
+            foreach (Input::file('files') as $variantItem) {
+            $view = new View();
+            $view->photo = $variantItem;
+            $view->user_id = $_POST["author_id"];
+            $view->save();
+            $addViewInfo = View::where('user_id', '=', $_POST['author_id'])
+                                ->orderBy('id', 'desc')
+                                ->first();
+            $updateViewInfo = View::find($addViewInfo->id);
+            $variantRes .= $addViewInfo->id.',';
+            $updateViewInfo->path_min = $updateViewInfo->photo->url('small');
+            $updateViewInfo->path_full = $updateViewInfo->photo->url();
+            $updateViewInfo->post_id = $lastId->id + 1;
+            $updateViewInfo->save();
+
+        }
+
+        $image->variants = $variantRes;
+        $image->save();
+
+        $addInfo = Image::where('author_id', '=', $_POST['author_id'])
+                        ->orderBy('id', 'desc')
+                        ->first();
+        $updateIinfo = Image::find($addInfo->id);
+        $updateIinfo->full_path = $updateIinfo->photo->url('max');
+        $updateIinfo->min_path = $updateIinfo->photo->url('small');
+        $updateIinfo->save();
+        return redirect()->back();
+    }
+    public function addPhotoSite($id)
+    {
+        $image = Image::find($id);
+        if ( !isset($_FILES['photo'])) {
+            $image->photo = $_FILES['photo'];
+        }
+        $image->title = $_POST['title'];
+        $image->description = $_POST['description'];
+        $image->verified = true;
         $color = $_POST['color'];
         $colorRes = "";
         if (is_array($color)) {
@@ -195,36 +439,8 @@ class PhotoController extends Controller
         }else{
             $image->style = $style;
         }
-
-        // $variant = $_FILES["files"];
-        $variantRes = "";
-            foreach (Input::file('files') as $variantItem) {
-            $view = new View();
-            $view->photo = $variantItem;
-            $view->user_id = $_POST["author_id"];
-            $view->save();
-            $addViewInfo = View::where('user_id', '=', $_POST['author_id'])
-                                ->orderBy('id', 'desc')
-                                ->first();
-            $updateViewInfo = View::find($addViewInfo->id);
-            $variantRes .= $addViewInfo->id.',';
-            $updateViewInfo->path_min = $updateViewInfo->photo->url('small');
-            $updateViewInfo->path_full = $updateViewInfo->photo->url();
-            $updateViewInfo->save();
-
-        }
-        $image->variants = $variantRes;
         $image->save();
-
-        $addInfo = Image::where('author_id', '=', $_POST['author_id'])
-                        ->orderBy('id', 'desc')
-                        ->first();
-        $updateIinfo = Image::find($addInfo->id);
-        $updateIinfo->full_path = $updateIinfo->photo->url('max');
-        $updateIinfo->min_path = $updateIinfo->photo->url('small');
-        $updateIinfo->save();
         return redirect()->back();
     }
-
 
 }

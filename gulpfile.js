@@ -28,7 +28,8 @@ elixir(mix => {
         "ajax-like.js",
         "ajax-slider.js",
         "fancybox.js",
-        "ajax-favorite.js"
+        "ajax-favorite.js",
+        "news-popup.js"
     ],'public/js/app.js')
        .copy('resources/assets/fonts/*.*', 'public/css/fonts/');
 });

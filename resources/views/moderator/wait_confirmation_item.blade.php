@@ -3,21 +3,24 @@
 <div class="big-col">
         <div class="help-text">Для удобства поиска твоего изображения на сайте заполни ка можно больше параметров</div>
         <div class="b-dwnld-img">
-          {{ Form::open(array('url' => '/add_photo', 'files' => 'true')) }}
+          {{ Form::open(array('url' => '/add_photo_site/'.$image->id, 'files' => 'true')) }}
             <input type="hidden" name="user_upload_id" value="{{$user->id}}">
             <input type="hidden" name="author_id" value="{{$user->id}}">
-            <input class="input-title-dwnld"type="text" name="title" placeholder="Заголовок">
+            <input class="input-title-dwnld"type="text" name="title" placeholder="Заголовок" value="{{ $image->title }}">
             <div id="main-wrap-photo" class="wrap-main-dwnld-photo" title="Добавить изображение">
-                <span class="add-photo-ico uk-icon-justify uk-icon-camera"></span>
-                <span class="add-photo-text">Добавить изображение</span>
+                {{$image->photo->url() !== null ? HTML::image($image->photo->url()) : ''}}
+                <span class="add-photo-ico uk-icon-justify uk-icon-camera" {{$image->photo->url() !== null ? "style=display:none" : ''}}></span>
+                <span class="add-photo-text" {{$image->photo->url() !== null ? 'style=display:none' : ''}}>Добавить изображение</span>
                 <input id="file" class="dwnld-file-input" type="file" name="photo">
             </div>
-            <textarea class="input-descreption"type="text" name="description" placeholder="Описание"></textarea>
+            <textarea class="input-descreption"type="text" name="description" placeholder="Описание">
+              {{$image->description}}
+            </textarea>
             <div class="title-choose-color">Укажи основные цвета</div>
             <div class="color-place">
                 @foreach ( $colors as $color)
                     <div class="wrap-color-input">
-                      <input class="color-photo-choose" type="checkbox" name="color[]" value="{{ $color->id }}" />
+                      <input class="color-photo-choose"{{ preg_match('/['.$color->id.']/',$image->colors) ? 'checked' : '' }} type="checkbox" name="color[]" value="{{ $color->id }}" />
                       <div class="b-color-input" id="color_{{ $color->title }}" style="background:{{ $color->RGB}}"></div>
                     </div>
                 @endforeach
@@ -36,6 +39,8 @@
               <input class="input-tag-name" type="text" name="name" placeholder="Введите тег">
               <button class="btn-add-tag uk-icon-justify uk-icon-plus" type="button" name="button"></button>
             </div>
+            <span>Нет ошибок в зополнении формы</span>
+            <input type="checkbox" name="verified" value="1">
             <button class="btn-dwnld" type="submit" name="button">
               <span class="save-text">Сохранить изменения</span>
               <span class="save-ico uk-icon-justify uk-icon-save"></span>
@@ -49,7 +54,7 @@
       <div class="tags-list">
         @foreach ( $styles as $style )
           <div class="wrap-tags-list-item">
-            <input class="opacity-radio" type="checkbox" name="style[]" value="{{ $style->id }}">
+            <input class="opacity-radio" {{ preg_match('/['.$style->id.']/',$image->style) ? 'checked' : '' }} type="checkbox" name="style[]" value="{{ $style->id }}">
             <div class="tags-list-item">
               {{ $style->name }}
             </div>
@@ -64,7 +69,7 @@
       <div class="tags-list">
         @foreach ( $rooms as $room )
         <div class="wrap-tags-list-item">
-          <input class="opacity-radio" type="checkbox" name="room[]" value="{{ $room->id }}">
+          <input class="opacity-radio" {{ preg_match('/['.$room->id.']/',$image->rooms) ? 'checked' : '' }} type="checkbox" name="room[]" value="{{ $room->id }}">
           <div class="tags-list-item">
             {{ $room->title }}
           </div>

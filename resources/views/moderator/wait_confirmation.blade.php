@@ -1,6 +1,6 @@
 @extends('layouts.profile')
 @section('profile-content')
-<h3 class="liked-title">Ожидают пожтвержления</h3>
+<h3 class="liked-title margin-bottom-10">Ожидают пожтвержления</h3>
 @foreach ($images as $image)
 <div class="item-admin-row">
   <div class="cell-item-admin id-cell">
@@ -13,10 +13,12 @@
     {{$image->title}}
   </div>
   <div class="cell-item-admin cell-for-btn">
-    <a  class="uk-icon-justify uk-icon-pencil btn-cell" href="/admin/verification/{{$image->id}}"></a>
+    <a title="проверить" class="uk-icon-justify uk-icon-pencil btn-cell" href="/profile/admin/verification/{{$image->id}}"></a>
   </div>
   <div class="cell-item-admin cell-for-btn">
-    <button type="button" class="uk-icon-justify uk-icon-remove btn-cell"></button>
+    {{ Form::open(array('url' => '/delete_verification_image/'.$image->id))}}
+    <button title="удалить без проверки" type="submit" class="uk-icon-justify uk-icon-remove btn-cell"></button>
+    {{ Form::close() }}
   </div>
   <div class="clear"></div>
 </div>

@@ -54,7 +54,7 @@
     <div class="b-personal-news">
 
 
-      @if ((empty($userImages)))
+      @if ((!empty($userImages)))
       <div class="content  content-your-photo uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights" data-uk-grid>
           @foreach ($userImages as $userImage)
               <a href="/photo/{{ $userImage->id }}" class="item-gallery" data-grid-prepared="true"style="position:absolute;">

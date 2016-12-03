@@ -2,7 +2,8 @@ $( document ).ready(function() {
   $('.save-info-user').on('click', function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
           post_id = $('input[name=post_id]').val(),
-          user_id = $('input[name=user_id]').val();
+          user_id = $('input[name=user_id]').val(),
+          url = $(),val();
 
       $.ajax({
           type:'POST',

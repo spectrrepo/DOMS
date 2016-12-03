@@ -7,7 +7,7 @@
               <div class="b-photo-slider">
                        <div class="wrap-slider">
                                   @foreach ($images as $image_el)
-                                        @if ($image_el->id == $image->id)
+                                        @if ($image_el->id === $image->id)
                                               <div class="photo-item active-slide" data-id="{{ $image->id }}">
                                                         <img class="img-slider" src="{{ $image_el->photo->url() }}" />
                                               </div>
@@ -70,7 +70,7 @@
                       </span>
                     </div>
                     <div class="b-item-stat full-scrn">
-                      <a class="ico-slider uk-icon-justify uk-icon-arrows-alt fancybox"  data-fancybox-group="main"></a>
+                      <a href="{{ $image->photo->url() }}" class="ico-slider uk-icon-justify uk-icon-arrows-alt fancybox"  data-fancybox-group="main"></a>
                       <span class="tooltip-stat margin-full-scr-tooltip">
                         <span class="text-tooltip-stat">
                          На весь экран
@@ -81,7 +81,8 @@
                     <div class="b-item-stat liked">
                       <input type="hidden" name="post_id" value="{{ $image->id }}">
                       <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                      <button class="ico-slider uk-icon-justify uk-icon-star"></button>
+                      <input type="hidden" name="url-liked" value="{{ $colorLiked ? '/delete_liked' : '/liked' }}">
+                      <button class="{{ $colorLiked ? 'active-favorite ': ''}}ico-slider uk-icon-justify uk-icon-star"></button>
                       <span class="tooltip-stat margin-liked-tooltip">
                         <span class="text-tooltip-stat">
                          Избранное
@@ -111,7 +112,8 @@
                     <div class="b-item-stat like">
                        <input type="hidden" name="post_id" value="{{ $image->id }}">
                        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                       <button class="ico-slider uk-icon-justify uk-icon-heart"></button>
+                       <input type="hidden" name="url-like" value="{{ $colorLike ? '/delete_like' : '/like' }}">
+                       <button class="{{ $colorLike ? 'active-like ': ''}}ico-slider uk-icon-justify uk-icon-heart"></button>
                       <span id="value-like">{{ $num_like }}</span>
                       <span class="tooltip-stat margin-like-tooltip">
                         <span class="text-tooltip-stat">
@@ -193,16 +195,13 @@
               <div class="view-photo-slide">
                 <div class="b-change-photo">
                   <div class="owl-demo" id="owl-demo">
-                   <a class="fancybox" href="/img/about-slider/slide-2.png" data-fancybox-group="gallery" >
-                     <div class="item">
-                       <img src="/img/about-slider/slide-2.png" alt="" />
-                     </div>
-                   </a>
-                   <a class="fancybox" href="/img/about-slider/slide-1.png" data-fancybox-group="gallery" >
-                     <div class="item">
-                       <img src="/img/about-slider/slide-1.png" alt="" />
-                     </div>
-                   </a>
+                  @foreach ($views as $view)
+                    <a class="fancybox" href="{{ $view->path_full }}" data-fancybox-group="gallery" >
+                      <div class="item">
+                        <img src="{{ $view->path_min }}" alt="" />
+                      </div>
+                    </a>
+                  @endforeach
                   </div>
 
                 </div>
