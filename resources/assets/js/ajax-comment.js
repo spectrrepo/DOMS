@@ -1,5 +1,6 @@
 $( document ).ready(function() {
   $('.submit-comment').on('click', function() {
+      $('.input-comment').val('');
       var csrftoken = $('meta[name=_token]').attr('content'),
           comment = $('.input-comment').val(),
           post_id = $('input[name=post_id]').val(),

@@ -6707,9 +6707,10 @@ html {
   width: 100%; }
 
 .wrap-add-tag {
-  height: 30px;
+  height: auto;
   width: 100%;
-  margin-top: 16px; }
+  margin-top: 16px;
+  padding-bottom: 10px; }
 
 .label-tag-input {
   display: block;
@@ -6718,7 +6719,7 @@ html {
   line-height: 30px; }
 
 .input-tag-name {
-  height: 99%;
+  height: 30px;
   width: 85%;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -6730,7 +6731,7 @@ html {
   box-sizing: border-box; }
 
 .btn-add-tag {
-  height: 100%;
+  height: 30px;
   width: 8%;
   border: 1px solid #dddddd;
   border-top-right-radius: 5px;
@@ -6740,6 +6741,20 @@ html {
   background: white;
   cursor: pointer;
   border-left: none; }
+
+.item-tag-show {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 4px;
+  cursor: not-allowed;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  margin: 3px;
+  display: inline-block; }
+
+.item-tag-show:hover {
+  background-color: #333333;
+  color: white; }
 
 .btn-dwnld {
   width: 100%;

@@ -224,7 +224,7 @@ class UserController extends Controller
            $user->skype = $_POST["skype"];
            $user->about = $_POST["about"];
            $user->soc_net = $_POST["soc_net"];
-           if (!isset($_FILES["avatar"])) {
+           if (empty($_FILES["avatar"])) {
                $user->avatar = $_FILES["avatar"];
            }
 

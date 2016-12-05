@@ -15,7 +15,7 @@ Route::get('/', function(){
     return redirect('/room=[0],styles=[0],colors=[0],sort=[""]');
 });
 Route::get('/room=[{room?}],styles=[{style?}],colors=[{color?}],sort=[{sort?}]', 'PhotoController@index');
-Route::get('/photo/{id}', array('uses' => 'PhotoController@indexItem'));
+Route::get('/photo/id=[{id}],room=[{room?}],styles=[{style?}],colors=[{color?}],sort=[{sort?}]', array('uses' => 'PhotoController@indexItem'));
 Route::get('/profile/{id}', array('uses' => 'UserController@index'));
 Route::get('/news', array('uses' => 'NewsController@Index'));
 

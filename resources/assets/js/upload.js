@@ -1,5 +1,6 @@
 $( document ).ready(function() {
   function handleFileOneSelect(evt) {
+      $('div span img').parent('span').remove();
       var files = evt.target.files; // FileList object
 
       // Loop through the FileList and render image files as thumbnails.

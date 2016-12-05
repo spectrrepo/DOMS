@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <meta name="_token" content="<?php echo csrf_token(); ?>">
     <title>

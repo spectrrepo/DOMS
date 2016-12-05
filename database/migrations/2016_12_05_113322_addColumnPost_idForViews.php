@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPostIdColumnViews extends Migration
+class AddColumnPostIdForViews extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class AddPostIdColumnViews extends Migration
      */
     public function up()
     {
-      Schema::table('Views', function(Blueprint $table) {
 
-          $table->string('post_id');
+            Schema::table('Views', function(Blueprint $table) {
 
-      });
+                $table->string('post_id')->nullable();
+
+            });
+
     }
 
     /**

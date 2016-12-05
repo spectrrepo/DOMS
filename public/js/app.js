@@ -2167,6 +2167,7 @@ var erw = 1;
 
 $( document ).ready(function() {
   function handleFileOneSelect(evt) {
+      $('div span img').parent('span').remove();
       var files = evt.target.files; // FileList object
 
       // Loop through the FileList and render image files as thumbnails.
@@ -2258,7 +2259,12 @@ $( document ).ready(function() {
 
           success: function (data) {
                 data.forEach( function(item, i, data) {
-                  $('<a href="/photo/'+item.id+'" class="item-gallery" data-grid-prepared="true"style="position:absolute;">' +
+                  $('<a href="/photo/id=['+item.id+
+                      '],room=['+$('input[name=roomSort]').val()+
+                      '],styles=['+$('input[name=styleSort]').val()+
+                      '],colors=['+$('input[name=colorSort]').val()+
+                      '],sort=['+$('input[name=sortSort]').val()+
+                      ']" class="item-gallery" data-grid-prepared="true"style="position:absolute;">' +
                       '<div class="uk-panel-box">' +
                         '<img src="'+item.min_path+'">'+
                        '</div>' +
@@ -2271,6 +2277,7 @@ $( document ).ready(function() {
 
 $( document ).ready(function() {
   $('.submit-comment').on('click', function() {
+      $('.input-comment').val('');
       var csrftoken = $('meta[name=_token]').attr('content'),
           comment = $('.input-comment').val(),
           post_id = $('input[name=post_id]').val(),
@@ -4475,6 +4482,22 @@ $(function() {
   $('.popup-close-news').on('click', function(){
     $('.modal-news').fadeOut();
   });
+});
+
+$( document ).ready(function() {
+  $('.btn-add-tag').on('click', function() {
+    $('input[name=data-tags]').val($('input[name=data-tags]').val()+$('.input-tag-name').val()+';');
+    $('<span class="item-tag-show">'+
+      $('.input-tag-name').val()
+    +'</span>').appendTo('.wrap-add-tag');
+    $('.input-tag-name').val("");
+    $('.item-tag-show').click(function () {
+      var replaceString = $('input[name=data-tags]').val();
+      $('input[name=data-tags]').val(replaceString.replace($(this).text()+';', ''));
+      $(this).remove();
+    });
+  });
+  return false;
 });
 
 //# sourceMappingURL=app.js.map

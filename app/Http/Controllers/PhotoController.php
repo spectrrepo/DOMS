@@ -106,11 +106,13 @@ class PhotoController extends Controller
        $news = News::orderBy('id','desc')->first();
        if ($sort != 0){
            $images = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                            ->where('verified', '=', true)
                             ->take(3)
                             ->orderBy($sortSort, 'desc')
                             ->get();
        }else {
            $images = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                            ->where('verified', '=', true)
                             ->take(3)
                             ->get();
            $sortSort = false;
@@ -123,7 +125,11 @@ class PhotoController extends Controller
                                   'roomSort' => $roomSort,
                                   'colorSort' => $colorSort,
                                   'styleSort' => $styleSort,
-                                  'sortSort' => $sortSort]);
+                                  'sortSort' => $sortSort,
+                                  'room' => $room,
+                                  'style' => $style,
+                                  'color' => $color,
+                                  'sort' => $sort]);
 
     }
     public function loadLeftPhoto () {
@@ -151,12 +157,14 @@ class PhotoController extends Controller
 
          if ($sortSort != 0) {
               $ajaxImage = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                               ->where('verified', '=', true)
                                ->skip($lastId)
                                ->take(3)
                                ->orderBy($sortSort, 'desc')
                                ->get();
          }else {
               $ajaxImage = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                               ->where('verified', '=', true)
                                ->skip($lastId)
                                ->take(3)
                                ->get();
@@ -246,19 +254,20 @@ class PhotoController extends Controller
             $image = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                           ->where('id','=', $id)
                           ->first();
+
         }
 
-        if (!empty($image)) {
+        if (empty($image)) {
+
              $image = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                            ->where('id','>', $id)
                            ->first();
-             if (!empty($image)) {
+             if (empty($image)) {
                   $image = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                                 ->where('id','<', $id)
                                 ->first();
              }else{
                   $image = false;
-                  dd($image);
              }
         }
         $needImage = Image::find($id);
@@ -299,7 +308,7 @@ class PhotoController extends Controller
         $image->save();
 
         $news = News::orderBy('id','desc')->first();
-
+     //    dd($user);
         return view('site.slider', ['news' => $news,
                                     'user' => $user,
                                     'colors' => $colors,
@@ -373,6 +382,7 @@ class PhotoController extends Controller
             foreach (Input::file('files') as $variantItem) {
             $view = new View();
             $view->photo = $variantItem;
+            $view->user_id = $_POST["author_id"];
             $view->user_id = $_POST["author_id"];
             $view->save();
             $addViewInfo = View::where('user_id', '=', $_POST['author_id'])
