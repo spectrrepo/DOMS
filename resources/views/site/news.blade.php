@@ -3,89 +3,33 @@
 <div class="content">
   <h3 class="liked-title">Новости</h3>
   <div class="uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights" data-uk-grid>
-    <div class="wrap-news-item">
-      <div class="news-item">
-        <img src="/img/news.jpg" alt="" />
-        <a href="#article" class="item-news-title">Квартира в доме XIX века в Милане</a>
-        <p class="item-news-text">
-          Студия Architetto Michele De Lucchi оформила интерьер апартаментов в Милане, Италия.
-        </p>
-        <span class="item-news-date">
-          10 августа 2015
-        </span>
+    @foreach ( $news as $new )
+      <div class="wrap-news-item">
+        <div class="news-item">
+          <img src="{{ $new->news->url() }}"/>
+          <a rel="article{{$new->id}}" class="item-news-title">{{$new->title}}</a>
+          <p class="item-news-text">
+            {{ $new->description }}
+          </p>
+          <span class="item-news-date">
+            {{ $new->news_updated_at->format('d M Y') }}
+          </span>
+        </div>
       </div>
-    </div>
-    <div class="wrap-news-item">
-      <div class="news-item">
-        <img src="/img/item-status-reg/item-reg-2.png" alt="" />
-        <a href="#article" class="item-news-title">Квартира в доме XIX века в Милане</a>
-        <p class="item-news-text">
-          Студия Architetto Michele De Lucchi оформила интерьер апартаментов в Милане, Италия.
-        </p>
-        <span class="item-news-date">
-          10 августа 2015
-        </span>
-      </div>
-    </div>
-
-    <div class="wrap-news-item">
-      <div class="news-item">
-        <img src="/img/news.jpg" alt="" />
-        <a href="#article" class="item-news-title">Квартира в доме XIX века в Милане</a>
-        <p class="item-news-text">
-          Студия Architetto Michele De Lucchi оформила интерьер апартаментов в Милане, Италия.
-        </p>
-        <span class="item-news-date">
-          10 августа 2015
-        </span>
-      </div>
-    </div>
-
-    <div class="wrap-news-item">
-      <div class="news-item">
-        <img src="/img/item-status-reg/item-reg-2.png" alt="" />
-        <a href="#article" class="item-news-title">Квартира в доме XIX века в Милане</a>
-        <p class="item-news-text">
-          Студия Architetto Michele De Lucchi оформила интерьер апартаментов в Милане, Италия.
-        </p>
-        <span class="item-news-date">
-          10 августа 2015
-        </span>
-      </div>
-    </div>
-
-    <div class="wrap-news-item">
-      <div class="news-item">
-        <img src="/img/news.jpg" alt="" />
-        <a href="#article" class="item-news-title">Квартира в доме XIX века в Милане</a>
-        <p class="item-news-text">
-          Студия Architetto Michele De Lucchi оформила интерьер апартаментов в Милане, Италия.
-        </p>
-        <span class="item-news-date">
-          10 августа 2015
-        </span>
-      </div>
-    </div>
-
-    <div class="wrap-news-item">
-      <div class="news-item">
-        <img src="/img/item-status-reg/item-reg-2.png" alt="" />
-        <a href="#article" class="item-news-title">Квартира в доме XIX века в Милане</a>
-        <p class="item-news-text">
-          Студия Architetto Michele De Lucchi оформила интерьер апартаментов в Милане, Италия.
-        </p>
-        <span class="item-news-date">
-          10 августа 2015
-        </span>
-      </div>
-    </div>
+    @endforeach
     <div class="clear"></div>
   </div>
-  <div class="modal-news">
-    <span class="close uk-icon-justify uk-icon-remove popup-close"></span>
+  @foreach ( $news as $new )
+  <div class="modal-news article{{$new->id}}">
+    <span class="close uk-icon-justify uk-icon-remove popup-close-news"></span>
     <div class="scroll-place-modal-news">
-
+      <img src="{{ $new->news->url() }}" />
+      <span class="item-news-title">{{ $new->title }}</span>
+      <div class="">
+        {{ $new->full_description }}
+      </div>
     </div>
   </div>
+  @endforeach
 </div>
 @endsection

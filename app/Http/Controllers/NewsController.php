@@ -21,7 +21,10 @@ class NewsController extends Controller
         $styles = Style::all();
         $rooms = Room::all();
 
-        return view('site.news', ['colors' => $colors,
+        $news = News::all();
+
+        return view('site.news', ['news'  => $news,
+                                  'colors' => $colors,
                                   'styles' => $styles,
                                   'rooms' => $rooms,
                                  ]);
@@ -59,5 +62,47 @@ class NewsController extends Controller
 
         return redirect()->back();
 
+    }
+    public function delete($id)
+    {
+        $news = News::find($id)->delete();
+        return redirect()->back();
+    }
+    public function edit ($id)
+    {
+        $news = News::find($id);
+
+        $news->title = $_POST["title"];
+        $news->description = $_POST["min_description"];
+        $news->full_description = $_POST["full_description"];
+
+        if ( !isset($_FILES["main_photo"])) {
+            $news->news = $_FILES['main_photo'];
+        }
+
+        if ( !isset($_FILES["variants"])) {
+            foreach (Input::file('variants') as $variantItem) {
+                $view = new NewsVariant();
+                $view->news_variant = $variantItem;
+                $view->save();
+                $addInfo = NewsVariant::orderBy('id', 'desc')
+                                ->first();
+                $updateVariantsInfo = NewsVariant::find($addInfo->id);
+                $updateVariantsInfo->file_path_full = $updateVariantsInfo->news_variant->url('max');
+                $variantRes .= $updateVariantsInfo->id;
+                $updateVariantsInfo->save();
+
+            }
+            $news->variants = $variantRes;
+        }
+
+        $news->update();
+        return redirect()->back();
+    }
+    public function editPageIndex($id)
+    {
+        $news = News::find($id);
+
+        return view('moderator.update_news',['news' => $news]);
     }
 }

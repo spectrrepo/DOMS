@@ -18,8 +18,7 @@ class CreateTableLiked extends Migration
             $table->increments('id');
             $table->string('post_id');
             $table->string('user_id');
-            $table->timestamp('update_to')->nullable();
-            $table->timestamp('create_to')->nullable();
+            $table->timestamp('date');
         });
 
     }

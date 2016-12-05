@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStylesTable extends Migration
+class AddColumnLikeds extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateStylesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Styles', function (Blueprint $table){
-                $table->increments('id');
-                $table->string('name');
-                $table->text('description');
-                $table->string('alt_text');
-        });
+      Schema::table('Likeds', function(Blueprint $table) {
+
+          $table->timestamp('date')->nullable();
+
+      });
     }
 
     /**
@@ -28,6 +27,11 @@ class CreateStylesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('Styles');
+      Schema::table('Likeds', function(Blueprint $table) {
+
+          $table->dropColumn('date');
+
+
+      });
     }
 }

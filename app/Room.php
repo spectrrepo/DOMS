@@ -13,4 +13,6 @@ class Room extends Model
      */
 
      protected $table = 'Rooms';
+     public $timestamps = false;
+
 }

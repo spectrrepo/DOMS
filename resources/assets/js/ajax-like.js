@@ -3,7 +3,7 @@ $( document ).ready(function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
           post_id = $('input[name=post_id]').val(),
           user_id = $('input[name=user_id]').val();
-
+          url = $('input[name=url-like]').val();
       $.ajax({
           type:'POST',
           data: {
@@ -11,11 +11,19 @@ $( document ).ready(function() {
                     'post_id' : post_id,
                     'user_id' : user_id
           },
-          url:'http://localhost:8000/like',
+          url:url,
 
           success: function (data) {
-                $('#value-like').text(data);
-                $('.uk-icon-heart').addClass('active-like');
+                if ( url === '/like') {
+                  $('.uk-icon-heart').addClass('active-like');
+                  $('#value-like').text(data);
+                  $('input[name=url-like]').val();
+                  $('input[name=url-like]').val('/delete_like');
+                }else {
+                  $('.uk-icon-heart').removeClass('active-like');
+                  $('#value-like').text( $('#value-like').text() - 1) ;
+                  $('input[name=url-like]').val('/like');
+                }
           }
       });
   });

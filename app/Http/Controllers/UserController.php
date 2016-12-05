@@ -14,6 +14,8 @@ use App\Room;
 use App\Tag;
 use App\Color;
 use App\Liked;
+use App\News;
+use App\Like;
 
 use Auth;
 
@@ -47,12 +49,14 @@ class UserController extends Controller
 
     public function index()
      {  if(Auth::check()){
-             $images =  Image::join('Likes', 'Images.id', '=', 'Likes.post_id')
-                             ->join('Likeds', 'Images.id', '=', 'Likes.post_id')
-                             ->join('Users', 'Likes.user_id', '=', 'Users.id')
+             $results = DB::select('(select * from Likes) union (select * from Likeds)');
+             $images =  Image::join('Users', 'Images.author_id', '=', 'Users.id')
+                             ->join('Likes', 'Images.id', '=', 'Likes.post_id')
+                             ->join('Likeds', 'Images.id', '=', 'Likeds.post_id')
                              ->get();
              $id = Auth::id();
              $user = User::find($id);
+            //  dd($images);
              return View('profile.index', [ 'id' => $id,
                                             'user' => $user,
                                             'images' => $images]);
@@ -66,7 +70,7 @@ class UserController extends Controller
          if(Auth::check()){
              $id = Auth::id();
              $user = User::find($id);
-             $userImages = Image::where('author_id', '=', Auth::id());
+             $userImages = Image::where('author_id', '=', $id)->get();
              return View('profile.index_photo', [ 'id' => $id,
                                                   'user' => $user,
                                                   'userImages' => $userImages]);
@@ -166,7 +170,7 @@ class UserController extends Controller
          $liked->user_id = $_POST['user_id'];
 
          $liked->save();
-         return "true";
+         return 'true';
 
       }
 
@@ -175,7 +179,7 @@ class UserController extends Controller
         $liked = Liked::where('post_id', '=', $_POST['post_id'])
                       ->where('user_id', '=', $_POST['user_id']);
         $liked->delete();
-        return "true";
+        return 'true';
       }
       /**
        * Login Form
@@ -185,7 +189,9 @@ class UserController extends Controller
       public function likedIndex()
       {
           if (Auth::check()){
-             $images =  Image::join('Likeds','Images.id', '=', 'Likeds.post_id' )->where('Likeds.user_id', '=', '1')->get();
+             $images =  Image::join('Likeds','Images.id', '=', 'Likeds.post_id' )
+                             ->where('Likeds.user_id', '=', Auth::id())
+                             ->get();
              return view('profile.liked', ['images' => $images]);
 
           }
@@ -213,11 +219,14 @@ class UserController extends Controller
 
            $user->name = $_POST["name"];
            $user->sex = $_POST["sex"];
-           $user->phone =  $_POST["phone"];
+           $user->phone = $_POST["phone"];
            $user->e_mail = $_POST["e_mail"];
            $user->skype = $_POST["skype"];
+           $user->about = $_POST["about"];
            $user->soc_net = $_POST["soc_net"];
-           $user->avatar = $_FILES["avatar"];
+           if (!isset($_FILES["avatar"])) {
+               $user->avatar = $_FILES["avatar"];
+           }
 
            $user->save();
            return redirect()->back();
@@ -226,7 +235,8 @@ class UserController extends Controller
     //    moderator
        public function addNewsPage()
        {
-           return view('moderator.add_news');
+           $news = News::all();
+           return view('moderator.add_news', ['news' => $news]);
        }
        public function editRoomsPage()
        {
@@ -250,7 +260,29 @@ class UserController extends Controller
        }
        public function confirmationItemPage($id)
        {
-           $image = Image::find($id)->get();
-           return view('moderator.wait_confirmation_item', ['image' => $image]);
+           $user = User::find( Auth::id() );
+           $styles = Style::all();
+           $rooms = Room::all();
+           $colors = Color::all();
+
+           $image = Image::find($id);
+           return view('moderator.wait_confirmation_item', ['user' => $user,
+                                                            'styles' => $styles,
+                                                            'rooms' => $rooms,
+                                                            'colors' => $colors,
+                                                            'image' => $image]);
+       }
+       public function addNewsItem()
+       {
+           return view('moderator.news');
+       }
+       public function addStyleItem()
+       {
+           return view('moderator.style');
+       }
+       public function deleteVerificationImage($id)
+       {
+           $image = Image::find($id)->delete();
+           return redirect()->back();
        }
 }

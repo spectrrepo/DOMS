@@ -89,21 +89,32 @@
       </form>
     </div>
 </nav>
+@if (!(preg_match('[/news]', URL::current())))
 <div class="news-title">
    Новости
 </div>
 <div class="news">
     <div class="b-news">
        <div class="b-photo-news">
-          <img src="img/place_for_reklama.jpg" alt="" />
+          <img src="{{$news->news->url()}}" alt="" />
        </div>
        <div class="b-text-news">
-          <div class="b-title-news">Квартира в доме ХIX века в Милане</div>
+          <div class="b-title-news item-news-title" rel="article{{$news->id}}">{{$news->title}}</div>
           <div class="b-descreption-news">
-           Студия Architetto Michele De Lucchi
-           оформила интерьер апартаментов в Милане, Италия.
+            {{$news->description}}
           </div>
-          <div class="b-date-news">10 августа 2015</div>
+          <div class="b-date-news">{{$news->news_updated_at->format('d M Y')}}</div>
        </div>
      </div>
 </div>
+<div class="modal-news article{{$news->id}}">
+<span class="close uk-icon-justify uk-icon-remove popup-close-news"></span>
+<div class="scroll-place-modal-news">
+   <img src="{{ $news->news->url() }}" />
+   <span class="item-news-title">{{ $news->title }}</span>
+   <div class="">
+     {{ $news->full_description }}
+   </div>
+</div>
+</div>
+@endif

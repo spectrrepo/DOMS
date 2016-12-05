@@ -2238,19 +2238,29 @@ $( document ).ready(function() {
   $('.b-next-page').on('click', function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
           lastIdJS = $('#pole').children('.item-gallery:last-child').index() + 1;
+
+          sortSort = $('input[name=sortSort]').val();
+          styleSort = $('input[name=styleSort]').val();
+          roomSort = $('input[name=roomSort]').val();
+          colorSort = $('input[name=colorSort]').val();
+
       $.ajax({
           type:'POST',
           data: {
                   'lastId': lastIdJS,
-                  '_token': csrftoken
+                  '_token': csrftoken,
+                  'sortSort': sortSort,
+                  'styleSort': styleSort,
+                  'roomSort': roomSort,
+                  'colorSort': colorSort
           },
-          url:'http://localhost:8000/pagination_index',
+          url:'/pagination_index',
 
           success: function (data) {
                 data.forEach( function(item, i, data) {
-                  $('<a href="/photo/'+1+'" class="item-gallery" data-grid-prepared="true"style="position:absolute;">' +
+                  $('<a href="/photo/'+item.id+'" class="item-gallery" data-grid-prepared="true"style="position:absolute;">' +
                       '<div class="uk-panel-box">' +
-                        '<img src="/system/App/Image/photos/000/000/0'+item.id+'/small/'+item.photo_file_name+'">'+
+                        '<img src="'+item.min_path+'">'+
                        '</div>' +
                      '</a>').appendTo('.uk-grid-width-small-1-2');
                    });
@@ -2305,7 +2315,7 @@ $( document ).ready(function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
           post_id = $('input[name=post_id]').val(),
           user_id = $('input[name=user_id]').val();
-
+          url = $('input[name=url-like]').val();
       $.ajax({
           type:'POST',
           data: {
@@ -2313,11 +2323,19 @@ $( document ).ready(function() {
                     'post_id' : post_id,
                     'user_id' : user_id
           },
-          url:'http://localhost:8000/like',
+          url:url,
 
           success: function (data) {
-                $('#value-like').text(data);
-                $('.uk-icon-heart').addClass('active-like');
+                if ( url === '/like') {
+                  $('.uk-icon-heart').addClass('active-like');
+                  $('#value-like').text(data);
+                  $('input[name=url-like]').val();
+                  $('input[name=url-like]').val('/delete_like');
+                }else {
+                  $('.uk-icon-heart').removeClass('active-like');
+                  $('#value-like').text( $('#value-like').text() - 1) ;
+                  $('input[name=url-like]').val('/like');
+                }
           }
       });
   });
@@ -4425,8 +4443,8 @@ $( document ).ready(function() {
   $('div.liked').on('click', function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
           post_id = $('input[name=post_id]').val(),
-          user_id = $('input[name=user_id]').val();
-
+          user_id = $('input[name=user_id]').val(),
+          url = $('input[name=url-liked]').val();
       $.ajax({
           type:'POST',
           data: {
@@ -4434,12 +4452,28 @@ $( document ).ready(function() {
                     'post_id' : post_id,
                     'user_id' : user_id
           },
-          url:'http://localhost:8000/liked',
+          url:url,
 
           success: function () {
-                $('.uk-icon-star').addClass('active-favorite');
+            if ( url === '/liked') {
+              $('.uk-icon-star').addClass('active-favorite');
+              $('input[name=url-liked]').val('/delete_liked');
+            }else {
+              $('.uk-icon-star').removeClass('active-favorite');
+              $('input[name=url-liked]').val('/liked');
+            }
+
           }
       });
+  });
+});
+
+$(function() {
+  $('.item-news-title').on('click', function(){
+    $('.'+$(this).attr('rel')).fadeIn();
+  });
+  $('.popup-close-news').on('click', function(){
+    $('.modal-news').fadeOut();
   });
 });
 

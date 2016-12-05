@@ -8,6 +8,9 @@ use App\Http\Requests;
 
 use App\Tag;
 
+use Carbon\Carbon;
+
+
 /**
  * The ResultMessage class holds a message that can be returned
  * as a result of a process. The message has a severity and
@@ -26,8 +29,13 @@ class TagsController extends Controller
      * @return
      *
      */
-    public function edit (){
+    public function edit ($id){
 
+      $tag = Tag::find($id);
+      $tag->title = $_POST["title-tag"];
+      $tag->save();
+
+      return redirect()->back();
     }
 
     /**
@@ -36,7 +44,10 @@ class TagsController extends Controller
      * @return
      *
      */
-    public function delete () {
+    public function delete ($tagID) {
+
+        $tag = Tag::find($tagID)->delete();
+        return redirect()->back();
 
     }
 
@@ -47,16 +58,14 @@ class TagsController extends Controller
      *
      */
     public function add() {
+      $tags = new Tag();
+
+      $tags->title = $_POST["title"];
+      $tags->post_id = 0;
+      $tags->save();
+
+      return redirect()->back();
 
     }
 
-    /**
-     * @param
-     *
-     * @return
-     *
-     */
-    public function index() {
-
-    }
 }

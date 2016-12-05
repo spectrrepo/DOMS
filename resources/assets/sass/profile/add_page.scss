@@ -269,7 +269,13 @@
   display: inline;
   width: 100%;
   position: absolute;
-  margin: none;
+  margin: 0;
+}
+#wrap-d span.add-photo-ico {
+  margin-top: 32px;
+}
+#wrap-d span.add-photo-text {
+  margin-top: 85px;
 }
 #wrap-d .b-hover-add-view {
   display: block;

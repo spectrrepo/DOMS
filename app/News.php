@@ -16,6 +16,8 @@ class News extends Model implements StaplerableInterface
      * @var string
      */
     protected $fillable = ['news'];
+    protected $dates = ['news_updated_at'];
+
     public $timestamps = false;
 
     public function __construct(array $attributes = array()) {

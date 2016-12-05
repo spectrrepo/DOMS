@@ -9,18 +9,20 @@
       </div>
       <div class="b-persobal-information edit-personal-info">
           <div class="b-common-person-information">
-            <input class="input-name-pers" type="text" name="name" value="{{ $user->name }}">
+            <input class="input-name-pers" type="text" placeholder="Имя" name="name" value="{{ $user->name }}">
             <div class="wrap-sex">
               <div class="b-item-sex left-item-sex">
-                <input class="opacity-radio" type="radio" name="sex" value="1">
+                <input class="opacity-radio"   {{$user->sex ==1 ? ' checked ' : ''}} type="radio" name="sex" value="1">
                 <div class="sex-name">Мужской</div>
               </div>
               <div class="b-item-sex right-item-sex">
-                <input class="opacity-radio" type="radio" name="sex" value="2">
+                <input class="opacity-radio"   {{$user->sex ==2 ? ' checked ' : ''}}type="radio" name="sex" value="2">
                 <div class="sex-name">Женский</div>
               </div>
             </div>
-            <textarea class="about-user-text" name="name"></textarea>
+            <textarea class="about-user-text" name="about" placeholder="О себе">
+              {{ $user->about }}
+            </textarea>
           </div>
           <div class="b-spec-info">
             <span class="contact-item-name edit-name-item">email</span>
