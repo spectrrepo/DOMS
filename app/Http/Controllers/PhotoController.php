@@ -127,19 +127,8 @@ class PhotoController extends Controller
 
         $num_image = count( Image::all());
         $num_like = count( Like::where('post_id', '=', $id)->get());
-        $num_comment = count( Comment::where('post_id', '=', $id)->get());
-
-        $new_count = $image->views_count + 1;
-        $image->views_count = $new_count;
-        $image->save();
-        return view('site.slider', ['user' => $user,
-                                    'colors' => $colors,
-                                    'styles' => $styles,
-                                    'rooms' =>  $rooms,
-                                    'images' => $images,
-                                    'image' => $image,
-                                    'comments' => $comments,
-                                    'tags' => $tags,
+        $num_comment = count(                 $table->string('file_path_min')->nullable();
+        'tags' => $tags,
                                     'views' => $views,
                                     'num_image' => $num_image,
                                     'num_like' => $num_like,
@@ -198,7 +187,7 @@ class PhotoController extends Controller
 
         // $variant = $_FILES["files"];
         $variantRes = "";
-            foreach (Input::file('files') as $variantItem) {
+        foreach (Input::file('files') as $variantItem) {
             $view = new View();
             $view->photo = $variantItem;
             $view->user_id = $_POST["author_id"];
