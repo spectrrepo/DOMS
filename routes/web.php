@@ -76,6 +76,8 @@ Route::post('/update/profile', 'UserController@changeYourself');
 Route::post('/load_left_images', 'PhotoController@loadLeftPhoto');
 Route::post('/load_right_images', 'PhotoController@loadRightPhoto');
 
+Route::post('/load_sort_photo', 'PhotoController@loadSortPhoto');
+
 Route::get('/logout', array('as' => 'logout',
                             'uses' => 'UserController@logout'));
 Route::post('/enter', 'UserController@login');

@@ -4,7 +4,7 @@
       <li id="placements" class="menu-item">
         <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
         <span class="click-ready">Помещения</span>
-        <div class="sidebar-modal rooms">
+        <div class="sidebar-modal rooms" data-max="3">
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
              <ul>
                @foreach ( $rooms as $room )
@@ -15,13 +15,13 @@
                </li>
                @endforeach
              </ul>
-           </div>
+        </div>
         <div class="clear"></div>
       </li>
       <li id="styles" class="menu-item">
-           <span class="click-ready">Стили</span>
-           <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
-           <div class="sidebar-modal styles-modal">
+        <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
+        <span class="click-ready">Стили</span>
+        <div class="sidebar-modal styles-modal" data-max="3">
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
              <ul class="styles-space">
              @foreach ( $styles as $style )
@@ -41,9 +41,9 @@
            <div class="clear"></div>
         </li>
       <li id="colors" class="menu-item">
-           <span class="click-ready">Цвета</span>
-           <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
-           <div class="sidebar-modal">
+        <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
+        <span class="click-ready">Цвета</span>
+        <div class="sidebar-modal" data-max="1">
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
                <ul class="colors-space">
                @foreach ($colors as $color)
@@ -57,9 +57,9 @@
            <div class="clear"></div>
         </li>
       <li id="orders" class="menu-item">
-           <span class="click-ready">Сортировка</span>
-           <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
-           <div class="sidebar-modal sort">
+        <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
+        <span class="click-ready">Сортировка</span>
+        <div class="sidebar-modal sort" data-max="1">
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
              <ul>
                <li class="item-moodal-sidebar" data-type="sort" >
@@ -80,7 +80,7 @@
              </ul>
            </div>
            <div class="clear"></div>
-        </li>
+     </li>
     </ul>
     <div class="search">
       <form action="">

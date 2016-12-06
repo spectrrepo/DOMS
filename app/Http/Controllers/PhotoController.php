@@ -172,6 +172,27 @@ class PhotoController extends Controller
 
          return $ajaxImage;
      }
+     public function loadSortPhoto()
+     {
+         $sortSort = $_POST['sortSort'];
+         $roomSort = $_POST['roomSort'];
+         $styleSort = $_POST['styleSort'];
+         $colorSort = $_POST['colorSort'];
+
+         if ($sortSort != 0) {
+              $ajaxImage = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                               ->where('verified', '=', true)
+                               ->take(3)
+                               ->orderBy($sortSort, 'desc')
+                               ->get();
+         }else {
+              $ajaxImage = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                               ->where('verified', '=', true)
+                               ->take(3)
+                               ->get();
+         }
+         return $ajaxImage;
+     }
     /**
      * @param
      *
@@ -307,7 +328,7 @@ class PhotoController extends Controller
         $image->save();
 
         $news = News::orderBy('id','desc')->first();
-        
+
         return view('site.slider', ['news' => $news,
                                     'user' => $user,
                                     'colors' => $colors,
