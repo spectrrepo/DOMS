@@ -178,34 +178,48 @@
             </div>
           </div>
             <div class="col-descreption-photo">
-              <div class="title-tag">
-                Тэги
-              </div>
-              <div class="pole-tag">
-                @foreach ( $tags as $tag )
-
-                  <div class="tag-item">{{ $tag->title }}</div>
-
-                @endforeach
-              </div>
-              <div class="clear"></div>
-              <div class="title-tag margin-title-tag">
-               Ракурсы
-              </div>
-              <div class="view-photo-slide">
-                <div class="b-change-photo">
-                  <div class="owl-demo" id="owl-demo">
-                  @foreach ($views as $view)
-                    <a class="fancybox" href="{{ $view->path_full }}" data-fancybox-group="gallery" >
-                      <div class="item">
-                        <img src="{{ $view->path_min }}" alt="" />
-                      </div>
-                    </a>
-                  @endforeach
-                  </div>
-
+              @if ( $tags->count() > 1)
+                <div class="title-tag">
+                  Тэги
                 </div>
-              </div>
+                <div class="pole-tag">
+                  @foreach ( $tags as $tag )
+
+                    <div class="tag-item">{{ $tag->title }}</div>
+
+                  @endforeach
+                </div>
+              @endif
+              <div class="clear"></div>
+              @if ( $views->count() > 1 )
+                <div class="title-tag margin-title-tag">
+                  Ракурсы
+                </div>
+                <div class="view-photo-slide">
+                  <div class="b-change-photo">
+                    <div class="owl-demo" id="owl-demo">
+                      @foreach ($views as $view)
+                        <a class="fancybox" href="{{ $view->path_full }}" data-fancybox-group="gallery" >
+                          <div class="item">
+                            <img src="{{ $view->path_min }}" alt="" />
+                          </div>
+                        </a>
+                      @endforeach
+                    </div>
+                  </div>
+                </div>
+              @endif
+              @if (!empty($image->title) || !empty($image->description))
+                <div class="title-tag margin-title-tag">
+                   Описание
+                </div>
+                <div class="view-photo-slide">
+                  <h3>{{$image->title}}</h3>
+                  <p>
+                   {{ $image->description }}
+                  </p>
+                </div>
+              @endif
             </div>
             <div class="clear"></div>
           </div>

@@ -1,10 +1,10 @@
 
 <nav class="sidebar">
     <ul>
-        <li class="menu-item">
-           <span class="click-ready">Помещения</span>
-           <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
-           <div class="sidebar-modal rooms">
+      <li id="placements" class="menu-item">
+        <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
+        <span class="click-ready">Помещения</span>
+        <div class="sidebar-modal rooms">
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
              <ul>
                @foreach ( $rooms as $room )
@@ -16,9 +16,9 @@
                @endforeach
              </ul>
            </div>
-           <div class="clear"></div>
-        </li>
-        <li class="menu-item">
+        <div class="clear"></div>
+      </li>
+      <li id="styles" class="menu-item">
            <span class="click-ready">Стили</span>
            <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
            <div class="sidebar-modal styles-modal">
@@ -40,7 +40,7 @@
            </div>
            <div class="clear"></div>
         </li>
-        <li class="menu-item">
+      <li id="colors" class="menu-item">
            <span class="click-ready">Цвета</span>
            <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
            <div class="sidebar-modal">
@@ -56,7 +56,7 @@
            </div>
            <div class="clear"></div>
         </li>
-        <li class="menu-item">
+      <li id="orders" class="menu-item">
            <span class="click-ready">Сортировка</span>
            <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
            <div class="sidebar-modal sort">

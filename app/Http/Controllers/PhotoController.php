@@ -275,7 +275,6 @@ class PhotoController extends Controller
         $colors = Color::all();
         $styles = Style::all();
         $rooms = Room::all();
-
         $tags = Tag::where('post_id', '=', $id)->get();
         $views = View::where('post_id', '=', $id)->get();
         $comments = Comment::where('post_id', '=', $id)->get();
@@ -308,7 +307,7 @@ class PhotoController extends Controller
         $image->save();
 
         $news = News::orderBy('id','desc')->first();
-     //    dd($user);
+        
         return view('site.slider', ['news' => $news,
                                     'user' => $user,
                                     'colors' => $colors,
@@ -377,7 +376,6 @@ class PhotoController extends Controller
             $image->style = $style;
         }
 
-        // $variant = $_FILES["files"];
         $variantRes = " ";
             foreach (Input::file('files') as $variantItem) {
             $view = new View();
@@ -400,6 +398,15 @@ class PhotoController extends Controller
         $image->variants = $variantRes;
         $image->save();
 
+        $tags = explode(';',$_POST['data-tags']);
+        foreach ($tags as $tag) {
+          $newTag = new Tag();
+          $newTag->title = $tag;
+          $newTag->post_id = $image->id;
+
+          $newTag->save();
+
+        }
         $addInfo = Image::where('author_id', '=', $_POST['author_id'])
                         ->orderBy('id', 'desc')
                         ->first();
