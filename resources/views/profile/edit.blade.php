@@ -26,7 +26,7 @@
           </div>
           <div class="b-spec-info">
             <span class="contact-item-name edit-name-item">email</span>
-            <input class="contact-item-value edit-value-item" type="text" name="e_mail" value="{{ $user->e_mail }}">
+            <a class="contact-item-value  edit-value-item" href="mailto:{{ $user->e_mail }}">{{ $user->e_mail }}</a>
             <span class="contact-item-name edit-name-item">skype</span>
             <input class="contact-item-value edit-value-item" type="text"type="text" name="skype" value="{{ $user->skype }}">
             <span class="contact-item-name edit-name-item">телефон</span>

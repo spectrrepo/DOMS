@@ -1,5 +1,6 @@
 $( document ).ready(function() {
   var queue = 1,
+      dataURL = 0,
       csrftoken = $('meta[name=_token]').attr('content'),
       sortSort = $('input[name=sortSort]').val(),
       styleSort = $('input[name=styleSort]').val(),
@@ -17,6 +18,7 @@ $( document ).ready(function() {
     $(this).toggleClass('active-menu-item');
   });
 
+
   $('#placements .item-moodal-sidebar').on('click', function () {
     var id = $(this).data('id');
     var title = $(this).children('.item-modal-text').text();
@@ -32,21 +34,35 @@ $( document ).ready(function() {
           $('#placements .item-moodal-sidebar[data-queue=3]').attr('data-queue', 2);
           $('#placements .choose-sort-item[data-list=2]').attr('data-list', 1);
           $('#placements .choose-sort-item[data-list=3]').attr('data-list', 2);
+          var deleteURL = $('#placements .item-moodal-sidebar[data-queue='+$(this).data('queue')
+          +']').data('url');
           if ($('#placements .item-moodal-sidebar[data-queue]').length === 2){
             queue = 3;
+            dataURL = dataURL.replace(deleteURL+',', '');
+            history.pushState(null, null, 'room=['+dataURL+'],styles=[0],colors=[0],sort=[""]');
+
           }
           if ($('#placements .item-moodal-sidebar[data-queue]').length === 1) {
             queue = 2;
+            dataURL = dataURL.replace(deleteURL+',', '');
+            history.pushState(null, null, 'room=['+dataURL+'],styles=[0],colors=[0],sort=[""]');
+
           }
           if ($('#placements .item-moodal-sidebar[data-queue]').length === 0) {
             queue = 1;
+            dataURL = 0;
+            history.pushState(null, null, 'room=['+dataURL+'],styles=[0],colors=[0],sort=[""]');
+
           }
         }else {
+          dataURL += ',' +$(this).data('url');
+          history.pushState(null, null, 'room=['+dataURL+'],styles=[0],colors=[0],sort=[""]');
+
           $(this).attr('data-queue', queue);
           $(this).children('.choose-ico').addClass('active-choose-ico');
 
           $('<li class="choose-sort-item" data-list="'+queue+'" '+
-          'data-type="'+$(this).data('type')+'">'+
+          'data-url="'+$(this).data('url')+'">'+
           '<span class="name-sort-item">'+title+'</span>' +
           '<i class="close-sort-item">×</i>' +
           '</li>').appendTo('#placements');
@@ -56,6 +72,8 @@ $( document ).ready(function() {
     } else {
         if ($(this).is('[data-queue]')) {
           $('#placements .choose-sort-item[data-list='+$(this).data('queue')+']').remove();
+          var deleteURL = $('#placements .item-moodal-sidebar[data-queue='+$(this).data('queue')
+          +']').data('url');
           $('#placements .item-moodal-sidebar[data-queue='+$(this).data('queue')
           +']').children('.choose-ico').removeClass('active-choose-ico');
           $('#placements .item-moodal-sidebar[data-queue='+$(this).data('queue')
@@ -66,14 +84,28 @@ $( document ).ready(function() {
           $('#placements .choose-sort-item[data-list=3]').attr('data-list', 2);
           if ($('#placements .item-moodal-sidebar[data-queue]').length === 2){
             queue = 3;
+            dataURL = dataURL.replace(deleteURL+',', '');
+            history.pushState(null, null, 'room=['+dataURL+'],styles=[0],colors=[0],sort=[""]');
+
           }
           if ($('#placements .item-moodal-sidebar[data-queue]').length === 1) {
             queue = 2;
+            dataURL = dataURL.replace(deleteURL, '');
+            history.pushState(null, null, 'room=['+dataURL+'],styles=[0],colors=[0],sort=[""]');
+
           }
           if ($('#placements .item-moodal-sidebar[data-queue]').length === 0) {
             queue = 1;
+            dataURL = 0;
+            history.pushState(null, null, 'room=['+dataURL+'],styles=[0],colors=[0],sort=[""]');
+
           }
         }else {
+
+          var replaceString = $(this).data('url');
+          dataURL = dataURL.replace(replaceString+',', '');
+          history.pushState(null, null, 'room=['+dataURL+'],styles=[0],colors=[0],sort=[""]');
+
           $('#placements .item-moodal-sidebar[data-queue=1]').children('.choose-ico').removeClass('active-choose-ico');
           $('#placements .item-moodal-sidebar[data-queue=1]').removeAttr('data-queue');
           $('#placements .item-moodal-sidebar[data-queue=2]').attr('data-queue', 1);
@@ -86,7 +118,7 @@ $( document ).ready(function() {
           $('#placements .choose-sort-item[data-list=2]').attr('data-list', 1);
           $('#placements .choose-sort-item[data-list=3]').attr('data-list', 2);
           $('<li class="choose-sort-item" data-list="'+3+'" '+
-          'data-type="'+$(this).data('type')+'">'+
+          'data-url="'+$(this).data('url')+'">'+
           '<span class="name-sort-item">'+title+'</span>' +
           '<i class="close-sort-item">×</i>' +
           '</li>').appendTo('#placements');
@@ -101,7 +133,6 @@ $( document ).ready(function() {
       $('#placements .item-moodal-sidebar[data-queue='+
       $(this).data('list') +']').removeAttr('data-queue');
       $(this).remove();
-
       if ($('#placements .item-moodal-sidebar[data-queue]').length === 2){
         queue = 3;
       }

@@ -27,7 +27,7 @@
               <div class="wrap-dwnld-photo">
                   <span class="add-photo-ico racurs-margin-ico uk-icon-justify uk-icon-camera"></span>
                   <span class="add-photo-text racurs-margin-text">Добавить ракурсы</span>
-                  <input id="files" class="input-dwnld-view-photo" type="file" name="files[]" multiple>
+                  <input id="files" class="input-dwnld-view-photo" type="file">
               </div>
             </div>
             <div class="clear"></div>

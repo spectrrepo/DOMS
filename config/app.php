@@ -181,6 +181,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+
+
 
     ],
 
@@ -235,6 +238,9 @@ return [
         'Input'     => Illuminate\Support\Facades\Input::class,
         'LocalizedCarbon'  => Laravelrus\LocalizedCarbon\LocalizedCarbon::class,
         'DiffFormatter'    => Laravelrus\LocalizedCarbon\DiffFactoryFacade::class,
+        'Image' => Intervention\Image\Facades\Image::class
+
+
 
 
     ],

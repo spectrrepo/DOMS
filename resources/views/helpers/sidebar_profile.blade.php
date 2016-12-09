@@ -1,5 +1,5 @@
 <!-- TODO:add link -->
-<nav class="sidebar">
+<nav class="sidebar" style="margin-top:-16px;">
   <ul>
     <li class="menu-item-profile"><a href="{{ URL::to('profile/'.Auth::id()) }}">Моя страница</a></li>
     <li class="menu-item-profile"><a href="{{ URL::route('add') }}">Добавить изображение</a></li>

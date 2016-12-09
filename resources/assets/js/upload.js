@@ -1,8 +1,10 @@
 $( document ).ready(function() {
-  function handleFileOneSelect(evt) {
-      $('div span img').parent('span').remove();
-      var files = evt.target.files; // FileList object
+  var id = 1;
 
+  function handleFileOneSelect(evt) {
+      $('#main-wrap-photo span img').parent('span').remove();
+      var files = evt.target.files; // FileList object
+      console.log(evt.target.files);
       // Loop through the FileList and render image files as thumbnails.
       for (var i = 0, f; f = files[i]; i++) {
 
@@ -44,7 +46,7 @@ $( document ).ready(function() {
         if (!f.type.match('image.*')) {
           continue;
         }
-
+        console.log(files[i]);
         var reader = new FileReader();
 
         // Closure to capture the file information.
@@ -52,18 +54,32 @@ $( document ).ready(function() {
           return function(e) {
             // Render thumbnail.
             var span = document.createElement('span');
+            span.id = id;
+            span.className = 'deleteSome';
             span.innerHTML = ['<img class="thumb" src="', e.target.result,
                               '" title="', escape(theFile.name), '"/>'+
-                              '<span class="b-hover-add-view uk-icon-justify uk-icon-remove"></span>'].join('');
+                              '<span class="b-hover-add-view">'+
+                              '<span class="uk-icon-justify uk-icon-remove vertical-align">'+
+                              '</span>'].join('');
             document.getElementById('wrap-d').insertBefore(span, null);
+            var lastInp = $('#files').clone().appendTo('#wrap-d');
+            lastInp.removeClass('input-dwnld-view-photo')
+                   .addClass('new')
+                   .css({'display':'none'})
+                   .attr('name', 'files[]')
+                   .attr('id', id);
+
+            id += 1;
+            $('.deleteSome').on('click', function () {
+                $(this).remove();
+                $('[id = '+$(this).attr("id")+'][class = new]').remove();
+            });
           };
         })(f);
-
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
       }
     }
 
-    document.getElementById('files').addEventListener('change', handleFileSelect, false);
-
+    $('#files').on('change', handleFileSelect);
 });

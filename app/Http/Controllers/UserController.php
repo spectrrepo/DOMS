@@ -21,7 +21,7 @@ use Auth;
 
 use Hash;
 use DB;
-use App\Image;
+use App\Picture;
 use Carbon\Carbon;
 
 
@@ -50,7 +50,7 @@ class UserController extends Controller
     public function index()
      {  if(Auth::check()){
              $results = DB::select('(select * from Likes) union (select * from Likeds)');
-             $images =  Image::join('Users', 'Images.author_id', '=', 'Users.id')
+             $images =  Picture::join('Users', 'Images.author_id', '=', 'Users.id')
                              ->join('Likes', 'Images.id', '=', 'Likes.post_id')
                              ->join('Likeds', 'Images.id', '=', 'Likeds.post_id')
                              ->get();
@@ -70,7 +70,7 @@ class UserController extends Controller
          if(Auth::check()){
              $id = Auth::id();
              $user = User::find($id);
-             $userImages = Image::where('author_id', '=', $id)->get();
+             $userImages = Picture::where('author_id', '=', $id)->get();
              return View('profile.index_photo', [ 'id' => $id,
                                                   'user' => $user,
                                                   'userImages' => $userImages]);
@@ -189,7 +189,7 @@ class UserController extends Controller
       public function likedIndex()
       {
           if (Auth::check()){
-             $images =  Image::join('Likeds','Images.id', '=', 'Likeds.post_id' )
+             $images =  Picture::join('Likeds','Images.id', '=', 'Likeds.post_id' )
                              ->where('Likeds.user_id', '=', Auth::id())
                              ->get();
              return view('profile.liked', ['images' => $images]);
@@ -224,7 +224,7 @@ class UserController extends Controller
            $user->skype = $_POST["skype"];
            $user->about = $_POST["about"];
            $user->soc_net = $_POST["soc_net"];
-           if (empty($_FILES["avatar"])) {
+           if (!empty($_FILES["avatar"])) {
                $user->avatar = $_FILES["avatar"];
            }
 
@@ -255,7 +255,7 @@ class UserController extends Controller
        }
        public function confirmationsPage()
        {
-           $images = Image::where('verified', '=', false)->paginate(10);
+           $images = Picture::where('verified', '=', false)->paginate(10);
            return view('moderator.wait_confirmation', ['images' => $images]);
        }
        public function confirmationItemPage($id)
@@ -265,7 +265,7 @@ class UserController extends Controller
            $rooms = Room::all();
            $colors = Color::all();
 
-           $image = Image::find($id);
+           $image = Picture::find($id);
            return view('moderator.wait_confirmation_item', ['user' => $user,
                                                             'styles' => $styles,
                                                             'rooms' => $rooms,
@@ -282,7 +282,7 @@ class UserController extends Controller
        }
        public function deleteVerificationImage($id)
        {
-           $image = Image::find($id)->delete();
+           $image = Picture::find($id)->delete();
            return redirect()->back();
        }
 }

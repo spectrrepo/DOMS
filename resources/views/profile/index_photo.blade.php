@@ -51,18 +51,20 @@
         <div class="clear"></div>
       </ul>
     </div>
-    <div class="b-personal-news">
 
 
       @if ((!empty($userImages)))
-      <div class="content  content-your-photo uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights" data-uk-grid>
+      <div class=" b-personal-news content  content-your-photo uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights" data-uk-grid>
           @foreach ($userImages as $userImage)
-              <a href="/photo/{{ $userImage->id }}" class="item-gallery" data-grid-prepared="true"style="position:absolute;">
+              <a href="/photo/{{ $userImage->id }}" class="item-gallery" style="position:absolute" data-grid-prepared="true">
                 <div class="uk-panel-box" >
                     <img src="{{ $userImage->photo->url('small') }}" alt="" />
                 </div>
             </a>
           @endforeach
+          <div class="clear">
+
+          </div>
       </div>
       @else
         <div class="content  content-your-photo">
@@ -72,9 +74,5 @@
         <div class="clear"></div>
 
       @endif
-</div>
-<div class="btn-dwnld-new content-your-photo">
-  Загрузить ещё
-</div>
 </div>
 @endsection

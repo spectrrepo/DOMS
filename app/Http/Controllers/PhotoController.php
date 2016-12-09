@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
-use App\Image;
+use App\Picture;
 use App\News;
 use App\Comment;
 
@@ -23,6 +23,7 @@ use App\Room;
 use Input;
 use Carbon\Carbon;
 
+use Image;
 use Auth;
 /**
  * The ResultMessage class holds a message that can be returned
@@ -105,13 +106,13 @@ class PhotoController extends Controller
        $rooms = Room::all();
        $news = News::orderBy('id','desc')->first();
        if ($sort != 0){
-           $images = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+           $images = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                             ->where('verified', '=', true)
                             ->take(3)
                             ->orderBy($sortSort, 'desc')
                             ->get();
        }else {
-           $images = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+           $images = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                             ->where('verified', '=', true)
                             ->take(3)
                             ->get();
@@ -134,12 +135,12 @@ class PhotoController extends Controller
     }
     public function loadLeftPhoto () {
         $lastPhoto = $_POST['lastPhoto'];
-        $images = Image::skip($lastPhoto)->take(3)->get();
+        $images = Picture::skip($lastPhoto)->take(3)->get();
         return $images;
     }
     public function loadRightPhoto () {
         $lastPhoto = $_POST['lastPhoto'];
-        $images = Image::skip($lastPhoto)->take(3)->get();
+        $images = Picture::skip($lastPhoto)->take(3)->get();
         return $images;
     }
     /**
@@ -156,14 +157,14 @@ class PhotoController extends Controller
          $colorSort = $_POST['colorSort'];
 
          if ($sortSort != 0) {
-              $ajaxImage = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+              $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                                ->where('verified', '=', true)
                                ->skip($lastId)
                                ->take(3)
                                ->orderBy($sortSort, 'desc')
                                ->get();
          }else {
-              $ajaxImage = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+              $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                                ->where('verified', '=', true)
                                ->skip($lastId)
                                ->take(3)
@@ -180,13 +181,13 @@ class PhotoController extends Controller
          $colorSort = $_POST['colorSort'];
 
          if ($sortSort != 0) {
-              $ajaxImage = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+              $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                                ->where('verified', '=', true)
                                ->take(3)
                                ->orderBy($sortSort, 'desc')
                                ->get();
          }else {
-              $ajaxImage = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+              $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                                ->where('verified', '=', true)
                                ->take(3)
                                ->get();
@@ -259,20 +260,20 @@ class PhotoController extends Controller
         }
 
         if ($sort != 0){
-            $images = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
-                           ->where('id','>=', $id)
-                           ->take(3)
+            $images = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                           ->where('verified', '=', true)
                            ->orderBy($sortSort, 'desc')
                            ->get();
-            $image = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+            $image = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                          ->where('verified', '=', true)
                           ->where('id','=', $id)
                           ->first();
         }else {
-            $images = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
-                           ->where('id','>=', $id)
-                           ->take(3)
+            $images = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                           ->where('verified', '=', true)
                            ->get();
-            $image = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+            $image = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                          ->where('verified', '=', true)
                           ->where('id','=', $id)
                           ->first();
 
@@ -280,27 +281,36 @@ class PhotoController extends Controller
 
         if (empty($image)) {
 
-             $image = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+             $image = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                            ->where('id','>', $id)
                            ->first();
              if (empty($image)) {
-                  $image = Image::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                  $image = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                                 ->where('id','<', $id)
                                 ->first();
              }else{
                   $image = false;
              }
         }
-        $needImage = Image::find($id);
+        $needImage = Picture::find($id);
         $user = User::find($needImage->author_id);
         $colors = Color::all();
         $styles = Style::all();
         $rooms = Room::all();
-        $tags = Tag::where('post_id', '=', $id)->get();
+        $tags = Tag::where('post_id', '=', $id)
+                    ->where('title', '<>', '')
+                    ->get();
         $views = View::where('post_id', '=', $id)->get();
         $comments = Comment::where('post_id', '=', $id)->get();
 
-        $num_image = count( Image::all());
+        $allComments = Comment::all();
+        $allTags = Tag::all();
+        $allViews = View::all();
+        $allLikes = Like::all();
+        $allLikeds = Liked::all();
+
+
+        $num_image = count( Picture::all());
         $num_like = count( Like::where('post_id', '=', $id)->get());
 
         $num_comment = count( Comment::where('post_id', '=', $id)->get());
@@ -330,6 +340,11 @@ class PhotoController extends Controller
         $news = News::orderBy('id','desc')->first();
 
         return view('site.slider', ['news' => $news,
+                                    'allTags' => $allTags,
+                                    'allLikes' => $allLikes,
+                                    'allLikeds' => $allLikeds,
+                                    'allComments' => $allComments,
+                                    'allViews' => $allViews,
                                     'user' => $user,
                                     'colors' => $colors,
                                     'styles' => $styles,
@@ -355,10 +370,17 @@ class PhotoController extends Controller
      */
     public function add(){
 
-        $image = new Image();
+        $image = new Picture();
 
-        $lastId = Image::orderBy('id', 'desc')->first();
-        $image->photo = $_FILES['photo'];
+        $lastId = Picture::orderBy('id', 'desc')->first();
+        $img = Image::make($_FILES['photo']['tmp_name']);
+
+        $watermark = Image::make(public_path('/img/watermark-files/poloska.png'));
+        $watermarkHouse = Image::make(public_path('/img/watermark-files/dom.png'));
+        $img->insert($watermark, 'top', 0, 0);
+        $img->insert($watermarkHouse, 'bottom-right', 30, 30);
+        $img->save(public_path('/img/f.jpg'));
+        $image->photo = public_path('/img/f.jpg');
         $image->title = $_POST['title'];
         $image->description = $_POST['description'];
         $image->author_id = $_POST['author_id'];
@@ -398,9 +420,17 @@ class PhotoController extends Controller
         }
 
         $variantRes = " ";
-            foreach (Input::file('files') as $variantItem) {
+     //    dd($_FILES['files']);
+        foreach ($_FILES['files']['tmp_name'] as $variantItem) {
             $view = new View();
-            $view->photo = $variantItem;
+            $imgView = Image::make($variantItem);
+            $watermarkView = Image::make(public_path('/img/watermark-files/poloska.png'));
+            $watermarkHouseView = Image::make(public_path('/img/watermark-files/dom.png'));
+            $imgView->insert($watermarkView, 'top', 0, 0);
+            $imgView->insert($watermarkHouseView, 'bottom-right', 30, 30);
+            $imgView->save(public_path('/img/fv.jpg'));
+
+            $view->photo = public_path('/img/fv.jpg');
             $view->user_id = $_POST["author_id"];
             $view->user_id = $_POST["author_id"];
             $view->save();
@@ -428,10 +458,10 @@ class PhotoController extends Controller
           $newTag->save();
 
         }
-        $addInfo = Image::where('author_id', '=', $_POST['author_id'])
+        $addInfo = Picture::where('author_id', '=', $_POST['author_id'])
                         ->orderBy('id', 'desc')
                         ->first();
-        $updateIinfo = Image::find($addInfo->id);
+        $updateIinfo = Picture::find($addInfo->id);
         $updateIinfo->full_path = $updateIinfo->photo->url('max');
         $updateIinfo->min_path = $updateIinfo->photo->url('small');
         $updateIinfo->save();
@@ -439,7 +469,7 @@ class PhotoController extends Controller
     }
     public function addPhotoSite($id)
     {
-        $image = Image::find($id);
+        $image = Picture::find($id);
         if ( !isset($_FILES['photo'])) {
             $image->photo = $_FILES['photo'];
         }

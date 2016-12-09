@@ -20,6 +20,7 @@
                                                         <img class="img-slider" src="{{ $image_el->photo->url() }}" />
                                               </div>
                                         @endif
+                                        <a href="{{ $image_el->photo->url() }}" class="fancybox"  data-fancybox-group="main"></a>
                                   @endforeach
                                   <div class="control-slide">
                                             <a class="btn-prew">
@@ -57,7 +58,7 @@
                     </div>
                   </span>
                   <span class="num-page">
-                    <span id="current-position"> {{ $image->id }} </span>/ {{ $num_image }}
+                    <span id="current-position"></span>/ <span id="all-photo"></span>
                   </span>
                   <span class="status-photo">
                     <div class="b-item-stat back-to-main">
@@ -222,5 +223,32 @@
               @endif
             </div>
             <div class="clear"></div>
+          </div>
+          <div id="all-info-photo">
+            <div id="allTags">
+              @foreach ($allTags as $tag)
+                <div data-id="{{ $tag->id }}" data-postID="{{ $tag->post_id }}">{{ $tag->title }}</div>
+              @endforeach
+            </div>
+            <div id="allComments">
+              @foreach ($allComments as $comment)
+                <div data-id="{{ $comment->id }}" data-postID="{{ $comment->post_id }}" data-user="{{ $comment->user_id }}" data-portret="{{ $comment->id }}" data-date="{{ $comment->date }}" data-name="{{ $comment->id }}">{{ $comment->text_comment }} </div>
+              @endforeach
+            </div>
+            <div id="allViews">
+              @foreach ($allViews as $view)
+                <div data-id="{{ $view->id }}" data-postID="{{ $view->post_id }}" data-path="{{ $view->id }}"></div>
+              @endforeach
+            </div>
+            <div id="allLikes">
+              @foreach ($allLikes as $like)
+                <div data-id="{{ $like->id }}" data-postID="{{ $like->post_id }}" data-user="{{ $like->user_id }}"></div>
+              @endforeach
+            </div>
+            <div id="allLikeds">
+              @foreach ($allLikeds as $liked)
+                <div data-id="{{ $liked->id }}" data-postID="{{ $liked->post_id }}" data-user="{{ $liked->user_id }}"></div>
+              @endforeach
+            </div>
           </div>
     @endsection

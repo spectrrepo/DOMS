@@ -1,6 +1,5 @@
 $( document ).ready(function() {
   $('.submit-comment').on('click', function() {
-      $('.input-comment').val('');cd
       var csrftoken = $('meta[name=_token]').attr('content'),
           comment = $('.input-comment').val(),
           post_id = $('input[name=post_id]').val(),
@@ -14,17 +13,18 @@ $( document ).ready(function() {
                     'post_id' : post_id,
                     'user_id' : user_id
           },
-          url:'http://localhost:8000/comment',
+          url:'/comment',
 
           success: function (data) {
+            $('.input-comment').val('');
 
                   $('<div class="b-comment">' +
-                    '<a href="http://localhost:8000/profile/'+
+                    '<a href="/profile/'+
                     data.user_id +'" class="b-photo-comment">' +
                     '<img class="img-full-width" src="'+'">' +
                     '</a>' +
                     '<div class="b-comment">' +
-                      '<a href="http://localhost:8000/profile/'+
+                      '<a href="/profile/'+
                       data.user_id +'" class="b-name-comment"> ' +
                         data.user_id +
                       '</a>' +

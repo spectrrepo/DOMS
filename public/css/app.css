@@ -6873,8 +6873,17 @@ html {
   opacity: 0;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  margin: 0;
-  padding: 50%; }
+  margin: 0; }
+
+#wrap-d .vertical-align {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  margin: auto; }
 
 #wrap-d .b-hover-add-view:hover {
   opacity: 1; }
@@ -7506,6 +7515,9 @@ ul.b-popup-item-list li {
 /*##################################################################################*/
 /*################################page whith slder##################################*/
 /*##################################################################################*/
+#all-info-photo {
+  display: none; }
+
 .uk-panel-box {
   padding: 7px;
   background: white; }

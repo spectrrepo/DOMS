@@ -55,7 +55,8 @@
       @foreach ($images as $image)
         <div class="b-person-post">
           <div class="col-news-min">
-              <div class="b-portret-blogger"><img src="" alt="" /></span></div>
+              <div class="b-portret-blogger"><img src="
+                {{ !($image->avatar === null ) ? $image->avatar->url() : '' }}" alt="" /></span></div>
           </div>
           <div class="col-news-big">
               <div class="b-name-redactor"><a href="/profile/{{$image->id}}">{{$image->name}}</a></div>
@@ -65,7 +66,7 @@
                 </div>
                 <div class="b-iformation">
                   <div class="b-date">
-                    {{$image->photo_updated_at->format('dd M Y')}}
+                    {{$image->photo_updated_at->format('d M Y')}}
                   </div>
                   <div class="b-statistics">
                     <div class="b-item-stat">
