@@ -20,7 +20,6 @@
                                                         <img class="img-slider" src="{{ $image_el->photo->url() }}" />
                                               </div>
                                         @endif
-                                        <a href="{{ $image_el->photo->url() }}" class="fancybox"  data-fancybox-group="main"></a>
                                   @endforeach
                                   <div class="control-slide">
                                             <a class="btn-prew">
@@ -47,7 +46,7 @@
                       </span>
                       <span class="author-name">{{ $user->name}}</span>
                     </a>
-                    <div class="b-item-stat pretense-tool">
+                    <!-- <div class="b-item-stat pretense-tool">
                       <span class="b-pretense">?</span>
                       <span class="tooltip-stat margin-full-scr-tooltip">
                         <span class="text-tooltip-stat">
@@ -55,7 +54,7 @@
                         </span>
                         <span class="triangle-tooltip-stat triangle-full-scr"></span>
                       </span>
-                    </div>
+                    </div> -->
                   </span>
                   <span class="num-page">
                     <span id="current-position"></span>/ <span id="all-photo"></span>
@@ -76,6 +75,10 @@
                         <span class="text-tooltip-stat">
                          На весь экран
                         </span>
+                        @foreach ($images as $image_el)
+                        <a href="{{ $image_el->photo->url() }}" class="fancybox"  data-fancybox-group="main"></a>
+
+                        @endforeach
                         <span class="triangle-tooltip-stat triangle-full-scr"></span>
                       </span>
                     </div>
@@ -83,7 +86,7 @@
                       <input type="hidden" name="post_id" value="{{ $image->id }}">
                       <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                       <input type="hidden" name="url-liked" value="{{ $colorLiked ? '/delete_liked' : '/liked' }}">
-                      <button class="{{ $colorLiked ? 'active-favorite ': ''}}ico-slider uk-icon-justify uk-icon-star"></button>
+                      <button id="num_liked" class="{{ $colorLiked ? 'active-favorite ': ''}}ico-slider uk-icon-justify uk-icon-star"></button>
                       <span class="tooltip-stat margin-liked-tooltip">
                         <span class="text-tooltip-stat">
                          Избранное
@@ -102,7 +105,7 @@
                     </div>
                     <div class="b-item-stat comment">
                       <span class="ico-slider uk-icon-justify uk-icon-comments"></span>
-                      <span>{{ $num_comment }}</span>
+                      <span id="num_comment">{{ $num_comment }}</span>
                       <span class="tooltip-stat margin-num-comment-tooltip">
                         <span class="text-tooltip-stat">
                          Количество коментариев
@@ -125,7 +128,7 @@
                     </div>
                     <div class="b-item-stat view">
                       <span class="ico-slider uk-icon-justify uk-icon-eye"></span>
-                      <span> {{ $image->views_count }}</span>
+                      <span id="num_views"> {{ $image->views_count }}</span>
                       <span class="tooltip-stat other-margin-tooltip1">
                         <span class="text-tooltip-stat">
                          Количество просмотров
@@ -146,9 +149,9 @@
                 @foreach ( $comments as $comment )
 
                   <div class="b-comment">
-                    <a href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-photo-comment"></a>
+                    <a style="background:url({{ $user->avatar->url('max') }})"href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-photo-comment"></a>
                     <div class="b-comment">
-                      <a href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-name-comment">
+                      <a href="{{ URL::to('profile/'.$comment->name) }}" class="b-name-comment">
                         {{ $comment->user_id }}
                       </a>
                       <div class="b-text-comment">
@@ -232,12 +235,17 @@
             </div>
             <div id="allComments">
               @foreach ($allComments as $comment)
-                <div data-id="{{ $comment->id }}" data-postID="{{ $comment->post_id }}" data-user="{{ $comment->user_id }}" data-portret="{{ $comment->id }}" data-date="{{ $comment->date }}" data-name="{{ $comment->id }}">{{ $comment->text_comment }} </div>
+                <div data-id="{{ $comment->id }}" data-path="{{ $comment->avatar_file_name }}" data-postID="{{ $comment->post_id }}" data-user="{{ $comment->user_id }}" data-portret="{{ $comment->id }}" data-date="{{ $comment->date->format('d M Y H:i') }}" data-name="{{ $comment->name }}">{{ $comment->text_comment }} </div>
               @endforeach
             </div>
             <div id="allViews">
               @foreach ($allViews as $view)
-                <div data-id="{{ $view->id }}" data-postID="{{ $view->post_id }}" data-path="{{ $view->id }}"></div>
+                <div data-id="{{ $view->id }}" data-postID="{{ $view->post_id }}" data-path="{{ $view->photo->url() }}"></div>
+              @endforeach
+            </div>
+            <div id="allUserViews">
+              @foreach ($images as $image)
+                <div data-id="{{ $image->id }}" data-count="{{ $image->views_count }}"></div>
               @endforeach
             </div>
             <div id="allLikes">
@@ -248,6 +256,16 @@
             <div id="allLikeds">
               @foreach ($allLikeds as $liked)
                 <div data-id="{{ $liked->id }}" data-postID="{{ $liked->post_id }}" data-user="{{ $liked->user_id }}"></div>
+              @endforeach
+            </div>
+            <div id="allDescriptionPhoto">
+              @foreach ($images as $image_el)
+                <div data-id="{{ $image_el->id }}">{{ $image_el->description }}</div>
+              @endforeach
+            </div>
+            <div id="allTitlePhoto">
+              @foreach ($images as $image_el)
+                <div data-id="{{ $image_el->id }}">{{ $image_el->title }}</div>
               @endforeach
             </div>
           </div>

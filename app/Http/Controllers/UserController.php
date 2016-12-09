@@ -70,7 +70,10 @@ class UserController extends Controller
          if(Auth::check()){
              $id = Auth::id();
              $user = User::find($id);
-             $userImages = Picture::where('author_id', '=', $id)->get();
+             $userImages = Picture::join('Users', function ($join) {
+                                    $join->on('Users.id', '=', 'Images.author_id');
+                                 })->where('author_id', '=', $id)
+                                   ->get();
              return View('profile.index_photo', [ 'id' => $id,
                                                   'user' => $user,
                                                   'userImages' => $userImages]);
@@ -220,7 +223,6 @@ class UserController extends Controller
            $user->name = $_POST["name"];
            $user->sex = $_POST["sex"];
            $user->phone = $_POST["phone"];
-           $user->e_mail = $_POST["e_mail"];
            $user->skype = $_POST["skype"];
            $user->about = $_POST["about"];
            $user->soc_net = $_POST["soc_net"];

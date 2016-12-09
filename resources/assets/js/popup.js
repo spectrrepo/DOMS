@@ -176,24 +176,24 @@ $( document ).ready(function() {
 
 
     $('#foot-about').on('click', function() {
-      $('#popup-about').css({'display':'block'});
+      $('#popup-about').fadeIn();
     });
 
     $('#foot-feedback').on('click', function() {
-      $('#popup-feedback').css({'display':'block'});
+      $('#popup-feedback').fadeIn();
     });
-    $('#login').on('click', function() {
-      $('#login-popup').css({'display':'block'});
+    $('.login').on('click', function() {
+      $('#login-popup').fadeIn();
     });
     $('#registration').on('click', function() {
-      $('#popup-registr').css({'display':'block'});
+      $('#popup-registr').fadeIn();
     });
     $('#recover-pswd').on('click', function () {
-      $('.overlay').css({'display':'none'});
-      $('#passwd-popup').css({'display':'block'});
+      $('.overlay').fadeOut();
+      $('#passwd-popup').fadeIn();
     });
     $('.popup-close').on('click', function() {
-      $('.overlay').css({'display':'none'});
+      $('.overlay').fadeOut();
     });
 
     $("#owl-demo").owlCarousel({

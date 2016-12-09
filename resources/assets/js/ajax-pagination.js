@@ -1,22 +1,21 @@
 $( document ).ready(function() {
   $('.b-next-page').on('click', function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
-          lastIdJS = $('#pole').children('.item-gallery:last-child').index() + 1;
-
-          sortSort = $('input[name=sortSort]').val();
-          styleSort = $('input[name=styleSort]').val();
-          roomSort = $('input[name=roomSort]').val();
-          colorSort = $('input[name=colorSort]').val();
+          lastIdJS = $('#pole').children('.item-gallery:last-child').index(),
+          sortSorting = $('input[name=sortSorting]').val();
+          styleSorting = $('input[name=styleSorting]').val();
+          roomSorting = $('input[name=roomSorting]').val();
+          colorSorting = $('input[name=colorSorting]').val();
 
       $.ajax({
           type:'POST',
           data: {
                   'lastId': lastIdJS,
                   '_token': csrftoken,
-                  'sortSort': sortSort,
-                  'styleSort': styleSort,
-                  'roomSort': roomSort,
-                  'colorSort': colorSort
+                  'sortSorting': sortSorting,
+                  'styleSorting': styleSorting,
+                  'roomSorting': roomSorting,
+                  'colorSorting': colorSorting
           },
           url:'/pagination_index',
 

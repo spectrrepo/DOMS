@@ -58,7 +58,7 @@
           @foreach ($userImages as $userImage)
               <a href="/photo/{{ $userImage->id }}" class="item-gallery" style="position:absolute" data-grid-prepared="true">
                 <div class="uk-panel-box" >
-                    <img src="{{ $userImage->photo->url('small') }}" alt="" />
+                    <img src="{{ $userImage->min_path }}" alt="" />
                 </div>
             </a>
           @endforeach

@@ -56,8 +56,10 @@ class PhotoController extends Controller
                    $roomSort .= ' rooms regexp ( '.$roomArrayItem.')';
                }
            }
+           $roomSorting = $room;
        }else{
            $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
+           $roomSorting = 0;
        }
        if ($style != 0 ) {
            $styleArray = explode(',',$style);
@@ -70,8 +72,10 @@ class PhotoController extends Controller
                    $styleSort .= ' style regexp ( '.$styleArrayItem.')';
                }
            }
+           $styleSorting = $style;
        }else{
            $styleSort = "style regexp '[a-zA-Z0-9_]'";
+           $styleSorting = 0;
        }
        if ($color != 0 ) {
            $colorArray = explode(',',$color);
@@ -84,8 +88,10 @@ class PhotoController extends Controller
                    $colorSort .= ' colors regexp ( '.$colorArrayItem.')';
                }
            }
+           $colorSorting = $color;
        }else{
-           $colorSort = "colors regexp '[a-zA-Z0-9_]'";
+            $colorSort = "colors regexp '[a-zA-Z0-9_]'";
+            $colorSorting = 0;
        }
        if ($sort != 0 ) {
          if ($sort == 'popular') {
@@ -97,9 +103,12 @@ class PhotoController extends Controller
          }else {
              $sortSort = '';
          }
+         $sortSorting = $sort;
 
        }else{
          $sortSort = true;
+         $sortSorting = 0;
+
        }
        $colors = Color::all();
        $styles = Style::all();
@@ -111,11 +120,21 @@ class PhotoController extends Controller
                             ->take(3)
                             ->orderBy($sortSort, 'desc')
                             ->get();
+                            $imageLast = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                                            ->where('verified', '=', true)
+                                            ->take(3)
+                                            ->orderBy('id', 'desc')
+                                            ->first();
        }else {
            $images = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                             ->where('verified', '=', true)
                             ->take(3)
                             ->get();
+                            $imageLast = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                                            ->where('verified', '=', true)
+                                            ->take(3)
+                                            ->orderBy('id', 'desc')
+                                            ->first();
            $sortSort = false;
        }
        return view('site.index', ['news' => $news,
@@ -123,14 +142,15 @@ class PhotoController extends Controller
                                   'styles' => $styles,
                                   'rooms' =>  $rooms,
                                   'images' => $images,
-                                  'roomSort' => $roomSort,
-                                  'colorSort' => $colorSort,
-                                  'styleSort' => $styleSort,
-                                  'sortSort' => $sortSort,
+                                  'roomSorting' => $roomSorting,
+                                  'colorSorting' => $colorSorting,
+                                  'styleSorting' => $styleSorting,
+                                  'sortSorting' => $sortSorting,
                                   'room' => $room,
                                   'style' => $style,
                                   'color' => $color,
-                                  'sort' => $sort]);
+                                  'sort' => $sort,
+                                  'imageLast' => $imageLast]);
 
     }
     public function loadLeftPhoto () {
@@ -151,21 +171,20 @@ class PhotoController extends Controller
      */
      public function indexAddPage(){
          $lastId = $_POST['lastId'];
-         $sortSort = $_POST['sortSort'];
-         $roomSort = $_POST['roomSort'];
-         $styleSort = $_POST['styleSort'];
-         $colorSort = $_POST['colorSort'];
+         $sortSort = $_POST['sortSorting'];
+         $roomSort = $_POST['roomSorting'];
+         $styleSort = $_POST['styleSorting'];
+         $colorSort = $_POST['colorSorting'];
 
          if ($sortSort != 0) {
-              $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
-                               ->where('verified', '=', true)
+              $ajaxImage = Picture::whereRaw("rooms  regexp '[".$roomSort."]' and style regexp '[".$styleSort."]' and colors regexp '[".$colorSort."]'")
+                               ->where('verified', '=', 1)
                                ->skip($lastId)
                                ->take(3)
-                               ->orderBy($sortSort, 'desc')
                                ->get();
          }else {
-              $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
-                               ->where('verified', '=', true)
+              $ajaxImage = Picture::whereRaw("rooms regexp '[".$roomSort."]' and style regexp '[".$styleSort."]' and colors regexp '[".$colorSort."]'")
+                               ->where('verified', '=', 1)
                                ->skip($lastId)
                                ->take(3)
                                ->get();
@@ -303,7 +322,7 @@ class PhotoController extends Controller
         $views = View::where('post_id', '=', $id)->get();
         $comments = Comment::where('post_id', '=', $id)->get();
 
-        $allComments = Comment::all();
+        $allComments = Comment::join('Users', 'Users.id', '=', 'Comments.user_id')->get();
         $allTags = Tag::all();
         $allViews = View::all();
         $allLikes = Like::all();
@@ -386,64 +405,69 @@ class PhotoController extends Controller
         $image->author_id = $_POST['author_id'];
         $image->user_upload_id = $_POST['user_upload_id'];
         $image->verified = false;
-        $color = $_POST['color'];
-        $colorRes = " ";
-        if (is_array($color)) {
-            foreach ($color as $colorItem) {
-                $colorRes .=$colorItem.', ';
+        if (Input::has('color')) {
+             $color = $_POST['color'];
+             $colorRes = " ";
+             if (is_array($color)) {
+                 foreach ($color as $colorItem) {
+                     $colorRes .=$colorItem.', ';
+                 }
+                 $image->colors = $colorRes;
+             }else{
+                 $image->colors = $color;
+             }
+       }
+       if (Input::has('room')) {
+            $roomRes = " ";
+            $room = $_POST['room'];
+            if (is_array($room)) {
+                 foreach ($room as $roomItem) {
+                     $roomRes .=$roomItem.', ';
+                 }
+                 $image->rooms = $roomRes;
+            }else{
+                 $image->rooms = $room;
             }
-            $image->colors = $colorRes;
-        }else{
-            $image->colors = $color;
         }
-
-        $room = $_POST['room'];
-        $roomRes = " ";
-        if (is_array($room)) {
-            foreach ($room as $roomItem) {
-                $roomRes .=$roomItem.', ';
-            }
-            $image->rooms = $roomRes;
-        }else{
-            $image->rooms = $room;
+        if (Input::has('style')) {
+             $style = $_POST['style'];
+             $styleRes = " ";
+             if (is_array($style)) {
+                 foreach ($style as $styleItem) {
+                     $styleRes .=$styleItem.', ';
+                 }
+                 $image->style = $styleRes;
+             }else{
+                 $image->style = $style;
+             }
         }
-
-        $style = $_POST['style'];
-        $styleRes = " ";
-        if (is_array($style)) {
-            foreach ($style as $styleItem) {
-                $styleRes .=$styleItem.', ';
-            }
-            $image->style = $styleRes;
-        }else{
-            $image->style = $style;
-        }
-
         $variantRes = " ";
-     //    dd($_FILES['files']);
-        foreach ($_FILES['files']['tmp_name'] as $variantItem) {
-            $view = new View();
-            $imgView = Image::make($variantItem);
-            $watermarkView = Image::make(public_path('/img/watermark-files/poloska.png'));
-            $watermarkHouseView = Image::make(public_path('/img/watermark-files/dom.png'));
-            $imgView->insert($watermarkView, 'top', 0, 0);
-            $imgView->insert($watermarkHouseView, 'bottom-right', 30, 30);
-            $imgView->save(public_path('/img/fv.jpg'));
+        if (!empty($_FILES['files']['tmp_name'])){
 
-            $view->photo = public_path('/img/fv.jpg');
-            $view->user_id = $_POST["author_id"];
-            $view->user_id = $_POST["author_id"];
-            $view->save();
-            $addViewInfo = View::where('user_id', '=', $_POST['author_id'])
-                                ->orderBy('id', 'desc')
-                                ->first();
-            $updateViewInfo = View::find($addViewInfo->id);
-            $variantRes .= $addViewInfo->id.',';
-            $updateViewInfo->path_min = $updateViewInfo->photo->url('small');
-            $updateViewInfo->path_full = $updateViewInfo->photo->url();
-            $updateViewInfo->post_id = $lastId->id + 1;
-            $updateViewInfo->save();
+             foreach ($_FILES['files']['tmp_name'] as $variantItem) {
+                  $view = new View();
+                  $imgView = Image::make($variantItem);
+                  $watermarkView = Image::make(public_path('/img/watermark-files/poloska.png'));
+                  $watermarkHouseView = Image::make(public_path('/img/watermark-files/dom.png'));
+                  $imgView->insert($watermarkView, 'top', 0, 0);
+                  $imgView->insert($watermarkHouseView, 'bottom-right', 30, 30);
+                  $imgView->save(public_path('/img/fv.jpg'));
 
+                  $view->photo = public_path('/img/fv.jpg');
+                  $view->user_id = $_POST["author_id"];
+                  $view->user_id = $_POST["author_id"];
+                  $view->save();
+                  $addViewInfo = View::where('user_id', '=', $_POST['author_id'])
+                  ->orderBy('id', 'desc')
+                  ->first();
+                  $updateViewInfo = View::find($addViewInfo->id);
+                  $variantRes .= $addViewInfo->id.',';
+                  $updateViewInfo->path_min = $updateViewInfo->photo->url('small');
+                  $updateViewInfo->path_full = $updateViewInfo->photo->url();
+                  $updateViewInfo->post_id = $lastId->id + 1;
+                  $updateViewInfo->save();
+
+             }
         }
 
         $image->variants = $variantRes;
@@ -476,8 +500,10 @@ class PhotoController extends Controller
         $image->title = $_POST['title'];
         $image->description = $_POST['description'];
         $image->verified = true;
-        $color = $_POST['color'];
-        $colorRes = "";
+        if (Input::has('style')) {
+             $color = $_POST['color'];
+             $colorRes = "";
+
         if (is_array($color)) {
             foreach ($color as $colorItem) {
                 $colorRes .=$colorItem.', ';
@@ -486,6 +512,8 @@ class PhotoController extends Controller
         }else{
             $image->colors = $color;
         }
+}
+if (Input::has('style')) {
 
         $room = $_POST['room'];
         $roomRes = "";
@@ -497,6 +525,8 @@ class PhotoController extends Controller
         }else{
             $image->rooms = $room;
         }
+}
+if (Input::has('style')) {
 
         $style = $_POST['style'];
         $styleRes = "";
@@ -508,6 +538,7 @@ class PhotoController extends Controller
         }else{
             $image->style = $style;
         }
+}
         $image->save();
         return redirect()->back();
     }

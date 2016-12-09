@@ -3,7 +3,11 @@
     <a href="/room=[0],styles=[0],colors=[0],sort=[0]" class="logo"><img src="{{asset('img/logo-doms.png')}}" alt="логотип DOM'S" /></a>
     <div class="control">
       <a href="/room=[0],styles=[0],colors=[0],sort=[0]" class="main-item">Интерьеры</a>
+      @if ( Auth::check())
       <a href="{{ URL::route('add') }}" class="plus-photo"><span class="uk-icon-justify uk-icon-plus"></span ></a>
+      @else
+      <span class="login plus-photo"><span class="uk-icon-justify uk-icon-plus"></span ></span>
+      @endif
     </div>
     <div class="logining">
       @if ( Auth::check())
@@ -14,7 +18,7 @@
           </div>
       </a>
       @else
-       <a id="login" class="logining-item">Вход</a>
+       <a class="login logining-item">Вход</a>
        <a id="registration" class="logining-item">Регистрация</a>
       @endif
     </div>
