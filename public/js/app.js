@@ -2389,6 +2389,21 @@ $( document ).ready(function() {
 });
 
 $( document ).ready(function() {
+  $('.remove-comment').on('click', function(){
+    var csrftoken = $('meta[name=_token]').attr('content'),
+        id = $(this).children('.delete_comment_id').data('id'),
+        positive = false;
+        $.ajax({
+            type:'POST',
+            data: {
+                      '_token'  : csrftoken,
+                      'delete_comment_id' : id,
+            },
+            url:'/delete_comment',
+        });
+        $(this).parent('.b-comment-wrap').remove();
+
+  });
   $('.submit-comment').on('click', function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
           comment = $('.input-comment').val(),
@@ -2408,7 +2423,10 @@ $( document ).ready(function() {
           success: function (data) {
             $('.input-comment').val('');
 
-                  $('<div class="b-comment">' +
+                  $('<div class="b-comment-wrap">' +
+                    '<span class="remove-comment uk-icon-justify uk-icon-remove">'+
+                    '<span class="delete_comment_id" data-id="'+data.id+'"></span>'+
+                    '</span>'+
                     '<a href="/profile/'+
                     data.user_id +'" class="b-photo-comment">' +
                     '<img class="img-full-width" src="'+'">' +
@@ -2426,7 +2444,21 @@ $( document ).ready(function() {
                       '</div>'+
                     '</div>'+
                   '</div>').appendTo('.b-all-comment');
+                  $('.remove-comment').click( function(){
+                    var csrftoken = $('meta[name=_token]').attr('content'),
+                        id = $(this).children('.delete_comment_id').data('id'),
+                        positive = false;
+                        $.ajax({
+                            type:'POST',
+                            data: {
+                                      '_token'  : csrftoken,
+                                      'delete_comment_id' : id,
+                            },
+                            url:'/delete_comment',
+                        });
+                        $(this).parent('.b-comment-wrap').remove();
 
+                  });
           }
       });
   });
@@ -2466,7 +2498,7 @@ $( document ).ready(function() {
 $( document ).ready(function() {
   var id, newLocal;
   $('#all-photo').text($('.photo-item').length);
-  $('#current-position').text($('.photo-item:first').length);
+  $('#current-position').text($('.active-slide').index());
   $('.btn-prew').on('click', function (){
     if ($('.wrap-slider').find(".photo-item:first").data('id') === $('.active-slide').data('id') ) {
       $('#popup-error-slider').fadeIn();
@@ -2485,7 +2517,7 @@ $( document ).ready(function() {
       if (typeof(sd[0]) !== "undefined") {
         $('.b-all-comment').empty();
         for(var i=0; i<sd.length; i++) {
-                    $('<div class="b-comment">'+
+                    $('<div class="b-comment-wrap">'+
                       '<a style="background:url(/system/App/User/avatars/000/000/0'+
                       sd[i].getAttribute('data-user')
                       +'/original/'+sd[i].getAttribute('data-path')
@@ -2528,7 +2560,8 @@ $( document ).ready(function() {
         }
       }else{
 
-        $('.pole-tag').remove();
+        $('.pole-tag').empty();
+        $('.pole-tag').fadeIn()
       }
       var description = $('#allDescriptionPhoto').children('div[data-id='+$('.active-slide').data('id')+']');
       if (description !== null) {
@@ -2573,7 +2606,7 @@ $( document ).ready(function() {
       if (typeof(sd[0]) !== "undefined") {
         $('.b-all-comment').empty();
         for(var i=0; i<sd.length; i++) {
-                    $('<div class="b-comment">'+
+                    $('<div class="b-comment-wrap">'+
                       '<a style="background:url(/system/App/User/avatars/000/000/0'+
                       sd[i].getAttribute('data-user')
                       +'/original/'+sd[i].getAttribute('data-path')
@@ -2615,8 +2648,8 @@ $( document ).ready(function() {
             $('<div class="clear"></div').appendTo('.pole-tag');
         }
       }else{
-
-        $('.pole-tag').remove();
+        $('.pole-tag').empty();
+        $('.pole-tag').fadeIn();
       }
 
 

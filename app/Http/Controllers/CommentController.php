@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\Comment;
+use App\Picture;
 
 use Carbon\Carbon;
 /**
@@ -44,7 +45,9 @@ class CommentController extends Controller
         $comment->post_id = $_POST['post_id'];
         $comment->user_id = $_POST['user_id'];
         $comment->text_comment = $_POST['comment'];
-
+        $image = Picture::find($_POST['post_id']);
+        $image->comments_count += 1;
+        $image->save();
         $comment->save();
         $lastComment = Comment::orderby('id', 'desc')->first();
         return $lastComment;
@@ -58,5 +61,15 @@ class CommentController extends Controller
      */
     public function delete(){
 
+      $id = $_POST['delete_comment_id'];
+      $comment = Comment::find($id);
+      $comment->delete();
+
+      return 'true';
+
+    }
+    public function index()
+    {
+      # code...
     }
 }

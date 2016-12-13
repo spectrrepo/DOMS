@@ -61,6 +61,7 @@ Route::post('/delete_tag/{id}','TagsController@delete');
 Route::post('/delete_style/{id}','StylesController@delete');
 Route::post('/delete_room/{id}','RoomsController@delete');
 Route::post('/delete_news/{id}', 'NewsController@delete');
+Route::post('/delete_comment', 'CommentController@delete');
 
 Route::post('/add_photo', 'PhotoController@add');
 Route::post('/comment', 'CommentController@add');

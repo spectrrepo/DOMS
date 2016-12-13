@@ -9,5 +9,8 @@
   </div>
         @section('site-content')
         @show
+        <div class="clear">
+
+        </div>
 </div>
 @endsection

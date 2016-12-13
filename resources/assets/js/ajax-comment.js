@@ -1,4 +1,19 @@
 $( document ).ready(function() {
+  $('.remove-comment').on('click', function(){
+    var csrftoken = $('meta[name=_token]').attr('content'),
+        id = $(this).children('.delete_comment_id').data('id'),
+        positive = false;
+        $.ajax({
+            type:'POST',
+            data: {
+                      '_token'  : csrftoken,
+                      'delete_comment_id' : id,
+            },
+            url:'/delete_comment',
+        });
+        $(this).parent('.b-comment-wrap').remove();
+
+  });
   $('.submit-comment').on('click', function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
           comment = $('.input-comment').val(),
@@ -18,7 +33,10 @@ $( document ).ready(function() {
           success: function (data) {
             $('.input-comment').val('');
 
-                  $('<div class="b-comment">' +
+                  $('<div class="b-comment-wrap">' +
+                    '<span class="remove-comment uk-icon-justify uk-icon-remove">'+
+                    '<span class="delete_comment_id" data-id="'+data.id+'"></span>'+
+                    '</span>'+
                     '<a href="/profile/'+
                     data.user_id +'" class="b-photo-comment">' +
                     '<img class="img-full-width" src="'+'">' +
@@ -36,7 +54,21 @@ $( document ).ready(function() {
                       '</div>'+
                     '</div>'+
                   '</div>').appendTo('.b-all-comment');
+                  $('.remove-comment').click( function(){
+                    var csrftoken = $('meta[name=_token]').attr('content'),
+                        id = $(this).children('.delete_comment_id').data('id'),
+                        positive = false;
+                        $.ajax({
+                            type:'POST',
+                            data: {
+                                      '_token'  : csrftoken,
+                                      'delete_comment_id' : id,
+                            },
+                            url:'/delete_comment',
+                        });
+                        $(this).parent('.b-comment-wrap').remove();
 
+                  });
           }
       });
   });

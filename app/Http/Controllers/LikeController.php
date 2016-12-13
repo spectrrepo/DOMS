@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\Like;
+use App\Picture;
 
 /**
  * The ResultMessage class holds a message that can be returned
@@ -30,9 +31,11 @@ class LikeController extends Controller
 
         $like->post_id = $_POST['post_id'];
         $like->user_id = $_POST['user_id'];
-
+        $image = Picture::find($_POST['post_id']);
+        $image->likes_count += 1;
+        $image->save();
         $like->save();
-        $countLike = count( Like::where('post_id', '=', $_POST['post_id'])->get());
+        $countLike = Picture::find($_POST['post_id'])->likes_count;
         return $countLike;
     }
 
@@ -45,6 +48,8 @@ class LikeController extends Controller
     public function delete(){
         $like = Like::where('post_id', '=', $_POST['post_id'])
                     ->where('user_id', '=', $_POST['user_id']);
+        $image = Picture::find($_POST['post_id']);
+        $image->likes_count -= 1;
         $like->delete();
         return 'true';
     }

@@ -238,12 +238,28 @@ a.btn-prew span {
   height: auto;
   width: 100%;
 }
-.b-comment{
-  width: 89%;
+.b-comment-wrap{
+  width: 100%;
+  position: relative;
   float: left;
   padding-left: 1%;
   margin-top: 7px;
   margin-bottom: 6px;
+}
+.b-comment {
+  float: left;
+  margin-left: 10px;
+  margin-top: 3px;
+}
+.remove-comment {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  color: gray;
+  cursor: pointer;
+}
+.remove-comment:hover {
+  color: black;
 }
 .input-comment{
   display: block;

@@ -18,17 +18,17 @@
         <div class="b-contact-data">
           <div class="contact-item">
               <span class="contact-item-name">email</span>
-              <span class="contact-item-value"> {{ $user->e_mail }} </span>
+              <a href="mailto:{{ $user->e_mail }}" class="contact-item-value"> {{ $user->e_mail }} </a>
               <div class="clear"></div>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">skype</span>
-              <span class="contact-item-value"> {{ $user->skype }} </span>
+              <a  href="skype:{{ $user->e_mail }}" class="contact-item-value"> {{ $user->skype }} </a>
               <div class="clear"></div>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">телефон</span>
-              <span class="contact-item-value"> {{ $user->phone }} </span>
+              <a href="tellto:{{ $user->e_mail }}" class="contact-item-value"> {{ $user->phone }} </a>
               <div class="clear"></div>
           </div>
           <div class="contact-item">
@@ -56,7 +56,7 @@
         <div class="b-person-post">
           <div class="col-news-min">
               <div class="b-portret-blogger"><img src="
-                {{ !($image->avatar === null ) ? $image->avatar->url() : '' }}" alt="" /></span></div>
+                {{ !($image->path_full === null ) ? $image->path_full : '' }}" alt="" /></span></div>
           </div>
           <div class="col-news-big">
               <div class="b-name-redactor"><a href="/profile/{{$image->id}}">{{$image->name}}</a></div>
@@ -71,7 +71,7 @@
                   <div class="b-statistics">
                     <div class="b-item-stat">
                       <span class="ico uk-icon-justify uk-icon-eye"></span>
-                      <span class="num-stat">8</span>
+                      <span class="num-stat">{{ !empty($image->views_count) ? $image->views_count : '0' }}</span>
                       <span class="tooltip-stat other-margin-tooltip1">
                         <span class="text-tooltip-stat">
                           количество просмотров
@@ -81,7 +81,7 @@
                     </div>
                     <div class="b-item-stat">
                       <span class="ico uk-icon-justify uk-icon-heart"></span>
-                      <span class="num-stat">12</span>
+                      <span class="num-stat">{{ !empty($image->likes_count) ? $image->likes_count : '0' }}</span>
                       <span class="tooltip-stat other-margin-tooltip2">
                         <span class="text-tooltip-stat">
                           понравилось
@@ -91,7 +91,7 @@
                     </div>
                     <div class="b-item-stat">
                       <span class="ico uk-icon-justify uk-icon-star"></span>
-                      <span class="num-stat">2</span>
+                      <span class="num-stat">{{ !empty($image->likes_count) ? $image->likes_count : '0' }}</span>
                       <span class="tooltip-stat">
                         <span class="text-tooltip-stat">
                          избранное

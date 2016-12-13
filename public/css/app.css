@@ -7212,6 +7212,9 @@ html {
   background-color: #333333;
   cursor: pointer; }
 
+.ico-liked {
+  float: right; }
+
 .item-admin-row {
   width: 100%;
   height: 90px;
@@ -7752,12 +7755,28 @@ a.btn-prew span {
   height: auto;
   width: 100%; }
 
-.b-comment {
-  width: 89%;
+.b-comment-wrap {
+  width: 100%;
+  position: relative;
   float: left;
   padding-left: 1%;
   margin-top: 7px;
   margin-bottom: 6px; }
+
+.b-comment {
+  float: left;
+  margin-left: 10px;
+  margin-top: 3px; }
+
+.remove-comment {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  color: gray;
+  cursor: pointer; }
+
+.remove-comment:hover {
+  color: black; }
 
 .input-comment {
   display: block;
@@ -8914,7 +8933,7 @@ a.btn-prew span {
   bottom: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.6);
-  z-index: 100000000; }
+  z-index: 1000000000000; }
 
 .fancybox-lock .fancybox-overlay {
   overflow: auto;

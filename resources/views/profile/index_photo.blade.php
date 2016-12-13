@@ -18,17 +18,17 @@
         <div class="b-contact-data">
           <div class="contact-item">
               <span class="contact-item-name">email</span>
-              <span class="contact-item-value"> {{$user->e_mail}} </span>
+              <a href="mailto:{{ $user->e_mail }}" class="contact-item-value"> {{ $user->e_mail }} </a>
               <div class="clear"></div>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">skype</span>
-              <span class="contact-item-value"> {{ $user->skype }} </span>
+              <a  href="skype:{{ $user->e_mail }}" class="contact-item-value"> {{ $user->skype }} </a>
               <div class="clear"></div>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">телефон</span>
-              <span class="contact-item-value"> {{ $user->phone }} </span>
+              <a href="tellto:{{ $user->e_mail }}" class="contact-item-value"> {{ $user->phone }} </a>
               <div class="clear"></div>
           </div>
           <div class="contact-item">
@@ -54,11 +54,20 @@
 
 
       @if ((!empty($userImages)))
-      <div class=" b-personal-news content  content-your-photo uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights" data-uk-grid>
+      <div class=" b-personal-news content  content-your-photo uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-5 tm-grid-heights" data-uk-grid>
           @foreach ($userImages as $userImage)
-              <a href="/photo/{{ $userImage->id }}" class="item-gallery" style="position:absolute" data-grid-prepared="true">
+              <a href="/profile/admin/verification/{{ $userImage->id }}" class="item-gallery" style="position:absolute" data-grid-prepared="true">
                 <div class="uk-panel-box" >
                     <img src="{{ $userImage->min_path }}" alt="" />
+                    <div class="ico-liked">
+                      <span class="uk-icon-justify uk-icon-eye"></span>
+                      <span>{{ !empty($userImage->views_count) ? $userImage->views_count : '0'}}</span>
+                      <span class="uk-icon-justify uk-icon-heart"></span>
+                      <span>{{ !empty($userImage->likes_count) ? $userImage->likes_count : '0'}}</span>
+                      <span class="uk-icon-justify uk-icon-comments"></span>
+                      <span>{{ !empty($userImage->comments_count) ? $userImage->comments_count : '0'}}</span>
+                    </div>
+                    <div class="clear"></div>
                 </div>
             </a>
           @endforeach

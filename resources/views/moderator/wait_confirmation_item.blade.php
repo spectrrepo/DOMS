@@ -20,7 +20,7 @@
             <div class="color-place">
                 @foreach ( $colors as $color)
                     <div class="wrap-color-input">
-                      <input class="color-photo-choose"{{ preg_match('/['.$color->id.']/',$image->colors) ? 'checked' : '' }} type="checkbox" name="color[]" value="{{ $color->id }}" />
+                      <input class="color-photo-choose"{{ preg_match('/ '.$color->id.',/', $image->colors) ? 'checked' : '' }} type="checkbox" name="color[]" value="{{ $color->id }}" />
                       <div class="b-color-input" id="color_{{ $color->title }}" style="background:{{ $color->RGB}}"></div>
                     </div>
                 @endforeach
@@ -32,14 +32,29 @@
                   <span class="add-photo-text racurs-margin-text">Добавить ракурсы</span>
                   <input id="files" class="input-dwnld-view-photo" type="file" name="files[]" multiple>
               </div>
+                @foreach ($views as $view)
+                  <span id="{{ $view->id }}" class="deleteSome">
+                    <img class="thumb" src="{{ $view->path_min }}">
+                    <span class="b-hover-add-view">
+                      <span class="uk-icon-justify uk-icon-remove vertical-align"></span>
+                    </span>
+                  </span>
+                  <input id="{{ $view->id }}" class="new" value="{{ $view->photo->url() }}" style="display: none;" name="files[]" type="file">
+                @endforeach
             </div>
             <div class="clear"></div>
             <div class="wrap-add-tag">
               <div class="label-tag-input">Теги</div>
               <input class="input-tag-name" type="text" name="name" placeholder="Введите тег">
               <button class="btn-add-tag uk-icon-justify uk-icon-plus" type="button" name="button"></button>
+              <input name="data-tags" value="{{ $tagAll }}" type="hidden">
+              @foreach ($tags as $tag)
+                @if ($tag->title !== '')
+                  <span class="item-tag-show">{{ $tag->title }}</span>
+                @endif
+              @endforeach
             </div>
-            <span>Нет ошибок в зополнении формы</span>
+            <span>Нет ошибок в заполнении формы</span>
             <input type="checkbox" name="verified" value="1">
             <button class="btn-dwnld" type="submit" name="button">
               <span class="save-text">Сохранить изменения</span>
@@ -54,7 +69,7 @@
       <div class="tags-list">
         @foreach ( $styles as $style )
           <div class="wrap-tags-list-item">
-            <input class="opacity-radio" {{ preg_match('/['.$style->id.']/',$image->style) ? 'checked' : '' }} type="checkbox" name="style[]" value="{{ $style->id }}">
+            <input class="opacity-radio" {{ preg_match('/ '.$style->id.',/',$image->style) ? 'checked' : '' }} type="checkbox" name="style[]" value="{{ $style->id }}">
             <div class="tags-list-item">
               {{ $style->name }}
             </div>
@@ -69,7 +84,7 @@
       <div class="tags-list">
         @foreach ( $rooms as $room )
         <div class="wrap-tags-list-item">
-          <input class="opacity-radio" {{ preg_match('/['.$room->id.']/',$image->rooms) ? 'checked' : '' }} type="checkbox" name="room[]" value="{{ $room->id }}">
+          <input class="opacity-radio" {{ preg_match('/ '.$room->id.',/',$image->rooms) ? 'checked' : '' }} type="checkbox" name="room[]" value="{{ $room->id }}">
           <div class="tags-list-item">
             {{ $room->title }}
           </div>

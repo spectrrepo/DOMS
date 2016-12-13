@@ -7,10 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\User;
-
+use Input;
+use File;
 use App\Style;
 
 use App\Room;
+use App\View;
 use App\Tag;
 use App\Color;
 use App\Liked;
@@ -53,6 +55,7 @@ class UserController extends Controller
              $images =  Picture::join('Users', 'Images.author_id', '=', 'Users.id')
                              ->join('Likes', 'Images.id', '=', 'Likes.post_id')
                              ->join('Likeds', 'Images.id', '=', 'Likeds.post_id')
+                             ->take(10)
                              ->get();
              $id = Auth::id();
              $user = User::find($id);
@@ -70,9 +73,7 @@ class UserController extends Controller
          if(Auth::check()){
              $id = Auth::id();
              $user = User::find($id);
-             $userImages = Picture::join('Users', function ($join) {
-                                    $join->on('Users.id', '=', 'Images.author_id');
-                                 })->where('author_id', '=', $id)
+             $userImages = Picture::where('author_id', '=', $id)
                                    ->get();
              return View('profile.index_photo', [ 'id' => $id,
                                                   'user' => $user,
@@ -171,7 +172,9 @@ class UserController extends Controller
 
          $liked->post_id = $_POST['post_id'];
          $liked->user_id = $_POST['user_id'];
-
+         $image = Picture::find($_POST['post_id']);
+         $image->favs_count += 1;
+         $image->save();
          $liked->save();
          return 'true';
 
@@ -181,6 +184,8 @@ class UserController extends Controller
       {
         $liked = Liked::where('post_id', '=', $_POST['post_id'])
                       ->where('user_id', '=', $_POST['user_id']);
+        $image->favs_count -= 1;
+        $image->save();
         $liked->delete();
         return 'true';
       }
@@ -195,8 +200,8 @@ class UserController extends Controller
              $images =  Picture::join('Likeds','Images.id', '=', 'Likeds.post_id' )
                              ->where('Likeds.user_id', '=', Auth::id())
                              ->get();
+                            //  dd($images);
              return view('profile.liked', ['images' => $images]);
-
           }
       }
       /**
@@ -226,8 +231,13 @@ class UserController extends Controller
            $user->skype = $_POST["skype"];
            $user->about = $_POST["about"];
            $user->soc_net = $_POST["soc_net"];
-           if (!empty($_FILES["avatar"])) {
+
+           if (!File::isFile(Input::get('avatar'))) {
+
                $user->avatar = $_FILES["avatar"];
+               $user->path_min = $user->avatar->url('small');
+               $user->path_full = $user->avatar->url('max');
+
            }
 
            $user->save();
@@ -262,17 +272,33 @@ class UserController extends Controller
        }
        public function confirmationItemPage($id)
        {
-           $user = User::find( Auth::id() );
-           $styles = Style::all();
-           $rooms = Room::all();
-           $colors = Color::all();
+           $imageId = Picture::find($id);
+        //    dd($imageId);
+           $needUser = User::find($imageId->author_id);
+           if ((Auth::user()->status === 'moderator' )|| (Auth::user()->id === $needUser->id)) {
+               $user = User::find( Auth::id() );
+               $styles = Style::all();
+               $rooms = Room::all();
+               $colors = Color::all();
+               $tags = Tag::where('post_id', '=', $id)->get();
+               $tagAll = '';
+               foreach ($tags as $tag) {
+                    $tagAll .= $tag->title.';';
+               }
 
-           $image = Picture::find($id);
-           return view('moderator.wait_confirmation_item', ['user' => $user,
-                                                            'styles' => $styles,
-                                                            'rooms' => $rooms,
-                                                            'colors' => $colors,
-                                                            'image' => $image]);
+               $views = View::where('post_id', '=', $id)->get();
+               $image = Picture::find($id);
+
+               return view('moderator.wait_confirmation_item', ['user' => $user,
+                                                                'styles' => $styles,
+                                                                'tags' => $tags,
+                                                                'views' => $views,
+                                                                'rooms' => $rooms,
+                                                                'tagAll' => $tagAll,
+                                                                'colors' => $colors,
+                                                                'image' => $image]);
+
+           }
        }
        public function addNewsItem()
        {
