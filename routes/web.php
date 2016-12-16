@@ -40,7 +40,27 @@ Route::get('/profile/admin/add_news', array('as' => 'news',
 Route::get('/profile/admin/verification/{id}', array('uses' => 'UserController@confirmationItemPage'));
 Route::get('/profile/admin/add_news_item', array('uses' => 'UserController@addNewsItem'));
 Route::get('/profile/admin/add_style_item', array('uses' => 'UserController@addStyleItem'));
+Route::get('/profile/admin/comments', array('as' => 'comments',
+                                            'uses' => 'CommentController@index'));
+Route::get('/profile/admin/messages', array('as' => 'messages',
+                                            'uses' => 'MessagesController@mailIndex'));
+Route::get('/profile/admin/copyrights', array('as' => 'copyright',
+                                            'uses' => 'CopyrightController@index'));
+Route::get('/profile/admin/slides', array('as' => 'slide',
+                                            'uses' => 'ChangeSlideController@index'));
+Route::get('/profile/admin/answer_mail/{id}', 'MessagesController@mailIndexItem');
 
+Route::post('/delete_copyright/{id}', 'CopyrightController@delete');
+Route::post('/delete_comments/{id}', 'CommentController@delete');
+Route::post('/delete_message/{id}', 'MessagesController@deleteMail');
+Route::post('/delete_slide/{id}', 'ChangeSlideController@delete');
+
+Route::post('/save_copyright/{id}', 'CopyrightController@delete');
+Route::post('/add_slide/{id}', 'ChangeSlideController@delete');
+
+
+Route::post('/edit_slide/{id}', 'ChangeSlideController@delete');
+Route::post('/answer_mail', 'MessagesController@askOnMail');
 Route::post('/delete_verification_image/{id}','UserController@deleteVerificationImage');
 Route::post('/add_photo_site/{id}','PhotoController@addPhotoSite');
 
@@ -53,6 +73,8 @@ Route::post('/edit_tag/{id}','TagsController@edit');
 Route::post('/edit_style/{id}','StylesController@edit');
 Route::post('/edit_room/{id}','RoomsController@edit');
 Route::post('/edit_new/{id}','NewsController@edit');
+Route::post('/send_mail',array('as' => 'sendMail',
+                               'uses' => 'MessagesController@sendMail'));
 
 Route::get('/profile/admin/edit_page_styles/{id}','StylesController@editPageIndex');
 Route::get('/profile/admin/edit_page_news/{id}','NewsController@editPageIndex');

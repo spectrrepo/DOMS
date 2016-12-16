@@ -23,8 +23,13 @@
   padding: 20px;
 }
 .title-cell {
- width: 62%;
+ width: 59%;
  line-height: 90px;
+}
+.name-cell {
+  width: 16%;
+  padding: 10px;
+  box-sizing: border-box;
 }
 .img-inside-cell {
   max-height: 100%;
@@ -79,4 +84,37 @@ ul.pagination li a {
   background: #efeded;
   font-size: 18px;
   color: #636363;
+}
+.message-user{
+  border: 1px solid #ccc;
+  padding: 5px;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.name-message-user{
+  float: left;
+  border-right: 1px solid #ccc;
+  padding: 5px;
+  box-sizing: border-box;
+  width: 50%;
+  line-height: 40px;
+}
+.email-message-user{
+  float: left;
+  padding: 5px;
+  box-sizing: border-box;
+  width: 50%;
+  line-height: 40px;
+  min-height: 40px;
+}
+.text-message-user {
+  padding: 5px;
+  clear: none;
+  box-sizing: border-box;
+  width: 100%;
+  border-top: 1px solid #ccc;
+}
+.mail-textarea {
+  height: 300px;
 }
