@@ -29,7 +29,7 @@ class AddColumnTableVariantNews extends Migration
     {
         Schema::table('News', function(Blueprint $table) {
 
-            $table->dropColumn('verified');
+            $table->dropColumn('variants');
 
         });
     }

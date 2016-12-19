@@ -492,7 +492,7 @@ class PhotoController extends Controller
         return redirect()->back();
     }
     public function addPhotoSite($id)
-    {   
+    {
         $image = Picture::find($id);
         if ( !isset($_FILES['photo'])) {
             $image->photo = $_FILES['photo'];

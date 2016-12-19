@@ -8,14 +8,17 @@ $( document ).ready(function() {
       colorSort = $('input[name=colorSort]').val();
 
   $('.close').on('click', function () {
-    $(this).parent("div.sidebar-modal").removeClass('block-view');
     $('.click-ready').removeClass('active-menu-item');
+    $('.sidebar-modal').fadeOut();
   });
 
   // placements sort control
-  $('#placements span.click-ready').on('click', function () {
-    $(this).next().toggleClass('block-view');
-    $(this).toggleClass('active-menu-item');
+  $('span.click-ready').on('click', function () {
+    $('.sidebar-modal').fadeOut();
+
+    $(this).next().fadeIn();
+    $('.click-ready').removeClass('active-menu-item');
+    $(this).addClass('active-menu-item');
   });
 
 
