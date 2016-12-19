@@ -9,6 +9,8 @@ use App\Http\Requests;
 use App\Comment;
 use App\Picture;
 
+use DB;
+
 use Carbon\Carbon;
 /**
  * The ResultMessage class holds a message that can be returned
@@ -29,6 +31,10 @@ class CommentController extends Controller
      */
     public function index(){
 
+      $comments = DB::table('Images')
+                    ->join('Comments', 'Comments.post_id', '=','Images.id')
+                    ->paginate(10);
+      return view('moderator.comments', ['comments' => $comments]);
 
     }
 
@@ -59,17 +65,12 @@ class CommentController extends Controller
      * @return
      *
      */
-    public function delete(){
+    public function delete($id){
 
-      $id = $_POST['delete_comment_id'];
       $comment = Comment::find($id);
       $comment->delete();
 
-      return 'true';
+      return redirect()->back();
 
-    }
-    public function index()
-    {
-      # code...
     }
 }

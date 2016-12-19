@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-use App\Message;
+use App\MessageMail;
+use Mail;
 
 /**
  * The ResultMessage class holds a message that can be returned
@@ -26,8 +27,41 @@ class MessagesController extends Controller
      * @return
      *
      */
-    public function send () {
+    public function sendMail () {
 
+        $messages = new MessageMail();
+        $messages->name = $_POST['name'];
+        $messages->e_mail = $_POST['e_mail'];
+        $messages->text_message = $_POST['text'];
+
+        $messages->save();
+        return 'true';
+
+    }
+
+    public function mailIndex () {
+
+        $messages = MessageMail::paginate(10);
+
+        return view('moderator.message', ['messages' => $messages]);
+    }
+    public function mailIndexItem ($id) {
+      $message = MessageMail::find($id);
+
+      return view('moderator.message_answer', ['message' => $message]);
+    }
+    /**
+     * @param
+     *
+     * @return
+     *
+     */
+    public function deleteMail ($id) {
+
+        $message = MessageMail::find($id);
+        $message->delete();
+
+        return redirect()->back();
     }
 
     /**
@@ -36,17 +70,15 @@ class MessagesController extends Controller
      * @return
      *
      */
-    public function delete () {
+    public function askOnMail () {
+        $thema = $_POST['thema'];
+        $text = $_POST['text'];
+        Mail::raw($text, function($message)
+        {
+            $message->from('us@example.com', 'Laravel');
 
-    }
-
-    /**
-     * @param
-     *
-     * @return
-     *
-     */
-    public function index () {
+            $message->to('skiffy166@gmail.com');
+        });
 
     }
 }

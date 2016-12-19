@@ -194,22 +194,85 @@ class PhotoController extends Controller
      }
      public function loadSortPhoto()
      {
-         $sortSort = $_POST['sortSort'];
-         $roomSort = $_POST['roomSort'];
-         $styleSort = $_POST['styleSort'];
-         $colorSort = $_POST['colorSort'];
+         $sort = $_POST['sortSort'];
+         $room = $_POST['roomSort'];
+         $style = $_POST['styleSort'];
+         $color = $_POST['colorSort'];
+         if ($room != 0 ) {
+             $roomArray = explode(',',$room);
+             $roomSort = "";
+             foreach ($roomArray as $roomArrayItem) {
+                 if ($roomArrayItem !== end($roomArray)) {
+                     $roomSort .= ' rooms regexp ( '.$roomArrayItem.') and';
+                 }
+                 else {
+                     $roomSort .= ' rooms regexp ( '.$roomArrayItem.')';
+                 }
+             }
+             $roomSorting = $room;
+         }else{
+             $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
+             $roomSorting = 0;
+         }
+         if ($style != 0 ) {
+             $styleArray = explode(',',$style);
+             $styleSort = "";
+             foreach ($styleArray as $styleArrayItem) {
+                 if ($styleArrayItem !== end($styleArray)) {
+                     $styleSort .= ' style regexp ( '.$styleArrayItem.') and';
+                 }
+                 else {
+                     $styleSort .= ' style regexp ( '.$styleArrayItem.')';
+                 }
+             }
+             $styleSorting = $style;
+         }else{
+             $styleSort = "style regexp '[a-zA-Z0-9_]'";
+             $styleSorting = 0;
+         }
+         if ($color != 0 ) {
+             $colorArray = explode(',',$color);
+             $colorSort = "";
+             foreach ($colorArray as $colorArrayItem) {
+                 if ($colorArrayItem !== end($colorArray)) {
+                     $colorSort .= ' colors regexp ( '.$colorArrayItem.') and';
+                 }
+                 else {
+                     $colorSort .= ' colors regexp ( '.$colorArrayItem.')';
+                 }
+             }
+         }else{
+              $colorSort = "colors regexp '[a-zA-Z0-9_]'";
+         }
+         if ($sort != 0 ) {
+           if ($sort == 'popular') {
+               $sortSort = 'views_count';
+           }elseif ($sort == 'recommended') {
+               $sortSort = 'id';
+           }elseif ($sort == 'new') {
+               $sortSort = 'id';
+           }else {
+               $sortSort = '';
+           }
 
-         if ($sortSort != 0) {
+         }else{
+           $sortSort = true;
+
+         }
+         if ($sort != 0) {
               $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                                ->where('verified', '=', true)
                                ->take(3)
                                ->orderBy($sortSort, 'desc')
                                ->get();
+                              //  dd($ajaxImage);
          }else {
               $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                                ->where('verified', '=', true)
                                ->take(3)
                                ->get();
+                              //  dd($ajaxImage);
+
          }
          return $ajaxImage;
      }

@@ -7,17 +7,18 @@
     {{ $comment->id}}
   </div>
   <div class="cell-item-admin img-cell">
-    <img class="img-inside-cell" src="{{ $comment->comments->url('max')}}" alt="" />
+    <img class="img-inside-cell" src="{{ $comment->min_path}}" />
   </div>
   <div class="cell-item-admin title-cell">
-    {{ $comment->title}}
+    {{ $comment->text_comment}}
   </div>
   <div class="cell-item-admin cell-for-btn">
-    {{ Form::open(array('url' => '/delete_comments/'.$comment->id.''))}}
-    <button type="button" class="btn-cell uk-icon-justify uk-icon-remove" name="button"></button>
+    {{ Form::open(array('url' => '/delete_comments/'.$comment->id ))}}
+    <button type="submit" class="btn-cell uk-icon-justify uk-icon-remove" name="button"></button>
     {{ Form::close()}}
   </div>
   <div class="clear"></div>
 </div>
 @endforeach
+{{ $comments->render() }}
 @endsection
