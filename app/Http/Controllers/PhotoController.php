@@ -283,52 +283,56 @@ class PhotoController extends Controller
      *
      */
     public function indexItem($id, $room = 0, $style = 0, $color = 0, $sort = 0){
-
+     //     if ($tags != 0){
+     //          $tagsSort = 'tags = '
+     //     }else {
+     //
+     //     }
          if ($room != 0 ) {
             $roomArray = explode(',',$room);
             $roomSort = "";
             foreach ($roomArray as $roomArrayItem) {
                 if ($roomArrayItem !== end($roomArray)) {
-                    $roomSort .= ' rooms regexp ( '.$roomArrayItem.') and';
+                    $roomSort .= ' Images.rooms regexp ( '.$roomArrayItem.') and';
                 }
                 else {
-                    $roomSort .= ' rooms regexp ( '.$roomArrayItem.')';
+                    $roomSort .= ' Images.rooms regexp ( '.$roomArrayItem.')';
                 }
             }
         }else{
-            $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
+            $roomSort = "Images.rooms regexp '[a-zA-Z0-9_]'";
         }
         if ($style != 0 ) {
             $styleArray = explode(',',$style);
             $styleSort = "";
             foreach ($styleArray as $styleArrayItem) {
                 if ($styleArrayItem !== end($styleArray)) {
-                    $styleSort .= ' style regexp ( '.$styleArrayItem.') and';
+                    $styleSort .= ' Images.style regexp ( '.$styleArrayItem.') and';
                 }
                 else {
-                    $styleSort .= ' style regexp ( '.$styleArrayItem.')';
+                    $styleSort .= ' Images.style regexp ( '.$styleArrayItem.')';
                 }
             }
         }else{
-            $styleSort = "style regexp '[a-zA-Z0-9_]'";
+            $styleSort = "Images.style regexp '[a-zA-Z0-9_]'";
         }
         if ($color != 0 ) {
             $colorArray = explode(',',$color);
             $colorSort = "";
             foreach ($colorArray as $colorArrayItem) {
                 if ($colorArrayItem !== end($colorArray)) {
-                    $colorSort .= ' colors regexp ( '.$colorArrayItem.') and';
+                    $colorSort .= ' Images.colors regexp ( '.$colorArrayItem.') and';
                 }
                 else {
-                    $colorSort .= ' colors regexp ( '.$colorArrayItem.')';
+                    $colorSort .= ' Images.colors regexp ( '.$colorArrayItem.')';
                 }
             }
         }else{
-            $colorSort = "colors regexp '[a-zA-Z0-9_]'";
+            $colorSort = "Images.colors regexp '[a-zA-Z0-9_]'";
         }
         if ($sort != 0 ) {
           if ($sort == 'popular') {
-              $sortSort = 'views_count';
+              $sortSort = 'Images.views_count';
           }elseif ($sort == 'recommended') {
               $sortSort = 'id';
           }elseif ($sort == 'new') {

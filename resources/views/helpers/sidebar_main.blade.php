@@ -95,7 +95,7 @@
 </div>
 <div class="news">
     <div class="b-news">
-       <div class="b-photo-news">
+       <div class="b-photo-news item-news-title" rel="article{{$news->id}}">
           <img src="{{$news->news->url()}}" alt="" />
        </div>
        <div class="b-text-news">

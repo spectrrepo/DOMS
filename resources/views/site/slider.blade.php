@@ -3,6 +3,13 @@
 @section('site-content')
           <div class="content  uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights">
             <div class="col-slider-comment">
+            <!-- <div class="title-tag" style="margin-bottom:10px;">
+              <span class="title-slider-tag" style="float:left;">Поиск по тегам:</span>
+              <div class="tag-item">Привет</div>
+              <div class="clear">
+
+              </div>
+            </div> -->
             <div class="one-picture-place">
               <div class="b-photo-slider">
                        <div class="wrap-slider">
@@ -61,7 +68,7 @@
                   </span>
                   <span class="status-photo">
                     <div class="b-item-stat back-to-main">
-                      <a  class="ico-slider uk-icon-justify uk-icon-th-large"></a>
+                      <a href="/" class="ico-slider uk-icon-justify uk-icon-th-large"></a>
                       <span class="tooltip-stat margin-callback-tooltip">
                         <span class="text-tooltip-stat">
                          Плитка
