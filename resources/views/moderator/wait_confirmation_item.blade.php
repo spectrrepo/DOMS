@@ -30,16 +30,16 @@
               <div class="wrap-dwnld-photo">
                   <span class="add-photo-ico racurs-margin-ico uk-icon-justify uk-icon-camera"></span>
                   <span class="add-photo-text racurs-margin-text">Добавить ракурсы</span>
-                  <input id="files" class="input-dwnld-view-photo" type="file" name="files[]" multiple>
+                  <input id="files" class="input-dwnld-view-photo" type="file">
               </div>
                 @foreach ($views as $view)
-                  <span id="{{ $view->id }}" class="deleteSome">
+                  <span class="deleteSome delete-view-edit">
+                    <input type="hidden" name="id" value="{{ $view->id }}">
                     <img class="thumb" src="{{ $view->path_min }}">
                     <span class="b-hover-add-view">
                       <span class="uk-icon-justify uk-icon-remove vertical-align"></span>
                     </span>
                   </span>
-                  <input id="{{ $view->id }}" class="new" value="{{ $view->photo->url() }}" style="display: none;" name="files[]" type="file">
                 @endforeach
             </div>
             <div class="clear"></div>
@@ -93,5 +93,12 @@
       </div>
     </div>
     {{ Form::close() }}
+    {{ Form::open(array('url' => '/delete_verification_image/'.$image->id))}}
+    <button class="btn-dwnld" style="width:50%;" type="submit" name="button">
+      <span class="save-text">Удалить изображение</span>
+      <span class="save-ico uk-icon-justify uk-icon-save"></span>
+    </button>
+    <input type="hidden" name="uri" value="{{ $uri }}">
+    {{ Form::close()}}
   </div>
   @endsection

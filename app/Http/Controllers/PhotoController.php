@@ -159,6 +159,10 @@ class PhotoController extends Controller
 
          return $ajaxImage;
      }
+     public function newsAddPage()
+     {
+          # code...
+     }
      public function loadSortPhoto()
      {
          $sort = $_POST['sortSort'];
@@ -544,8 +548,45 @@ if (Input::has('style')) {
             $image->style = $style;
         }
 }
+$variantRes = " ";
+if (!empty($_FILES['files']['tmp_name'])){
+
+     foreach ($_FILES['files']['tmp_name'] as $variantItem) {
+          $view = new View();
+          $imgView = Image::make($variantItem);
+          $watermarkView = Image::make(public_path('/img/watermark-files/poloska.png'));
+          $watermarkHouseView = Image::make(public_path('/img/watermark-files/dom.png'));
+          $imgView->insert($watermarkView, 'top', 0, 0);
+          $imgView->insert($watermarkHouseView, 'bottom-right', 30, 30);
+          $imgView->save(public_path('/img/fv.jpg'));
+
+          $view->photo = public_path('/img/fv.jpg');
+          $view->user_id = $_POST["author_id"];
+          $view->user_id = $_POST["author_id"];
+          $view->save();
+          $addViewInfo = View::where('user_id', '=', $_POST['author_id'])
+          ->orderBy('id', 'desc')
+          ->first();
+          $updateViewInfo = View::find($addViewInfo->id);
+          $variantRes .= $addViewInfo->id.',';
+          $updateViewInfo->path_min = $updateViewInfo->photo->url('small');
+          $updateViewInfo->path_full = $updateViewInfo->photo->url();
+          $updateViewInfo->post_id = $id;
+          $updateViewInfo->save();
+
+     }
+}
         $image->save();
         return redirect()->back();
+    }
+
+    public function deleteView()
+    {
+        $id = $_POST['id'];
+        $views = View::find($id);
+        $views->delete();
+        dd($views);
+        return 'true';
     }
 
 }

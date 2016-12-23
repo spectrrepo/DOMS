@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-
 use App\User;
 use Input;
 use File;
@@ -284,7 +283,7 @@ class UserController extends Controller
                foreach ($tags as $tag) {
                     $tagAll .= $tag->title.';';
                }
-
+               $uri = 'admin';
                $views = View::where('post_id', '=', $id)->get();
                $image = Picture::find($id);
 
@@ -295,10 +294,11 @@ class UserController extends Controller
                                                                 'rooms' => $rooms,
                                                                 'tagAll' => $tagAll,
                                                                 'colors' => $colors,
+                                                                'uri' => $uri,
                                                                 'image' => $image]);
 
            }else {
-               return redirect()->back();
+               return redirect('/profile/'.Auth::user()->id);   
            }
        }
        public function addNewsItem()
@@ -312,6 +312,11 @@ class UserController extends Controller
        public function deleteVerificationImage($id)
        {
            $image = Picture::find($id)->delete();
-           return redirect()->back();
+            $uri= $_POST['uri'];
+           if ( $uri == 'admin') {
+               return redirect('/profile/admin/verification');
+           }else {
+               return redirect('/profile/'.Autrh::user()->id);
+           }
        }
 }
