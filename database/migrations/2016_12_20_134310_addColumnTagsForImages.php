@@ -14,7 +14,7 @@ class AddColumnTagsForImages extends Migration
     public function up()
     {
         Schema::table('Images', function(Blueprint $table) {
-               $table->string('path_min')->nullable();
+               $table->text('tags')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddColumnTagsForImages extends Migration
     public function down()
     {
         Schema::table('Images', function(Blueprint $table) {
-            $table->dropColumn('path_min');
+            $table->dropColumn('tags');
         });
     }
 }

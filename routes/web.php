@@ -12,10 +12,10 @@
 */
 
 Route::get('/', function(){
-    return redirect('/room=[0],styles=[0],colors=[0],sort=[""]');
+    return redirect('/room=[0],styles=[0],colors=[0],sort=[0],tag=[0]');
 });
-Route::get('/room=[{room?}],styles=[{style?}],colors=[{color?}],sort=[{sort?}]', 'PhotoController@index');
-Route::get('/photo/id=[{id}],room=[{room?}],styles=[{style?}],colors=[{color?}],sort=[{sort?}]', array('uses' => 'PhotoController@indexItem'));
+Route::get('/room=[{room?}],styles=[{style?}],colors=[{color?}],sort=[{sort?}],tag=[{tag?}]', 'PhotoController@index');
+Route::get('/photo/id=[{id}],room=[{room?}],styles=[{style?}],colors=[{color?}],sort=[{sort?}],tag=[{tag?}]', array('uses' => 'PhotoController@indexItem'));
 Route::get('/profile/{id}', array('uses' => 'UserController@index'));
 Route::get('/news', array('uses' => 'NewsController@Index'));
 
@@ -96,8 +96,15 @@ Route::post('/delete_like', 'LikeController@delete');
 Route::post('/pagination_index', 'PhotoController@indexAddPage');
 Route::post('/update/profile', 'UserController@changeYourself');
 
-Route::post('/load_left_images', 'PhotoController@loadLeftPhoto');
-Route::post('/load_right_images', 'PhotoController@loadRightPhoto');
+
+Route::post('/load_slides', 'SliderController@dwnldPhotoSlider');
+Route::post('/load_views', 'SliderController@dwnldViewsForPhoto');
+Route::post('/load_tags', 'SliderController@dwnldTags');
+Route::post('/load_comments', 'SliderController@dwnldComments');
+Route::post('/load_like', 'SliderController@dwnldLikeWhom');
+Route::post('/load_info_slide', 'SliderController@dwnldInfoPhoto');
+Route::post('/load_user', 'SliderController@dwnldPhotoUser');
+
 
 Route::post('/load_sort_photo', 'PhotoController@loadSortPhoto');
 

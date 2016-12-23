@@ -19,7 +19,7 @@ elixir(mix => {
       .scripts([
         "jquery.min.js",
         "uikit.min.js",
-        "owl.carousel.js",
+        "owl.carousel.min.js",
         "grid.js",
         "popup.js",
         "upload.js",

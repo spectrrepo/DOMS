@@ -273,9 +273,8 @@ class UserController extends Controller
        public function confirmationItemPage($id)
        {
            $imageId = Picture::find($id);
-        //    dd($imageId);
            $needUser = User::find($imageId->author_id);
-           if ((Auth::user()->status === 'moderator' )|| (Auth::user()->id === $needUser->id)) {
+           if ((Auth::user()->status === 'moderator' ) || (Auth::user()->id === $needUser->id)) {
                $user = User::find( Auth::id() );
                $styles = Style::all();
                $rooms = Room::all();
@@ -298,6 +297,8 @@ class UserController extends Controller
                                                                 'colors' => $colors,
                                                                 'image' => $image]);
 
+           }else {
+               return redirect()->back();
            }
        }
        public function addNewsItem()

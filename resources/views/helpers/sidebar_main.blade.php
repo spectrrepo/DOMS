@@ -83,8 +83,8 @@
      </li>
     </ul>
     <div class="search">
-      <form action="">
-          <input class="input-search" type="search" name="name" value="" placeholder="Поиск по тегам">
+      <form class="ajax-search">
+          <input class="input-search" type="search" name="tagSearch" autocomplete="off" placeholder="Поиск по тегам">
           <button class="search-submit" type="submit"><span class="uk-icon-justify uk-icon-search"></span ></button>
       </form>
     </div>

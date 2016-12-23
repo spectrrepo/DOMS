@@ -1,4 +1,8 @@
 $( document ).ready(function() {
+  $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.8});
+    $(window).resize(function() {
+      $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.8});
+    });
   $('.remove-comment').on('click', function(){
     var csrftoken = $('meta[name=_token]').attr('content'),
         id = $(this).children('.delete_comment_id').data('id'),
@@ -14,7 +18,7 @@ $( document ).ready(function() {
         $(this).parent('.b-comment-wrap').remove();
 
   });
-  $('.submit-comment').on('click', function() {
+  $('.comment-add-form').on('submit', function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
           comment = $('.input-comment').val(),
           post_id = $('input[name=post_id]').val(),
@@ -71,5 +75,6 @@ $( document ).ready(function() {
                   });
           }
       });
+      return false;
   });
 });

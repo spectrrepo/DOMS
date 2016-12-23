@@ -17,16 +17,16 @@ $( document ).ready(function() {
       $(elem).addClass('active-menu-item');
     }
   }
-  function changeURL(queueChange, dataURL, deleteURL, styleSort, roomSort, colorSort, sortSort) {
+  function changeURL(queueChange, dataURL, deleteURL, styleSort, roomSort, colorSort, sortSort, tagSort) {
     queue = queueChange;
     dataURL = dataURL.replace(deleteURL, '');
-    history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=['+sortSort+']');
+    history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=['+sortSort+'],tag=['+tagSort+']');
   }
 
-  function changeURlStyle(queueChange, dataURL, deleteURL, styleSort, roomSort, colorSort, sortSort) {
+  function changeURlStyle(queueChange, dataURL, deleteURL, styleSort, roomSort, colorSort, sortSort, tagSort) {
     queueStyle = queueChange;
     dataURL = dataURL.replace(deleteURL, '');
-    history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=['+sortSort+']');
+    history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=['+sortSort+'],tag=['+tagSort+']');
   }
   function addElemForList(dataList, title, where, elem) {
     $('<li class="choose-sort-item" data-list="'+dataList+'" '+
@@ -35,7 +35,7 @@ $( document ).ready(function() {
     '<i class="close-sort-item">×</i>' +
     '</li>').appendTo(where);
   }
-  function ajaxRequest(roomSort, styleSort, colorSort, sortSort) {
+  function ajaxRequest(roomSort, styleSort, colorSort, sortSort, tagSort) {
     $.ajax({
       type:'POST',
       data: {
@@ -43,21 +43,29 @@ $( document ).ready(function() {
                 'sortSort': $('input[name=sortSorting]').val(),
                 'styleSort': $('input[name=styleSorting]').val(),
                 'roomSort': $('input[name=roomSorting]').val(),
-                'colorSort': $('input[name=colorSorting]').val()
+                'colorSort': $('input[name=colorSorting]').val(),
+                'tag': $('input[name=tagSorting]').val()
       },
       url:'/load_sort_photo',
 
       success: function (data) {
         $('#pole').empty();
-        for(var i=0; i<data.length; i++) {
-        $( '<a href="/photo/id=['+data[i].id+'],room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=['+sortSort+']"'+
-              'class="item-gallery" data-grid-prepared="true"'+
-              'style="position:absolute;">'+
-             '<div class="uk-panel-box">'+
-               '<img src="'+data[i].min_path+'">'+
-             '</div>'+
-           '</a>').appendTo('#pole');
+        if ((data === 'error_download')) {
+          $('.b-next-page').fadeOut();
+          $('.info-text-message').fadeIn();
+        }else {
+          $('.info-text-message').fadeOut();
+          $('.b-next-page').fadeIn();
+          for(var i=0; i<data.length; i++) {
+            $( '<a href="/photo/id=['+data[i].id+'],room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=['+sortSort+'],tag=['+tagSort+']"'+
+            'class="item-gallery" data-grid-prepared="true"'+
+            'style="position:absolute;">'+
+            '<div class="uk-panel-box">'+
+            '<img src="'+data[i].min_path+'">'+
+            '</div>'+
+            '</a>').appendTo('#pole');
 
+          }
         }
       }
     });
@@ -83,7 +91,8 @@ $( document ).ready(function() {
         sortSort = $('input[name=sortSorting').val(),
         styleSort = $('input[name=styleSorting]').val(),
         roomSort = $('input[name=roomSorting]').val(),
-        colorSort = $('input[name=colorSorting]').val();
+        colorSort = $('input[name=colorSorting]').val(),
+        tagSort = $('input[name=tagSorting]').val();
 
     if (!($('#placements .item-moodal-sidebar').is('[data-queue=3]'))) {
         if($(this).is('[data-queue]')) {
@@ -117,7 +126,7 @@ $( document ).ready(function() {
           if ($('#placements .item-moodal-sidebar[data-queue]').length === 0) {
 
             dataURL =$(this).data('url');
-            history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"]');
+            history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
 
             $(this).attr('data-queue', queue);
             $(this).children('.choose-ico').addClass('active-choose-ico');
@@ -127,7 +136,7 @@ $( document ).ready(function() {
             $('input[name=roomSorting]').val(dataURL);
           }else {
             dataURL += ','+$(this).data('url');
-            history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"]');
+            history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
 
             $(this).attr('data-queue', queue);
             $(this).children('.choose-ico').addClass('active-choose-ico');
@@ -152,17 +161,17 @@ $( document ).ready(function() {
           $('#placements .choose-sort-item[data-list=3]').attr('data-list', 2);
           if ($('#placements .item-moodal-sidebar[data-queue]').length === 2){
 
-            changeURL(3, dataURL, deleteURL+',', styleSort, roomSort, colorSort, sortSort);
+            changeURL(3, dataURL, deleteURL+',', styleSort, roomSort, colorSort, sortSort, tagSort);
 
           }
           if ($('#placements .item-moodal-sidebar[data-queue]').length  === 1) {
 
-            changeURL(2, dataURL, deleteURL, styleSort, roomSort, colorSort, sortSort);
+            changeURL(2, dataURL, deleteURL, styleSort, roomSort, colorSort, sortSort, tagSort);
 
           }
           if ($('#placements .item-moodal-sidebar[data-queue]').length  === 0) {
 
-            changeURL(1, 0, deleteURL, styleSort, roomSort, colorSort, sortSort);
+            changeURL(1, 0, deleteURL, styleSort, roomSort, colorSort, sortSort, tagSort);
 
           }
           $('input[name=roomSorting]').val(dataURL);
@@ -172,7 +181,7 @@ $( document ).ready(function() {
           var replace = $('#placements .item-moodal-sidebar[data-queue=1]').data('url');
           dataURL = dataURL.replace(replace+',', '' );
           dataURL += ','+replaceString;
-          history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"]');
+          history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
 
           $('#placements .item-moodal-sidebar[data-queue=1]').children('.choose-ico').removeClass('active-choose-ico');
           $('#placements .item-moodal-sidebar[data-queue=1]').removeAttr('data-queue');
@@ -198,6 +207,7 @@ $( document ).ready(function() {
           styleSort = $('input[name=styleSorting]').val(),
           roomSort = $('input[name=roomSorting]').val(),
           colorSort = $('input[name=colorSorting]').val(),
+          tagSort = $('input[name=tagSorting]').val(),
           deleteURL = $(this).data('url');
           // console.log($(this).index +1 );
       $('#placements .item-moodal-sidebar[data-queue='+
@@ -206,18 +216,18 @@ $( document ).ready(function() {
       if ($('#placements .item-moodal-sidebar[data-queue]').length === 1) {
         queue = 1;
         dataURL = 0;
-        history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"]');
+        history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
         $('input[name=roomSorting]').val(dataURL);
       } else if ($('#placements .item-moodal-sidebar[data-queue]').length === 2) {
         if (($('#placements .choose-sort-item[data-list='+$(this).data('list')+']').index()+1) == 6) {
           dataURL = dataURL.replace(','+deleteURL, '');
           queue = 2;
-          history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"]');
+          history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
           $('input[name=roomSorting]').val(dataURL);
         }else {
           dataURL = dataURL.replace(deleteURL+',', '');
           queue = 2;
-          history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"]');
+          history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
           $('input[name=roomSorting]').val(dataURL);
         }
       } else if ($('#placements .item-moodal-sidebar[data-queue]').length === 3) {
@@ -227,7 +237,7 @@ $( document ).ready(function() {
           dataURL = dataURL.replace(deleteURL+',', '');
         }
         queue = 3;
-        history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"]');
+        history.pushState(null, null, 'room=['+dataURL+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
         $('input[name=roomSorting]').val(dataURL);
 
       }
@@ -252,7 +262,8 @@ $( document ).ready(function() {
         sortSort = $('input[name=sortSorting').val(),
         styleSort = $('input[name=styleSorting]').val(),
         roomSort = $('input[name=roomSorting]').val(),
-        colorSort = $('input[name=colorSorting]').val();
+        colorSort = $('input[name=colorSorting]').val(),
+        tagSort = $('input[name=tagSorting]').val();
 
     if (!($('#styles .item-moodal-sidebar').is('[data-queue=3]'))) {
         if($(this).is('[data-queue]')) {
@@ -269,28 +280,24 @@ $( document ).ready(function() {
           if ($('#styles .item-moodal-sidebar[data-queue]').length === 2){
             if ($(this).data('queue') === 2) {
 
-              changeURlStyle(3, dataURL, ','+deleteURL, styleSort, roomSort, colorSort, sortSort);
-              console.log(1);
+              changeURlStyle(3, dataURL, ','+deleteURL, styleSort, roomSort, colorSort, sortSort, tagSort);
             }
           }else if ($('#styles .item-moodal-sidebar[data-queue]').length === 1) {
 
-            changeURlStyle(2, dataURL, deleteURL+',', styleSort, roomSort, colorSort, sortSort);
-            console.log(2);
+            changeURlStyle(2, dataURL, deleteURL+',', styleSort, roomSort, colorSort, sortSort, tagSort);
 
 
           }else if ($('#styles .item-moodal-sidebar[data-queue]').length === 0) {
 
-            changeURlStyle(1, 0, deleteURL+',', styleSort, roomSort, colorSort, sortSort);
-            console.log(3);
+            changeURlStyle(1, 0, deleteURL+',', styleSort, roomSort, colorSort, sortSort, tagSort);
 
           }
           $('input[name=styleSorting]').val(dataURL);
         }else {
           if ($('#styles .item-moodal-sidebar[data-queue]').length === 0) {
-            console.log(4);
 
             dataURL =$(this).data('url');
-            history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=["'+sortSort+'"]');
+            history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
 
             $(this).attr('data-queue', queueStyle);
             $(this).children('.choose-ico').addClass('active-choose-ico');
@@ -300,7 +307,7 @@ $( document ).ready(function() {
             $('input[name=styleSorting]').val(dataURL);
           }else {
             dataURL += ','+$(this).data('url');
-            history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=["'+sortSort+'"]');
+            history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
             console.log(5);
 
             $(this).attr('data-queue', queueStyle);
@@ -327,19 +334,19 @@ $( document ).ready(function() {
           if ($('#styles .item-moodal-sidebar[data-queue]').length === 2){
             console.log(6);
 
-            changeURlStyle(3, dataURL, deleteURL+',', styleSort, roomSort, colorSort, sortSort);
+            changeURlStyle(3, dataURL, deleteURL+',', styleSort, roomSort, colorSort, sortSort, tagSort);
 
           }
           if ($('#styles .item-moodal-sidebar[data-queue]').length  === 1) {
             console.log(7);
 
-            changeURlStyle(2, dataURL, deleteURL, styleSort, roomSort, colorSort, sortSort);
+            changeURlStyle(2, dataURL, deleteURL, styleSort, roomSort, colorSort, sortSort, tagSort);
 
           }
           if ($('#styles .item-moodal-sidebar[data-queue]').length  === 0) {
             console.log(8);
 
-            changeURlStyle(1, 0, deleteURL, styleSort, roomSort, colorSort, sortSort);
+            changeURlStyle(1, 0, deleteURL, styleSort, roomSort, colorSort, sortSort, tagSort);
 
           }
           $('input[name=styleSorting]').val(dataURL);
@@ -351,7 +358,7 @@ $( document ).ready(function() {
           dataURL = dataURL.replace(replace+',', '' );
           dataURL += ','+replaceString;
 
-          history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=["'+sortSort+'"]');
+          history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
           $('#styles .item-moodal-sidebar[data-queue=1]').children('.choose-ico').removeClass('active-choose-ico');
           $('#styles .item-moodal-sidebar[data-queue=1]').removeAttr('data-queue');
           $('#styles .item-moodal-sidebar[data-queue=2]').attr('data-queue', 1);
@@ -376,26 +383,27 @@ $( document ).ready(function() {
           styleSort = $('input[name=styleSorting]').val(),
           roomSort = $('input[name=roomSorting]').val(),
           colorSort = $('input[name=colorSorting]').val(),
-          deleteURL = $(this).data('url');
-          // console.log($(this).index +1 );
+          deleteURL = $(this).data('url')
+          tagSort = $('input[name=tagSorting]').val();
+
       $('#styles .item-moodal-sidebar[data-queue='+
       $(this).data('list') +']').children('.active-choose-ico')
                                 .removeClass('active-choose-ico');
       if ($('#styles .item-moodal-sidebar[data-queue]').length === 1) {
         queueStyle = 1;
         dataURL = 0;
-        history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=["'+sortSort+'"]');
+        history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
         $('input[name=styleSorting]').val(dataURL);
       } else if ($('#styles .item-moodal-sidebar[data-queue]').length === 2) {
         if (($('#styles .choose-sort-item[data-list='+$(this).data('list')+']').index()+1) == 6) {
           dataURL = dataURL.replace(','+deleteURL, '');
           queueStyle = 2;
-          history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=["'+sortSort+'"]');
+          history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
           $('input[name=styleSorting]').val(dataURL);
         }else {
           dataURL = dataURL.replace(deleteURL+',', '');
           queueStyle = 2;
-          history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=["'+sortSort+'"]');
+          history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
           $('input[name=styleSorting]').val(dataURL);
         }
       } else if ($('#styles .item-moodal-sidebar[data-queue]').length === 3) {
@@ -405,7 +413,7 @@ $( document ).ready(function() {
           dataURL = dataURL.replace(deleteURL+',', '');
         }
         queueStyle = 3;
-        history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=["'+sortSort+'"]');
+        history.pushState(null, null, 'room=['+roomSort+'],styles=['+dataURL+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
         $('input[name=styleSorting]').val(dataURL);
 
       }
@@ -430,17 +438,18 @@ $( document ).ready(function() {
         sortSort = $('input[name=sortSorting').val(),
         styleSort = $('input[name=styleSorting]').val(),
         roomSort = $('input[name=roomSorting]').val(),
-        colorSort = $('input[name=colorSorting]').val();
+        colorSort = $('input[name=colorSorting]').val(),
+        tagSort = $('input[name=tagSorting]').val();
 
    if($(this).is('.active-choose-ico')) {
           $('#colors .choose-sort-item[data-list='+$(this).data('queue')+']').remove();
           $('active-choose-ico').children('.choose-ico').removeClass('active-choose-ico');
           var deleteURL = $(this).data('url');
-          changeURlStyle(1, 0, deleteURL+',', styleSort, roomSort, colorSort, sortSort);
+          changeURlStyle(1, 0, deleteURL+',', styleSort, roomSort, colorSort, sortSort, tagSort);
           $('input[name=colorSorting]').val(dataURL);
     }else {
           dataURL = $(this).data('url');
-          history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+dataURL+'],sort=["'+sortSort+'"]');
+          history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+dataURL+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
           $('#colors .colors-space-item').children('.choose-ico').removeClass('active-choose-ico');
           $(this).children('.choose-ico').addClass('active-choose-ico');
           $('#colors .choose-sort-item').remove();
@@ -463,10 +472,11 @@ $( document ).ready(function() {
       var sortSort = $('input[name=sortSorting').val(),
           styleSort = $('input[name=styleSorting]').val(),
           roomSort = $('input[name=roomSorting]').val(),
-          colorSort = $('input[name=colorSorting]').val();
+          colorSort = $('input[name=colorSorting]').val(),
+          tagSort = $('input[name=tagSorting]').val();
 
       $('input[name=colorSorting]').val(0);
-      history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+0+'],sort=["'+sortSort+'"]');
+      history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+0+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
       $('#colors .colors-space-item').children('.choose-ico').removeClass('active-choose-ico');
       $(this).remove();
 
@@ -488,17 +498,18 @@ $( document ).ready(function() {
         sortSort = $('input[name=sortSorting').val(),
         styleSort = $('input[name=styleSorting]').val(),
         roomSort = $('input[name=roomSorting]').val(),
-        colorSort = $('input[name=colorSorting]').val();
+        colorSort = $('input[name=colorSorting]').val(),
+        tagSort = $('input[name=tagSorting]').val();
 
    if($(this).is('.active-choose-ico')) {
           $('#orders .choose-sort-item[data-list='+$(this).data('queue')+']').remove();
           $('active-choose-ico').children('.choose-ico').removeClass('active-choose-ico');
           var deleteURL = $(this).data('url');
-          changeURlStyle(1, 0, deleteURL+',', styleSort, roomSort, colorSort, sortSort);
+          changeURlStyle(1, 0, deleteURL+',', styleSort, roomSort, colorSort, sortSort, tagSort);
           $('input[name=sortSorting]').val(dataURL);
     }else {
           dataURL = $(this).data('url');
-          history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+dataURL+'"]');
+          history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+dataURL+'"],tag=['+tagSort+']');
           $('#orders .item-moodal-sidebar').children('.choose-ico').removeClass('active-choose-ico');
           $(this).children('.choose-ico').addClass('active-choose-ico');
           $('#orders .choose-sort-item').remove();
@@ -510,10 +521,11 @@ $( document ).ready(function() {
       var sortSort = $('input[name=sortSorting').val(),
           styleSort = $('input[name=styleSorting]').val(),
           roomSort = $('input[name=roomSorting]').val(),
-          colorSort = $('input[name=colorSorting]').val();
+          colorSort = $('input[name=colorSorting]').val(),
+          tagSort = $('input[name=tagSorting]').val();
 
-      $('input[name=colorSorting]').val(0);
-      history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+0+'],sort=["'+sortSort+'"]');
+      $('input[name=sortSorting]').val(0);
+      history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+0+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
       $('#orders .colors-space-item').children('.choose-ico').removeClass('active-choose-ico');
       $(this).remove();
 
@@ -523,7 +535,43 @@ $( document ).ready(function() {
   });
 
 // tags finder
+$('.ajax-search').on('submit', function(){
+  var sortSort = $('input[name=sortSorting]').val(),
+      styleSort = $('input[name=styleSorting]').val(),
+      roomSort = $('input[name=roomSorting]').val(),
+      colorSort = $('input[name=colorSorting]').val(),
+      tag = $('input[name=tagSearch]').val();
 
+  $('input[name=tagSorting]').val(tag);
+  $.ajax({
+    type:'POST',
+    data: {
+              '_token'  : csrftoken,
+              'sortSort': sortSort,
+              'styleSort': styleSort,
+              'roomSort': roomSort,
+              'colorSort': colorSort,
+              'tag': tag
+    },
+    url:'/load_sort_photo',
+
+    success: function (data) {
+      $('#pole').empty();
+      history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=["'+tag+'"]');
+      for(var i=0; i<data.length; i++) {
+      $( '<a href="/photo/id=['+data[i].id+'],room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=['+sortSort+'],tag=["'+tag+'"]"'+
+            'class="item-gallery" data-grid-prepared="true"'+
+            'style="position:absolute;">'+
+           '<div class="uk-panel-box">'+
+             '<img src="'+data[i].min_path+'">'+
+           '</div>'+
+         '</a>').appendTo('#pole');
+
+      }
+    }
+  });
+  return false;
+});
 
 
     $('#foot-about').on('click', function() {
