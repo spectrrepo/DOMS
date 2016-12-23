@@ -43,99 +43,74 @@ class PhotoController extends Controller
      * @return
      *
      */
-     public function index ($room = 0, $style = 0, $color = 0, $sort = 0)
+     public function index ($room = 0, $style = 0, $color = 0, $sort = 0, $tag = 0)
      {
-       if ($room != 0 ) {
-           $roomArray = explode(',',$room);
-           $roomSort = "";
-           foreach ($roomArray as $roomArrayItem) {
-               if ($roomArrayItem !== end($roomArray)) {
-                   $roomSort .= ' rooms regexp ( '.$roomArrayItem.') and';
-               }
-               else {
-                   $roomSort .= ' rooms regexp ( '.$roomArrayItem.')';
-               }
-           }
-           $roomSorting = $room;
-       }else{
-           $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
-           $roomSorting = 0;
-       }
-       if ($style != 0 ) {
-           $styleArray = explode(',',$style);
-           $styleSort = "";
-           foreach ($styleArray as $styleArrayItem) {
-               if ($styleArrayItem !== end($styleArray)) {
-                   $styleSort .= ' style regexp ( '.$styleArrayItem.') and';
-               }
-               else {
-                   $styleSort .= ' style regexp ( '.$styleArrayItem.')';
-               }
-           }
-           $styleSorting = $style;
-       }else{
-           $styleSort = "style regexp '[a-zA-Z0-9_]'";
-           $styleSorting = 0;
-       }
-       if ($color != 0 ) {
-           $colorArray = explode(',',$color);
-           $colorSort = "";
-           foreach ($colorArray as $colorArrayItem) {
-               if ($colorArrayItem !== end($colorArray)) {
-                   $colorSort .= ' colors regexp ( '.$colorArrayItem.') and';
-               }
-               else {
-                   $colorSort .= ' colors regexp ( '.$colorArrayItem.')';
-               }
-           }
-           $colorSorting = $color;
-       }else{
-            $colorSort = "colors regexp '[a-zA-Z0-9_]'";
-            $colorSorting = 0;
-       }
-       if ($sort != 0 ) {
-         if ($sort == 'popular') {
-             $sortSort = 'views_count';
-         }elseif ($sort == 'recommended') {
-             $sortSort = 'id';
-         }elseif ($sort == 'new') {
-             $sortSort = 'id';
-         }else {
-             $sortSort = '';
-         }
-         $sortSorting = $sort;
+          if ($room != 0 ) {
+              $roomSort = ' rooms like "% '.$room.',%"';
+              $roomSorting = $room;
+          }else{
+              $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
+              $roomSorting = 0;
+          }
+          if ($style != 0 ) {
+              $styleSort = ' style like "% '.$style.',%"';
+              $styleSorting = $style;
+          }else{
+              $styleSort = "style regexp '[a-zA-Z0-9_]'";
+              $styleSorting = 0;
+          }
+          if ($color != 0 ) {
+              $colorSort = ' colors like "% '.$color.',%"';
+              $colorSorting = $color;
+          }else{
+              $colorSort = "colors regexp '[a-zA-Z0-9_]'";
+              $colorSorting = 0;
+          }
+            if ($sort != 0 ) {
+              if ($sort == 'popular') {
+                  $sortSort = 'views_count';
+              }elseif ($sort == 'recommended') {
+                  $sortSort = 'id';
+              }elseif ($sort == 'new') {
+                  $sortSort = 'id';
+              }else {
+                  $sortSort = '';
+              }
+              $sortSorting = $sort;
 
-       }else{
-         $sortSort = true;
-         $sortSorting = 0;
+            }else{
+              $sortSort = true;
+              $sortSorting = 0;
 
-       }
+            }
+
+            if ( $tag != '0') {
+               $tagSort = 'and tags like "%#'.$tag.';%" ';
+            } else {
+               $tagSort = '';
+            }
+            $tagSorting = $tag;
        $colors = Color::all();
        $styles = Style::all();
        $rooms = Room::all();
        $news = News::orderBy('id','desc')->first();
        if ($sort != 0){
-           $images = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
-                            ->where('verified', '=', true)
+           $images = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
                             ->take(3)
                             ->orderBy($sortSort, 'desc')
                             ->get();
-                            $imageLast = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
-                                            ->where('verified', '=', true)
-                                            ->take(3)
-                                            ->orderBy('id', 'desc')
-                                            ->first();
+                            if (empty($images->toArray())) {
+                              $ajaxImage = 'error_download';
+                              // dd($ajaxImage);
+                           }
        }else {
-           $images = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
-                            ->where('verified', '=', true)
+           $images = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
                             ->take(3)
                             ->get();
-                            $imageLast = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
-                                            ->where('verified', '=', true)
-                                            ->take(3)
-                                            ->orderBy('id', 'desc')
-                                            ->first();
            $sortSort = false;
+           if (empty($images->toArray())) {
+             $ajaxImage = 'error_download';
+          }
        }
        return view('site.index', ['news' => $news,
                                   'colors' => $colors,
@@ -146,23 +121,15 @@ class PhotoController extends Controller
                                   'colorSorting' => $colorSorting,
                                   'styleSorting' => $styleSorting,
                                   'sortSorting' => $sortSorting,
+                                  'tagSorting' => $tagSorting,
                                   'room' => $room,
                                   'style' => $style,
                                   'color' => $color,
                                   'sort' => $sort,
-                                  'imageLast' => $imageLast]);
+                                  'tag' => $tag]);
 
     }
-    public function loadLeftPhoto () {
-        $lastPhoto = $_POST['lastPhoto'];
-        $images = Picture::skip($lastPhoto)->take(3)->get();
-        return $images;
-    }
-    public function loadRightPhoto () {
-        $lastPhoto = $_POST['lastPhoto'];
-        $images = Picture::skip($lastPhoto)->take(3)->get();
-        return $images;
-    }
+
     /**
      * @param
      *
@@ -198,53 +165,23 @@ class PhotoController extends Controller
          $room = $_POST['roomSort'];
          $style = $_POST['styleSort'];
          $color = $_POST['colorSort'];
+         $tag = $_POST['tag'];
          if ($room != 0 ) {
-             $roomArray = explode(',',$room);
-             $roomSort = "";
-             foreach ($roomArray as $roomArrayItem) {
-                 if ($roomArrayItem !== end($roomArray)) {
-                     $roomSort .= ' rooms regexp ( '.$roomArrayItem.') and';
-                 }
-                 else {
-                     $roomSort .= ' rooms regexp ( '.$roomArrayItem.')';
-                 }
-             }
-             $roomSorting = $room;
+             $roomSort = ' rooms like "% '.$room.',%"';
          }else{
              $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
-             $roomSorting = 0;
          }
          if ($style != 0 ) {
-             $styleArray = explode(',',$style);
-             $styleSort = "";
-             foreach ($styleArray as $styleArrayItem) {
-                 if ($styleArrayItem !== end($styleArray)) {
-                     $styleSort .= ' style regexp ( '.$styleArrayItem.') and';
-                 }
-                 else {
-                     $styleSort .= ' style regexp ( '.$styleArrayItem.')';
-                 }
-             }
-             $styleSorting = $style;
+             $styleSort = ' style like "% '.$style.',%"';
          }else{
              $styleSort = "style regexp '[a-zA-Z0-9_]'";
-             $styleSorting = 0;
          }
          if ($color != 0 ) {
-             $colorArray = explode(',',$color);
-             $colorSort = "";
-             foreach ($colorArray as $colorArrayItem) {
-                 if ($colorArrayItem !== end($colorArray)) {
-                     $colorSort .= ' colors regexp ( '.$colorArrayItem.') and';
-                 }
-                 else {
-                     $colorSort .= ' colors regexp ( '.$colorArrayItem.')';
-                 }
-             }
-         }else{
-              $colorSort = "colors regexp '[a-zA-Z0-9_]'";
-         }
-         if ($sort != 0 ) {
+             $colorSort = ' colors like "% '.$color.',%"';
+        }else {
+             $colorSort = "colors regexp '[a-zA-Z0-9_]'";
+        }
+         if ($sort != '0' ) {
            if ($sort == 'popular') {
                $sortSort = 'views_count';
            }elseif ($sort == 'recommended') {
@@ -259,20 +196,27 @@ class PhotoController extends Controller
            $sortSort = true;
 
          }
-         if ($sort != 0) {
-              $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
-                               ->where('verified', '=', true)
-                               ->take(3)
-                               ->orderBy($sortSort, 'desc')
-                               ->get();
-                              //  dd($ajaxImage);
-         }else {
-              $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
-                               ->where('verified', '=', true)
-                               ->take(3)
-                               ->get();
-                              //  dd($ajaxImage);
+         if ( $tag != '0') {
+            $tagSort = 'and tags like "%#'.$tag.';%" ';
+         } else {
+            $tagSort = '';
+         }
+         if ($sort != '0') {
 
+              $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
+                                  ->take(3)
+                                  ->orderBy($sortSort, 'desc')
+                                  ->get();
+             if (empty($ajaxImage->toArray())) {
+                  $ajaxImage = 'error_download';
+             }
+         }else {
+              $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true' )
+                                  ->take(3)
+                                  ->get();
+                                  if (empty($ajaxImage->toArray())) {
+                                       $ajaxImage = 'error_download';
+                                  }
          }
          return $ajaxImage;
      }
@@ -282,67 +226,62 @@ class PhotoController extends Controller
      * @return
      *
      */
-    public function indexItem($id, $room = 0, $style = 0, $color = 0, $sort = 0){
+    public function indexItem($id, $room = 0, $style = 0, $color = 0, $sort = 0, $tag = 0){
 
          if ($room != 0 ) {
-            $roomArray = explode(',',$room);
-            $roomSort = "";
-            foreach ($roomArray as $roomArrayItem) {
-                if ($roomArrayItem !== end($roomArray)) {
-                    $roomSort .= ' rooms regexp ( '.$roomArrayItem.') and';
-                }
-                else {
-                    $roomSort .= ' rooms regexp ( '.$roomArrayItem.')';
-                }
-            }
-        }else{
+            $roomSort = ' rooms like "% '.$room.',%"';
+            $roomSorting = $room;
+         }else{
             $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
-        }
-        if ($style != 0 ) {
-            $styleArray = explode(',',$style);
-            $styleSort = "";
-            foreach ($styleArray as $styleArrayItem) {
-                if ($styleArrayItem !== end($styleArray)) {
-                    $styleSort .= ' style regexp ( '.$styleArrayItem.') and';
-                }
-                else {
-                    $styleSort .= ' style regexp ( '.$styleArrayItem.')';
-                }
-            }
-        }else{
+            $roomSorting = 0;
+         }
+         if ($style != 0 ) {
+            $styleSort = ' style like "% '.$style.',%"';
+            $styleSorting = $style;
+         }else{
             $styleSort = "style regexp '[a-zA-Z0-9_]'";
-        }
-        if ($color != 0 ) {
-            $colorArray = explode(',',$color);
-            $colorSort = "";
-            foreach ($colorArray as $colorArrayItem) {
-                if ($colorArrayItem !== end($colorArray)) {
-                    $colorSort .= ' colors regexp ( '.$colorArrayItem.') and';
-                }
-                else {
-                    $colorSort .= ' colors regexp ( '.$colorArrayItem.')';
-                }
-            }
-        }else{
+            $styleSorting = 0;
+         }
+         if ($color != 0 ) {
+            $colorSort = ' colors like "% '.$color.',%"';
+            $colorSorting = $color;
+         }else{
             $colorSort = "colors regexp '[a-zA-Z0-9_]'";
-        }
-        if ($sort != 0 ) {
-          if ($sort == 'popular') {
-              $sortSort = 'views_count';
-          }elseif ($sort == 'recommended') {
-              $sortSort = 'id';
-          }elseif ($sort == 'new') {
-              $sortSort = 'id';
-          }else {
-              $sortSort = '';
+            $colorSorting = 0;
+         }
+          if ($sort != 0 ) {
+            if ($sort == 'popular') {
+                 $sortSort = 'views_count';
+            }elseif ($sort == 'recommended') {
+                 $sortSort = 'id';
+            }elseif ($sort == 'new') {
+                 $sortSort = 'id';
+            }else {
+                 $sortSort = '';
+            }
+            $sortSorting = $sort;
+
+          }else{
+            $sortSort = true;
+            $sortSorting = 0;
+
           }
 
-        }else{
-          $sortSort = true;
-        }
+          if ( $tag != '0') {
+              $tagSort = 'and tags like "%#'.$tag.';%" ';
+          } else {
+              $tagSort = '';
+          }
+          $tagSorting = $tag;
 
-        if ($sort != 0){
+        if ($sort != '0'){
             $images = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                           ->where('verified', '=', true)
+                           ->where('id', '>=', $id)
+                           ->take(3)
+                           ->orderBy($sortSort, 'desc')
+                           ->get();
+            $imageAll = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                            ->where('verified', '=', true)
                            ->orderBy($sortSort, 'desc')
                            ->get();
@@ -353,7 +292,12 @@ class PhotoController extends Controller
         }else {
             $images = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                            ->where('verified', '=', true)
+                           ->where('id', '>=', $id)
+                           ->take(3)
                            ->get();
+                           $imageAll = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                                          ->where('verified', '=', true)
+                                          ->get();
             $image = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                           ->where('verified', '=', true)
                           ->where('id','=', $id)
@@ -386,10 +330,6 @@ class PhotoController extends Controller
         $comments = Comment::where('post_id', '=', $id)->get();
 
         $allComments = Comment::join('Users', 'Users.id', '=', 'Comments.user_id')->get();
-        $allTags = Tag::all();
-        $allViews = View::all();
-        $allLikes = Like::all();
-        $allLikeds = Liked::all();
 
 
         $num_image = count( Picture::all());
@@ -421,12 +361,9 @@ class PhotoController extends Controller
 
         $news = News::orderBy('id','desc')->first();
 
-        return view('site.slider', ['news' => $news,
-                                    'allTags' => $allTags,
-                                    'allLikes' => $allLikes,
-                                    'allLikeds' => $allLikeds,
+        return view('site.slider', ['imageAll' => $imageAll,
+                                    'news' => $news,
                                     'allComments' => $allComments,
-                                    'allViews' => $allViews,
                                     'user' => $user,
                                     'colors' => $colors,
                                     'styles' => $styles,
@@ -440,7 +377,12 @@ class PhotoController extends Controller
                                     'num_like' => $num_like,
                                     'num_comment' => $num_comment,
                                     'colorLike' => $colorLike,
-                                    'colorLiked' => $colorLiked]);
+                                    'colorLiked' => $colorLiked,
+                                    'sortSorting' => $sortSorting,
+                                    'tagSorting' => $tagSorting,
+                                    'colorSorting' => $colorSorting,
+                                    'roomSorting' => $roomSorting,
+                                    'styleSorting' => $styleSorting]);
 
     }
 

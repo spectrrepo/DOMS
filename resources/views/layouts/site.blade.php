@@ -13,4 +13,9 @@
 
         </div>
 </div>
+<meta name="sortSort" content="{{ $sortSorting }}">
+<meta name="colorSort" content="{{ $colorSorting }}">
+<meta name="styleSort" content="{{ $styleSorting }}">
+<meta name="roomSort" content="{{ $roomSorting }}">
+<meta name="tagSort" content="{{ $tagSorting }}">
 @endsection

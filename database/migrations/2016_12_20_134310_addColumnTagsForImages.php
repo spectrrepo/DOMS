@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnTableVariantNews extends Migration
+class AddColumnTagsForImages extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class AddColumnTableVariantNews extends Migration
      */
     public function up()
     {
-        Schema::table('News', function(Blueprint $table) {
-
-            $table->string('variants');
-
+        Schema::table('Images', function(Blueprint $table) {
+               $table->text('tags')->nullable();
         });
     }
 
@@ -27,10 +25,8 @@ class AddColumnTableVariantNews extends Migration
      */
     public function down()
     {
-        Schema::table('News', function(Blueprint $table) {
-
-            $table->dropColumn('variants');
-
+        Schema::table('Images', function(Blueprint $table) {
+            $table->dropColumn('tags');
         });
     }
 }

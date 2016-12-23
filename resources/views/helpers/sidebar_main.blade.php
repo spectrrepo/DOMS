@@ -83,8 +83,8 @@
      </li>
     </ul>
     <div class="search">
-      <form action="">
-          <input class="input-search" type="search" name="name" value="" placeholder="Поиск по тегам">
+      <form class="ajax-search">
+          <input class="input-search" type="search" name="tagSearch" autocomplete="off" placeholder="Поиск по тегам">
           <button class="search-submit" type="submit"><span class="uk-icon-justify uk-icon-search"></span ></button>
       </form>
     </div>
@@ -95,8 +95,10 @@
 </div>
 <div class="news">
     <div class="b-news">
-       <div class="b-photo-news">
-          <img src="{{ $news->news->url() }}" alt="" />
+
+       <div class="b-photo-news item-news-title" rel="article{{$news->id}}">
+          <img src="{{$news->news->url()}}" alt="" />
+
        </div>
        <div class="b-text-news">
           <div class="b-title-news item-news-title" rel="article{{ $news->id }}">{{ $news->title }}</div>

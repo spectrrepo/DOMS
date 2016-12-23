@@ -7421,7 +7421,8 @@ ul {
   overflow: hidden;
   background: #9ecca4;
   margin: 0 auto;
-  border-radius: 5px; }
+  border-radius: 5px;
+  cursor: pointer; }
 
 .news-title {
   border-bottom: 1px solid #cccccc;
@@ -7435,7 +7436,8 @@ ul {
   padding-bottom: 10px; }
 
 .b-title-news {
-  color: #993399; }
+  color: #993399;
+  cursor: pointer; }
 
 .b-descreption-news {
   font-size: 11px;
@@ -7582,20 +7584,33 @@ ul.b-popup-item-list li {
   border: 1px solid #cccccc;
   overflow: hidden;
   background: white;
-  padding: 7px; }
+  padding: 7px;
+  position: relative; }
 
 .b-photo-slider {
-  height: auto;
   margin: 0;
   padding: 0;
   text-align: center;
   overflow: hidden;
-  position: relative; }
+  position: relative;
+  height: 94%; }
+
+.info-text-message {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 277px;
+  height: 50px;
+  bottom: 0;
+  text-align: center;
+  display: none; }
 
 .photo-item {
   background: #F4F4F4;
   height: 100%;
-  width: auto;
+  width: 100%;
   margin: 0px auto;
   position: relative;
   vertical-align: middle;
@@ -7613,12 +7628,15 @@ ul.b-popup-item-list li {
 
 .img-slider {
   max-height: 100%;
-  vertical-align: middle;
-  display: inline-block;
   max-width: 100%;
-  font-size: 1rem;
-  box-sizing: border-box;
-  height: auto; }
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  left: 0;
+  right: 0; }
 
 .control-slide {
   height: auto;
@@ -7686,14 +7704,27 @@ a.btn-prew span {
   right: 0; }
 
 .wrap-slider {
-  min-height: 300px;
   position: relative;
-  overflow: hidden; }
+  overflow: hidden;
+  height: 100%; }
 
 .b-informstion {
   height: 27px;
-  width: 100%;
-  margin-top: 12px; }
+  width: 98%;
+  margin-top: 12px;
+  position: absolute;
+  z-index: 10;
+  opacity: 1;
+  bottom: 3px;
+  z-index: 100; }
+
+.mini-avatar {
+  width: 20px;
+  height: 20px;
+  display: block; }
+
+.mini-avatar img {
+  width: 100%; }
 
 .b-pretens {
   float: left;
