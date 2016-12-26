@@ -1387,16 +1387,16 @@ $( document ).ready(function() {
 });
 
 $( document ).ready(function() {
-  $('.popup-error-close').on('click', function () {
-    $('#popup-error-slider').fadeOut();
-  });
-  var id, newLocal;
   $('#current-position').text($('.active-slide').index()+1);
+  var id, newLocal;
 
-  // ========================================================
-  // ========================================================
-  // ========================================================
-  // ========================================================
+
+  /**
+   * Represents a book.
+   * @constructor
+   * @param {string} title - The title of the book.
+   * @param {string} author - The author of the book.
+   */
 
   function commentDownload() {
       var id = $('.active-slide').data('id'),
@@ -1430,8 +1430,9 @@ $( document ).ready(function() {
               +')" href="/profile/'+data[i].author_id+
               '" class="b-photo-comment"></a>'+
               '<div class="b-comment">'+
-              '<a href="/profile/'+data[i].author_id+'" class="b-name-comment">'+
-              data[i].name+
+              '<a href="/profile/'+data[i].author_id+'" class="b-name-comment"'+
+              'style="background: url('+data[i].userPhoto+');background-size:cover;" >'+
+              data[i].userName+
               '</a><div class="b-text-comment">'+
               data[i].text_comment+
               '</div><div class="b-date-comment">'+
@@ -1442,6 +1443,13 @@ $( document ).ready(function() {
         }
       });
   }
+
+  /**
+   * Represents a book.
+   * @constructor
+   * @param {string} title - The title of the book.
+   * @param {string} author - The author of the book.
+   */
 
   function tagsDownload() {
       var id = $('.active-slide').data('id'),
@@ -1473,6 +1481,14 @@ $( document ).ready(function() {
         }
       });
   }
+
+  /**
+   * Represents a book.
+   * @constructor
+   * @param {string} title - The title of the book.
+   * @param {string} author - The author of the book.
+   */
+
   function viewsDownload() {
     var id = $('.active-slide').data('id'),
     csrftoken = $('meta[name=_token]').attr('content');
@@ -1505,6 +1521,13 @@ $( document ).ready(function() {
       }
     });
   }
+
+  /**
+   * Represents a book.
+   * @constructor
+   * @param {string} title - The title of the book.
+   * @param {string} author - The author of the book.
+   */
 
   function infoPhotoDownload() {
     var id = $('.active-slide').data('id'),
@@ -1555,6 +1578,13 @@ $( document ).ready(function() {
     });
   }
 
+  /**
+   * Represents a book.
+   * @constructor
+   * @param {string} title - The title of the book.
+   * @param {string} author - The author of the book.
+   */
+
   function userInfoDownload() {
     var id = $('.active-slide').data('id'),
     csrftoken = $('meta[name=_token]').attr('content');
@@ -1571,17 +1601,26 @@ $( document ).ready(function() {
           $('.author-portret').empty();
           $('.author-name').empty();
         }else {
+          $('.b-pretense a').attr('href','/profile/'+data.author_id);
           if (!('path_min' in data)) {
             $('.author-portret').empty();
           }else {
-            $('<img src="'+'path_min' in data+'">').appendTo('.author-portret');
+            $('<img src="'+data.userPhoto+'">').appendTo('.author-portret');
           }
-          $('.author-name').text(data.name);
+          $('.author-name').text(data.userName);
         }
       }
     });
 
   }
+
+  /**
+   * Represents a book.
+   * @constructor
+   * @param {string} title - The title of the book.
+   * @param {string} author - The author of the book.
+   */
+
   function newPhotoDownload(direction){
     var id = $('.active-slide').data('id'),
         sortSort = $('meta[name=sortSort]').attr('content'),
@@ -1629,6 +1668,13 @@ $( document ).ready(function() {
     });
   }
 
+  /**
+   * Represents a book.
+   * @constructor
+   * @param {string} title - The title of the book.
+   * @param {string} author - The author of the book.
+   */
+
   function likeWhom() {
     var id = $('.active-slide').data('id'),
         csrftoken = $('meta[name=_token]').attr('content');
@@ -1657,6 +1703,62 @@ $( document ).ready(function() {
 
   }
 
+  /**
+   * Represents a book.
+   * @constructor
+   * @param {string} title - The title of the book.
+   * @param {string} author - The author of the book.
+   */
+
+  function activeLike() {
+    var id = $('.active-slide').data('id'),
+        csrftoken = $('meta[name=_token]').attr('content');
+    $.ajax({
+      type:'POST',
+      data: {
+                '_token'  : csrftoken,
+                'id': id
+      },
+      url:'/load_active_like',
+
+      success: function (data) {
+        if (data ===  'success') {
+          $('.uk-icon-heart').addClass('active-like');
+        }else {
+          $('.uk-icon-heart').removeClass('active-like');
+        }
+      }
+    });
+  }
+
+  /**
+   * Represents a book.
+   * @constructor
+   * @param {string} title - The title of the book.
+   * @param {string} author - The author of the book.
+   */
+
+  function actveLiked() {
+    var id = $('.active-slide').data('id'),
+        csrftoken = $('meta[name=_token]').attr('content');
+    $.ajax({
+      type:'POST',
+      data: {
+                '_token'  : csrftoken,
+                'id': id
+      },
+      url:'/load_active_favorite',
+
+      success: function (data) {
+        if (data ===  'success') {
+          $('.uk-icon-star').addClass('active-favorite');
+        }else {
+          $('.uk-icon-star').removeClass('active-favorite');
+        }
+      }
+    });
+  }
+
   $('.btn-nav').on('click', function () {
     var ret,direction = $(this).data('direction');
     if (direction === 'right') {
@@ -1676,6 +1778,8 @@ $( document ).ready(function() {
           viewsDownload();
           infoPhotoDownload();
           userInfoDownload();
+          activeLike();
+          // activeLiked();
       }else if ($('.active-slide').index() === $('.photo-item:last').index()) {
 
         $('#popup-error-slider').fadeIn();
@@ -1698,6 +1802,8 @@ $( document ).ready(function() {
         viewsDownload();
         infoPhotoDownload();
         userInfoDownload();
+        activeLike();
+        // activeLiked();
       }
     } else if (direction === 'left') {
       if ($('.active-slide').index()=== $('.photo-item:first').index()) {
@@ -1720,7 +1826,8 @@ $( document ).ready(function() {
           infoPhotoDownload();
           userInfoDownload();
           likeWhom();
-
+          activeLike();
+          // activeLiked();
         }
      }else {
         $('.active-slide').prev().addClass('active-slide').removeClass('left-slide');
@@ -1739,10 +1846,11 @@ $( document ).ready(function() {
         tagsDownload();
         infoPhotoDownload();
         userInfoDownload();
+        activeLike();
+        // activeLiked();
       }
     }
   });
-
   // $('btn-nav-views').on('click', function () {
   //     if () {
   //       if (last) {
@@ -1759,6 +1867,15 @@ $( document ).ready(function() {
   //       }
   //     }
   // });
+  $('.popup-error-close').on('click', function () {
+    $('#popup-error-slider').fadeOut();
+  });
+  $('.full-scrn').on('click', function () {
+    $('#zoom-slider').fadeIn();
+  });
+  $('.slider-close').on('click', function () {
+    $('#zoom-slider').fadeOut();
+  });
 });
 
 /*!
@@ -3853,5 +3970,56 @@ $( document ).ready(function() {
 
   });
 });
+
+// $( document ).ready(function() {
+//   $('.b-next-page').on('click', function() {
+//       var csrftoken = $('meta[name=_token]').attr('content'),
+//           lastIdJS = $('#pole').children('.item-gallery:last-child').index(),
+//
+//       $.ajax({
+//           type:'POST',
+//           data: {
+//                   'lastId': lastIdJS,
+//                   '_token': csrftoken
+//
+//           },
+//           url:'/pagination_news',
+//
+//           success: function (data) {
+//             for (var i = 0; i < data.length; i++) {
+//               $('<div class="b-person-post"><div class="col-news-min">'+
+//               '<div class="b-portret-blogger"><img src="'++'" alt="">'+
+//               '</div></div><div class="col-news-big">'+
+//               '<div class="b-name-redactor"><a href="'++'">'++'</a></div>'+
+//               '<div class="b-post-body"><div class="b-photo-post">'+
+//               '<img src="'++'" class="img-post" alt="">'+
+//               '</div><div class="b-iformation"><div class="b-date">'+
+//               13 Dec 2016+
+//               '</div><div class="b-statistics"><div class="b-item-stat">'+
+//               '<span class="ico uk-icon-justify uk-icon-eye"></span>'+
+//               '<span class="num-stat">'++'</span>'+
+//               '<span class="tooltip-stat other-margin-tooltip1">'+
+//               '<span class="text-tooltip-stat">количество просмотров</span>'+
+//               '<span class="triangle-tooltip-stat"></span>'+
+//               '</span></div><div class="b-item-stat">'+
+//               '<span class="ico uk-icon-justify uk-icon-heart"></span>'+
+//               '<span class="num-stat">'++'</span>'+
+//               '<span class="tooltip-stat other-margin-tooltip2">'+
+//               '<span class="text-tooltip-stat">понравилось'+
+//               '</span><span class="triangle-tooltip-stat"></span>'+
+//               '</span></div><div class="b-item-stat">'+
+//               '<span class="ico uk-icon-justify uk-icon-star"></span>'+
+//               '<span class="num-stat">'++'</span>'+
+//               '<span class="tooltip-stat"><span class="text-tooltip-stat">избранное'+
+//               '</span><span class="triangle-tooltip-stat"></span>'+
+//               '</span></div></div></div><div class="clear"></div></div>'+
+//               '<div class="clear"></div></div><div class="clear"></div></div>')
+//               .appendTo('.b-personal-news');
+//             }
+//
+//           }
+//       });
+//   });
+// });
 
 //# sourceMappingURL=app.js.map

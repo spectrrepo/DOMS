@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Picture;
 
 use App\Comment;
+use Auth;
 
 use App\Like;
 
@@ -149,8 +150,7 @@ class SliderController extends Controller
     public function dwnldPhotoUser()
     {
       $id = $_POST['id'];
-      $photoInfo = Picture::find($id);
-      $user = User::where('id', '=', $photoInfo->author_id)->get();
+      $user = Picture::find($id);
       return $user;
     }
 
@@ -161,5 +161,33 @@ class SliderController extends Controller
       $tagsString = $image->tags;
       $tags = explode(';',$tagsString);
       return $tags;
+    }
+
+    public function loadActiveLike()
+    {
+        $id = $_POST['id'];
+        $findLike = Like::where('post_id', '=', $id)
+                        ->where('user_id', '=', Auth::user()->id);
+        if ( $findLike->count() !== 0 ) {
+            $response = 'success';
+        } else {
+            $response = 'error';
+        }
+
+        return $response;
+    }
+
+    public function loadActiveLiked()
+    {
+        $id = $_POST['id'];
+        $findLiked = Liked::where('post_id', '=', $id)
+                         ->where('user_id', '=', Auth::user()->id);
+        if ( $findLiked->count() !== 0 ) {
+            $response = 'success';
+        } else {
+            $response = 'error';
+        }
+
+        return $response;
     }
 }

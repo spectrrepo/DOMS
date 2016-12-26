@@ -78,15 +78,11 @@
               </span>
             </div>
             <div class="b-item-stat full-scrn">
-              <a href="{{ $image->photo->url() }}" class="ico-slider uk-icon-justify uk-icon-arrows-alt fancybox"  data-fancybox-group="main"></a>
+              <a class="ico-slider uk-icon-justify uk-icon-arrows-alt"></a>
               <span class="tooltip-stat margin-full-scr-tooltip">
                 <span class="text-tooltip-stat">
                   На весь экран
                 </span>
-                @foreach ($images as $image_el)
-                  <a href="{{ $image_el->photo->url() }}" class="fancybox"  data-fancybox-group="main"></a>
-
-                @endforeach
                 <span class="triangle-tooltip-stat triangle-full-scr"></span>
               </span>
             </div>
@@ -233,4 +229,5 @@
             <div class="clear"></div>
           </div>
           </div>
+          @include('../popup_for_slider')
     @endsection
