@@ -132,6 +132,10 @@
   border-radius: 5px;
   padding: 3px;
 }
+.email-edit,
+.soc-set-edit {
+  height: 25px;
+}
 .wrap-add-sort {
   width: 100%;
   height: auto;
@@ -197,4 +201,43 @@
   border: 1px solid #ccc;
   margin-bottom: 15px;
   border-radius: 3px;
+}
+.list-links {
+  float: left;
+  width: 55%;
+  height: 25px;
+}
+.item-links {
+  display: inline-block;
+  list-style: none;
+  background: #cccccc;
+  color: white;
+  width: 20px;
+  height: 18px;
+  text-align: center;
+  line-height: 18px;
+  border-radius: 3px;
+  margin-bottom: 3px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.item-links:hover {
+  color: #cccccc;
+}
+.open-di-link {
+  display: inline-block;
+  list-style: none;
+  background: #cccccc;
+  color: white;
+  width: 20px;
+  height: 18px;
+  text-align: center;
+  line-height: 18px;
+  border-radius: 3px;
+  margin-bottom: 3px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.open-di-link:hover {
+  color: black;
 }

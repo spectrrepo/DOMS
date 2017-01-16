@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\User;
+use Carbon\Carbon;
+use App\Picture;
 use Input;
 use File;
-use App\Style;
+use Auth;
+use Hash;
+use DB;
 
+use App\User;
+use App\Style;
 use App\Room;
 use App\View;
 use App\Tag;
@@ -17,18 +22,11 @@ use App\Color;
 use App\Liked;
 use App\News;
 use App\Like;
+use App\Social;
 
-use Auth;
-
-use Hash;
-use DB;
-use App\Picture;
-use Carbon\Carbon;
 
 
 // TODO: include library for work with validation
-// TODO: change on my DB
-// TODO: change on my message
 
 /**
  * The ResultMessage class holds a message that can be returned
@@ -54,7 +52,7 @@ class UserController extends Controller
              $images =  Picture::join('Users', 'Images.author_id', '=', 'Users.id')
                              ->join('Likes', 'Images.id', '=', 'Likes.post_id')
                              ->join('Likeds', 'Images.id', '=', 'Likeds.post_id')
-                             ->take(10)
+                             ->take(1)
                              ->get();
              $id = Auth::id();
              $user = User::find($id);
@@ -66,6 +64,16 @@ class UserController extends Controller
             return redirect('/login');
         }
 
+     }
+     public function ajaxDownloadUpdate () {
+         $lastUpdate = $_POST['lastId'];
+         $images =  Picture::join('Users', 'Images.author_id', '=', 'Users.id')
+                           ->join('Likes', 'Images.id', '=', 'Likes.post_id')
+                           ->join('Likeds', 'Images.id', '=', 'Likeds.post_id')
+                           ->skip($lastUpdate)
+                           ->take(1)
+                           ->get();
+         return $images;
      }
      public function yourPhotoUpload ()
      {
@@ -298,7 +306,7 @@ class UserController extends Controller
                                                                 'image' => $image]);
 
            }else {
-               return redirect('/profile/'.Auth::user()->id);   
+               return redirect('/profile/'.Auth::user()->id);
            }
        }
        public function addNewsItem()
@@ -318,5 +326,42 @@ class UserController extends Controller
            }else {
                return redirect('/profile/'.Autrh::user()->id);
            }
+       }
+
+       public function addSocLink (){
+           $link = $_POST['link'];
+           $user_id = $_POST['user_id'];
+
+           $newLink = new Social();
+           $newLink->link = $link;
+           $newLink->user = $user_id;
+           $newLink->save();
+
+           return "true";
+
+       }
+
+       public function deleteSocLink () {
+           $link = $_POST['link'];
+           $user_id = $_POST['user_id'];
+
+           $deleteLink = Social::where('link', '=', $link)
+                               ->where('user_id', '=', $user_id);
+           $deleteLink->delete();
+
+           return 'true';
+       }
+
+       public function editSocLink () {
+           $link = $_POST['link'];
+           $user_id = $_POST['user_id'];
+           $old_link = $_POST['user_id'];
+
+           $editLink = Social::where('link', '=', $old_link)
+                               ->where('user_id', '=', $user_id);
+           $editLink->link = $link;
+           $editLink->save();
+
+           return 'true';
        }
 }

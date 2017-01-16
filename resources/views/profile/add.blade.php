@@ -3,7 +3,7 @@
 <div class="big-col">
         <div class="help-text">Для удобства поиска твоего изображения на сайте заполни ка можно больше параметров</div>
         <div class="b-dwnld-img">
-          {{ Form::open(array('url' => '/add_photo', 'files' => 'true')) }}
+          {{ Form::open(array('id' => 'addPhotoSite', 'url' => '/add_photo', 'files' => 'true')) }}
             <input type="hidden" name="user_upload_id" value="{{$user->id}}">
             <input type="hidden" name="author_id" value="{{$user->id}}">
             <input class="input-title-dwnld"type="text" name="title" placeholder="Заголовок">
@@ -35,11 +35,11 @@
               <div class="label-tag-input">Теги</div>
               <input class="input-tag-name" type="text" name="name" placeholder="Введите тег">
               <input type="hidden" name="data-tags" placeholder="Введите тег">
-              <button class="btn-add-tag uk-icon-justify uk-icon-plus" type="button" name="button"></button>
+              <button class="btn-add-tag uk-icon-justify uk-icon-plus" type="button"></button>
               <div class="clear"></div>
               <hr>
             </div>
-            <button class="btn-dwnld" type="submit" name="button">
+            <button class="btn-dwnld" type="button" name="button" onclick="this.parentNode.submit();">
               <span class="save-text">Сохранить изменения</span>
               <span class="save-ico uk-icon-justify uk-icon-save"></span>
             </button>

@@ -218,9 +218,9 @@ class PhotoController extends Controller
               $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true' )
                                   ->take(3)
                                   ->get();
-                                  if (empty($ajaxImage->toArray())) {
-                                       $ajaxImage = 'error_download';
-                                  }
+              if (empty($ajaxImage->toArray())) {
+                   $ajaxImage = 'error_download';
+              }
          }
          return $ajaxImage;
      }

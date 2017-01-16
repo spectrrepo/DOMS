@@ -68,11 +68,13 @@ Route::post('/add_tags','TagsController@add');
 Route::post('/add_styles','StylesController@add');
 Route::post('/add_rooms','RoomsController@add');
 Route::post('/add_news', 'NewsController@addNews');
+Route::post('/add_links', 'UserController@addSocLink');
 
 Route::post('/edit_tag/{id}','TagsController@edit');
 Route::post('/edit_style/{id}','StylesController@edit');
 Route::post('/edit_room/{id}','RoomsController@edit');
 Route::post('/edit_new/{id}','NewsController@edit');
+Route::post('/edit_links','UserController@editSocLink');
 Route::post('/send_mail',array('as' => 'sendMail',
                                'uses' => 'MessagesController@sendMail'));
 
@@ -85,6 +87,7 @@ Route::post('/delete_room/{id}','RoomsController@delete');
 Route::post('/delete_news/{id}', 'NewsController@delete');
 Route::post('/delete_comment', 'CommentController@delete');
 Route::post('/delete_view', 'PhotoController@deleteView');
+Route::post('/delete_links', 'UserController@deleteSocLink');
 
 Route::post('/add_photo', 'PhotoController@add');
 Route::post('/comment', 'CommentController@add');
@@ -95,7 +98,7 @@ Route::post('/delete_liked', 'UserController@likedDelete');
 Route::post('/delete_like', 'LikeController@delete');
 
 Route::post('/pagination_index', 'PhotoController@indexAddPage');
-Route::post('/pagination_news', 'PhotoController@indexAddPage');
+Route::post('/pagination_news', 'UserController@ajaxDownloadUpdate');
 Route::post('/update/profile', 'UserController@changeYourself');
 
 

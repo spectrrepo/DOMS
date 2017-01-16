@@ -2,9 +2,9 @@
 @section('profile-content')
   <div class="wrap-personal-information edit-line-profile">
     {{ Form::open( array('url' => '/update/profile', 'files' => 'true') ) }}
-      <div class="b-photo-person" id="photo-person">
+      <div class="b-photo-person" id="photo-person" style="background:url({{ $user->avatar->url('max')}}) center no-repeat;
+          bacground-size:cover;">
           <div class="hover-effect-person uk-icon-justify uk-icon-pencil"></div>
-          <img class="img-full-width" src="{{ $user->avatar->url('max')}}" alt="user_{{ $user->id }} " />
           <input id="photo" type="file" name="avatar">
       </div>
       <div class="b-persobal-information edit-personal-info">
@@ -26,18 +26,30 @@
           </div>
           <div class="b-spec-info">
             <span class="contact-item-name edit-name-item">email</span>
-            <a class="contact-item-value  edit-value-item" href="mailto:{{ $user->e_mail }}">{{ $user->e_mail }}</a>
+            <a class="contact-item-value email-edit" href="mailto:{{ $user->e_mail }}">{{ $user->e_mail }}</a>
             <span class="contact-item-name edit-name-item">skype</span>
             <input class="contact-item-value edit-value-item" type="text"type="text" name="skype" value="{{ $user->skype }}">
             <span class="contact-item-name edit-name-item">телефон</span>
             <input class="contact-item-value edit-value-item" type="text" name="phone" value="{{ $user->phone }}">
             <span class="contact-item-name edit-name-item">соц.сети</span>
-            <input class="contact-item-value edit-value-item" type="text"type="text" name="soc_net" value="{{ $user->soc_net }}">
+            <span class="list-links">
+              <li class="item-links uk-icon-external-link open-modal-link" data-action="editLinks">
+                <a href="#">
+                  <input class="contact-item-value soc-set-edit" type="hidden" name="soc_net" value="{{ $user->soc_net }}">
+                </a>
+              </li>
+              <li class="open-di-link uk-icon-plus open-modal-link" data-action="addLinks">
+                <a href="#">
+                  <input class="contact-item-value soc-set-edit" type="hidden" name="soc_net" value="{{ $user->soc_net }}">
+                </a>
+              </li>
+            </span>
           </div>
           <input type="submit" class="save-info-user" value="Сохранить">
       {{ Form::close() }}
     </div>
   </div>
+  @include('../popups.links')
   <script type="text/javascript">
 
   function FileSelect(evt) {

@@ -637,24 +637,32 @@ $( document ).ready(function() {
           +']').children('.choose-ico').removeClass('active-choose-ico');
           $('#placements .item-moodal-sidebar[data-queue='+$(this).data('queue')
           +']').removeAttr('data-queue');
-          $('#placements .item-moodal-sidebar[data-queue=2]').attr('data-queue', 1);
-          $('#placements .item-moodal-sidebar[data-queue=3]').attr('data-queue', 2);
-          $('#placements .choose-sort-item[data-list=2]').attr('data-list', 1);
-          $('#placements .choose-sort-item[data-list=3]').attr('data-list', 2);
+          // if ($('#placements .item-moodal-sidebar').data('queue').length === 3) {
+
+            $('#placements .item-moodal-sidebar[data-queue=2]').attr('data-queue', 1);
+            $('#placements .item-moodal-sidebar[data-queue=3]').attr('data-queue', 2);
+            $('#placements .choose-sort-item[data-list=2]').attr('data-list', 1);
+            $('#placements .choose-sort-item[data-list=3]').attr('data-list', 2);
+          //
+          // } else if (($('#placements .item-moodal-sidebar').data('queue').length === 2)) {
+          //
+          // } else {
+          //
+          // }
           var deleteURL = $(this).data('url');
           if ($('#placements .item-moodal-sidebar[data-queue]').length === 2){
             if ($(this).data('queue') === 2) {
 
-              changeURL(3, dataURL, ','+deleteURL, styleSort, roomSort, colorSort, sortSort);
+              changeURL(3, dataURL, ','+deleteURL, styleSort, roomSort, colorSort, sortSort, tagSort);
 
             }
           }else if ($('#placements .item-moodal-sidebar[data-queue]').length === 1) {
 
-            changeURL(2, dataURL, deleteURL+',', styleSort, roomSort, colorSort, sortSort);
+            changeURL(2, dataURL, deleteURL+',', styleSort, roomSort, colorSort, sortSort, tagSort);
 
           }else if ($('#placements .item-moodal-sidebar[data-queue]').length === 0) {
 
-            changeURL(1, '0', deleteURL+',', styleSort, roomSort, colorSort, sortSort);
+            changeURL(1, '0', deleteURL+',', styleSort, roomSort, colorSort, sortSort, tagSort);
 
           }
           $('input[name=roomSorting]').val(dataURL);
@@ -956,7 +964,7 @@ $( document ).ready(function() {
       $('#styles .item-moodal-sidebar[data-queue='+
       $(this).data('list') +']').removeAttr('data-queue');
       $(this).remove();
-      ajaxRequest(roomSort, styleSort, colorSort, sortSort);
+      ajaxRequest(roomSort, styleSort, colorSort, sortSort, tag);
     });
     ajaxRequest(roomSort, styleSort, colorSort, sortSort);
   });
@@ -1006,10 +1014,10 @@ $( document ).ready(function() {
 
     $('#colors .choose-sort-item').click(function () {
       var sortSort = $('input[name=sortSorting').val(),
-          styleSort = $('input[name=styleSorting]').val(),
-          roomSort = $('input[name=roomSorting]').val(),
-          colorSort = $('input[name=colorSorting]').val(),
-          tagSort = $('input[name=tagSorting]').val();
+      styleSort = $('input[name=styleSorting]').val(),
+      roomSort = $('input[name=roomSorting]').val(),
+      colorSort = $('input[name=colorSorting]').val(),
+      tagSort = $('input[name=tagSorting]').val();
 
       $('input[name=colorSorting]').val(0);
       history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+0+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
@@ -1065,9 +1073,9 @@ $( document ).ready(function() {
       $('#orders .colors-space-item').children('.choose-ico').removeClass('active-choose-ico');
       $(this).remove();
 
-      ajaxRequest(roomSort, styleSort, colorSort, sortSort);
+      ajaxRequest(roomSort, styleSort, colorSort, sortSort, tagSort);
     });
-    ajaxRequest(roomSort, styleSort, colorSort, sortSort);
+    ajaxRequest(roomSort, styleSort, colorSort, sortSort, tagSort);
   });
 
 // tags finder
@@ -1546,6 +1554,10 @@ $( document ).ready(function() {
         }else {
           $('#num_views').text(data.views_count);
         }
+        if (!data.full_path) {
+        }else{
+          $('img.img-max-center').attr("src",data.full_path);
+        }
         if (!data.likes_count) {
           $('#value-like').text(0);
         }else {
@@ -1759,7 +1771,7 @@ $( document ).ready(function() {
     });
   }
 
-  $('.btn-nav').on('click', function () {
+  $('.btn-nav, .nav-zoom').on('click', function () {
     var ret,direction = $(this).data('direction');
     if (direction === 'right') {
       if ($('.active-slide').index()+1 === $('.photo-item:last').index()) {
@@ -1779,7 +1791,7 @@ $( document ).ready(function() {
           infoPhotoDownload();
           userInfoDownload();
           activeLike();
-          // activeLiked();
+          activeLiked();
       }else if ($('.active-slide').index() === $('.photo-item:last').index()) {
 
         $('#popup-error-slider').fadeIn();
@@ -1803,7 +1815,7 @@ $( document ).ready(function() {
         infoPhotoDownload();
         userInfoDownload();
         activeLike();
-        // activeLiked();
+        activeLiked();
       }
     } else if (direction === 'left') {
       if ($('.active-slide').index()=== $('.photo-item:first').index()) {
@@ -1827,7 +1839,7 @@ $( document ).ready(function() {
           userInfoDownload();
           likeWhom();
           activeLike();
-          // activeLiked();
+          activeLiked();
         }
      }else {
         $('.active-slide').prev().addClass('active-slide').removeClass('left-slide');
@@ -1847,26 +1859,11 @@ $( document ).ready(function() {
         infoPhotoDownload();
         userInfoDownload();
         activeLike();
-        // activeLiked();
+        activeLiked();
       }
     }
   });
-  // $('btn-nav-views').on('click', function () {
-  //     if () {
-  //       if (last) {
-  //
-  //       }else {
-  //
-  //       }
-  //     }
-  //     if () {
-  //       if (last) {
-  //
-  //       }else {
-  //
-  //       }
-  //     }
-  // });
+
   $('.popup-error-close').on('click', function () {
     $('#popup-error-slider').fadeOut();
   });
@@ -3935,6 +3932,24 @@ $(function() {
   $('.popup-close-news').on('click', function(){
     $('.modal-news').fadeOut();
   });
+
+  var height = parseInt($('pre').css('height'));
+  if (height > 119){
+    $('.b-about-person').append(
+    '<span class="to-bottom ico uk-icon-justify uk-icon-chevron-down"></span>'
+    );
+  }
+  $('.to-bottom').on('click', function () {
+    if ($(this).hasClass('uk-icon-chevron-down')) {
+      $('.b-about-person').css({'height':'auto'});
+      $(this).removeClass('uk-icon-chevron-down')
+             .addClass('uk-icon-chevron-up');
+    } else {
+      $('.b-about-person').css({'height':'105px'});
+      $(this).removeClass('uk-icon-chevron-up')
+             .addClass('uk-icon-chevron-down');
+    }
+  });
 });
 
 $( document ).ready(function() {
@@ -3949,8 +3964,26 @@ $( document ).ready(function() {
       $('input[name=data-tags]').val(replaceString.replace($(this).text()+';', ''));
       $(this).remove();
     });
+    return false;
   });
-  return false;
+
+  $('.input-tag-name').keyup(function(e) {
+    if(e.keyCode==13)
+     {
+          e.preventDefault();
+          $('input[name=data-tags]').val($('input[name=data-tags]').val()+$('.input-tag-name').val()+';');
+          $('<span class="item-tag-show">'+
+            $('.input-tag-name').val()
+            +'</span>').appendTo('.wrap-add-tag');
+          $('.input-tag-name').val("");
+          $('.item-tag-show').click(function () {
+            var replaceString = $('input[name=data-tags]').val();
+            $('input[name=data-tags]').val(replaceString.replace($(this).text()+';', ''));
+            $(this).remove();
+          });
+          return false;
+     }
+   });
 });
 
 $( document ).ready(function() {
@@ -3971,55 +4004,156 @@ $( document ).ready(function() {
   });
 });
 
-// $( document ).ready(function() {
-//   $('.b-next-page').on('click', function() {
-//       var csrftoken = $('meta[name=_token]').attr('content'),
-//           lastIdJS = $('#pole').children('.item-gallery:last-child').index(),
-//
-//       $.ajax({
-//           type:'POST',
-//           data: {
-//                   'lastId': lastIdJS,
-//                   '_token': csrftoken
-//
-//           },
-//           url:'/pagination_news',
-//
-//           success: function (data) {
-//             for (var i = 0; i < data.length; i++) {
-//               $('<div class="b-person-post"><div class="col-news-min">'+
-//               '<div class="b-portret-blogger"><img src="'++'" alt="">'+
-//               '</div></div><div class="col-news-big">'+
-//               '<div class="b-name-redactor"><a href="'++'">'++'</a></div>'+
-//               '<div class="b-post-body"><div class="b-photo-post">'+
-//               '<img src="'++'" class="img-post" alt="">'+
-//               '</div><div class="b-iformation"><div class="b-date">'+
-//               13 Dec 2016+
-//               '</div><div class="b-statistics"><div class="b-item-stat">'+
-//               '<span class="ico uk-icon-justify uk-icon-eye"></span>'+
-//               '<span class="num-stat">'++'</span>'+
-//               '<span class="tooltip-stat other-margin-tooltip1">'+
-//               '<span class="text-tooltip-stat">количество просмотров</span>'+
-//               '<span class="triangle-tooltip-stat"></span>'+
-//               '</span></div><div class="b-item-stat">'+
-//               '<span class="ico uk-icon-justify uk-icon-heart"></span>'+
-//               '<span class="num-stat">'++'</span>'+
-//               '<span class="tooltip-stat other-margin-tooltip2">'+
-//               '<span class="text-tooltip-stat">понравилось'+
-//               '</span><span class="triangle-tooltip-stat"></span>'+
-//               '</span></div><div class="b-item-stat">'+
-//               '<span class="ico uk-icon-justify uk-icon-star"></span>'+
-//               '<span class="num-stat">'++'</span>'+
-//               '<span class="tooltip-stat"><span class="text-tooltip-stat">избранное'+
-//               '</span><span class="triangle-tooltip-stat"></span>'+
-//               '</span></div></div></div><div class="clear"></div></div>'+
-//               '<div class="clear"></div></div><div class="clear"></div></div>')
-//               .appendTo('.b-personal-news');
-//             }
-//
-//           }
-//       });
-//   });
-// });
+$( document ).ready(function() {
+  $('.btn-dwnld-new').on('click', function() {
+      var csrftoken = $('meta[name=_token]').attr('content'),
+          lastIdJS = $('.b-personal-news').children('.b-person-post').index()+1;
+      $.ajax({
+          type:'POST',
+          data: {
+                  'lastId': lastIdJS,
+                  '_token': csrftoken
+
+          },
+          url:'/pagination_news',
+
+          success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+              $('<div class="b-person-post"><div class="col-news-min">'+
+              '<div class="b-portret-blogger" style="background:url('+data[i].path_full+')'+
+              'center no-repeat;background-size: cover;"></div>'+
+              '</div><div class="col-news-big">'+
+              '<div class="b-name-redactor"><a href="'+data[i].user_upload_id+'">'+data[i].name+'</a></div>'+
+              '<div class="b-post-body"><a href="'+data[i].id+'" class="b-photo-post">'+
+              '<img src="'+data[i].full_path+'" class="img-post" alt="">'+
+              '</a><div class="b-iformation"><div class="b-date">'+
+              +data[i].photo_update_at+
+              '</div><div class="b-statistics"><div class="b-item-stat">'+
+              '<span class="ico uk-icon-justify uk-icon-eye"></span>'+
+              '<span class="num-stat">'+data[i].views_count+'</span>'+
+              '<span class="tooltip-stat other-margin-tooltip1">'+
+              '<span class="text-tooltip-stat">количество просмотров</span>'+
+              '<span class="triangle-tooltip-stat"></span>'+
+              '</span></div><div class="b-item-stat">'+
+              '<span class="ico uk-icon-justify uk-icon-heart"></span>'+
+              '<span class="num-stat">'+data[i].likes_count+'</span>'+
+              '<span class="tooltip-stat other-margin-tooltip2">'+
+              '<span class="text-tooltip-stat">понравилось'+
+              '</span><span class="triangle-tooltip-stat"></span>'+
+              '</span></div><div class="b-item-stat">'+
+              '<span class="ico uk-icon-justify uk-icon-star"></span>'+
+              '<span class="num-stat">'+data[i].favs_count+'</span>'+
+              '<span class="tooltip-stat"><span class="text-tooltip-stat">избранное'+
+              '</span><span class="triangle-tooltip-stat"></span>'+
+              '</span></div></div></div><div class="clear"></div></div>'+
+              '<div class="clear"></div></div><div class="clear"></div></div>')
+              .appendTo('.b-personal-news');
+            }
+
+          }
+      });
+  });
+});
+
+$( document ).ready(function() {
+
+  $('#closeLink').on('click', function () {
+    $('#dialogLinkAdd').fadeOut();
+  });
+
+  $('.open-modal-link').on('click', function () {
+    if ($(this).data('action') === 'addLinks') {
+      $('h3.title-form').empty()
+                        .text('Добавить ссылку');
+      $('.mini-modal-submit').removeClass('uk-icon-save')
+                             .addClass('uk-icon-plus');
+      $('.links-control').removeAttr('id')
+                         .attr('id', 'add-link-form');
+
+      $('#add-link-form').submit(function (e) {
+         e.preventDefault();
+         var csrftoken = $('meta[name=_token]').attr('content'),
+             link = $('input[name=link]').val(),
+             user_id = $('input[name=user_id]').val();
+
+         $.ajax({
+           type:'POST',
+           data: {
+                '_token'  : csrftoken,
+                'link' : post_id,
+                'user_id' : user_id
+           },
+           url:'http://localhost:8000/add_links',
+           success: function () {
+           // close
+           // add
+           // fadeIn
+           }
+         });
+         return false;
+     });
+    }else {
+      $('.links-control').append(
+        '<input type="hidden" name="old_link" value=""/>'
+      );
+      $('.links-control').append(
+        '<input type="hidden" name="link" value=""/>'
+      );
+      $('h3.title-form').empty()
+                        .append('Изменить ссылку для ССЫЛКА или'+
+              '<span id="delete-btn" class="remove-this-links">удалить</span>');
+
+      $('.mini-modal-submit').removeClass('uk-icon-plus')
+                             .addClass('uk-icon-save')
+      $('.links-control').removeAttr('id')
+                         .attr('id', 'save-link-form');
+         $('#save-link-form').submit(function () {
+             e.preventDefault();
+             var csrftoken = $('meta[name=_token]').attr('content'),
+                 link = $('input[name=link]').val(),
+                 user_id = $('input[name=user_id]').val();
+
+             $.ajax({
+                 type:'POST',
+                 data: {
+                      '_token'  : csrftoken,
+                      'link' : post_id,
+                      'user_id' : user_id
+                 },
+                 url:'http://localhost:8000/edit_links',
+                 success: function () {
+                                 // close
+                                 // add
+                                 // fadeIn
+                 }
+             });
+             return false;
+         });
+         $('#delete-btn').on('click', function () {
+           var csrftoken = $('meta[name=_token]').attr('content'),
+               link = $('input[name=link]').val(),
+               user_id = $('input[name=user_id]').val();
+
+           $.ajax({
+               type:'POST',
+               data: {
+                         '_token'  : csrftoken,
+                         'link' : post_id,
+                         'user_id' : user_id
+               },
+               url:'http://localhost:8000/delete_links',
+
+               success: function () {
+                 // close
+                 // add
+                 // fadeIn
+               }
+           });
+         });
+    }
+    $('#dialogLinkAdd').fadeIn();
+  });
+
+});
 
 //# sourceMappingURL=app.js.map

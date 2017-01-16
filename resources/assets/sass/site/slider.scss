@@ -158,10 +158,16 @@ a.btn-prew span {
   bottom: 3px;
   z-index: 100;
 }
+#like-whom-pole {
+  width: 90px;
+  display: block;
+  text-align: left;
+}
 .mini-avatar{
   width:20px;
   height: 20px;
-  display: block;
+  margin: 2px;
+  display: inline-block;
 }
 .mini-avatar img {
   width: 100%;

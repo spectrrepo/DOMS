@@ -2,8 +2,8 @@
 @section('profile-content')
 
 <div class="wrap-personal-information">
-    <div class="b-photo-person">
-        <img src=" {{ $user->avatar->url('max') }} " alt="user_{{ $user->id }} " />
+    <div class="b-photo-person" style="background:url({{ $user->avatar->url('max') }}) center no-repeat;
+                                       background-size:cover;">
     </div>
     <div class="b-persobal-information">
         <div class="b-name-person">
@@ -13,7 +13,9 @@
           {{ $user->status }}
         </div>
         <div class="b-about-person">
-          fdjgfsdjgl
+          <pre>
+            {{ $user->about }}
+          </pre>
         </div>
         <div class="b-contact-data">
           <div class="contact-item">
@@ -55,8 +57,8 @@
       @foreach ($images as $image)
         <div class="b-person-post">
           <div class="col-news-min">
-              <div class="b-portret-blogger"><img src="
-                {{ !($image->path_full === null ) ? $image->path_full : '' }}" alt="" /></span></div>
+              <div class="b-portret-blogger" style="background:url({{ !($image->path_full === null ) ? $image->path_full : '' }}) center no-repeat;
+                                                    background-size: cover;"></div>
           </div>
           <div class="col-news-big">
               <div class="b-name-redactor"><a href="/profile/{{$image->id}}">{{$image->name}}</a></div>

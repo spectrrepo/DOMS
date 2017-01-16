@@ -158,6 +158,10 @@ $( document ).ready(function() {
         }else {
           $('#num_views').text(data.views_count);
         }
+        if (!data.full_path) {
+        }else{
+          $('img.img-max-center').attr("src",data.full_path);
+        }
         if (!data.likes_count) {
           $('#value-like').text(0);
         }else {
@@ -371,7 +375,7 @@ $( document ).ready(function() {
     });
   }
 
-  $('.btn-nav').on('click', function () {
+  $('.btn-nav, .nav-zoom').on('click', function () {
     var ret,direction = $(this).data('direction');
     if (direction === 'right') {
       if ($('.active-slide').index()+1 === $('.photo-item:last').index()) {
@@ -391,7 +395,7 @@ $( document ).ready(function() {
           infoPhotoDownload();
           userInfoDownload();
           activeLike();
-          // activeLiked();
+          activeLiked();
       }else if ($('.active-slide').index() === $('.photo-item:last').index()) {
 
         $('#popup-error-slider').fadeIn();
@@ -415,7 +419,7 @@ $( document ).ready(function() {
         infoPhotoDownload();
         userInfoDownload();
         activeLike();
-        // activeLiked();
+        activeLiked();
       }
     } else if (direction === 'left') {
       if ($('.active-slide').index()=== $('.photo-item:first').index()) {
@@ -439,7 +443,7 @@ $( document ).ready(function() {
           userInfoDownload();
           likeWhom();
           activeLike();
-          // activeLiked();
+          activeLiked();
         }
      }else {
         $('.active-slide').prev().addClass('active-slide').removeClass('left-slide');
@@ -459,26 +463,11 @@ $( document ).ready(function() {
         infoPhotoDownload();
         userInfoDownload();
         activeLike();
-        // activeLiked();
+        activeLiked();
       }
     }
   });
-  // $('btn-nav-views').on('click', function () {
-  //     if () {
-  //       if (last) {
-  //
-  //       }else {
-  //
-  //       }
-  //     }
-  //     if () {
-  //       if (last) {
-  //
-  //       }else {
-  //
-  //       }
-  //     }
-  // });
+
   $('.popup-error-close').on('click', function () {
     $('#popup-error-slider').fadeOut();
   });

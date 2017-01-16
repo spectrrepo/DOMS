@@ -59,10 +59,12 @@
     width: 76%;
     float: left;
     margin-left: 3.5%;
-    height: 100%;
+    height: auto;
     border-radius: 5px;
     border: 1px solid #E5E5E5;
     box-sizing: border-box;
+    overflow: hidden;
+    min-height: 162px;
 }
 .b-name-person {
     width: 33%;
@@ -83,11 +85,20 @@
 }
 .b-about-person {
     width: 66%;
-    height: 119px;
     float: left;
     box-sizing: border-box;
     padding: 10px;
     text-align: left;
+    position: relative;
+    min-height: 105px;
+    height: 105px;
+    overflow: hidden;
+}
+.to-bottom {
+    position: absolute;
+    bottom: 15px;
+    right: 0px;
+    cursor: pointer;
 }
 .b-contact-data {
     width: 33%;
@@ -273,6 +284,7 @@
 }
 .margin-like-tooltip {
   margin-left: -61px;
+  bottom: 25px;
 }
 .b-item-stat > .margin-liked-tooltip {
   margin-left: -46px;
