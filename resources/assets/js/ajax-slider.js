@@ -169,6 +169,10 @@ $( document ).ready(function() {
           $('#num_comment').text(data.comments_count);
           $('#num_comment_zoom').text(data.comments_count);
         }
+        if (!data.full_path) {
+        }else{
+          $('img.img-max-center').attr("src",data.full_path);
+        }
         if (!data.likes_count) {
           $('#value-like').text(0);
         }else {
@@ -429,7 +433,7 @@ function loadZoomPhoto() {
           userInfoDownload();
           activeLike();
           loadZoomPhoto();
-          // activeLiked();
+          activeLiked();
       }else if ($('.active-slide').index() === $('.photo-item:last').index()) {
 
         $('#popup-error-slider').fadeIn();
@@ -455,7 +459,7 @@ function loadZoomPhoto() {
         userInfoDownload();
         activeLike();
         loadZoomPhoto();
-        // activeLiked();
+        activeLiked();
       }
     } else if (direction === 'left') {
       if ($('.active-slide').index()=== $('.photo-item:first').index()) {
@@ -481,7 +485,7 @@ function loadZoomPhoto() {
           likeWhom();
           activeLike();
           loadZoomPhoto();
-          // activeLiked();
+          activeLiked();
         }
      }else {
         $('.active-slide').prev().addClass('active-slide').removeClass('left-slide');
@@ -503,26 +507,11 @@ function loadZoomPhoto() {
         userInfoDownload();
         activeLike();
         loadZoomPhoto();
-        // activeLiked();
+        activeLiked();
       }
     }
   });
-  // $('btn-nav-views').on('click', function () {
-  //     if () {
-  //       if (last) {
-  //
-  //       }else {
-  //
-  //       }
-  //     }
-  //     if () {
-  //       if (last) {
-  //
-  //       }else {
-  //
-  //       }
-  //     }
-  // });
+
   $('.popup-error-close').on('click', function () {
     $('#popup-error-slider').fadeOut();
   });

@@ -101,24 +101,32 @@ $( document ).ready(function() {
           +']').children('.choose-ico').removeClass('active-choose-ico');
           $('#placements .item-moodal-sidebar[data-queue='+$(this).data('queue')
           +']').removeAttr('data-queue');
-          $('#placements .item-moodal-sidebar[data-queue=2]').attr('data-queue', 1);
-          $('#placements .item-moodal-sidebar[data-queue=3]').attr('data-queue', 2);
-          $('#placements .choose-sort-item[data-list=2]').attr('data-list', 1);
-          $('#placements .choose-sort-item[data-list=3]').attr('data-list', 2);
+          // if ($('#placements .item-moodal-sidebar').data('queue').length === 3) {
+
+            $('#placements .item-moodal-sidebar[data-queue=2]').attr('data-queue', 1);
+            $('#placements .item-moodal-sidebar[data-queue=3]').attr('data-queue', 2);
+            $('#placements .choose-sort-item[data-list=2]').attr('data-list', 1);
+            $('#placements .choose-sort-item[data-list=3]').attr('data-list', 2);
+          //
+          // } else if (($('#placements .item-moodal-sidebar').data('queue').length === 2)) {
+          //
+          // } else {
+          //
+          // }
           var deleteURL = $(this).data('url');
           if ($('#placements .item-moodal-sidebar[data-queue]').length === 2){
             if ($(this).data('queue') === 2) {
 
-              changeURL(3, dataURL, ','+deleteURL, styleSort, roomSort, colorSort, sortSort);
+              changeURL(3, dataURL, ','+deleteURL, styleSort, roomSort, colorSort, sortSort, tagSort);
 
             }
           }else if ($('#placements .item-moodal-sidebar[data-queue]').length === 1) {
 
-            changeURL(2, dataURL, deleteURL+',', styleSort, roomSort, colorSort, sortSort);
+            changeURL(2, dataURL, deleteURL+',', styleSort, roomSort, colorSort, sortSort, tagSort);
 
           }else if ($('#placements .item-moodal-sidebar[data-queue]').length === 0) {
 
-            changeURL(1, '0', deleteURL+',', styleSort, roomSort, colorSort, sortSort);
+            changeURL(1, '0', deleteURL+',', styleSort, roomSort, colorSort, sortSort, tagSort);
 
           }
           $('input[name=roomSorting]').val(dataURL);
@@ -420,7 +428,7 @@ $( document ).ready(function() {
       $('#styles .item-moodal-sidebar[data-queue='+
       $(this).data('list') +']').removeAttr('data-queue');
       $(this).remove();
-      ajaxRequest(roomSort, styleSort, colorSort, sortSort);
+      ajaxRequest(roomSort, styleSort, colorSort, sortSort, tag);
     });
     ajaxRequest(roomSort, styleSort, colorSort, sortSort);
   });
@@ -470,10 +478,10 @@ $( document ).ready(function() {
 
     $('#colors .choose-sort-item').click(function () {
       var sortSort = $('input[name=sortSorting').val(),
-          styleSort = $('input[name=styleSorting]').val(),
-          roomSort = $('input[name=roomSorting]').val(),
-          colorSort = $('input[name=colorSorting]').val(),
-          tagSort = $('input[name=tagSorting]').val();
+      styleSort = $('input[name=styleSorting]').val(),
+      roomSort = $('input[name=roomSorting]').val(),
+      colorSort = $('input[name=colorSorting]').val(),
+      tagSort = $('input[name=tagSorting]').val();
 
       $('input[name=colorSorting]').val(0);
       history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+0+'],sort=["'+sortSort+'"],tag=['+tagSort+']');
@@ -529,9 +537,9 @@ $( document ).ready(function() {
       $('#orders .colors-space-item').children('.choose-ico').removeClass('active-choose-ico');
       $(this).remove();
 
-      ajaxRequest(roomSort, styleSort, colorSort, sortSort);
+      ajaxRequest(roomSort, styleSort, colorSort, sortSort, tagSort);
     });
-    ajaxRequest(roomSort, styleSort, colorSort, sortSort);
+    ajaxRequest(roomSort, styleSort, colorSort, sortSort, tagSort);
   });
 
 // tags finder

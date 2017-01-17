@@ -154,7 +154,7 @@
 
                   <div class="b-comment-wrap">
                     {!! Auth::user()->id === $comment->user_id ? HTML::decode('<span class="remove-comment uk-icon-justify uk-icon-remove"><span class="delete_comment_id" data-id="'.$comment->id.'"></span></span>') : ''!!}
-                    <a style="background:url({{ $user->avatar->url('max') }});background-size:cover;"href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-photo-comment"></a>
+                    <a style="background:url({{ $user->avatar->url('max') }}) center no-repeat;background-size:cover;"href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-photo-comment"></a>
                     <div class="b-comment">
                       <a href="{{ URL::to('profile/'.$comment->name) }}" class="b-name-comment">
                         {{ $comment->user_id }}

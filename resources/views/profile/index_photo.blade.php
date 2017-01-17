@@ -2,9 +2,9 @@
 @section('profile-content')
 
 <div class="wrap-personal-information">
-    <div class="b-photo-person">
-        <img src=" {{ $user->avatar->url('max') }} " alt="user_{{ $user->id }} " />
-    </div>
+  <div class="b-photo-person" style="background:url({{ $user->avatar->url('max') }}) center no-repeat;
+                                     background-size:cover;">
+  </div>
     <div class="b-persobal-information">
         <div class="b-name-person">
           {{ $user->name }}
@@ -13,7 +13,9 @@
           {{ $user->status }}
         </div>
         <div class="b-about-person">
-          fdjgfsdjgl
+          <pre>
+            {{ $user->about }}
+          </pre>
         </div>
         <div class="b-contact-data">
           <div class="contact-item">
