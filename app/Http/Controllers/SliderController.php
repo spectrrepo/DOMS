@@ -190,4 +190,12 @@ class SliderController extends Controller
 
         return $response;
     }
+    public function loadZoomPhoto()
+    {
+        $id = $_POST['id'];
+        $image = Picture::find($id);
+        $zoomPhoto = $image->photo->url();
+
+        return $zoomPhoto;
+    }
 }

@@ -7799,7 +7799,8 @@ a.btn-prew span {
 .pretense-tool {
   float: left; }
 
-.author-portret {
+.author-portret,
+.author-portret-zoom {
   float: left;
   width: 20px;
   height: 20px;

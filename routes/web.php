@@ -106,6 +106,7 @@ Route::post('/load_comments', 'SliderController@dwnldComments');
 Route::post('/load_like', 'SliderController@dwnldLikeWhom');
 Route::post('/load_info_slide', 'SliderController@dwnldInfoPhoto');
 Route::post('/load_user', 'SliderController@dwnldPhotoUser');
+Route::post('/load_zoom_photo', 'SliderController@loadZoomPhoto');
 
 Route::post('/load_active_like', 'SliderController@loadActiveLike');
 Route::post('/load_active_favorite', 'SliderController@loadActiveLiked');
