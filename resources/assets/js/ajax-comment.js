@@ -41,14 +41,13 @@ $( document ).ready(function() {
                     '<span class="remove-comment uk-icon-justify uk-icon-remove">'+
                     '<span class="delete_comment_id" data-id="'+data.id+'"></span>'+
                     '</span>'+
-                    '<a href="/profile/'+
-                    data.user_id +'" class="b-photo-comment">' +
-                    '<img class="img-full-width" src="'+'">' +
-                    '</a>' +
+                    '<a href="/profile/'+data.user_id +
+                    '" class="b-photo-comment" style="background:url('+data.userPhoto+')'+
+                    'center no-repeat;background-size:cover;"></a>' +
                     '<div class="b-comment">' +
                       '<a href="/profile/'+
                       data.user_id +'" class="b-name-comment"> ' +
-                        data.user_id +
+                        data.userName +
                       '</a>' +
                       '<div class="b-text-comment">' +
                         data.text_comment +

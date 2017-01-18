@@ -177,6 +177,18 @@ a.btn-prew span {
   display: block;
   width: 45%;
 }
+.num-page-zoom {
+  display: block;
+  width: 10%;
+  text-align: center;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 18px;
+}
 .num-page{
   float: left;
   display: block;
@@ -188,6 +200,12 @@ a.btn-prew span {
   display: block;
   width: 45%;
   text-align: right;
+}
+.status-photo-zoom {
+  display: block;
+  width: 45%;
+  position: absolute;
+  right: 5%;  
 }
 .back-to-main,
 .full-scrn,
@@ -255,7 +273,7 @@ a.btn-prew span {
   overflow: hidden;
   border-radius: 3px;
 }
-.author-name {
+.author-name-zoom {
   float: left;
   margin-left: 6px;
   line-height: 28px;

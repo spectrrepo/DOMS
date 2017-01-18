@@ -83,8 +83,11 @@ class UserController extends Controller
              $user = User::find($id);
              $userImages = Picture::where('author_id', '=', $id)
                                    ->get();
+             $links = Social::where('user', '=', $id)->get();
+
              return View('profile.index_photo', [ 'id' => $id,
                                                   'user' => $user,
+                                                  'links' => $links,
                                                   'userImages' => $userImages]);
          }else {
              return redirect('/login');
@@ -348,9 +351,8 @@ class UserController extends Controller
            $user_id = $_POST['user_id'];
 
            $deleteLink = Social::where('link', '=', $link)
-                               ->where('user_id', '=', $user_id);
-           $deleteLink->delete();
-
+                               ->where('user', '=', $user_id)
+                               ->delete();
            return 'true';
        }
 
@@ -360,9 +362,8 @@ class UserController extends Controller
            $old_link = $_POST['old_link'];
 
            $editLink = Social::where('link', '=', $old_link)
-                               ->where('user_id', '=', $user_id);
-           $editLink->link = $link;
-           $editLink->save();
+                              ->where('user', '=', $user_id)
+                              ->update(array('link' => $link));
 
            return 'true';
        }

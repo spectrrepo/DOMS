@@ -16,11 +16,11 @@
         <span class="author-name-zoom">{{ $user->name}}</span>
       </a>
     </span>
-    <span class="num-page">
+    <span class="num-page-zoom">
       <span id="current-position-zoom"></span>/
       <span id="all-photo-zoom">{{ $imageAll->count() }}</span>
     </span>
-    <span class="status-photo">
+    <span class="status-photo-zoom">
       <div class="b-item-stat comment">
         <span class="ico-slider uk-icon-justify uk-icon-comments"></span>
         <span id="num_comment_zoom">{{ $num_comment }}</span>

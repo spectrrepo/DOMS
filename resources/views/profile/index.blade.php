@@ -2,6 +2,7 @@
 @section('profile-content')
 
 <div class="wrap-personal-information">
+
     <div class="b-photo-person" style="background:url({{ $user->avatar->url('max') }}) center no-repeat;
                                        background-size:cover;">
     </div>
@@ -34,8 +35,12 @@
               <div class="clear"></div>
           </div>
           <div class="contact-item">
-              <span class="contact-item-name">соц.сети</span>
-              <span class="contact-item-value"> {{ $user->soc_net }} </span>
+              <span class="contact-item-name">соц.<br>сети</span>
+              <span class="contact-item-value">
+                @foreach ($links as $link_item)
+                  <a href="http://{{ $link_item->link }}" class="item-links uk-icon-external-link"></a>
+                @endforeach
+              </span>
               <div class="clear"></div>
           </div>
         </div>

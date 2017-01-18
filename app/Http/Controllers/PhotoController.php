@@ -322,6 +322,14 @@ class PhotoController extends Controller
                   $image = false;
              }
         }
+        $likes = Like::where('post_id', '=', $id)->get();
+
+        $likeWhom = array();
+        foreach ($likes as $like) {
+            $user = User::find($like->user_id);
+            array_push( $likeWhom, $user);
+        }
+
         $needImage = Picture::find($id);
         $user = User::find($needImage->author_id);
         $colors = Color::all();
@@ -386,6 +394,7 @@ class PhotoController extends Controller
                                     'tagSorting' => $tagSorting,
                                     'colorSorting' => $colorSorting,
                                     'roomSorting' => $roomSorting,
+                                    'likeWhom' => $likeWhom,
                                     'styleSorting' => $styleSorting]);
 
     }

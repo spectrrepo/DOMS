@@ -126,7 +126,14 @@
               <span class="tooltip-stat margin-like-tooltip">
                 <span class="text-tooltip-stat">
                   Понравилось
-                  <span id="like-whom-pole"></span>
+                  <span id="like-whom-pole">
+                    @foreach ($likeWhom as $like)
+                      <a class="mini-avatar"
+                      href="/user/{{ $like->id }}"
+                      title="{{ $like->name }}">
+                      <img src="{{ $like->path_min }}"></a>
+                    @endforeach
+                  </span>
                 </span>
                 <span class="triangle-tooltip-stat"></span>
               </span>
@@ -154,10 +161,10 @@
 
                   <div class="b-comment-wrap">
                     {!! Auth::user()->id === $comment->user_id ? HTML::decode('<span class="remove-comment uk-icon-justify uk-icon-remove"><span class="delete_comment_id" data-id="'.$comment->id.'"></span></span>') : ''!!}
-                    <a style="background:url({{ $user->avatar->url('max') }}) center no-repeat;background-size:cover;"href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-photo-comment"></a>
+                    <a style="background:url({{ $comment->userPhoto }}) center no-repeat;background-size:cover;"href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-photo-comment"></a>
                     <div class="b-comment">
-                      <a href="{{ URL::to('profile/'.$comment->name) }}" class="b-name-comment">
-                        {{ $comment->user_id }}
+                      <a href="{{ URL::to('profile/'.$comment->userName) }}" class="b-name-comment">
+                        {{ $comment->userName }}
                       </a>
                       <div class="b-text-comment">
                         {{ $comment->text_comment }}
@@ -200,10 +207,10 @@
                   @endforeach
                 </div>
               <div class="clear"></div>
-                <div id="views" class="title-tag margin-title-tag" {{ $tags->count() > 1 ? '': 'style=display:none;' }}>
+                <div id="views" class="title-tag margin-title-tag" {{ $views->count() > 1 ? '': 'style=display:none;' }}>
                   Ракурсы
                 </div>
-                <div id="views-pole" class="view-photo-slide" {{ $tags->count() > 1 ? '': 'style=display:none;' }}>
+                <div id="views-pole" class="view-photo-slide" {{ $views->count() > 1 ? '': 'style=display:none;' }}>
                   <div class="b-change-photo">
                     <div class="owl-demo" id="owl-demo">
                       @foreach ($views as $view)
@@ -216,10 +223,10 @@
                     </div>
                   </div>
                 </div>
-                <div  id="description" class="title-tag margin-title-tag" {{ $tags->count() > 1 ? '': 'style=display:none;' }}>
+                <div  id="description" class="title-tag margin-title-tag" {{ empty($image->description) ? 'style=display:none;' : '' }}>
                    Описание
                 </div>
-                <div id="description-pole" class="view-photo-slide" {{ $tags->count() > 1 ? '': 'style=display:none;' }}>
+                <div id="description-pole" class="view-photo-slide" {{ empty($image->description) ? 'style=display:none;' : '' }}>
                   <h3>{{$image->title}}</h3>
                   <p>
                    {{ $image->description }}

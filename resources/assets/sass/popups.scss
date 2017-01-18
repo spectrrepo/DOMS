@@ -27,6 +27,31 @@
   right: 0;
   cursor: pointer;
 }
+.owl-nav {
+  top: 37px;
+  position: absolute;
+  width: 120%;
+  color: white;
+  font-size: 60px;
+  left: -10%;
+}
+.nav-about-right {
+  position: absolute;
+  right: 0;
+}
+.nav-about-left {
+  position: absolute;
+  left: 0;
+}
+.nav-about-right::before {
+  content: "\f105";
+  font-family: FontAwesome;
+}
+
+.nav-about-left::before {
+  content: "\f104";
+  font-family: FontAwesome;
+}
 
 // ======================== about ======================= //
 
@@ -563,6 +588,7 @@
   width: 20px;
   text-align: center;
   position: absolute;
+  font-style: normal;
   top: 0;
   right: 0;
   padding: 1px 0;
@@ -571,6 +597,9 @@
   -ms-transition: all 0.4s ease;
   -o-transition: all 0.4s ease;
   transition: all 0.4s ease;
+}
+.close-sort-item:hover {
+  background: #ccc;
 }
 // ======================= style ======================== //
 .styles-modal{

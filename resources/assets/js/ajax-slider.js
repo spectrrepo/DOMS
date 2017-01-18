@@ -12,7 +12,7 @@ $( document ).ready(function() {
 
   function commentDownload() {
       var id = $('.active-slide').data('id'),
-          authID = $('meta[name=auth_id]').val(),
+          authID = $('meta[name=authID]').attr('content'),
           csrftoken = $('meta[name=_token]').attr('content');
       $.ajax({
         type:'POST',
@@ -23,33 +23,47 @@ $( document ).ready(function() {
         url:'/load_comments',
 
         success: function (data) {
+          var btn;
           if (data === 'error_comments'){
             $('.b-all-comment').empty();
           }else {
             $('.b-all-comment').empty();
             for(var i=0; i<data.length; i++) {
-              if (authID === data[i].user_id) {
-              var delete_comment = '<span class="remove-comment uk-icon-justify'+
-                                'uk-icon-remove"><span class="delete_comment_id"'+
-                                'data-id="'+data.id+'"></span></span>';
+              if (parseInt(authID) === parseInt(data[i].user_id)) {
+                 $('<div class="b-comment-wrap">'+
+                   '<span class="remove-comment uk-icon-justify '+
+                   'uk-icon-remove"><span class="delete_comment_id" '+
+                   'data-id="'+data[i].id+'"></span></span> '+
+                   '<a style="background:url('+data[i].userPhoto+
+                   ')center no-repeat;background-size:cover;'+
+                   ')" href="/profile/'+data[i].author_id+
+                   '" class="b-photo-comment"></a>'+
+                   '<div class="b-comment">'+
+                   '<a href="/profile/'+data[i].author_id+'" class="b-name-comment" '+
+                   ' >'+
+                   data[i].userName+
+                   '</a><div class="b-text-comment">'+
+                   data[i].text_comment+
+                   '</div><div class="b-date-comment">'+
+                   data[i].date+
+                   '</div></div></div>').appendTo('.b-all-comment');
               }
               else {
-                var delete_comment = '';
+                $('<div class="b-comment-wrap">'+
+                '<a style="background:url('+data[i].userPhoto+
+                ')center no-repeat;background-size:cover;'+
+                +')" href="/profile/'+data[i].author_id+
+                '" class="b-photo-comment"></a>'+
+                '<div class="b-comment">'+
+                '<a href="/profile/'+data[i].author_id+'" class="b-name-comment" '+
+                ' >'+
+                data[i].userName+
+                '</a><div class="b-text-comment">'+
+                data[i].text_comment+
+                '</div><div class="b-date-comment">'+
+                data[i].date+
+                '</div></div></div>').appendTo('.b-all-comment');
               }
-              $('<div class="b-comment-wrap">'+delete_comment+
-              '<a style="background:url('+data[i].path_full+
-              'background-size:cover;'+
-              +')" href="/profile/'+data[i].author_id+
-              '" class="b-photo-comment"></a>'+
-              '<div class="b-comment">'+
-              '<a href="/profile/'+data[i].author_id+'" class="b-name-comment"'+
-              'style="background: url('+data[i].userPhoto+');background-size:cover;" >'+
-              data[i].userName+
-              '</a><div class="b-text-comment">'+
-              data[i].text_comment+
-              '</div><div class="b-date-comment">'+
-              data[i].date+
-              '</div></div></div>').appendTo('.b-all-comment');
             }
           }
         }

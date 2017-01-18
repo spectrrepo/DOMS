@@ -11,7 +11,6 @@ class Social extends Model
      *
      * @var string
      */
-
      protected $table = 'user_socials';
      public $timestamps = false;
 

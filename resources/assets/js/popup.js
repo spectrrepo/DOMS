@@ -603,13 +603,13 @@ $('.ajax-search').on('submit', function(){
       $('.overlay').fadeOut();
     });
 
-    $("#owl-demo").owlCarousel({
+    $(".owl-carousel").owlCarousel({
 
         navigation : true,
         slideSpeed : 300,
         paginationSpeed : 400,
-        singleItem : true,
-        navigationText : false,
+        items : 1,
+        nav : true,
         pagination : false,
 
     });
@@ -617,6 +617,5 @@ $('.ajax-search').on('submit', function(){
     /*
      *  Simple image gallery. Uses default settings
      */
-     $('.fancybox').fancybox();
 
 });

@@ -1,7 +1,7 @@
 @extends('layouts.profile')
 @section('profile-content')
   <div class="wrap-personal-information edit-line-profile">
-    {{ Form::open( array('url' => '/update/profile', 'files' => 'true') ) }}
+    {{ Form::open( array('id'=> 'editUser', 'url' => '/update/profile', 'files' => 'true') ) }}
       <div class="b-photo-person" id="photo-person" style="background:url({{ $user->avatar->url('max')}}) center no-repeat;
           bacground-size:cover;">
           <div class="hover-effect-person uk-icon-justify uk-icon-pencil"></div>
@@ -33,13 +33,14 @@
             <input class="contact-item-value edit-value-item" type="text" name="phone" value="{{ $user->phone }}">
             <span class="contact-item-name edit-name-item">соц.сети</span>
             <span class="list-links">
-              @foreach ($links as $link)
-                <li class="item-links uk-icon-external-link open-modal-link" data-action="editLinks">
-                    <input class="contact-item-value soc-set-edit" type="hidden" name="soc_net" value="{{ $link->link }}">
+              <?php $i = 0; ?>
+              @foreach ($links as $link_item)
+                <li class="item-links uk-icon-external-link open-modal-link" data-action="editLinks" data-id="{{ $link_item->id }}">
+                  <input class="contact-item-value soc-set-edit" type="hidden" name="soc_net_{{ $link_item->id }}" value="{{ $link_item->link }}">
                 </li>
               @endforeach
               <li class="open-di-link uk-icon-plus open-modal-link" data-action="addLinks">
-                  <input class="contact-item-value soc-set-edit" type="hidden" name="soc_net" value="{{ $user->soc_net }}">
+                  <input class="contact-item-value soc-set-edit" type="hidden" name="soc_net">
               </li>
             </span>
           </div>
