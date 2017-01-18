@@ -33,15 +33,13 @@
             <input class="contact-item-value edit-value-item" type="text" name="phone" value="{{ $user->phone }}">
             <span class="contact-item-name edit-name-item">соц.сети</span>
             <span class="list-links">
-              <li class="item-links uk-icon-external-link open-modal-link" data-action="editLinks">
-                <a href="#">
-                  <input class="contact-item-value soc-set-edit" type="hidden" name="soc_net" value="{{ $user->soc_net }}">
-                </a>
-              </li>
+              @foreach ($links as $link)
+                <li class="item-links uk-icon-external-link open-modal-link" data-action="editLinks">
+                    <input class="contact-item-value soc-set-edit" type="hidden" name="soc_net" value="{{ $link->link }}">
+                </li>
+              @endforeach
               <li class="open-di-link uk-icon-plus open-modal-link" data-action="addLinks">
-                <a href="#">
                   <input class="contact-item-value soc-set-edit" type="hidden" name="soc_net" value="{{ $user->soc_net }}">
-                </a>
               </li>
             </span>
           </div>

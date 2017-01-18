@@ -56,10 +56,11 @@ class UserController extends Controller
                              ->get();
              $id = Auth::id();
              $user = User::find($id);
-            //  dd($images);
+             $links = Social::where('user', '=', $id)->get();
              return View('profile.index', [ 'id' => $id,
                                             'user' => $user,
-                                            'images' => $images]);
+                                            'images' => $images,
+                                            'links' => $links]);
         }else {
             return redirect('/login');
         }
@@ -220,7 +221,9 @@ class UserController extends Controller
        {
            if (Auth::check()){
                $user = User::find(Auth::id());
-               return view('profile.edit', ['user' => $user]);
+               $links = Social::where('user', '=', $user->id)->get();
+               return view('profile.edit', ['user' => $user,
+                                            'links' => $links]);
            }
        }
        /**
@@ -237,7 +240,6 @@ class UserController extends Controller
            $user->phone = $_POST["phone"];
            $user->skype = $_POST["skype"];
            $user->about = $_POST["about"];
-           $user->soc_net = $_POST["soc_net"];
 
            if (!File::isFile(Input::get('avatar'))) {
 
@@ -355,7 +357,7 @@ class UserController extends Controller
        public function editSocLink () {
            $link = $_POST['link'];
            $user_id = $_POST['user_id'];
-           $old_link = $_POST['user_id'];
+           $old_link = $_POST['old_link'];
 
            $editLink = Social::where('link', '=', $old_link)
                                ->where('user_id', '=', $user_id);
