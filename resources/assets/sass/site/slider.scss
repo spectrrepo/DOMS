@@ -205,7 +205,7 @@ a.btn-prew span {
   display: block;
   width: 45%;
   position: absolute;
-  right: 5%;  
+  right: 5%;
 }
 .back-to-main,
 .full-scrn,
@@ -325,6 +325,10 @@ a.btn-prew span {
   padding: 3px;
   box-sizing: border-box;
   background: white;
+  transition: all 0.3s ease;
+}
+.input-comment:focus {
+  border-color:  #3399ff;
 }
 .b-add-comment{
   clear: both;
@@ -407,4 +411,5 @@ a.btn-prew span {
   box-sizing: border-box;
   margin: 0 auto;
   text-align: center;
+  overflow: hidden;
 }

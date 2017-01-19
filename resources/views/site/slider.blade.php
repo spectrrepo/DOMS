@@ -1,59 +1,59 @@
 
 @extends('layouts.site')
 @section('site-content')
-          <div class="content  uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights">
-            <div class="col-slider-comment">
-            <!-- <div class="title-tag" style="margin-bottom:10px;">
-              <span class="title-slider-tag" style="float:left;">Поиск по тегам:</span>
-              <div class="tag-item">Привет</div>
-              <div class="clear">
-
+ <div class="content  uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights">
+   <div class="col-slider-comment">
+   <!-- <div class="title-tag" style="margin-bottom:10px;">
+   <span class="title-slider-tag" style="float:left;">Поиск по тегам:</span>
+   <div class="tag-item">Привет</div>
+   <div class="clear">
+   </div>
+   </div> -->
+     <div class="one-picture-place">
+       <div class="b-photo-slider">
+         <div class="wrap-slider">
+           @foreach ($images as $image_el)
+            @if ($image_el->id === $image->id)
+                <div class="photo-item active-slide" data-id="{{ $image->id }}">
+                    <img class="img-slider" src="{{ $image_el->photo->url() }}" />
+                </div>
+            @elseif ($image_el->id < $image->id)
+                <div class="photo-item left-slide" data-id="{{ $image_el->id }}">
+                    <img class="img-slider" src="{{ $image_el->photo->url() }}" />
+                </div>
+            @else
+                <div class="photo-item right-slide" data-id="{{ $image_el->id }}">
+                    <img class="img-slider" src="{{ $image_el->photo->url() }}" />
+                </div>
+            @endif
+           @endforeach
+           <div class="control-slide">
+              <a class="btn-prew btn-nav" data-direction="left">
+                <span class="uk-icon-justify uk-icon-chevron-left"></span>
+              </a>
+              <a class="btn-next btn-nav" data-direction="right">
+                <span class="uk-icon-justify uk-icon-chevron-right"></span>
+              </a>
+           </div>
+           @include('popups.modal_racourse')
+           <div id="popup-error-slider" class="popup-error-slider-white">
+              <div class="modal-error-slider">
+                <span class="close uk-icon-justify uk-icon-remove popup-error-close"></span>
+                <div class="center-block">
+                 Фотографии по вашему запросу закончились
+                </div>
               </div>
-            </div> -->
-            <div class="one-picture-place">
-              <div class="b-photo-slider">
-                       <div class="wrap-slider">
-                                  @foreach ($images as $image_el)
-                                        @if ($image_el->id === $image->id)
-                                              <div class="photo-item active-slide" data-id="{{ $image->id }}">
-                                                        <img class="img-slider" src="{{ $image_el->photo->url() }}" />
-                                              </div>
-                                        @elseif ($image_el->id < $image->id)
-                                              <div class="photo-item left-slide" data-id="{{ $image_el->id }}">
-                                                        <img class="img-slider" src="{{ $image_el->photo->url() }}" />
-                                              </div>
-                                        @else
-                                              <div class="photo-item right-slide" data-id="{{ $image_el->id }}">
-                                                        <img class="img-slider" src="{{ $image_el->photo->url() }}" />
-                                              </div>
-                                        @endif
-                                  @endforeach
-                                  <div class="control-slide">
-                                            <a class="btn-prew btn-nav" data-direction="left">
-                                                      <span class="uk-icon-justify uk-icon-chevron-left"></span>
-                                            </a>
-                                            <a class="btn-next btn-nav" data-direction="right">
-                                                      <span class="uk-icon-justify uk-icon-chevron-right"></span>
-                                            </a>
-                                  </div>
-                                  <div id="popup-error-slider" class="popup-error-slider-white">
-                                     <div class="modal-error-slider">
-                                        <span class="close uk-icon-justify uk-icon-remove popup-error-close"></span>
-                                        <div class="center-block">
-                                           Фотографии по вашему запросу закончились
-                                        </div>
-                                     </div>
-                                  </div>
-                        </div>
-              </div>
-              <div class="b-informstion">
-                <span class="b-pretens">
-                  <a href="/profile/{{ $user->id }}">
-                    <span class="author-portret">
-                      <img src=" {{ $user->avatar->url('small')}} " alt="" />
-                    </span>
-                    <span class="author-name">{{ $user->name}}</span>
-                  </a>
+           </div>
+         </div>
+        </div>
+        <div class="b-informstion">
+          <span class="b-pretens">
+            <a href="/profile/{{ $user->id }}">
+              <span class="author-portret">
+                  <img src=" {{ $user->avatar->url('small')}} " alt="" />
+              </span>
+              <span class="author-name">{{ $user->name}}</span>
+            </a>
                   <!-- <div class="b-item-stat pretense-tool">
                   <span class="b-pretense">?</span>
                   <span class="tooltip-stat margin-full-scr-tooltip">
@@ -207,10 +207,10 @@
                   @endforeach
                 </div>
               <div class="clear"></div>
-                <div id="views" class="title-tag margin-title-tag" {{ $views->count() > 1 ? '': 'style=display:none;' }}>
+                <div id="views" class="title-tag margin-title-tag" {{ $views->count() >= 1 ? '': 'style=display:none;' }}>
                   Ракурсы
                 </div>
-                <div id="views-pole" class="view-photo-slide" {{ $views->count() > 1 ? '': 'style=display:none;' }}>
+                <div id="views-pole" class="view-photo-slide" {{ $views->count() >= 1 ? '': 'style=display:none;' }}>
                   <div class="b-change-photo">
                     <div class="owl-demo" id="owl-demo">
                       @foreach ($views as $view)

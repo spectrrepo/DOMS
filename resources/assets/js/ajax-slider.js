@@ -127,14 +127,17 @@ $( document ).ready(function() {
       url:'/load_views',
 
       success: function (data) {
+        // alert(data.length);
         if (data.length === 1) {
           $('#views-pole').fadeIn();
           $('#views').fadeIn();
           $('.nav-views-slider').fadeIn()
           $('.b-change-photo').empty();
           $('.nav-views-slider').fadeOut()
-          $(data[0].path_min).appendTo();
+          $('<div class="photo-item-views"><img src="'+data[0].path_min+'"></div>').appendTo('.b-change-photo');
         }else if (data.length === 0) {
+          $('#views-pole').fadeIn();
+          $('#views').fadeIn();
           $('.b-change-photo').empty();
           $('#views').fadeOut();
           $('#views-pole').fadeOut();

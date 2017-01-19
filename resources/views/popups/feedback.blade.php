@@ -15,10 +15,10 @@
       </div>
       <div class="clear"></div>
       {{ Form::open(array('url' => '/send_mail' ) ) }}
-      <input class="input-feedback left" type="text" name="name" value="" placeholder="Имя">
-      <input class="input-feedback right" type="text" name="e_mail" value="" placeholder="E-mail">
+      <input class="input-feedback left" required="" type="text" name="name" value="" placeholder="Имя">
+      <input class="input-feedback right" required="" type="text" name="e_mail" value="" placeholder="E-mail">
       <div class="clear"></div>
-      <textarea class="textarea-feedback" name="text" rows="8" cols="40"></textarea>
+      <textarea class="textarea-feedback" required="" name="text" rows="8" cols="40"></textarea>
       <input class="feedback-submit" type="submit" value="Отправить сообщение">
       {{ Form::close() }}
       <div class="clear"></div>

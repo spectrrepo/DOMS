@@ -514,6 +514,13 @@
   background: #333333;
   color: white;
 }
+.menu-item-profile-active {
+  background: #333333;
+  color: white;
+}
+.menu-item-profile-active a {
+  color: white;
+}
 .click-ready:hover {
   background: #333333;
   color: white;
@@ -840,3 +847,32 @@
   color: #993399;
   cursor: pointer;
 }
+
+
+// ==============================================================
+// ===== modal for slider views =================================
+
+.zoom-slider-views {
+  width: 80%;
+  height: 80%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.views-zoom-space {
+
+}
+.views-zoom-list {
+
+}
+.left-slide-zoom-views {
+
+}
+.active-slide-zoom-views {}
+.right-slide-zoom-views {}
+.nav-zoom-views {}
+.images-navigator {}
+.nav-cicle {}
+.active-cicle {}

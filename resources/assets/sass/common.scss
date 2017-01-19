@@ -172,8 +172,9 @@ html {
     margin: 0 auto;
 }
 .site-wrapper {
-    margin-top: 75px;
     height: auto;
     width: 100%;
     position: relative;
+    padding-top: 75px;
+    padding-bottom: 60px;
 }
