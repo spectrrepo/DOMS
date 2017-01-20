@@ -33,7 +33,8 @@ elixir(mix => {
         "tag-add.js",
         "ajax-delete-view.js",
         "ajax-add-news-profile.js",
-        "ajax-add-soc-link.js"
+        "ajax-add-soc-link.js",
+        "views-slider.js"
     ],'public/js/app.js')
        .copy('resources/assets/fonts/*.*', 'public/css/fonts/');
 });

@@ -34,8 +34,18 @@
 .scroll-place-modal-news {
   overflow-y: scroll;
   width: 90%;
-  height: 90%;
+  height: 80%;
   margin: 0 auto;
   margin-top: 5%;
 
+}
+.date-and-all-news{
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+.date-and-all-news a {
+  float: right;
+  color: white;
+  text-decoration: underline;
 }

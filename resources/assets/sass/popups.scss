@@ -853,26 +853,102 @@
 // ===== modal for slider views =================================
 
 .zoom-slider-views {
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  background-color: rgba(51, 51, 51, 0.8);
+  z-index: 10000;
 }
 .views-zoom-space {
-
+  width: 93%;
+  margin: 0 auto;
+  height: 100%;
 }
 .views-zoom-list {
-
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: block;
+  position: relative;
+}
+.right-slide-zoom-views {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
 }
 .left-slide-zoom-views {
-
+  position: absolute;
+  opacity: 0;
+  z-index:-1;
 }
-.active-slide-zoom-views {}
-.right-slide-zoom-views {}
-.nav-zoom-views {}
-.images-navigator {}
-.nav-cicle {}
-.active-cicle {}
+.active-slide-zoom-views {
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  z-index: 1;
+}
+.item-views-zoom {
+  transition: all 0.2s ease;
+}
+.img-views-zoom {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+.nav-zoom-views {
+  font-size: 48px;
+  display: block;
+  color: #ffffff;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  height: 26px;
+  cursor: pointer;
+}
+.nav-left-zoom-views::after{
+  content: "\f104";
+  font-family: FontAwesome;
+}
+.nav-left-zoom-views {
+ left: 3px;
+}
+.nav-right-zoom-views::after{
+  content: "\f105";
+  font-family: FontAwesome;
+}
+.nav-right-zoom-views {
+  right: 3px;
+}
+.images-navigator {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  height: 20px;
+}
+.nav-cicle {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  border: 2px solid white;
+  display: inline-block;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.active-cicle {
+  background: white;
+}

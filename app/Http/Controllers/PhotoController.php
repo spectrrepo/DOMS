@@ -339,6 +339,7 @@ class PhotoController extends Controller
                     ->where('title', '<>', '')
                     ->get();
         $views = View::where('post_id', '=', $id)->get();
+
         $comments = Comment::where('post_id', '=', $id)->get();
 
         $allComments = Comment::join('Users', 'Users.id', '=', 'Comments.user_id')->get();

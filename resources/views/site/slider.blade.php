@@ -11,6 +11,7 @@
    </div> -->
      <div class="one-picture-place">
        <div class="b-photo-slider">
+          @include('popups.modal_racourse')
          <div class="wrap-slider">
            @foreach ($images as $image_el)
             @if ($image_el->id === $image->id)
@@ -35,7 +36,6 @@
                 <span class="uk-icon-justify uk-icon-chevron-right"></span>
               </a>
            </div>
-           @include('popups.modal_racourse')
            <div id="popup-error-slider" class="popup-error-slider-white">
               <div class="modal-error-slider">
                 <span class="close uk-icon-justify uk-icon-remove popup-error-close"></span>
@@ -212,16 +212,21 @@
                 </div>
                 <div id="views-pole" class="view-photo-slide" {{ $views->count() >= 1 ? '': 'style=display:none;' }}>
                   <div class="b-change-photo">
-                    <div class="owl-demo" id="owl-demo">
                       @foreach ($views as $view)
-                        <a class="fancybox" href="{{ $view->path_full }}" data-fancybox-group="gallery" >
-                          <div class="item">
-                            <img src="{{ $view->path_min }}" alt="" />
-                          </div>
-                        </a>
+                        @if ($views[0] == $view)
+                           <div class="item-view-min active-view-min">
+                             <img src="{{ $view->path_min }}" alt="" />
+                           </div>
+                        @else
+                           <div class="item-view-min right-view-min">
+                             <img src="{{ $view->path_min }}" alt="" />
+                           </div>
+                        @endif
+
                       @endforeach
-                    </div>
                   </div>
+                  <span class="min-nav-views prev-min-nav-views" data-direction="prev"></span>
+                  <span class="min-nav-views next-min-nav-views" data-direction="next"></span>
                 </div>
                 <div  id="description" class="title-tag margin-title-tag" {{ empty($image->description) ? 'style=display:none;' : '' }}>
                    Описание

@@ -114,9 +114,13 @@
 <div class="scroll-place-modal-news">
    <img src="{{  $news->news->url() }} " />
    <span class="item-news-title">{{  $news->title }} </span>
-   <div class="">
-      {{ $news->full_description }} 
+   <div class="popup-text-news">
+      {{ $news->full_description }}
    </div>
+</div>
+<div class="date-and-all-news">
+      {{ $news->news_updated_at->format('d M Y') }}
+      <a href="/news">Просмотреть все новости</a>
 </div>
 </div>
 @endif

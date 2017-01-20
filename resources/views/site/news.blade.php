@@ -25,7 +25,7 @@
     <div class="scroll-place-modal-news">
       <img src="{{ $new->news->url() }}" />
       <span class="item-news-title">{{ $new->title }}</span>
-      <div class="">
+      <div class="popup-text-news">
         {{ $new->full_description }}
       </div>
     </div>

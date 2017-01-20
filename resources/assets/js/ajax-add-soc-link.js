@@ -4,6 +4,7 @@ $( document ).ready(function() {
     $('#dialogLinkAdd').fadeOut();
   });
 
+
   $('.open-modal-link').on('click', function () {
     if ($(this).data('action') === 'addLinks') {
 
@@ -42,6 +43,7 @@ $( document ).ready(function() {
                 'style="display: block;">'+
                 '<a href="" class="uk-alert-close uk-close"></a>'+
                 '<p>Ссылка добавлена</p></div>');
+             setTimeout(function(){$('.uk-alert').css({'height':'0'}).remove()}, 10000)
            }
          });
          return false;
@@ -88,6 +90,8 @@ $( document ).ready(function() {
                      $('li.item-links[data-id='+$('#save-link-form').data('id')+']')
                                 .children('input.soc-set-edit')
                                 .val(link);
+                    setTimeout(function(){$('.uk-alert').css({'height':'0'}).remove()}, 10000)
+
                  }
              });
              return false;
@@ -115,6 +119,8 @@ $( document ).ready(function() {
                     '<a href="" class="uk-alert-close uk-close"></a>'+
                     '<p>Ссылка удалена</p></div>');
                 $('li[data-id='+$('#save-link-form').data('id')+']').remove();
+                setTimeout(function(){$('.uk-alert').css({'height':'0'}).remove()}, 10000)
+
                }
            });
          });
