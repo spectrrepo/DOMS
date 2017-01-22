@@ -159,10 +159,7 @@ class PhotoController extends Controller
 
          return $ajaxImage;
      }
-     public function newsAddPage()
-     {
-          # code...
-     }
+
      public function loadSortPhoto()
      {
          $sort = $_POST['sortSort'];
@@ -508,7 +505,7 @@ class PhotoController extends Controller
         $updateIinfo->full_path = $updateIinfo->photo->url('max');
         $updateIinfo->min_path = $updateIinfo->photo->url('small');
         $updateIinfo->save();
-        return redirect()->back();
+        return redirect('/profile/'.Auth::user()->id)->with('check','true');
     }
     public function addPhotoSite($id)
     {

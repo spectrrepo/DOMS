@@ -3,6 +3,11 @@ $( document ).ready(function() {
     $('#modalViewsZoom').fadeOut();
   });
 
+
+  $('.item-view-min').on('click', function () {
+    $('#modalViewsZoom').fadeIn();
+  });
+
   $('.min-nav-views').on('click', function () {
     if ($(this).data('direction') === 'prev') {
       if ($('.item-view-min:first').hasClass('active-view-min')) {

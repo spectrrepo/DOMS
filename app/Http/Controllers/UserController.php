@@ -46,7 +46,7 @@ class UserController extends Controller
      * @return Response
      */
 
-    public function index()
+    public function index($id)
      {  if(Auth::check()){
              $results = DB::select('(select * from Likes) union (select * from Likeds)');
              $images =  Picture::join('Users', 'Images.author_id', '=', 'Users.id')
@@ -54,7 +54,6 @@ class UserController extends Controller
                              ->join('Likeds', 'Images.id', '=', 'Likeds.post_id')
                              ->take(1)
                              ->get();
-             $id = Auth::id();
              $user = User::find($id);
              $links = Social::where('user', '=', $id)->get();
              return View('profile.index', [ 'id' => $id,

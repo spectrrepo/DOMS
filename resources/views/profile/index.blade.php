@@ -2,7 +2,12 @@
 @section('profile-content')
 
 <div class="wrap-personal-information">
-
+  @if (session('error') == 'true')
+    <div class="uk-alert uk-alert-success" data-uk-alert=""style="display: block;">
+      <a href="" class="uk-alert-close uk-close"></a>
+      <p>Фото добавлено</p>
+    </div>
+  @endif
     <div class="b-photo-person" style="background:url({{ $user->avatar->url('max') }}) center no-repeat;
                                        background-size:cover;">
     </div>
@@ -46,6 +51,9 @@
         </div>
     </div>
 </div>
+@if ($id != Auth::user()->id)
+
+@else
 <div class="separate-title">
   Лента
 </div>
@@ -121,5 +129,6 @@
 <div class="btn-dwnld-new">
   Загрузить ещё
 </div>
-</div>
+@endif
+
 @endsection
