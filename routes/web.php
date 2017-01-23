@@ -116,6 +116,7 @@ Route::post('/load_active_favorite', 'SliderController@loadActiveLiked');
 
 
 Route::post('/load_sort_photo', 'PhotoController@loadSortPhoto');
+Route::post('/load_sort_photo_slider', 'PhotoController@loadSortPhotoSlider');
 
 Route::get('/logout', array('as' => 'logout',
                             'uses' => 'UserController@logout'));

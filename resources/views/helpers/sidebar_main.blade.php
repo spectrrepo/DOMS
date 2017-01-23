@@ -1,7 +1,7 @@
 
 <nav class="sidebar">
     <ul>
-      <li id="placements" class="menu-item">
+      <li id="placements{{ preg_match('[/photo/]', URL::current()) ? '-slider' : ''}}" class="menu-item">
         <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
         <span class="click-ready">Помещения</span>
         <div class="sidebar-modal rooms" data-max="3">
@@ -18,7 +18,7 @@
         </div>
         <div class="clear"></div>
       </li>
-      <li id="styles" class="menu-item">
+      <li id="styles{{ preg_match('[/photo/]', URL::current()) ? '-slider' : ''}}" class="menu-item">
         <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
         <span class="click-ready">Стили</span>
         <div class="sidebar-modal styles-modal" data-max="3">
@@ -40,7 +40,7 @@
            </div>
            <div class="clear"></div>
         </li>
-      <li id="colors" class="menu-item">
+      <li id="colors{{ preg_match('[/photo/]', URL::current()) ? '-slider' : ''}}" class="menu-item">
         <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
         <span class="click-ready">Цвета</span>
         <div class="sidebar-modal" data-max="1">
@@ -56,7 +56,7 @@
            </div>
            <div class="clear"></div>
         </li>
-      <li id="orders" class="menu-item">
+      <li id="orders{{ preg_match('[/photo/]', URL::current()) ? '-slider' : ''}}" class="menu-item">
         <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
         <span class="click-ready">Сортировка</span>
         <div class="sidebar-modal sort" data-max="1">
@@ -83,7 +83,7 @@
      </li>
     </ul>
     <div class="search">
-      <form class="ajax-search">
+      <form class="ajax-search {{ preg_match('[/photo/]', URL::current()) ? 'ajax-search-slider' : ''}}">
           <input class="input-search" type="search" name="tagSearch" autocomplete="off" placeholder="Поиск по тегам">
           <button class="search-submit" type="submit"><span class="uk-icon-justify uk-icon-search"></span ></button>
       </form>

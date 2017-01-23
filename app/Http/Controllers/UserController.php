@@ -214,6 +214,12 @@ class UserController extends Controller
              return view('profile.liked', ['images' => $images]);
           }
       }
+      public function pretenseAdd()
+      {
+          if (Auth::check()) {
+              
+          }
+      }
       /**
        * Login Form
        *

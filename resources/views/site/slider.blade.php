@@ -12,6 +12,7 @@
      <div class="one-picture-place">
        <div class="b-photo-slider">
           @include('popups.modal_racourse')
+          @include('popups.law')
          <div class="wrap-slider">
            @foreach ($images as $image_el)
             @if ($image_el->id === $image->id)
@@ -54,15 +55,17 @@
               </span>
               <span class="author-name">{{ $user->name}}</span>
             </a>
-                  <!-- <div class="b-item-stat pretense-tool">
-                  <span class="b-pretense">?</span>
-                  <span class="tooltip-stat margin-full-scr-tooltip">
-                  <span class="text-tooltip-stat">
-                  Заявить права
-                </span>
-                <span class="triangle-tooltip-stat triangle-full-scr"></span>
-              </span>
-            </div> -->
+            @if (Auth::check())
+               <div class="b-item-stat pretense-tool">
+                     <span class="b-pretense">?</span>
+                     <span class="tooltip-stat margin-full-scr-tooltip">
+                     <span class="text-tooltip-stat">
+                     Заявить права
+                   </span>
+                   <span class="triangle-tooltip-stat triangle-full-scr"></span>
+                 </span>
+               </div>
+            @endif
           </span>
           <span class="num-page">
             <span id="current-position"></span>/ <span id="all-photo">{{ $imageAll->count() }}</span>
@@ -242,4 +245,13 @@
           </div>
           </div>
           @include('../popup_for_slider')
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+         <input type="hidden" name="lastId" value=" $imageLast->id ">
+
+         <input type="hidden" name="sortSorting" value="{{ $sortSorting }}">
+         <input type="hidden" name="styleSorting" value="{{ $styleSorting }}">
+         <input type="hidden" name="roomSorting" value="{{ $roomSorting }}">
+         <input type="hidden" name="colorSorting" value="{{ $colorSorting }}">
+         <input type="hidden" name="tagSorting" value="{{ $tagSorting }}">
+         <input type="hidden" name="IdPhoto" value="{{ $image->id }}">
     @endsection

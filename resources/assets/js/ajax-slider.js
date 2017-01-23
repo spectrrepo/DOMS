@@ -69,7 +69,11 @@ $( document ).ready(function() {
         }
       });
   }
-
+  function openModalView(el) {
+    $(el).on('click', function () {
+      $('#modalViewsZoom').fadeIn();
+    });
+  }
   /**
    * Represents a book.
    * @constructor
@@ -127,14 +131,16 @@ $( document ).ready(function() {
       url:'/load_views',
 
       success: function (data) {
-        // alert(data.length);
         if (data.length === 1) {
           $('#views-pole').fadeIn();
           $('#views').fadeIn();
-          $('.nav-views-slider').fadeIn()
           $('.b-change-photo').empty();
-          $('.nav-views-slider').fadeOut()
-          $('<div class="photo-item-views"><img src="'+data[0].path_min+'"></div>').appendTo('.b-change-photo');
+          $('.min-nav-views').fadeOut()
+          $('<li class="item-views-zoom active-slide-zoom-views">'+
+                    '<img class="img-views-zoom" src="'+data[0].path_full+'"></li>')
+                    .appendTo('.views-zoom-list');
+          $('<div class="item-view-min active-view-min"><img src="'+data[0].path_min+'"></div>').appendTo('.b-change-photo');
+          openModalView('.item-view-min');
         }else if (data.length === 0) {
           $('#views-pole').fadeIn();
           $('#views').fadeIn();
@@ -143,10 +149,26 @@ $( document ).ready(function() {
           $('#views-pole').fadeOut();
         }else {
           $('.b-change-photo').empty();
+          $('.min-nav-views').fadeIn()
+          $('#views').fadeIn();
+          $('#views-pole').fadeIn();
+
             for(var i=0; i<data.length; i++) {
-              $('<div class="photo-item-views"><img src="'+data[i].path_min+'"></div>').appendTo('.b-change-photo');
+              if (data[i] === data[0]) {
+                $('<div class="item-view-min active-view-min"><img src="'+data[i].path_min+'"></div>').appendTo('.b-change-photo');
+                $('<li class="item-views-zoom active-slide-zoom-views">'+
+                          '<img class="img-views-zoom" src="'+data[i].path_full+'"></li>')
+                          .appendTo('.views-zoom-list');
+              }else {
+                $('<div class="item-view-min right-view-min"><img src="'+data[i].path_min+'"></div>').appendTo('.b-change-photo');
+                $('<li class="item-views-zoom right-slide-zoom-views">'+
+                          '<img class="img-views-zoom" src="'+data[i].path_full+'"></li>')
+                          .appendTo('.views-zoom-list');
+              }
             }
+
         }
+        openModalView('.item-view-min');
       }
     });
   }
@@ -266,15 +288,14 @@ $( document ).ready(function() {
    * @param {string} title - The title of the book.
    * @param {string} author - The author of the book.
    */
-
   function newPhotoDownload(direction){
     var id = $('.active-slide').data('id'),
-        sortSort = $('meta[name=sortSort]').attr('content'),
-        roomSort = $('meta[name=roomSort]').attr('content'),
-        styleSort = $('meta[name=styleSort]').attr('content'),
-        colorSort = $('meta[name=colorSort]').attr('content'),
-        tag = $('meta[name=tagSort]').attr('content'),
-        currentPosition = +$('#current-position').text()+1;
+        sortSort = $('input[name=sortSorting]').val(),
+        roomSort = $('input[name=roomSorting]').val(),
+        styleSort = $('input[name=styleSorting]').val(),
+        colorSort = $('input[name=colorSorting]').val(),
+        tag = $('input[name=tagSorting]').val(),
+        currentPosition = +$('#current-position').text()+1,
         csrftoken = $('meta[name=_token]').attr('content');
     $.ajax({
       type:'POST',

@@ -26,7 +26,9 @@ elixir(mix => {
         "ajax-pagination.js",
         "ajax-comment.js",
         "ajax-like.js",
+        "views-slider.js",
         "ajax-slider.js",
+        "ajax-slider-sort.js",
         "fancybox.js",
         "ajax-favorite.js",
         "news-popup.js",
@@ -34,7 +36,7 @@ elixir(mix => {
         "ajax-delete-view.js",
         "ajax-add-news-profile.js",
         "ajax-add-soc-link.js",
-        "views-slider.js"
+        "ajax-pretense.js"
     ],'public/js/app.js')
        .copy('resources/assets/fonts/*.*', 'public/css/fonts/');
 });

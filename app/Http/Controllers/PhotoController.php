@@ -221,6 +221,97 @@ class PhotoController extends Controller
          }
          return $ajaxImage;
      }
+
+     /**
+      * Slider photo sort download
+      * @param
+      *
+      * @return
+      *
+      */
+     public function loadSortPhotoSlider()
+     {
+         $sort = $_POST['sortSort'];
+         $room = $_POST['roomSort'];
+         $style = $_POST['styleSort'];
+         $color = $_POST['colorSort'];
+         $tag = $_POST['tag'];
+         $id = $_POST['id'];
+         if ($room != 0 ) {
+             $roomSort = ' rooms like "% '.$room.',%"';
+         }else{
+             $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
+         }
+         if ($style != 0 ) {
+             $styleSort = ' style like "% '.$style.',%"';
+         }else{
+             $styleSort = "style regexp '[a-zA-Z0-9_]'";
+         }
+         if ($color != 0 ) {
+             $colorSort = ' colors like "% '.$color.',%"';
+        }else {
+             $colorSort = "colors regexp '[a-zA-Z0-9_]'";
+        }
+         if ($sort != '0' ) {
+           if ($sort == 'popular') {
+               $sortSort = 'views_count';
+           }elseif ($sort == 'recommended') {
+               $sortSort = 'id';
+           }elseif ($sort == 'new') {
+               $sortSort = 'id';
+           }else {
+               $sortSort = '';
+           }
+
+         }else{
+           $sortSort = true;
+
+         }
+         if ( $tag != '0') {
+            $tagSort = 'and tags like "%#'.$tag.';%" ';
+         } else {
+            $tagSort = '';
+         }
+         if ($sort != 0) {
+
+              $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
+                                  ->take(3)
+                                  ->orderBy($sortSort, 'desc')
+                                  ->get();
+              if (empty($ajaxImage->toArray())) {
+
+                $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true' )
+                                                    ->where('id','>', $id)
+                                                    ->get();
+                if (empty($ajaxImage->toArray())) {
+                   $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true' )
+                                       ->where('id','<', $id)
+                                       ->get();
+                }else{
+                   $ajaxImage = 'error_download';
+                }
+              }
+         }else {
+              $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true' )
+                                  ->take(3)
+                                  ->get();
+              if (empty($ajaxImage->toArray())) {
+
+                $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true' )
+                                    ->where('id','>', $id)
+                                    ->get();
+
+                if (empty($ajaxImage->toArray())) {
+                   $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true' )
+                                       ->where('id','<', $id)
+                                       ->get();
+                }else{
+                   $ajaxImage = 'error_download';
+                }
+              }
+         }
+         return $ajaxImage;
+     }
     /**
      * @param
      *

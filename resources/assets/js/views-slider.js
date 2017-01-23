@@ -3,10 +3,13 @@ $( document ).ready(function() {
     $('#modalViewsZoom').fadeOut();
   });
 
+  function openModalView(el) {
+    $(el).on('click', function () {
+      $('#modalViewsZoom').fadeIn();
+    });
+  }
 
-  $('.item-view-min').on('click', function () {
-    $('#modalViewsZoom').fadeIn();
-  });
+  openModalView('.item-view-min');
 
   $('.min-nav-views').on('click', function () {
     if ($(this).data('direction') === 'prev') {

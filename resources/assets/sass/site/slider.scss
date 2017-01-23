@@ -283,6 +283,9 @@ a.btn-prew span {
   line-height: 28px;
   height: 20px;
 }
+.author-name {
+  float: left;
+}
    /*###and comments###*/
 .b-comments{}
 .b-com-title{
@@ -478,4 +481,26 @@ a.btn-prew span {
 }
 .next-min-nav-views {
   right: 2px;
+}
+
+.pole-error-dwnld {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #f4f4f4;
+  text-align: center;
+  color: black;
+}
+.error-text-dwnld {
+  display: block;
+  position: absolute;
+  width: 400px;
+  height: 20px;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }

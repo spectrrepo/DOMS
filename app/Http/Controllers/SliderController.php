@@ -70,29 +70,29 @@ class SliderController extends Controller
            } else {
               $tagSort = '';
            }
-      if ($sort != 0){
+      if ($sort != "0"){
           if ($direction == 'left') {
 
-              $newPhoto = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true and id < '.$id.'')
+              $newPhoto = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true and id < '.$id)
               ->take(3)
               ->orderBy($sortSort, 'desc')
               ->get();
-              if (empty($images->toArray())) {
+              if (empty($newPhoto->toArray())) {
                   $newPhoto = 'error_download';
               }
           }else {
               $newPhoto = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true ')
-              ->where('id', '>', $id+1)
+              ->where('id', '>', $id)
               ->take(3)
               ->orderBy($sortSort, 'desc')
               ->get();
-              if (empty($images->toArray())) {
+              if (empty($newPhoto->toArray())) {
                   $newPhoto = 'error_download';
               }
           }
       }else {
           if ($direction == 'left') {
-              $newPhoto = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true and id < '.$id.'')
+              $newPhoto = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true and id < '.$id)
               ->take(3)
               ->get();
               $sortSort = false;

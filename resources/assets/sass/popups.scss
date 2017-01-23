@@ -953,3 +953,101 @@
 .active-cicle {
   background: white;
 }
+// modal for pretense
+
+.modal-law {
+  position: absolute;
+  width: 300px;
+  opacity: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  background-color: #ffffff;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  border-radius: 5px;
+  z-index: 10000;
+  display: none;
+}
+.header-modal-law {
+  background-color: #666666;
+  color: #ffffff;
+  text-align: left;
+  padding: 5px 10px;
+}
+.modal-law form {
+  margin: 10px;
+}
+.text-pretense {
+  border: 1px solid #cccccc;
+  background-color: #ffffff;
+  color: #666666;
+  font-size: 13px;
+  line-height: 15px;
+  border-radius: 5px;
+  transition: all 0.4s ease !important;
+  width: 100%;
+  resize: none;
+}
+.text-pretense:focus {
+  border-color: #3399ff;
+}
+.submit-pretense {
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  transition: all 0.4s ease;
+  background-color: #333333;
+  float: left;
+  width: 50%;
+  width: 45%;
+  box-sizing: border-box;
+  margin-top: -1px;
+  cursor:pointer;
+}
+.wrap-file-modal-law {
+  border: 1px dashed #cccccc;
+  background: #FAFAFA;
+  text-align: center;
+  position: relative;
+  height: 40px;
+  box-sizing: border-box;
+  width: 45%;
+  float: right;
+  color: #993399;
+  cursor: pointer;
+}
+.wrap-file-modal-law::before {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+#close-modal-law {
+  color: white;
+  position: absolute;
+  display: block;
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font-family: FontAwesome;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1;
+  top: 8px;
+  right: 4px;
+  font-size: 14px;
+}
+#close-modal-law::before {
+  content: "\f00d";
+}
