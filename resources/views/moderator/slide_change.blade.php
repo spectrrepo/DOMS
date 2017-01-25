@@ -14,10 +14,15 @@
     {{ $slide->id }}
   </div>
   <div class="cell-item-admin id-cell">
-    {{ $slide->phot }}
+    {{ $slide->photo }}
   </div>
   <div class="cell-item-admin title-cell">
     {{ $slid->text }}
+  </div>
+  <div class="cell-item-admin cell-for-btn">
+    {{ Form::open(array())}}
+    <button type="button" class="btn-cell uk-icon-justify uk-icon-remove" name="button"></button>
+    {{ Form::close()}}
   </div>
   <div class="cell-item-admin cell-for-btn">
     {{ Form::open(array())}}

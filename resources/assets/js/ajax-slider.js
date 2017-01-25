@@ -45,7 +45,7 @@ $( document ).ready(function() {
                    '</a><div class="b-text-comment">'+
                    data[i].text_comment+
                    '</div><div class="b-date-comment">'+
-                   data[i].date+
+                   data[i].rus_date+
                    '</div></div></div>').appendTo('.b-all-comment');
               }
               else {
@@ -61,7 +61,7 @@ $( document ).ready(function() {
                 '</a><div class="b-text-comment">'+
                 data[i].text_comment+
                 '</div><div class="b-date-comment">'+
-                data[i].date+
+                data[i].rus_date+
                 '</div></div></div>').appendTo('.b-all-comment');
               }
             }

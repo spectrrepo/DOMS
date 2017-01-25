@@ -1038,8 +1038,9 @@ $('.ajax-search-slider').on('submit', function(){
   var sortSort = $('input[name=sortSorting]').val(),
       styleSort = $('input[name=styleSorting]').val(),
       roomSort = $('input[name=roomSorting]').val(),
-      colorSort = $('input[name=colorSorting]').val(),
-      tag = $('input[name=tagSearch]').val(),
+      colorSort = $('input[name=colorSorting]').val();
+      $('input[name=tagSorting]').val($('.active-drop-item').text());
+      tag = $('input[name=tagSorting]').val(),
       id = $('input[name=IdPhoto]').val();
 
 
@@ -1055,7 +1056,7 @@ $('.ajax-search-slider').on('submit', function(){
               'tag': tag,
               'id' : id
     },
-    url:'/load_sort_photo',
+    url:'/load_sort_photo_slider',
 
     success: function (data) {
       commentDownload();
@@ -1066,21 +1067,164 @@ $('.ajax-search-slider').on('submit', function(){
       userInfoDownload();
       activeLike();
       loadZoomPhoto();
-      activeLiked();
+      // activeLiked();
       $('#pole').empty();
       history.pushState(null, null, 'id=['+id+'],room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=['+sortSort+'],tag=["'+tag+'"]');
-      for(var i=0; i<data.length; i++) {
-      $( '<a href="/photo/id=['+data[i].id+'],room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=['+sortSort+'],tag=["'+tag+'"]"'+
-            'class="item-gallery" data-grid-prepared="true"'+
-            'style="position:absolute;">'+
-           '<div class="uk-panel-box">'+
-             '<img src="'+data[i].min_path+'">'+
-           '</div>'+
-         '</a>').appendTo('#pole');
+      if (data.length > 1) {
+        for(var i=0; i<data.length; i++) {
+          $( '<a href="/photo/id=['+data[i].id+'],room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=['+sortSort+'],tag=["'+tag+'"]"'+
+          'class="item-gallery" data-grid-prepared="true"'+
+          'style="position:absolute;">'+
+          '<div class="uk-panel-box">'+
+          '<img src="'+data[i].min_path+'">'+
+          '</div>'+
+          '</a>').appendTo('#pole');
+
+        }
+      }else {
+          $('.photo-item').remove();
+          $('.b-comment-wrap').empty();
+          $('#description-pole').empty().fadeOut();
+          $('#description').fadeOut();
+          $('#views-pole b-change').empty();
+          $('#views-pole').fadeOut();
+          $('#views').fadeOut();
+          $('#tag').fadeOut();
+          $('.pole-tag').empty().fadeOut();
+
 
       }
     }
   });
   return false;
 });
+
+$('.ajax-input-search').keydown( function(e) {
+  if ((e === 13) && ($('li').is('.active-drop-item'))) {
+    e.preventDefault();
+    var sortSort = $('input[name=sortSorting]').val(),
+        styleSort = $('input[name=styleSorting]').val(),
+        roomSort = $('input[name=roomSorting]').val(),
+        colorSort = $('input[name=colorSorting]').val();
+
+    $.ajax({
+      type:'POST',
+      async:false,
+      data: {
+                '_token'  : $('meta[name=_token]').attr('content'),
+                'sortSort': sortSort,
+                'styleSort': styleSort,
+                'roomSort': roomSort,
+                'colorSort': colorSort,
+                'tag': $('input[name=tagSorting]').val()
+      },
+      url:'/load_sort_photo_slider',
+
+      success: function (data) {
+          $('.popup-search-tag').fadeOut().empty();
+          if (data === 'error_download') {
+            $('.info-text-message').fadeIn();
+            $('.b-next-page').fadeOut();
+          }else {
+            history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=["'+$('input[name=tagSorting]').val()+'"]');
+            for(var i=0; i<data.length; i++) {
+              commentDownload();
+              likeWhom();
+              viewsDownload();
+              tagsDownload();
+              infoPhotoDownload();
+              userInfoDownload();
+              activeLike();
+              loadZoomPhoto();
+              activeLiked();
+              $('#pole').empty();
+              history.pushState(null, null, 'id=['+id+'],room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=['+sortSort+'],tag=["'+tag+'"]');
+              for(var i=0; i<data.length; i++) {
+              $( '<a href="/photo/id=['+data[i].id+'],room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=['+sortSort+'],tag=["'+tag+'"]"'+
+                    'class="item-gallery" data-grid-prepared="true"'+
+                    'style="position:absolute;">'+
+                   '<div class="uk-panel-box">'+
+                     '<img src="'+data[i].min_path+'">'+
+                   '</div>'+
+                 '</a>').appendTo('#pole');
+
+              }
+            }
+          }
+      }
+    });
+    return false;
+}
+});
+
+$('.tag-item').on('click', function(){
+  var sortSort = $('input[name=sortSorting]').val(),
+      styleSort = $('input[name=styleSorting]').val(),
+      roomSort = $('input[name=roomSorting]').val(),
+      colorSort = $('input[name=colorSorting]').val(),
+      tag = $(this).text(),
+      thisI = $(this);
+
+  $.ajax({
+    type:'POST',
+    async:false,
+    data: {
+              '_token'  : $('meta[name=_token]').attr('content'),
+              'sortSort': sortSort,
+              'styleSort': styleSort,
+              'roomSort': roomSort,
+              'colorSort': colorSort,
+              'tag': tag,
+              'id': $('.active-slide').data('id'),
+    },
+    url:'/load_sort_photo_slider',
+
+    success: function (data) {
+        $('.popup-search-tag').fadeOut().empty();
+        if (data === 'error_download') {
+          $('.title-tag').fadeIn();
+
+          $('.title-tag').children('.tag-item').text(tag);
+
+          $('.photo-item').remove();
+          $('.b-comment-wrap').empty();
+          $('#description-pole').empty().fadeOut();
+          $('#description').fadeOut();
+          $('#views-pole b-change').empty();
+          $('#views-pole').fadeOut();
+          $('#views').fadeOut();
+          $('#tag').fadeOut();
+          $('.pole-tag').empty().fadeOut();
+          $('.info-text-message').fadeIn();
+        }else {
+          history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=["'+tag+'"]');
+            commentDownload();
+            likeWhom();
+            viewsDownload();
+            tagsDownload();
+            infoPhotoDownload();
+            userInfoDownload();
+            activeLike();
+            loadZoomPhoto();
+            // activeLiked();
+            $('.title-tag').fadeIn();
+            $('.title-tag').children('.tag-item').text(tag);
+            $('.photo-item').remove();
+            $('tag-item').removeClass('active-tag-right');
+            thisI.addClass('.active-tag-right');
+            for(var i=0; i<data.length; i++) {
+            $( '<a href="/photo/id=['+data[i].id+'],room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=['+sortSort+'],tag=["'+tag+'"]"'+
+                  'class="item-gallery" data-grid-prepared="true"'+
+                  'style="position:absolute;">'+
+                 '<div class="uk-panel-box">'+
+                   '<img src="'+data[i].min_path+'">'+
+                 '</div>'+
+               '</a>').appendTo('#pole');
+
+            }
+          }
+    }
+  });
+});
+
 });

@@ -81,7 +81,7 @@
                 </div>
                 <div class="b-iformation">
                   <div class="b-date">
-                    {{$image->photo_updated_at->format('d M Y')}}
+                    <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($image->photo_updated_at)->formatLocalized('%d %b %Y') ?>
                   </div>
                   <div class="b-statistics">
                     <div class="b-item-stat">

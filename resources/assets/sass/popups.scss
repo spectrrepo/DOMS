@@ -1065,3 +1065,37 @@
 #close-modal-law::before {
   content: "\f00d";
 }
+// tags
+.search {
+  position: relative;
+}
+.popup-search-tag{
+  width: 97%;
+  height: auto;
+  padding: 10px;
+  position: absolute;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 7px;
+  top: 40px;
+  padding-top: 0px;
+  display: none;
+  overflow: hidden;
+}
+.drop-item-tag {
+  height: auto;
+  padding:10px;
+  box-sizing: border-box;
+  cursor: pointer;
+  list-style: none;
+  transition: all 0.3s ease;
+  width: 106%;
+  margin-left: -3%;
+}
+.drop-item-tag:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+.active-drop-item {
+  background: rgba(0, 0, 0, 0.8);  
+}

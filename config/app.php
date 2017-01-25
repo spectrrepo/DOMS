@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
@@ -182,6 +182,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        // Carbon/Carbon::class,
+
+        // Laravelrus\LocalizedCarbon\LocalizedCarbonServiceProvider::class,
 
 
 
@@ -236,10 +239,10 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'HTML' => Collective\Html\HtmlFacade::class,
         'Input'     => Illuminate\Support\Facades\Input::class,
-        'LocalizedCarbon'  => Laravelrus\LocalizedCarbon\LocalizedCarbon::class,
-        'DiffFormatter'    => Laravelrus\LocalizedCarbon\DiffFactoryFacade::class,
-        'Image' => Intervention\Image\Facades\Image::class
-
+        // 'Carbon' => Carbon/Carbon::class,
+        // 'LocalizedCarbon'  => Laravelrus\LocalizedCarbon\LocalizedCarbon::class,
+        // 'DiffFormatter'    => Laravelrus\LocalizedCarbon\DiffFactoryFacade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
 
 
 

@@ -547,8 +547,9 @@ $('.ajax-search').on('submit', function(){
   var sortSort = $('input[name=sortSorting]').val(),
       styleSort = $('input[name=styleSorting]').val(),
       roomSort = $('input[name=roomSorting]').val(),
-      colorSort = $('input[name=colorSorting]').val(),
-      tag = $('input[name=tagSearch]').val();
+      colorSort = $('input[name=colorSorting]').val();
+      $('input[name=colorSorting]').val($('input[name=tagSearch]').val());
+  var tag = $('input[name=colorSorting]').val();
 
   $('input[name=tagSorting]').val(tag);
   $.ajax({
@@ -565,16 +566,24 @@ $('.ajax-search').on('submit', function(){
 
     success: function (data) {
       $('#pole').empty();
-      history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=["'+tag+'"]');
-      for(var i=0; i<data.length; i++) {
-      $( '<a href="/photo/id=['+data[i].id+'],room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=['+sortSort+'],tag=["'+tag+'"]"'+
-            'class="item-gallery" data-grid-prepared="true"'+
-            'style="position:absolute;">'+
-           '<div class="uk-panel-box">'+
-             '<img src="'+data[i].min_path+'">'+
-           '</div>'+
-         '</a>').appendTo('#pole');
+      if (!(data === 'error_download')) {
+        $('.info-text-message').fadeOut();
+        $('.b-next-page').fadeIn();
+        history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=["'+tag+'"]');
+        for(var i=0; i<data.length; i++) {
+          $( '<a href="/photo/id=['+data[i].id+'],room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=['+sortSort+'],tag=["'+tag+'"]"'+
+          'class="item-gallery" data-grid-prepared="true"'+
+          'style="position:absolute;">'+
+          '<div class="uk-panel-box">'+
+          '<img src="'+data[i].min_path+'">'+
+          '</div>'+
+          '</a>').appendTo('#pole');
 
+        }
+      }
+      else {
+        $('.info-text-message').fadeIn();
+        $('.b-next-page').fadeOut();
       }
     }
   });

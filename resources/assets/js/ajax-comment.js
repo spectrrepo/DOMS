@@ -53,7 +53,7 @@ $( document ).ready(function() {
                         data.text_comment +
                       '</div>' +
                       '<div class="b-date-comment">' +
-                        data.date +
+                        data.rus_date +
                       '</div>'+
                     '</div>'+
                   '</div>').appendTo('.b-all-comment');

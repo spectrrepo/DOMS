@@ -57,6 +57,8 @@ class CommentController extends Controller
         $comment->text_comment = $_POST['comment'];
         $image = Picture::find($_POST['post_id']);
         $image->comments_count += 1;
+        setlocale(LC_TIME, 'ru_RU.utf8');
+        $comment->rus_date = \Carbon\Carbon::parse(\Carbon\Carbon::now())->formatLocalized('%d %b %Y');
         $image->save();
         $comment->save();
         $lastComment = Comment::orderby('id', 'desc')->first();

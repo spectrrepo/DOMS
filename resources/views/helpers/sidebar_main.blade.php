@@ -86,8 +86,11 @@
      </li>
     </ul>
     <div class="search">
+      <div class="popup-search-tag">
+
+      </div>
       <form class="ajax-search {{ preg_match('[/photo/]', URL::current()) ? 'ajax-search-slider' : ''}}">
-          <input class="input-search" type="search" name="tagSearch" autocomplete="off" placeholder="Поиск по тегам">
+          <input class="popup-tag input-search {{ preg_match('[/photo/]', URL::current()) ? 'ajax-input-search-slider' : 'ajax-input-search'}}" type="search" name="tagSearch" autocomplete="off" placeholder="Поиск по тегам">
           <button class="search-submit" type="submit"><span class="uk-icon-justify uk-icon-search"></span ></button>
       </form>
     </div>
@@ -108,7 +111,10 @@
           <div class="b-descreption-news">
             {{ $news->description }}
           </div>
-          <div class="b-date-news">{{ $news->news_updated_at->format('d M Y') }}</div>
+          <div class="b-date-news">
+            <?php setlocale(LC_TIME, 'ru_RU.utf8');
+            echo \Carbon\Carbon::parse($news->news_updated_at)->formatLocalized('%d %b %Y') ?>
+          </div>
        </div>
      </div>
 </div>
@@ -122,7 +128,7 @@
    </div>
 </div>
 <div class="date-and-all-news">
-      {{ $news->news_updated_at->format('d M Y') }}
+      <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($news->news_updated_at)->formatLocalized('%d %b %Y') ?>
       <a href="/news">Просмотреть все новости</a>
 </div>
 </div>

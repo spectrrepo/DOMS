@@ -68,4 +68,12 @@ class TagsController extends Controller
 
     }
 
+    public function indexTagsMask () {
+
+        $currentText = $_POST['current'];
+        $needTags = Tag::whereRaw('title like "%'.$currentText.'%"')->get();
+
+        return $needTags;
+    }
+
 }
