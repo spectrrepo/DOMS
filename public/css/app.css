@@ -6498,17 +6498,22 @@ a.uk-thumbnail:focus, a.uk-thumbnail:hover {
   width: 100%; }
 
 @font-face {
-  font-family: MainFont;
-  src: url(font/pt-sans.ttf); }
+  font-family: 'MainFont';
+  src: url(../fonts/pt-sans.ttf); }
 
 body {
   background: url(../img/fon.jpg); }
 
 html {
-  background: url(../img/fon.jpg); }
+  background: url(../img/fon.jpg);
+  font: 400 16px 'MainFont'; }
 
 img {
   width: 100%; }
+
+input, textarea {
+  font-size: 13px;
+  line-height: 20px; }
 
 /*############################################################################*/
 /*###########################start and main page##############################*/
@@ -6525,8 +6530,7 @@ header, footer {
   clear: both;
   position: absolute;
   bottom: 0;
-  left: 0;
-  font: 400 14px/20px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  left: 0; }
 
 a {
   color: #993399; }
@@ -6585,7 +6589,9 @@ nav ul li a:hover {
   transition: all 0.3s ease;
   line-height: 44px;
   width: 100px;
-  text-align: center; }
+  text-align: center;
+  font-size: 16px;
+  font-weight: normal; }
 
 .plus-photo {
   display: block;
@@ -6606,7 +6612,8 @@ nav ul li a:hover {
   padding-left: 10px;
   padding-right: 42px;
   -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease; }
+  transition: all 0.3s ease;
+  font-size: 14px; }
 
 .logining-item:hover {
   color: #993399; }
@@ -6639,7 +6646,8 @@ nav ul li a:hover {
   padding-left: 10px;
   padding-right: 10px;
   -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease; }
+  transition: all 0.3s ease;
+  color: #dbd3d3; }
 
 .item-about:hover {
   background: #222222; }
@@ -6686,7 +6694,8 @@ html {
 .help-text {
   width: 100%;
   height: auto;
-  text-align: left; }
+  text-align: left;
+  font-size: 14px; }
 
 .b-dwnld-img {
   height: auto;
@@ -6737,7 +6746,8 @@ html {
 
 .title-choose-color {
   width: 100%;
-  height: 30px; }
+  height: 30px;
+  font-size: 14px; }
 
 .color-place {
   width: 100%;
@@ -6815,7 +6825,8 @@ html {
   text-align: center;
   position: absolute;
   margin-top: 122px;
-  width: 100%; }
+  width: 100%;
+  font-size: 14px; }
 
 .wrap-add-tag {
   height: auto;
@@ -6827,7 +6838,8 @@ html {
   display: block;
   float: left;
   height: 100%;
-  line-height: 30px; }
+  line-height: 30px;
+  font-size: 15px; }
 
 .input-tag-name {
   height: 30px;
@@ -6893,7 +6905,8 @@ html {
   box-sizing: border-box; }
 
 .title-tag-list {
-  margin-top: 10px; }
+  margin-top: 10px;
+  font-size: 15px; }
 
 .tags-list {
   width: 100%;
@@ -7053,15 +7066,16 @@ html {
   width: auto; }
 
 .b-persobal-information {
-  width: 76%;
   float: left;
-  margin-left: 3.5%;
   height: auto;
   border-radius: 5px;
   border: 1px solid #E5E5E5;
   box-sizing: border-box;
   overflow: hidden;
-  min-height: 162px; }
+  min-height: 162px;
+  font-size: 14px;
+  width: 78%;
+  margin-left: 1.5%; }
 
 .b-name-person {
   width: 33%;
@@ -7108,12 +7122,13 @@ html {
   text-align: left; }
 
 .contact-item {
-  width: 100%; }
+  width: 100%;
+  margin-bottom: 4px; }
 
 .contact-item-name {
   display: block;
   float: left;
-  width: 50%;
+  width: 32%;
   box-sizing: border-box; }
 
 .contact-item-value {
@@ -7125,7 +7140,8 @@ html {
 .separate-title {
   width: 60%;
   height: 50px;
-  line-height: 70px; }
+  line-height: 70px;
+  font-size: 14px; }
 
 /*########################block with news tape#############################*/
 .wrap-personal-news {
@@ -7161,7 +7177,8 @@ html {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   box-sizing: border-box;
-  padding: 5px; }
+  padding: 5px;
+  font-size: 14px; }
 
 .item-swicher a {
   color: #666666; }
@@ -7252,8 +7269,9 @@ html {
 
 .b-item-stat {
   float: left;
-  margin-left: 6px;
-  cursor: pointer; }
+  margin-left: 1px;
+  cursor: pointer;
+  font-size: 0.86rem; }
 
 .ico {
   float: left;
@@ -7379,6 +7397,10 @@ pre {
 .title-cell {
   width: 59%;
   line-height: 90px; }
+
+.message-cell {
+  line-height: 90px;
+  width: 45%; }
 
 .name-cell {
   width: 16%;
@@ -7521,7 +7543,8 @@ ul {
   box-sizing: border-box;
   padding-left: 10px;
   -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease; }
+  transition: all 0.3s ease;
+  font-size: 13px; }
 
 .input-search:focus {
   border: 1px solid #81afd5; }
@@ -7564,7 +7587,8 @@ ul {
   border-bottom: 1px solid #cccccc;
   width: 89%;
   margin-top: 60px;
-  padding-bottom: 5px; }
+  padding-bottom: 5px;
+  font-size: 15px; }
 
 .b-text-news {
   padding-left: 10px;
@@ -7807,7 +7831,21 @@ ul.b-popup-item-list li {
   position: relative;
   width: 50px; }
 
-.btn-next {
+.btn-prew span::before {
+  content: "\f104";
+  font-family: FontAwesome; }
+
+.btn-next span::before {
+  content: "\f105";
+  font-family: FontAwesome; }
+
+a.btn-next span:hover {
+  opacity: 1; }
+
+a.btn-prew span:hover {
+  opacity: 1; }
+
+a.btn-next {
   cursor: pointer;
   float: right;
   margin-right: 20px;
@@ -7828,7 +7866,13 @@ a.btn-prew span {
   top: 0;
   bottom: 0;
   left: 0;
-  right: 0; }
+  right: 0;
+  color: #ffffff;
+  opacity: 0.5;
+  text-shadow: 1px 1px 1px #cccccc;
+  font-size: 60px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease; }
 
 .wrap-slider {
   position: relative;
@@ -7862,7 +7906,8 @@ a.btn-prew span {
 .b-pretens {
   float: left;
   display: block;
-  width: 45%; }
+  width: 45%;
+  font-size: 0.81rem; }
 
 .num-page-zoom {
   display: block;
@@ -7880,7 +7925,8 @@ a.btn-prew span {
   float: left;
   display: block;
   width: 10%;
-  text-align: center; }
+  text-align: center;
+  font-size: 0.81rem; }
 
 .status-photo {
   float: left;
@@ -7965,7 +8011,9 @@ a.btn-prew span {
   height: 20px; }
 
 .author-name {
-  float: left; }
+  float: left;
+  padding-left: 4px;
+  padding-top: 4px; }
 
 /*###and comments###*/
 .b-com-title {
@@ -8048,8 +8096,14 @@ a.btn-prew span {
   cursor: pointer;
   color: #7a2a75; }
 
+.b-text-comment {
+  font-size: 14px; }
+
 .b-date-comment {
-  color: #b8b3b0; }
+  color: #b8b3b0;
+  font-size: 14px;
+  bottom: 0;
+  position: absolute; }
 
 /*###description photo###*/
 .col-descreption-photo {
@@ -8061,7 +8115,8 @@ a.btn-prew span {
 .title-tag {
   width: 100%;
   display: block;
-  border-bottom: 1px solid #cccccc; }
+  border-bottom: 1px solid #cccccc;
+  font-size: 15px; }
 
 .margin-title-tag {
   margin-top: 20px; }
@@ -8070,13 +8125,14 @@ a.btn-prew span {
   display: block;
   float: left;
   width: auto;
-  padding: 4px;
   border: 1px solid #cccccc;
-  border-radius: 3px;
-  margin: 4px;
   cursor: pointer;
   -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease; }
+  transition: all 0.3s ease;
+  font-size: 13px;
+  padding: 3px;
+  border-radius: 5px;
+  margin: 3px; }
 
 .tag-item:hover {
   background: #444444;
@@ -8090,6 +8146,10 @@ a.btn-prew span {
   margin-top: 10px;
   border-radius: 5px;
   position: relative; }
+
+#description-pole {
+  padding: 10px;
+  box-sizing: border-box; }
 
 .b-change-photo {
   width: 100%;
@@ -8199,10 +8259,23 @@ a.btn-prew span {
 .item-news-title {
   color: #993399;
   display: block;
-  margin-top: 10px; }
+  margin-top: 10px;
+  font-size: 17px; }
+
+.item-news-title-modal {
+  font-size: 15pt;
+  margin: 20px 0;
+  color: white;
+  display: block; }
+
+.item-news-date {
+  font-size: 14px; }
+
+.popup-text-news {
+  font-size: 11pt; }
 
 .modal-news {
-  width: 65%;
+  width: 59%;
   height: 80%;
   margin: auto;
   top: 0;
@@ -8218,15 +8291,19 @@ a.btn-prew span {
 
 .scroll-place-modal-news {
   overflow-y: scroll;
-  width: 90%;
   height: 80%;
   margin: 0 auto;
-  margin-top: 5%; }
+  margin-top: 5%;
+  width: 47%; }
 
 .date-and-all-news {
-  width: 90%;
-  margin: 0 auto;
-  margin-top: 50px; }
+  width: 47%;
+  margin: auto;
+  margin-top: 50px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0; }
 
 .date-and-all-news a {
   float: right;
@@ -8248,7 +8325,7 @@ a.btn-prew span {
   padding: 5px;
   background: white;
   float: left;
-  width: 40%; }
+  width: 50%; }
 
 .hover-effect-person {
   text-align: center;
@@ -8270,7 +8347,7 @@ a.btn-prew span {
 
 .wrap-sex {
   float: left;
-  width: 54%;
+  width: 44%;
   height: 32px;
   margin-left: 35px;
   margin-left: 6%; }
@@ -8352,17 +8429,17 @@ a.btn-prew span {
   height: 160px; }
 
 .edit-name-item {
-  width: 45%;
+  width: 32%;
   line-height: 25px; }
 
 .edit-value-item {
-  width: 55%;
   height: 25px;
   background: white;
   border: 1px solid #D8D7D7;
   margin-bottom: 2px;
   border-radius: 5px;
-  padding: 3px; }
+  padding: 3px;
+  width: 68%; }
 
 .email-edit,
 .soc-set-edit {
@@ -8565,6 +8642,9 @@ a.btn-prew span {
 .modal-feedback-center {
   width: 50%;
   margin: 0 auto; }
+
+.modal-feedback-center p {
+  font-size: 14px; }
 
 .title-link {
   font-size: 18px;
@@ -8944,7 +9024,8 @@ a.btn-prew span {
   box-sizing: border-box;
   border-radius: 5px;
   padding-left: 16px;
-  padding-right: 10px; }
+  padding-right: 10px;
+  font-size: 15px; }
 
 .menu-item-profile {
   display: block;
@@ -9089,15 +9170,26 @@ a.btn-prew span {
   transition: all 0.3s ease;
   border-radius: 5px;
   float: left;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 25px; }
 
 .item-modal-text:hover {
   background: rgba(129, 126, 126, 0.7); }
 
 .b-preview-style {
-  width: 20%;
+  width: 31%;
   float: left; }
+
+.b-preview-style img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto; }
+
+.style-description {
+  color: white;
+  font-size: 12px;
+  line-height: 17px; }
 
 .sidebar ul.colors-space li {
   width: 55px;

@@ -14,8 +14,24 @@ $( document ).ready(function() {
 
   $('#formPretense').on('submit', function (e){
     e.preventDefault();
-    $('#modalLaw').fadeOut();
-    $('.b-pretense').text('OK');
+    var csrftoken = $('input[name=_token]').val(),
+        postId = $('.active-slide').data('id'),
+        textPretense = $('input[name=text_pretense]').val(),
+        filePretense = new FormData($(this).get(0));
+        // filePretense.append('img', $('input[name=file_pretense]').prop('files')[0]);
+        // filePretense.append('img' , $('input[name=file_pretense]').prop('files')[0]);
+    $.ajax({
+        type:'POST',
+        data: filePretense,
+        url: '/add_copyright',
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function (data) {
+          $('#modalLaw').fadeOut();
+          $('.b-pretense').text('OK');
+        }
+    });
     return false;
   });
 });

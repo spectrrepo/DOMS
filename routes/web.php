@@ -49,16 +49,18 @@ Route::get('/profile/admin/copyrights', array('as' => 'copyright',
 Route::get('/profile/admin/slides', array('as' => 'slide',
                                             'uses' => 'ChangeSlideController@index'));
 Route::get('/profile/admin/answer_mail/{id}', 'MessagesController@mailIndexItem');
+Route::get('/profile/admin/edit_copyrights', array('as' => 'pretense',
+                                                    'uses' => 'CopyrightController@index'));
 
-Route::post('/delete_copyright/{id}', 'CopyrightController@delete');
+Route::post('/delete_copyright', 'CopyrightController@delete');
 Route::post('/delete_comments/{id}', 'CommentController@delete');
 Route::post('/delete_message/{id}', 'MessagesController@deleteMail');
 Route::post('/delete_slide/{id}', 'ChangeSlideController@delete');
 
-Route::post('/save_copyright/{id}', 'CopyrightController@delete');
+Route::post('/save_copyright', 'CopyrightController@saveNewCopyright');
 Route::post('/add_slide/{id}', 'ChangeSlideController@delete');
 
-
+Route::post('/add_copyright', 'CopyrightController@add');
 Route::post('/edit_slide/{id}', 'ChangeSlideController@delete');
 Route::post('/answer_mail', 'MessagesController@askOnMail');
 Route::post('/delete_verification_image/{id}','UserController@deleteVerificationImage');

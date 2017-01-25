@@ -11,7 +11,7 @@
       <li class="menu-item-profile"><a href="{{ URL::route('news') }}">Новости</a></li>
       <li class="menu-item-profile"><a href="{{ URL::route('comments') }}">Комментарии</a></li>
       <li class="menu-item-profile"><a href="{{ URL::route('messages') }}">Сообщения</a></li>
-      {{--<li class="menu-item-profile"><a href="{{ URL::route('messages') }}">Претензии</a></li>--}}
+      <li class="menu-item-profile"><a href="{{ URL::route('pretense') }}">Претензии</a></li>
       <li class="menu-item-profile"><a href="{{ URL::route('messages') }}">Изменение слайдов</a></li>
     @endif
   </ul>

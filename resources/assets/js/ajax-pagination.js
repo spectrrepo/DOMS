@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+
   $('.b-next-page').on('click', function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
           lastIdJS = $('#pole').children('.item-gallery:last-child').index(),

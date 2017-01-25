@@ -19,9 +19,11 @@
     <input type="hidden" name="roomSorting" value="{{ $roomSorting }}">
     <input type="hidden" name="colorSorting" value="{{ $colorSorting }}">
     <input type="hidden" name="tagSorting" value="{{ $tagSorting }}">
-    <div class="b-next-page">
-      Следущая страница
-    </div>
+    @if ( $images->count() >= 3)
+      <div class="b-next-page">
+        Следущая страница
+      </div>
+    @endif
 </div>
 
 @endsection

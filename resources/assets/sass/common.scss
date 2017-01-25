@@ -1,15 +1,20 @@
 @font-face {
-    font-family: MainFont;
-    src: url(font/pt-sans.ttf);
+    font-family: 'MainFont';
+    src: url(../fonts/pt-sans.ttf);
 }
 body {
     background: url(../img/fon.jpg);
 }
 html {
     background: url(../img/fon.jpg);
+    font: 400 16px 'MainFont';
 }
 img {
     width: 100%;
+}
+input, textarea {
+    font-size: 13px;
+    line-height: 20px;
 }
 
 /*############################################################################*/
@@ -39,7 +44,6 @@ header, footer {
     position: absolute;
     bottom: 0;
     left: 0;
-    font: 400 14px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 a {
     color: #993399;
@@ -98,6 +102,8 @@ nav ul li a:hover {
     line-height: 44px;
     width: 100px;
     text-align: center;
+    font-size: 16px;
+    font-weight: normal;
 }
 .plus-photo {
     display: block;
@@ -118,6 +124,7 @@ nav ul li a:hover {
     padding-left: 10px;
     padding-right: 42px;
     transition: all 0.3s ease;
+    font-size: 14px;
 }
 .logining-item:hover {
     color: #993399;
@@ -150,6 +157,7 @@ nav ul li a:hover {
     padding-left: 10px;
     padding-right: 10px;
     transition: all 0.3s ease;
+    color: #dbd3d3;
 }
 .item-about:hover {
     background: #222222;

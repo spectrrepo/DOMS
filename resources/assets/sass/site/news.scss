@@ -14,10 +14,22 @@
   color: #993399;
   display: block;
   margin-top: 10px;
+  font-size: 17px;
 }
-
+.item-news-title-modal {
+  font-size: 15pt;
+  margin: 20px 0;
+  color: white;
+  display: block;
+}
+.item-news-date {
+  font-size: 14px;
+}
+.popup-text-news {
+  font-size: 11pt;
+}
 .modal-news {
-  width: 65%;
+  width: 59%;
   height: 80%;
   margin: auto;
   top: 0;
@@ -33,16 +45,21 @@
 }
 .scroll-place-modal-news {
   overflow-y: scroll;
-  width: 90%;
   height: 80%;
   margin: 0 auto;
   margin-top: 5%;
+  width: 47%;
 
 }
 .date-and-all-news{
-  width: 90%;
-  margin: 0 auto;
+  width: 47%;
+  margin: auto;
   margin-top: 50px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
 }
 .date-and-all-news a {
   float: right;

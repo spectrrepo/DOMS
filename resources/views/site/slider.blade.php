@@ -90,10 +90,15 @@
               </span>
             </div>
             <div class="b-item-stat liked">
-              <input type="hidden" name="post_id" value="{{ $image->id }}">
-              <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-              <input type="hidden" name="url-liked" value="{{ $colorLiked ? '/delete_liked' : '/liked' }}">
-              <button id="num_liked" class="{{ $colorLiked ? 'active-favorite ': ''}}ico-slider uk-icon-justify uk-icon-star"></button>
+              @if (Auth::check())
+                 <input type="hidden" name="post_id" value="{{ $image->id }}">
+                 <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                 <input type="hidden" name="url-liked" value="{{ $colorLiked ? '/delete_liked' : '/liked' }}">
+              @endif
+              <button
+              @if (Auth::check())
+                 id="num_liked"
+              @endif  class="{{ $colorLiked ? 'active-favorite ': ''}}ico-slider uk-icon-justify uk-icon-star"></button>
               <span class="tooltip-stat margin-liked-tooltip">
                 <span class="text-tooltip-stat">
                   Избранное
@@ -121,9 +126,11 @@
               </span>
             </div>
             <div class="b-item-stat like">
-              <input type="hidden" name="post_id" value="{{ $image->id }}">
-              <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-              <input type="hidden" name="url-like" value="{{ $colorLike ? '/delete_like' : '/like' }}">
+               @if (Auth::check())
+                  <input type="hidden" name="post_id" value="{{ $image->id }}">
+                  <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                  <input type="hidden" name="url-like" value="{{ $colorLike ? '/delete_like' : '/like' }}">
+               @endif
               <button class="{{ $colorLike ? 'active-like ': ''}}ico-slider uk-icon-justify uk-icon-heart"></button>
               <span id="value-like">{{ $num_like }}</span>
               <span class="tooltip-stat margin-like-tooltip">
@@ -163,7 +170,7 @@
                 @foreach ( $comments as $comment )
 
                   <div class="b-comment-wrap">
-                    {!! Auth::user()->id === $comment->user_id ? HTML::decode('<span class="remove-comment uk-icon-justify uk-icon-remove"><span class="delete_comment_id" data-id="'.$comment->id.'"></span></span>') : ''!!}
+                    {{-- {!! Auth::user()->id === $comment->user_id ? HTML::decode('<span class="remove-comment uk-icon-justify uk-icon-remove"><span class="delete_comment_id" data-id="'.$comment->id.'"></span></span>') : ''!!} --}}
                     <a style="background:url({{ $comment->userPhoto }}) center no-repeat;background-size:cover;"href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-photo-comment"></a>
                     <div class="b-comment">
                       <a href="{{ URL::to('profile/'.$comment->userName) }}" class="b-name-comment">

@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-
+use Auth;
 use App\Picture;
-use App\Copyright;
+use Image;
+use App\Pretense;
 
 /**
  * The ResultMessage class holds a message that can be returned
@@ -28,7 +29,7 @@ class CopyrightController extends Controller
      */
     public function index(){
 
-      $copyrights = Copyright::paginate(10);
+      $copyrights = Pretense::paginate(10);
 
       return view('moderator.copyright_index', ['copyrights' => $copyrights]);
 
@@ -42,15 +43,18 @@ class CopyrightController extends Controller
      */
     public function add(){
 
-        $copyright = new Copyright();
-        $copyright->photo = $_POST['photo'];
+
+        $copyright = new Pretense();
+        $photo = Image::make($_FILES['file_pretense']['tmp_name']);
+        $photo->save( public_path('/img/f.jpg'));
+        $copyright->photo_pretense = public_path('/img/f.jpg');
         $copyright->post_id = $_POST['post_id'];
-        $copyright->user_pretense_id = $_POST['user_pretense_id'];
-        $copyright->user_author_id = $_POST['user_author_id'];
-        $copyright->message = $_POST['message'];
+        $copyright->user_pretense_id = Auth::user()->id;
+        $copyright->user_author_id = Picture::find($_POST['post_id'])->author_id;
+        $copyright->message = $_POST['text_pretense'];
 
         $copyright->save();
-        return redirect()->back();
+        return 'true';
     }
 
     /**
@@ -59,9 +63,11 @@ class CopyrightController extends Controller
      * @return
      *
      */
-    public function delete($id){
+    public function delete(){
 
-        $copyright = Copyright::find($id);
+        $id = $_POST['id'];
+
+        $copyright = Pretense::find($id);
         $copyright->delete();
 
         return redirect()->back();
@@ -74,9 +80,16 @@ class CopyrightController extends Controller
      * @return
      *
      */
-    public function saveNewCopyright($id){
+    public function saveNewCopyright(){
 
-        $copyright = Copyright::find($id);
+        $id = $_POST['id'];
+
+        $copyright = Pretense::find($id);
+        $imageChange = Picture::find($copyright->post_id);
+        $imageChange->author_id = $copyright->user_pretense_id;
+        $imageChange->save();
+
+        $copyright->delete();
 
         return redirect()->back();
 

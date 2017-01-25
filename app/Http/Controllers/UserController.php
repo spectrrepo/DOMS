@@ -217,7 +217,7 @@ class UserController extends Controller
       public function pretenseAdd()
       {
           if (Auth::check()) {
-              
+
           }
       }
       /**
@@ -249,7 +249,7 @@ class UserController extends Controller
            $user->skype = $_POST["skype"];
            $user->about = $_POST["about"];
 
-           if (!File::isFile(Input::get('avatar'))) {
+           if (File::isFile(Input::get('avatar'))) {
 
                $user->avatar = $_FILES["avatar"];
                $user->path_min = $user->avatar->url('small');

@@ -123,8 +123,23 @@
   height: 100%;
   position: relative;
   width: 50px;
+
 }
-.btn-next{
+.btn-prew span::before {
+  content: "\f104";
+  font-family: FontAwesome;
+}
+.btn-next span::before {
+  content: "\f105";
+  font-family: FontAwesome;
+}
+a.btn-next span:hover {
+  opacity: 1;
+}
+a.btn-prew span:hover {
+  opacity: 1;
+}
+a.btn-next{
   cursor: pointer;
   float: right;
   margin-right: 20px;
@@ -146,6 +161,11 @@ a.btn-prew span {
   bottom: 0;
   left: 0;
   right: 0;
+  color: #ffffff;
+  opacity: 0.5;
+  text-shadow: 1px 1px 1px #cccccc;
+  font-size: 60px;
+  transition: all 0.3s ease;
 }
 .wrap-slider {
   position: relative;
@@ -180,6 +200,7 @@ a.btn-prew span {
   float: left;
   display: block;
   width: 45%;
+  font-size: 0.81rem;
 }
 .num-page-zoom {
   display: block;
@@ -198,6 +219,7 @@ a.btn-prew span {
   display: block;
   width: 10%;
   text-align: center;
+  font-size: 0.81rem;
 }
 .status-photo{
   float: left;
@@ -285,6 +307,8 @@ a.btn-prew span {
 }
 .author-name {
   float: left;
+  padding-left: 4px;
+  padding-top: 4px;
 }
    /*###and comments###*/
 .b-comments{}
@@ -367,9 +391,14 @@ a.btn-prew span {
   cursor: pointer;
   color: rgb(122, 42, 117);
 }
-.b-text-comment{}
+.b-text-comment{
+  font-size: 14px;
+}
 .b-date-comment{
   color: #b8b3b0;
+  font-size: 14px;
+  bottom: 0;
+  position: absolute;
 }
   /*###description photo###*/
 .col-descreption-photo{
@@ -382,6 +411,7 @@ a.btn-prew span {
   width: 100%;
   display: block;
   border-bottom: 1px solid #cccccc;
+  font-size: 15px;
 }
 .margin-title-tag {
   margin-top: 20px;
@@ -391,12 +421,13 @@ a.btn-prew span {
   display: block;
   float: left;
   width: auto;
-  padding: 4px;
   border: 1px solid #cccccc;
-  border-radius: 3px;
-  margin: 4px;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-size: 13px;
+  padding: 3px;
+  border-radius: 5px;
+  margin: 3px;
 }
 .tag-item:hover{
   background: #444444;
@@ -410,6 +441,10 @@ a.btn-prew span {
   margin-top: 10px;
   border-radius: 5px;
   position: relative;
+}
+#description-pole {
+  padding: 10px;
+  box-sizing: border-box;
 }
 .b-change-photo {
   width: 100%;

@@ -59,15 +59,16 @@
     width: auto;
 }
 .b-persobal-information {
-    width: 76%;
     float: left;
-    margin-left: 3.5%;
     height: auto;
     border-radius: 5px;
     border: 1px solid #E5E5E5;
     box-sizing: border-box;
     overflow: hidden;
     min-height: 162px;
+    font-size: 14px;
+    width: 78%;
+    margin-left: 1.5%;
 }
 .b-name-person {
     width: 33%;
@@ -115,12 +116,14 @@
 }
 .contact-item {
     width: 100%;
+    margin-bottom: 4px;
 }
 .contact-item-name {
     display: block;
     float: left;
-    width: 50%;
+    width: 32%;
     box-sizing: border-box;
+
 }
 .contact-item-value {
     display: block;
@@ -132,6 +135,7 @@
     width: 60%;
     height: 50px;
     line-height: 70px;
+    font-size: 14px;
 }
 
 /*########################block with news tape#############################*/
@@ -170,6 +174,7 @@
     border-top-right-radius: 5px;
     box-sizing: border-box;
     padding: 5px;
+    font-size: 14px;
 }
 .item-swicher a {
     color: #666666;
@@ -260,8 +265,9 @@
 }
 .b-item-stat {
     float: left;
-    margin-left: 6px;
+    margin-left: 1px;
     cursor: pointer;
+    font-size: 0.86rem;
 }
 .ico {
     float: left;

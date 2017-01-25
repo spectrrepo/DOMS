@@ -33,8 +33,11 @@
              @endforeach
              </ul>
              <div class="b-preview-style">
-               <img src="" alt="" />
+               <img src="http://doms.design/res/section/default-style/_img_400x_20/logotipyi.5802.png">
                <p class="style-description">
+                  Вы можете выбрать до 3-х интересующих Вас стилей,
+                  а мы подберем самые подходящие интерьерные решения,
+                  Вам остаётся только собрать свою коллекцию избранного!
                </p>
              </div>
            </div>
@@ -113,7 +116,7 @@
 <span class="close uk-icon-justify uk-icon-remove popup-close-news"></span>
 <div class="scroll-place-modal-news">
    <img src="{{  $news->news->url() }} " />
-   <span class="item-news-title">{{  $news->title }} </span>
+   <span class="item-news-title-modal">{{  $news->title }} </span>
    <div class="popup-text-news">
       {{ $news->full_description }}
    </div>
