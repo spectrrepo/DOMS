@@ -14,6 +14,7 @@ ul {
     position: relative;
     height: auto;
 }
+
 .search-submit {
     height: 32px;
     width: 16%;
@@ -26,11 +27,20 @@ ul {
     border-left: none;
     cursor: pointer;
 }
+.menu-item:hover {
+    color: white;
+}
+.menu-item:hover > span {
+    color: white;
+}
 .ungle-item {
     float: right;
     font-size: 17px;
     font-weight: bold;
     line-height: 28px;
+    position: absolute;
+    right: 0px;
+    z-index: 19;
 }
 .input-search {
     background: white;
@@ -199,9 +209,13 @@ ul.b-popup-item-list li {
     margin-bottom: 40px;
     float: right;
     position: relative;
+    width: calc(79% - 35px);
+    margin-right: 35px;
+    box-sizing: border-box;
 }
 .content-your-photo {
     width:100%;
+    margin-right: 0;
 }
 .b-next-page {
     position: absolute;

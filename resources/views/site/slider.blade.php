@@ -3,7 +3,7 @@
 @section('site-content')
  <div class="content  uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights">
    <div class="col-slider-comment">
-   <div class="title-tag" style="margin-bottom:10px;">
+   <div id="hide-pole-tag" class="title-tag" style="margin-bottom:10px;">
          <span class="title-slider-tag" style="float:left;">Поиск по тегам:</span>
          <div class="tag-item">Привет</div>
             <div class="clear"></div>
@@ -169,7 +169,9 @@
                 @foreach ( $comments as $comment )
 
                   <div class="b-comment-wrap">
-                    {{-- {!! Auth::user()->id === $comment->user_id ? HTML::decode('<span class="remove-comment uk-icon-justify uk-icon-remove"><span class="delete_comment_id" data-id="'.$comment->id.'"></span></span>') : ''!!} --}}
+                     @if (Auth::check())
+                        {!! Auth::user()->id === $comment->user_id ? HTML::decode('<span class="remove-comment uk-icon-justify uk-icon-remove"><span class="delete_comment_id" data-id="'.$comment->id.'"></span></span>') : ''!!}
+                     @endif
                     <a style="background:url({{ $comment->userPhoto }}) center no-repeat;background-size:cover;"href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-photo-comment"></a>
                     <div class="b-comment">
                       <a href="{{ URL::to('profile/'.$comment->userName) }}" class="b-name-comment">
@@ -205,7 +207,7 @@
             </div>
           </div>
             <div class="col-descreption-photo">
-                <div id="tag" class="title-tag" {{ $tags->count() > 1 ? '': 'style=display:none;' }}>
+                <div id="tag" class="title-tag" {{ $tags->count() > 1 ? '' : 'style=display:none;' }}>
                   Тэги
                 </div>
                 <div class="pole-tag" {{ $tags->count() > 1 ? '': 'style=display:none;' }}>

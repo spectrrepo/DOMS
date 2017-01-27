@@ -4,7 +4,7 @@
 
 /*####################block wthith config for picture#########################*/
 .big-col{
-  width: 60%;
+  width: 47.9%;
   height: auto;
   float: left;
 }
@@ -53,20 +53,7 @@
 .input-descreption{
   border: 1px solid #dddddd;
   width: 100%;
-  height: 50px;
-  border-radius: 5px;
-  margin-bottom: 16px;
-  resize:none;
-  box-sizing: border-box;
-  padding: 5px;
-  background: white;
-}
-.title-choose-color{
-  width: 100%;
-  height: 30px;
-  font-size: 14px;
-}
-.color-place{
+  height: 50px;margin-bottom: 10px;
   width: 100%;
   height: auto;
 }
@@ -212,14 +199,14 @@
 }
 /*###################tags columns whith kategory image########################*/
 .small-col{
-  width: 10%;
+  width: 12%;
   height: 200px;
   float: left;
   margin-left: 1%;
   box-sizing: border-box;
 }
 .title-tag-list{
-  margin-top: 10px;
+  margin-bottom: 10px;
   font-size: 15px;
 }
 .tags-list{

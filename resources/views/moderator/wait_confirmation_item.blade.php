@@ -91,14 +91,15 @@
         </div>
         @endforeach
       </div>
+      {{ Form::close() }}
     </div>
-    {{ Form::close() }}
-    {{ Form::open(array('url' => '/delete_verification_image/'.$image->id))}}
-    <button class="btn-dwnld" style="width:50%;" type="submit" name="button">
+  </div>
+  <div class="clear"></div>
+  {{ Form::open(array('url' => '/delete_verification_image/'.$image->id))}}
+  <button class="btn-dwnld" style="width:50%;margin-left:21%;" type="submit" name="button">
       <span class="save-text">Удалить изображение</span>
       <span class="save-ico uk-icon-justify uk-icon-save"></span>
-    </button>
-    <input type="hidden" name="uri" value="{{ $uri }}">
-    {{ Form::close()}}
-  </div>
+  </button>
+  <input type="hidden" name="uri" value="{{ $uri }}">
+  {{ Form::close()}}
   @endsection

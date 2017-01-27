@@ -12,7 +12,7 @@
       <li class="menu-item-profile"><a href="{{ URL::route('comments') }}">Комментарии</a></li>
       <li class="menu-item-profile"><a href="{{ URL::route('messages') }}">Сообщения</a></li>
       <li class="menu-item-profile"><a href="{{ URL::route('pretense') }}">Претензии</a></li>
-      <li class="menu-item-profile"><a href="{{ URL::route('messages') }}">Изменение слайдов</a></li>
+      <li class="menu-item-profile"><a href="{{ URL::route('slide') }}">Изменение слайдов</a></li>
     @endif
   </ul>
 </nav>

@@ -30,4 +30,18 @@ $( document ).ready(function() {
           return false;
      }
    });
+
 });
+$(document).mouseup(function (e) {
+    var container = $(".overlay");
+    if (container.has(e.target).length === 0){
+        container.fadeOut();
+    }
+});
+
+// $(document).mouseup(function (e) {
+//   var container = $(".sidebar-modal");
+//   if (container.has(e.target).length === 0){
+//       container.toggleClass('block-view');
+//   }
+// });

@@ -593,9 +593,16 @@ class PhotoController extends Controller
                         ->orderBy('id', 'desc')
                         ->first();
         $updateIinfo = Picture::find($addInfo->id);
+        $img2 = Image::make($_FILES['photo']['tmp_name']);
+        $img2->crop(400, 400);
+     //    $img2->resize(400, 400);
+        $img2->encode('jpg');
+        $img2->save(public_path('/img/quadro/'.$addInfo->id.'.jpg'));
+        $updateIinfo->quadro_photo = '/img/quadro/'.$addInfo->id.'.jpg';
         $updateIinfo->full_path = $updateIinfo->photo->url('max');
         $updateIinfo->min_path = $updateIinfo->photo->url('small');
         $updateIinfo->save();
+
         return redirect('/profile/'.Auth::user()->id)->with('check','true');
     }
     public function addPhotoSite($id)

@@ -8,8 +8,9 @@
       <p>Фото добавлено</p>
     </div>
   @endif
-    <div class="b-photo-person" style="background:url({{ $user->avatar->url('max') }}) center no-repeat;
-                                       background-size:cover;">
+    <div class="b-photo-person">
+       <div style="background:url({{ $user->avatar->url('max') }}) center no-repeat;
+                                       background-size:cover;"></div>
     </div>
     <div class="b-persobal-information">
         <div class="b-name-person">

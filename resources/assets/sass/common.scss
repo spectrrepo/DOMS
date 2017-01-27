@@ -15,6 +15,11 @@ img {
 input, textarea {
     font-size: 13px;
     line-height: 20px;
+    transition: all ease 0.3s;
+}
+input:focus,
+textarea:focus {
+    border: 1px solid #81afd5;
 }
 
 /*############################################################################*/
@@ -125,6 +130,9 @@ nav ul li a:hover {
     padding-right: 42px;
     transition: all 0.3s ease;
     font-size: 14px;
+}
+.logining-item-top {
+    margin-top: 6px;
 }
 .logining-item:hover {
     color: #993399;

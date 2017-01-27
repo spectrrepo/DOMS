@@ -35,7 +35,7 @@ class MessagesController extends Controller
         $messages->text_message = $_POST['text'];
 
         $messages->save();
-        return 'true';
+        return redirect()->back();
 
     }
 

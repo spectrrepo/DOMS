@@ -55,13 +55,13 @@ Route::get('/profile/admin/edit_copyrights', array('as' => 'pretense',
 Route::post('/delete_copyright', 'CopyrightController@delete');
 Route::post('/delete_comments/{id}', 'CommentController@delete');
 Route::post('/delete_message/{id}', 'MessagesController@deleteMail');
-Route::post('/delete_slide/{id}', 'ChangeSlideController@delete');
+Route::post('/delete_slide', 'ChangeSlideController@delete');
 
 Route::post('/save_copyright', 'CopyrightController@saveNewCopyright');
-Route::post('/add_slide/{id}', 'ChangeSlideController@delete');
+Route::post('/add_slide', 'ChangeSlideController@add');
 
 Route::post('/add_copyright', 'CopyrightController@add');
-Route::post('/edit_slide/{id}', 'ChangeSlideController@delete');
+Route::post('/edit_slide', 'ChangeSlideController@change');
 Route::post('/answer_mail', 'MessagesController@askOnMail');
 Route::post('/delete_verification_image/{id}','UserController@deleteVerificationImage');
 Route::post('/add_photo_site/{id}','PhotoController@addPhotoSite');

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Codesleeve\Stapler\ORM\EloquentTrait;
 
-class Slides extends Modelimplements StaplerableInterface
+class Slides extends Model implements StaplerableInterface
 {
     /**
      * table DB using model

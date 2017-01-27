@@ -11,7 +11,7 @@
     </div>
     <div class="logining">
       @if ( Auth::check())
-      <a href="{{ URL::to('profile/'.Auth::id()) }}" class="logining-item">{{ Auth::user()->name }}</a>
+      <a href="{{ URL::to('profile/'.Auth::id()) }}" class="logining-item logining-item-top">{{ Auth::user()->name }}</a>
       <a href="{{URL::route('logout')}}" class="logining-item">Выход</a>
       <a href="{{ URL::to('profile/'.Auth::id()) }}">
           <div class="login-portret" style="background:url({{ Auth::user()->avatar->url() }}) center no-repeat; background-size:cover;">

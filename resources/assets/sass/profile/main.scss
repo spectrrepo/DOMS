@@ -26,22 +26,27 @@
     padding-bottom: 10px;
 }
 .wrap-personal-information {
-    width: 73%;
+    width: 72.2%;
     clear: both;
-    height: 160px;
+    height: 180px;
 }
 .b-photo-person {
     width: 20%;
     overflow: hidden;
-    border-radius: 5px;
     float: left;
     height: 100%;
     background: #F4F4F4;
-    height: 160px;
+    height: 180px;
     box-sizing: border-box;
     position: relative;
     text-align: center;
     vertical-align: middle;
+    padding-right: 25px;
+}
+.b-photo-person div {
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
 }
 .b-photo-person input {
     position: absolute;
@@ -62,13 +67,14 @@
     float: left;
     height: auto;
     border-radius: 5px;
-    border: 1px solid #E5E5E5;
+    border: 1px solid #cccccc;
     box-sizing: border-box;
     overflow: hidden;
-    min-height: 162px;
+    min-height: 180px;
     font-size: 14px;
     width: 78%;
     margin-left: 1.5%;
+    position: relative;
 }
 .b-name-person {
     width: 33%;
@@ -95,12 +101,12 @@
     text-align: left;
     position: relative;
     min-height: 105px;
-    height: 105px;
+    height: 127px;
     overflow: hidden;
 }
 .to-bottom {
     position: absolute;
-    bottom: 15px;
+    bottom: 0px;
     right: 0px;
     cursor: pointer;
 }
@@ -136,20 +142,21 @@
     height: 50px;
     line-height: 70px;
     font-size: 14px;
+    clear: both;
 }
 
 /*########################block with news tape#############################*/
 
 .wrap-personal-news {
-    width: 73.5%;
+    width: 71.8%;
     height: auto;
     box-sizing: border-box;
 }
 .b-personal-news {
-    border: 1px solid #e5e5e5;
+    border: 1px solid #cccccc;
     height: auto;
     border-radius: 5px;
-    border: 1px solid #e5e5e5;
+    border: 1px solid #cccccc;
     margin-bottom: 20px;
     padding-bottom: 13px;
 }
@@ -205,18 +212,18 @@
 .col-news-min {
     width: 10%;
     float: left;
-    width: 14%;
+    width: 9%;
     height: 100px;
     margin-top: 1%;
     box-sizing: border-box;
 }
 .b-portret-blogger {
-    width: 90px;
-    height: 85px;
-    margin: 0 auto;
+    width: 75px;
+    height: 75px;
     text-align: center;
     background: #cadede;
     cursor: pointer;
+    margin-left: 20px;
 }
 .col-news-big {
     width: 90%;
@@ -234,7 +241,7 @@
 }
 .b-post-body {
     border-radius: 5px;
-    border: 1px solid #e5e5e5;
+    border: 1px solid #cccccc;
     height: auto;
     padding: 5px;
 }
@@ -248,16 +255,18 @@
 }
 .b-iformation {
     bottom: 0px;
-    margin-top: 50px;
+    margin-top: 10px;
     padding: 10px;
     width: 100%;
     height: 25px;
     box-sizing: border-box;
     padding-bottom: 0px;
+    margin-bottom: 10px;
 }
 .b-date {
     float: left;
-    margin-left: 10px;
+    margin-left: -8px;
+    font-size: 13px;
 }
 .b-statistics {
     float: right;
@@ -265,19 +274,20 @@
 }
 .b-item-stat {
     float: left;
-    margin-left: 1px;
     cursor: pointer;
     font-size: 0.86rem;
+    margin-left: 1px;
 }
 .ico {
     float: left;
-    display: block;
-    margin-top: 3px;
-    margin-right: 2px;
+    width: 20px;
+    height: 16px;
+    line-height: 14px;
 }
 .num-stat {
     float: left;
     display: block;
+    font-size: 13px;
 }
 .b-item-stat> .tooltip-stat {
     position: absolute;

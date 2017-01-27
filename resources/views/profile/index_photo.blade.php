@@ -2,8 +2,9 @@
 @section('profile-content')
 
 <div class="wrap-personal-information">
-  <div class="b-photo-person" style="background:url({{ $user->avatar->url('max') }}) center no-repeat;
-                                     background-size:cover;">
+  <div class="b-photo-person">
+     <div style="background:url({{ $user->avatar->url('max')}}) center no-repeat;
+     background-size: cover;"></div>
   </div>
     <div class="b-persobal-information">
         <div class="b-name-person">
@@ -63,7 +64,7 @@
           @foreach ($userImages as $userImage)
               <a href="/profile/admin/verification/{{ $userImage->id }}" class="item-gallery" style="position:absolute" data-grid-prepared="true">
                 <div class="uk-panel-box" >
-                    <img src="{{ $userImage->min_path }}" alt="" />
+                    <img src="{{ $userImage->quadro_photo }}" alt="" />
                     <div class="ico-liked">
                       <span class="uk-icon-justify uk-icon-eye"></span>
                       <span>{{ !empty($userImage->views_count) ? $userImage->views_count : '0'}}</span>

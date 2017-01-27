@@ -3402,7 +3402,21 @@ $( document ).ready(function() {
           return false;
      }
    });
+
 });
+$(document).mouseup(function (e) {
+    var container = $(".overlay");
+    if (container.has(e.target).length === 0){
+        container.fadeOut();
+    }
+});
+
+// $(document).mouseup(function (e) {
+//   var container = $(".sidebar-modal");
+//   if (container.has(e.target).length === 0){
+//       container.toggleClass('block-view');
+//   }
+// });
 
 $( document ).ready(function() {
   $('.delete-view-edit').on('click', function() {
@@ -3425,7 +3439,7 @@ $( document ).ready(function() {
 $( document ).ready(function() {
   $('.btn-dwnld-new').on('click', function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
-          lastIdJS = $('.b-personal-news').children('.b-person-post').index()+1;
+          lastIdJS = $('.b-person-post').length;
       $.ajax({
           type:'POST',
           data: {

@@ -6,7 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-use App\Slide;
+use App\Slides;
+use DB;
+use Image;
+use Input;
+
+
 
 /**
  * The ResultMessage class holds a message that can be returned
@@ -17,7 +22,7 @@ use App\Slide;
  *
  */
 
-class CopyrightController extends Controller
+class ChangeSlideController extends Controller
 {
     /**
      * @param
@@ -27,7 +32,7 @@ class CopyrightController extends Controller
      */
     public function index(){
 
-        $slides = Slide::all()->paginate(10);
+        $slides = DB::table('slides')->paginate(10);
 
         return view('moderator.slide_change', ['slides' => $slides]);
     }
@@ -40,11 +45,17 @@ class CopyrightController extends Controller
      */
     public function add(){
 
-        $slide = new Slide();
-        $slide->photo = $_POST['photo'];
+        $slide = new Slides();
         $slide->text = $_POST['text'];
 
         $slide->save();
+
+        $slides = Slides::orderBy('id', 'desc')->first();
+        $image = Image::make($_FILES['photo']['tmp_name']);
+        $image->encode('jpg');
+        $image->save(public_path('img/about-slider/slide-'.$slides->id.'.jpg'));
+        $slides->photo = '/img/about-slider/slide-'.$slides->id.'.jpg';
+        $slides->save();
         return redirect()->back();
     }
 
@@ -54,9 +65,10 @@ class CopyrightController extends Controller
      * @return
      *
      */
-    public function delete($id){
+    public function delete(){
 
-        $slide = Slide::find($id);
+        $id = $_POST['id'];
+        $slide = Slides::find($id);
         $slide->delete();
 
         return redirect()->back();
@@ -69,12 +81,19 @@ class CopyrightController extends Controller
      * @return
      *
      */
-    public function change($id){
+    public function change(){
 
-        $slide = Slide::find($id);
-        $slide->text =  $_POST['text'];
-        $slide->photo =  $_POST['photo'];
+        $id = $_POST['id'];
+        $slide = Slides::find($id);
+        if (Input::has('text')) {
+            $slide->text = $_POST['text'];
+        }
 
+        if (!empty($_FILES['photo']['tmp_name'])) {
+            $image = Image::make($_FILES['photo']['tmp_name']);
+            $image->encode('jpg');
+            $image->save(public_path($slide->photo));
+        }
         $slide->save();
 
         return redirect()->back();

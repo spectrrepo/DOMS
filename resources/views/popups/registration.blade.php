@@ -89,6 +89,6 @@
       </div>
       <div class="clear"></div>
     </div>
-    <input class="registr-submit" type="submit">
+    <input class="registr-submit" type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ">
   </div>
 </div>
