@@ -543,6 +543,7 @@ return j.call(r(a),c)})),b))for(;i>h;h++)b(a[h],c,g?d:d.call(a[h],h,b(a[h],c)));
 });
 
 $( document ).ready(function() {
+  
   var dataURL = 0,
       csrftoken = $('meta[name=_token]').attr('content');
       var queue = 1;
@@ -1264,10 +1265,11 @@ $( document ).ready(function() {
   $('.b-next-page').on('click', function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
           lastIdJS = $('#pole').children('.item-gallery:last-child').index(),
-          sortSorting = $('input[name=sortSorting]').val();
-          styleSorting = $('input[name=styleSorting]').val();
-          roomSorting = $('input[name=roomSorting]').val();
-          colorSorting = $('input[name=colorSorting]').val();
+          sortSorting = $('input[name=sortSorting]').val(),
+          styleSorting = $('input[name=styleSorting]').val(),
+          roomSorting = $('input[name=roomSorting]').val(),
+          colorSorting = $('input[name=colorSorting]').val(),
+          tagSorting = $('input[name=tagSorting]').val();
 
       $.ajax({
           type:'POST',
@@ -1277,23 +1279,25 @@ $( document ).ready(function() {
                   'sortSorting': sortSorting,
                   'styleSorting': styleSorting,
                   'roomSorting': roomSorting,
-                  'colorSorting': colorSorting
+                  'colorSorting': colorSorting,
+                  'tagSorting': tagSorting
           },
           url:'/pagination_index',
 
           success: function (data) {
-                data.forEach( function(item, i, data) {
-                  $('<a href="/photo/id=['+item.id+
-                      '],room=['+$('input[name=roomSort]').val()+
-                      '],styles=['+$('input[name=styleSort]').val()+
-                      '],colors=['+$('input[name=colorSort]').val()+
-                      '],sort=['+$('input[name=sortSort]').val()+
-                      ']" class="item-gallery" data-grid-prepared="true"style="position:absolute;">' +
+            for(var i=0; i<data.length; i++) {
+                  $('<a href="/photo/id=['+data[i].id+
+                      '],room=['+roomSorting+
+                      '],styles=['+styleSorting+
+                      '],colors=['+colorSorting+
+                      '],sort=['+sortSorting+
+                      '],tag=["'+tagSorting+
+                      '"]" class="item-gallery" data-grid-prepared="true"style="position:absolute;">' +
                       '<div class="uk-panel-box">' +
-                        '<img src="'+item.min_path+'">'+
+                        '<img src="'+data[i].min_path+'">'+
                        '</div>' +
                      '</a>').appendTo('.uk-grid-width-small-1-2');
-                   });
+            }
           }
       });
   });
@@ -3517,7 +3521,7 @@ $( document ).ready(function() {
                 'link' : link,
                 'user_id' : user_id
            },
-           url:'http://localhost:8000/add_links',
+           url:'/add_links',
            success: function () {
              $('input[name=link]').val('');
              $('#dialogLinkAdd').fadeOut();
@@ -3566,7 +3570,7 @@ $( document ).ready(function() {
                       'old_link' : old_link,
                       'user_id' : user_id
                  },
-                 url:'http://localhost:8000/edit_links',
+                 url:'/edit_links',
                  success: function () {
                    $('input[name=link]').val('');
                    $('#dialogLinkAdd').fadeOut();
@@ -3597,7 +3601,7 @@ $( document ).ready(function() {
                          'link' : link,
                          'user_id' : user_id
                },
-               url:'http://localhost:8000/delete_links',
+               url:'/delete_links',
 
                success: function () {
                  $('input[name=link]').val('');
@@ -3790,6 +3794,20 @@ $( document ).ready(function() {
     });
   });
 
+});
+
+$( document ).ready(function() {
+  $('#description-pole h3').on('click', function(){
+    $('<h3></h3>').appendTo('.description-scroll-place')
+                  .text($(this).text());
+    $('<p></p>').appendTo('.description-scroll-place')
+                .text($('#description-pole p').text());
+    $('#modalDescriptionFull').fadeIn();
+  });
+  $('#close-modal-description').on('click', function(){
+    $('#modalDescriptionFull').fadeOut();
+    $('.description-scroll-place').empty();
+  });
 });
 
 //# sourceMappingURL=app.js.map

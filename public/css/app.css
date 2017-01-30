@@ -6743,11 +6743,14 @@ html {
 
 .input-descreption {
   border: 1px solid #dddddd;
-  width: 100%;
   height: 50px;
   margin-bottom: 10px;
   width: 100%;
-  height: auto; }
+  resize: none;
+  background: white;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 5px; }
 
 .b-color-input {
   background: green;
@@ -6847,9 +6850,11 @@ html {
   display: block;
   border: 1px solid #dddddd;
   margin-left: 5px;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  background: white; }
 
 .btn-add-tag {
+  background: white;
   height: 30px;
   width: 8%;
   border: 1px solid #dddddd;
@@ -6910,7 +6915,8 @@ html {
   border: 1px solid #dddddd;
   border-radius: 5px;
   padding: 7px;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  background: white; }
 
 .wrap-tags-list-item {
   position: relative;
@@ -7034,17 +7040,16 @@ html {
   height: 180px; }
 
 .b-photo-person {
-  width: 20%;
-  overflow: hidden;
+  width: 17%;
   float: left;
-  height: 100%;
   background: #F4F4F4;
-  height: 180px;
-  box-sizing: border-box;
+  height: auto;
   position: relative;
   text-align: center;
   vertical-align: middle;
-  padding-right: 25px; }
+  margin-right: 3%;
+  overflow: hidden;
+  border-radius: 6px; }
 
 .b-photo-person div {
   border-radius: 5px;
@@ -7066,6 +7071,15 @@ html {
   max-width: 100%;
   width: auto; }
 
+.b-photo-person span {
+  position: absolute;
+  z-index: 100;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto; }
+
 .b-persobal-information {
   float: left;
   height: auto;
@@ -7077,6 +7091,7 @@ html {
   font-size: 14px;
   width: 78%;
   margin-left: 1.5%;
+  background: white;
   position: relative; }
 
 .b-name-person {
@@ -7210,9 +7225,8 @@ html {
   height: auto; }
 
 .col-news-min {
-  width: 10%;
   float: left;
-  width: 9%;
+  width: auto;
   height: 100px;
   margin-top: 1%;
   box-sizing: border-box; }
@@ -7243,7 +7257,8 @@ html {
   border-radius: 5px;
   border: 1px solid #cccccc;
   height: auto;
-  padding: 5px; }
+  padding: 5px;
+  background: white; }
 
 .b-photo-post {
   width: 80%;
@@ -7276,7 +7291,8 @@ html {
   float: left;
   cursor: pointer;
   font-size: 0.86rem;
-  margin-left: 1px; }
+  margin-left: 1px;
+  position: relative; }
 
 .ico {
   float: left;
@@ -7292,51 +7308,58 @@ html {
 .b-item-stat > .tooltip-stat {
   position: absolute;
   opacity: 0;
-  margin-left: -50px;
-  margin-top: -32px;
+  margin: auto;
+  bottom: 25px;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  z-index: 100; }
+  z-index: 100;
+  left: 0;
+  right: 0;
+  font-size: 12px; }
 
 .b-item-stat:hover > .tooltip-stat {
   position: absolute;
   opacity: 1; }
 
-.margin-like-tooltip {
-  margin-left: -61px;
-  bottom: 25px; }
+.b-item-stat > .margin-like-tooltip {
+  left: -23px;
+  right: -16px; }
 
 .b-item-stat > .margin-liked-tooltip {
-  margin-left: -46px;
-  margin-top: -33px; }
+  left: -30px;
+  right: -22px; }
 
 .b-item-stat > .margin-num-comment-tooltip {
-  margin-left: -105px;
-  margin-top: -36px; }
+  left: -62px;
+  right: -38px; }
 
 .b-item-stat > .margin-share-tooltip {
-  margin-left: -55px; }
+  left: -30px;
+  right: -11px; }
 
 .b-item-stat > .margin-full-scr-tooltip {
-  margin-left: -78px; }
+  left: -37px;
+  right: -21px; }
 
 .b-item-stat > .margin-callback-tooltip {
-  margin-left: -56px; }
+  left: -16px;
+  right: -1px; }
+
+.b-item-stat > .other-margin-tooltip1 {
+  left: -44px;
+  right: -32px; }
 
 .triangle-tooltip-stat {
-  width: 0;
-  height: 0;
+  width: 1px;
+  height: 1px;
   display: block;
   border-style: solid;
-  border-width: 10px 5px 0 5px;
-  border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
-  margin: 0 auto; }
-
-.triangle-full-scr {
-  margin-left: 63px; }
-
-.triangle-callback {
-  margin-left: 41px; }
+  border-width: 8px 6px 0 6px;
+  border-color: #454343 transparent transparent transparent;
+  left: 0;
+  right: -12px;
+  position: absolute;
+  margin: auto; }
 
 .text-tooltip-stat {
   display: block;
@@ -7344,18 +7367,14 @@ html {
   background-color: rgba(0, 0, 0, 0.7);
   color: #e4e4e4;
   border-radius: 3px;
-  padding: 2px; }
-
-.b-item-stat > .other-margin-tooltip1 {
-  margin-left: -97px; }
-
-.b-item-stat > .other-margin-tooltip2 {
-  margin-left: -62px; }
+  padding: 7px;
+  border-radius: 5px;
+  text-align: center; }
 
 .btn-dwnld-new {
   text-align: center;
   clear: both;
-  width: 73.5%;
+  width: 71.8%;
   height: 50px;
   color: white;
   line-height: 50px;
@@ -7389,7 +7408,7 @@ pre {
 .cell-item-admin {
   float: left;
   width: 20%;
-  height: 100%;
+  height: 90px;
   text-align: center; }
 
 .id-cell {
@@ -7529,6 +7548,7 @@ ul {
   float: left;
   background: none;
   border-left: none;
+  background: white;
   cursor: pointer; }
 
 .menu-item:hover {
@@ -7581,7 +7601,8 @@ ul {
 
 /*#############################block news#####################################*/
 .b-news {
-  padding: 7px; }
+  padding: 7px;
+  background: white; }
 
 .news {
   border: 1px solid #cccccc;
@@ -8032,8 +8053,9 @@ a.btn-prew span {
 .author-name-zoom {
   float: left;
   margin-left: 6px;
-  line-height: 28px;
-  height: 20px; }
+  height: 20px;
+  line-height: 21px;
+  color: white; }
 
 .author-name {
   float: left;
@@ -8102,7 +8124,7 @@ a.btn-prew span {
   border: 1px solid #cccccc;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  background: none;
+  background: white;
   cursor: pointer;
   border-left: none;
   height: 28px;
@@ -8153,6 +8175,9 @@ a.btn-prew span {
 .margin-title-tag {
   margin-top: 20px; }
 
+.pole-tag {
+  background: white; }
+
 .tag-item {
   display: block;
   float: left;
@@ -8177,7 +8202,8 @@ a.btn-prew span {
   border: 1px solid #ccc;
   margin-top: 10px;
   border-radius: 5px;
-  position: relative; }
+  position: relative;
+  background-color: white; }
 
 #description-pole {
   padding: 10px;
@@ -8286,7 +8312,8 @@ a.btn-prew span {
 .wrap-news-item {
   width: 25%;
   padding: 10px;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  background: white; }
 
 .item-news-title {
   color: #993399;
@@ -8769,7 +8796,11 @@ a.btn-prew span {
 
 .recover-title {
   text-align: center;
-  display: block; }
+  display: block;
+  font-size: 14px; }
+
+.recover-text {
+  font-size: 14px; }
 
 .recover-text-inp {
   float: left;
@@ -8800,13 +8831,14 @@ a.btn-prew span {
   text-align: center;
   width: 100%;
   display: block;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  font-size: 14px; }
 
 .b-soc-log {
   width: 100%;
   height: auto;
-  padding-top: 15px;
-  padding-bottom: 15px; }
+  padding-bottom: 15px;
+  padding-top: 5px; }
 
 .fb {
   width: 100px;
@@ -8860,7 +8892,8 @@ a.btn-prew span {
   border-radius: 3px;
   cursor: pointer;
   box-sizing: border-box;
-  padding: 8px; }
+  padding: 8px;
+  font-size: 16px; }
 
 .modal-login-sbmt:hover {
   background: #828181; }
@@ -8870,7 +8903,8 @@ a.btn-prew span {
   display: block;
   float: left;
   padding-left: 17px;
-  cursor: pointer; }
+  cursor: pointer;
+  font-size: 14px; }
 
 .modal-reg {
   width: 900px;
@@ -9109,13 +9143,14 @@ a.btn-prew span {
 
 .close {
   position: absolute;
-  top: 0;
-  right: 0px;
+  top: 6px;
+  right: 6px;
   display: block;
   width: 17px;
   height: 17px;
   cursor: pointer;
-  font-size: 17px; }
+  font-size: 15px;
+  color: #747070; }
 
 .white-close {
   color: white; }
@@ -9318,9 +9353,17 @@ a.btn-prew span {
   width: 100%;
   background-color: #000000;
   height: 47px;
-  font-family: "PT Sans Narrow";
   padding: 15px 5%;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  font-family: 'MainFont';
+  color: white;
+  font-size: 14px; }
+
+.other-color {
+  background: #454343; }
+
+.ico-slider-zoom::before {
+  color: white; }
 
 .img-max-area {
   position: absolute;
@@ -9663,6 +9706,15 @@ a.btn-prew span {
 
 .active-drop-item {
   background: rgba(0, 0, 0, 0.8); }
+
+.description-scroll-place {
+  color: white;
+  width: 90%;
+  height: 94%;
+  margin: 0 auto;
+  margin-top: 2%;
+  overflow-y: scroll;
+  text-align: left; }
 
 /*! fancyBox v2.1.5 fancyapps.com | fancyapps.com/fancybox/#license */
 .fancybox-wrap,

@@ -15,8 +15,16 @@ return [
     |            "ses", "sparkpost", "log"
     |
     */
-
-    'driver' => env('MAIL_DRIVER', 'log'),
+    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'host' => env('MAIL_HOST', 'smtp.yandex.ru'),
+    'port' => env('MAIL_PORT', 587),
+    'from' => [
+               'address' => 'info@domspectr.ru',
+               'name' => 'DOMS',
+    ],
+    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'username' => env('MAIL_USERNAME', 'info@domspectr.ru'),
+    'password' => env('MAIL_PASSWORD', 'info2015'),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +37,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+    // 'host' => env('MAIL_HOST', 'smtp.gmail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +50,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 587),
+    // 'port' => env('MAIL_PORT', 587),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,10 +63,10 @@ return [
     |
     */
 
-    'from' => [
-        'address' => 'skiffy166@gmail.com',
-        'name' => 'Example',
-    ],
+    // 'from' => [
+    //     'address' => 'skiffy166@gmail.com',
+    //     'name' => 'Example',
+    // ],
 
     /*
     |--------------------------------------------------------------------------
@@ -71,7 +79,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    // 'encryption' => env('MAIL_ENCRYPTION', 'tls'),
 
     /*
     |--------------------------------------------------------------------------
@@ -84,7 +92,7 @@ return [
     |
     */
 
-    'username' => env('skiffy166@gmail.com'),
+    // 'username' => env('skiffy166@gmail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -97,7 +105,7 @@ return [
     |
     */
 
-    'password' => env('Skeleton4ik4ik'),
+    // 'password' => env('Skeleton4ik4ik'),
 
     /*
     |--------------------------------------------------------------------------
@@ -110,8 +118,8 @@ return [
     |
     */
 
-    'sendmail' => '/usr/sbin/sendmail -bs',
+    // 'sendmail' => '/usr/sbin/sendmail -bs',
 
-    'pretend' => false
+    // 'pretend' => false
 
 ];

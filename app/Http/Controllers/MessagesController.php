@@ -34,6 +34,13 @@ class MessagesController extends Controller
         $messages->e_mail = $_POST['e_mail'];
         $messages->text_message = $_POST['text'];
 
+        Mail::raw('Текст письма', function($message)
+        {
+            $message->from('info@domspectr.ru', 'DOMS');
+
+            $message->to('skiffy166@gmail.com');
+        });
+
         $messages->save();
         return redirect()->back();
 
