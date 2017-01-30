@@ -16,7 +16,7 @@
     {{ $slide->id }}
   </div>
   <div class="cell-item-admin id-cell">
-    <img src="{{ $slide->photo }}"/>
+    <img class="img-inside-cell" src="{{ $slide->photo }}"/>
   </div>
   <div class="cell-item-admin id-cell">
     <input type="file" name="photo" value="">
