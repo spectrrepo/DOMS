@@ -9,8 +9,7 @@
     </div>
   @endif
     <div class="b-photo-person">
-       <div style="background:url({{ $user->avatar->url('max') }}) center no-repeat;
-                                       background-size:cover;"></div>
+          <img src="{{ $user->quadro_ava }}" alt="" />
     </div>
     <div class="b-persobal-information">
         <div class="b-name-person">
@@ -88,7 +87,7 @@
                     <div class="b-item-stat">
                       <span class="ico uk-icon-justify uk-icon-eye"></span>
                       <span class="num-stat">{{ !empty($image->views_count) ? $image->views_count : '0' }}</span>
-                      <span class="tooltip-stat other-margin-tooltip1">
+                      <span class="tooltip-stat margin-num-comment-tooltip">
                         <span class="text-tooltip-stat">
                           количество просмотров
                         </span>
@@ -98,7 +97,7 @@
                     <div class="b-item-stat">
                       <span class="ico uk-icon-justify uk-icon-heart"></span>
                       <span class="num-stat">{{ !empty($image->likes_count) ? $image->likes_count : '0' }}</span>
-                      <span class="tooltip-stat other-margin-tooltip2">
+                      <span class="tooltip-stat margin-like-tooltip">
                         <span class="text-tooltip-stat">
                           понравилось
                         </span>
@@ -108,7 +107,7 @@
                     <div class="b-item-stat">
                       <span class="ico uk-icon-justify uk-icon-star"></span>
                       <span class="num-stat">{{ !empty($image->likes_count) ? $image->likes_count : '0' }}</span>
-                      <span class="tooltip-stat">
+                      <span class="tooltip-stat margin-liked-tooltip">
                         <span class="text-tooltip-stat">
                          избранное
                         </span>

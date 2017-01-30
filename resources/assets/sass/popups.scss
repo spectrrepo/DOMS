@@ -199,6 +199,10 @@
 .recover-title {
   text-align: center;
   display: block;
+  font-size: 14px;
+}
+.recover-text{
+  font-size: 14px;
 }
 .recover-text-inp {
   float: left;
@@ -231,12 +235,13 @@
   width: 100%;
   display: block;
   text-transform: uppercase;
+  font-size: 14px;
 }
 .b-soc-log {
   width: 100%;
   height: auto;
-  padding-top: 15px;
   padding-bottom: 15px;
+  padding-top: 5px;
 }
 .fb {
   width: 100px;
@@ -288,6 +293,7 @@
   cursor: pointer;
   box-sizing: border-box;
   padding: 8px;
+  font-size: 16px;
 }
 .modal-login-sbmt:hover {
   background: #828181;
@@ -298,6 +304,7 @@
   float: left;
   padding-left: 17px;
   cursor: pointer;
+  font-size: 14px;
 }
 // ====================== registration ================== //
 .modal-reg {
@@ -544,13 +551,14 @@
 }
 .close{
   position: absolute;
-  top: 0;
-  right: 0px;
+  top: 6px;
+  right: 6px;
   display: block;
   width: 17px;
   height: 17px;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 15px;
+  color: #747070
 }
 .white-close{
   color: white;
@@ -764,9 +772,17 @@
   width: 100%;
   background-color: #000000;
   height: 47px;
-  font-family: "PT Sans Narrow";
   padding: 15px 5%;
   box-sizing: border-box;
+  font-family: 'MainFont';
+  color: white;
+  font-size: 14px;
+}
+.other-color {
+  background: #454343;
+}
+.ico-slider-zoom::before {
+  color: white;
 }
 .img-max-area {
   position: absolute;
@@ -1111,4 +1127,16 @@
 }
 .active-drop-item {
   background: rgba(0, 0, 0, 0.8);
+}
+
+// modal for description
+
+.description-scroll-place {
+  color: white;
+  width: 90%;
+  height: 94%;
+  margin: 0 auto;
+  margin-top: 2%;
+  overflow-y: scroll;
+  text-align: left;
 }

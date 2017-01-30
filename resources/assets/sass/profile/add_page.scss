@@ -52,10 +52,14 @@
 }
 .input-descreption{
   border: 1px solid #dddddd;
+  height: 50px;
+  margin-bottom: 10px;
   width: 100%;
-  height: 50px;margin-bottom: 10px;
-  width: 100%;
-  height: auto;
+  resize: none;
+  background: white;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 5px;
 }
 .b-color-input{
   background: green;
@@ -155,8 +159,10 @@
   border:1px solid #dddddd;
   margin-left: 5px;
   box-sizing: border-box;
+  background: white;
 }
 .btn-add-tag{
+  background: white;
   height: 30px;
   width: 8%;
   border: 1px solid #dddddd;
@@ -216,6 +222,7 @@
   border-radius: 5px;
   padding: 7px;
   box-sizing: border-box;
+  background: white;
 }
 .wrap-tags-list-item {
   position: relative;

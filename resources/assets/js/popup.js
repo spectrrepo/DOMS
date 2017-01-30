@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+  
   var dataURL = 0,
       csrftoken = $('meta[name=_token]').attr('content');
       var queue = 1;

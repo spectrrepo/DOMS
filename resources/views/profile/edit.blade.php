@@ -3,8 +3,7 @@
   <div class="wrap-personal-information edit-line-profile">
     {{ Form::open( array('id'=> 'editUser', 'url' => '/update/profile', 'files' => 'true') ) }}
       <div class="b-photo-person" id="photo-person">
-          <div style="background:url({{ $user->avatar->url('max')}}) center no-repeat;
-              background-size: cover;"></div>
+          <img src="{{ $user->quadro_ava }}" alt="" />
           <div class="hover-effect-person uk-icon-justify uk-icon-pencil"></div>
           <input id="photo" type="file" name="avatar">
       </div>

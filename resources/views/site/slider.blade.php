@@ -11,6 +11,7 @@
      <div class="one-picture-place">
        <div class="b-photo-slider">
           @include('popups.modal_racourse')
+          @include('popups.modal_description')
           @include('popups.law')
          <div class="wrap-slider">
            @foreach ($images as $image_el)
@@ -252,7 +253,7 @@
             <div class="clear"></div>
           </div>
           </div>
-          @include('../popup_for_slider')
+          @include('../popups.popup_for_slider')
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
          <input type="hidden" name="lastId" value=" $imageLast->id ">
 

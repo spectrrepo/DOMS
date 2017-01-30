@@ -296,8 +296,9 @@ a.btn-prew span {
 .author-name-zoom {
   float: left;
   margin-left: 6px;
-  line-height: 28px;
   height: 20px;
+  line-height: 21px;
+  color: white;
 }
 .author-name {
   float: left;
@@ -366,7 +367,7 @@ a.btn-prew span {
   border: 1px solid #cccccc;
   border-top-right-radius: 5px;
   border-bottom-right-radius:5px;
-  background: none;
+  background: white;
   cursor: pointer;
   border-left: none;
   height: 28px;
@@ -418,7 +419,9 @@ a.btn-prew span {
 .margin-title-tag {
   margin-top: 20px;
 }
-.pole-tag{}
+.pole-tag{
+  background: white;
+}
 .tag-item{
   display: block;
   float: left;
@@ -443,6 +446,7 @@ a.btn-prew span {
   margin-top: 10px;
   border-radius: 5px;
   position: relative;
+  background-color: white;
 }
 #description-pole {
   padding: 10px;

@@ -3,8 +3,7 @@
 
 <div class="wrap-personal-information">
   <div class="b-photo-person">
-     <div style="background:url({{ $user->avatar->url('max')}}) center no-repeat;
-     background-size: cover;"></div>
+     <img src="{{ $user->quadro_ava}}" alt="Автопортрет {{ Auth::user()->id }}" />
   </div>
     <div class="b-persobal-information">
         <div class="b-name-person">

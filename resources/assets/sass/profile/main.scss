@@ -31,17 +31,16 @@
     height: 180px;
 }
 .b-photo-person {
-    width: 20%;
-    overflow: hidden;
+    width: 17%;
     float: left;
-    height: 100%;
     background: #F4F4F4;
-    height: 180px;
-    box-sizing: border-box;
+    height: auto;
     position: relative;
     text-align: center;
     vertical-align: middle;
-    padding-right: 25px;
+    margin-right: 3%;
+    overflow: hidden;
+    border-radius: 6px;
 }
 .b-photo-person div {
     border-radius: 5px;
@@ -63,6 +62,15 @@
     max-width: 100%;
     width: auto;
 }
+.b-photo-person span {
+  position: absolute;
+  z-index: 100;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
 .b-persobal-information {
     float: left;
     height: auto;
@@ -74,6 +82,7 @@
     font-size: 14px;
     width: 78%;
     margin-left: 1.5%;
+    background: white;
     position: relative;
 }
 .b-name-person {
@@ -210,9 +219,8 @@
     height: auto;
 }
 .col-news-min {
-    width: 10%;
     float: left;
-    width: 9%;
+    width: auto;
     height: 100px;
     margin-top: 1%;
     box-sizing: border-box;
@@ -244,6 +252,7 @@
     border: 1px solid #cccccc;
     height: auto;
     padding: 5px;
+    background: white;
 }
 .b-photo-post {
     width: 80%;
@@ -277,6 +286,7 @@
     cursor: pointer;
     font-size: 0.86rem;
     margin-left: 1px;
+    position: relative;
 }
 .ico {
     float: left;
@@ -292,50 +302,57 @@
 .b-item-stat> .tooltip-stat {
     position: absolute;
     opacity: 0;
-    margin-left: -50px;
-    margin-top: -32px;
+    margin: auto;
+    bottom: 25px;
     transition: all 0.3s ease;
     z-index: 100;
+    left: 0;
+    right: 0;
+    font-size: 12px;
 }
 .b-item-stat:hover> .tooltip-stat {
     position: absolute;
     opacity: 1;
 }
-.margin-like-tooltip {
-  margin-left: -61px;
-  bottom: 25px;
+.b-item-stat > .margin-like-tooltip {
+    left: -23px;
+    right: -16px;
 }
 .b-item-stat > .margin-liked-tooltip {
-  margin-left: -46px;
-  margin-top: -33px;
+  left: -30px;
+  right: -22px;
 }
 .b-item-stat > .margin-num-comment-tooltip {
-  margin-left: -105px;
-  margin-top: -36px;
+    left: -62px;
+    right: -38px;
 }
 .b-item-stat > .margin-share-tooltip {
-    margin-left: -55px;
+    left: -30px;
+    right: -11px;
 }
 .b-item-stat > .margin-full-scr-tooltip {
-    margin-left: -78px;
+    left: -37px;
+    right: -21px;
 }
 .b-item-stat > .margin-callback-tooltip {
-    margin-left: -56px;
+    left: -16px;
+    right: -1px;
+}
+.b-item-stat> .other-margin-tooltip1 {
+    left: -44px;
+    right: -32px;
 }
 .triangle-tooltip-stat {
-    width: 0;
-    height: 0;
+    width: 1px;
+    height: 1px;
     display: block;
     border-style: solid;
-    border-width: 10px 5px 0 5px;
-    border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
-    margin: 0 auto;
-}
-.triangle-full-scr {
-    margin-left: 63px;
-}
-.triangle-callback {
-    margin-left: 41px;
+    border-width: 8px 6px 0 6px;
+    border-color: #454343 transparent transparent transparent;
+    left: 0;
+    right: -12px;
+    position: absolute;
+    margin: auto;
 }
 .text-tooltip-stat {
     display: block;
@@ -343,18 +360,14 @@
     background-color: rgba(0, 0, 0, 0.7);
     color: rgb(228, 228, 228);
     border-radius: 3px;
-    padding: 2px;
-}
-.b-item-stat> .other-margin-tooltip1 {
-    margin-left: -97px;
-}
-.b-item-stat> .other-margin-tooltip2 {
-    margin-left: -62px;
+    padding: 7px;
+    border-radius: 5px;
+    text-align: center;
 }
 .btn-dwnld-new {
     text-align: center;
     clear: both;
-    width: 73.5%;
+    width: 71.8%;
     height: 50px;
     color: white;
     line-height: 50px;

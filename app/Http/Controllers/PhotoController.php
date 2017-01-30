@@ -630,8 +630,8 @@ class PhotoController extends Controller
                         ->first();
         $updateIinfo = Picture::find($addInfo->id);
         $img2 = Image::make($_FILES['photo']['tmp_name']);
-        $img2->crop(400, 400);
         $img2->encode('jpg');
+        $img2->fit(400);
         $img2->save(public_path('/img/quadro/'.$addInfo->id.'.jpg'));
         $updateIinfo->quadro_photo = '/img/quadro/'.$addInfo->id.'.jpg';
         $updateIinfo->full_path = $updateIinfo->photo->url('max');
@@ -662,7 +662,7 @@ class PhotoController extends Controller
             $image->colors = $color;
         }
       }
-if (Input::has('style')) {
+      if (Input::has('style')) {
 
         $room = $_POST['room'];
         $roomRes = "";
@@ -674,8 +674,8 @@ if (Input::has('style')) {
         }else{
             $image->rooms = $room;
         }
-}
-if (Input::has('style')) {
+        }
+        if (Input::has('style')) {
 
         $style = $_POST['style'];
         $styleRes = "";
@@ -687,11 +687,11 @@ if (Input::has('style')) {
         }else{
             $image->style = $style;
         }
-}
-$variantRes = " ";
-if (!empty($_FILES['files']['tmp_name'])){
+        }
+        $variantRes = " ";
+        if (!empty($_FILES['files']['tmp_name'])){
 
-     foreach ($_FILES['files']['tmp_name'] as $variantItem) {
+            foreach ($_FILES['files']['tmp_name'] as $variantItem) {
           $view = new View();
           $imgView = Image::make($variantItem);
           $watermarkView = Image::make(public_path('/img/watermark-files/poloska.png'));
@@ -714,8 +714,8 @@ if (!empty($_FILES['files']['tmp_name'])){
           $updateViewInfo->post_id = $id;
           $updateViewInfo->save();
 
-     }
-}
+         }
+        }
         $image->save();
         return redirect()->back();
     }

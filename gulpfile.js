@@ -38,6 +38,7 @@ elixir(mix => {
         "ajax-add-soc-link.js",
         "ajax-pretense.js",
         "fast-search-tag.js",
+        "popup-description.js"
     ],'public/js/app.js')
        .copy('resources/assets/fonts/*.*', 'public/css/fonts/');
 });

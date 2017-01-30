@@ -22,20 +22,20 @@
     </span>
     <span class="status-photo-zoom">
       <div class="b-item-stat comment">
-        <span class="ico-slider uk-icon-justify uk-icon-comments"></span>
+        <span class="ico-slider ico-slider-zoom uk-icon-justify uk-icon-comments"></span>
         <span id="num_comment_zoom">{{ $num_comment }}</span>
         <span class="tooltip-stat margin-num-comment-tooltip">
-          <span class="text-tooltip-stat">
+          <span class="text-tooltip-stat other-color">
             Количество коментариев
           </span>
           <span class="triangle-tooltip-stat"></span>
         </span>
       </div>
       <div class="b-item-stat view">
-        <span class="ico-slider uk-icon-justify uk-icon-eye"></span>
+        <span class="ico-slider ico-slider-zoom uk-icon-justify uk-icon-eye"></span>
         <span id="num_views_zoom"> {{ $image->views_count }}</span>
         <span class="tooltip-stat other-margin-tooltip1">
-          <span class="text-tooltip-stat">
+          <span class="text-tooltip-stat other-color">
             Количество просмотров
           </span>
           <span class="triangle-tooltip-stat"></span>

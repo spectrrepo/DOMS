@@ -8,15 +8,23 @@
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
              <ul>
                @foreach ( $rooms as $room )
-               <li class="item-moodal-sidebar" data-url="{{ $room->id }}" >
-                 <span class="item-modal-text"> {{ $room->title }} </span>
-                 <span class="choose-ico uk-icon-justify uk-icon-check"></span>
-                 <div class="clear"></div>
-               </li>
+                   <li class="item-moodal-sidebar" data-url="{{ $room->id }}" >
+                     <span class="item-modal-text"> {{ $room->title }} </span>
+                     <span class="choose-ico uk-icon-justify uk-icon-check"></span>
+                     <div class="clear"></div>
+                   </li>
                @endforeach
              </ul>
         </div>
         <div class="clear"></div>
+        <!-- @foreach ($rooms as $room)
+          @if (preg_match('['.$room->id.']', $roomSorting))
+           <li class="choose-sort-item" data-list="1" data-url="1">
+              <span class="name-sort-item"> {{ $room->title}} </span>
+              <i class="close-sort-item">×</i>
+           </li>
+          @endif
+        @endforeach -->
       </li>
       <li id="styles{{ preg_match('[/photo/]', URL::current()) ? '-slider' : ''}}" class="menu-item">
         <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
@@ -42,6 +50,14 @@
              </div>
            </div>
            <div class="clear"></div>
+           <!-- @foreach ($styles as $style)
+               @if (preg_match('['.$style->id.']', $styleSorting))
+                  <li class="choose-sort-item" data-list="1" data-url="1">
+                     <span class="name-sort-item"> {{ $style->title}} </span>
+                     <i class="close-sort-item">×</i>
+                  </li>
+               @endif
+           @endforeach -->
         </li>
       <li id="colors{{ preg_match('[/photo/]', URL::current()) ? '-slider' : ''}}" class="menu-item">
         <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
@@ -58,7 +74,16 @@
                </ul>
            </div>
            <div class="clear"></div>
-        </li>
+           <!-- @foreach ($colors as $color)
+               @if (preg_match('['.$color->id.']', $colorSorting))
+                 <li class="choose-sort-item" data-list="1" data-url="1" style="width: 40px;">
+                     <span class="name-sort-item" style="display: block;
+                     margin: 2px; height: 8px; width: 18px; background:{{ $color->RGB }};"></span>
+                     <i class="close-sort-item">×</i>
+                 </li>
+               @endif
+           @endforeach -->
+       </li>
       <li id="orders{{ preg_match('[/photo/]', URL::current()) ? '-slider' : ''}}" class="menu-item">
         <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
         <span class="click-ready">Сортировка</span>
@@ -83,6 +108,22 @@
              </ul>
            </div>
            <div class="clear"></div>
+           <!-- @if (preg_match('/new/', $sortSorting))
+               <li class="choose-sort-item" data-list="1" data-url="new">
+                   <span class="name-sort-item">Новое</span>
+                   <i class="close-sort-item">×</i>
+               </li>
+           @elseif (preg_match('/recommended/', $sortSorting))
+               <li class="choose-sort-item" data-list="1" data-url="new">
+                   <span class="name-sort-item">Рекомендованное</span>
+                   <i class="close-sort-item">×</i>
+               </li>
+           @elseif (preg_match('/popular/', $sortSorting))
+               <li class="choose-sort-item" data-list="1" data-url="new">
+                   <span class="name-sort-item">Популярное</span>
+                   <i class="close-sort-item">×</i>
+               </li>
+           @endif -->
      </li>
     </ul>
     <div class="search">

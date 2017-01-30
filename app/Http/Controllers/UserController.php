@@ -12,6 +12,7 @@ use File;
 use Auth;
 use Hash;
 use DB;
+use Image;
 
 use App\User;
 use App\Style;
@@ -132,7 +133,8 @@ class UserController extends Controller
          {
             return redirect()->intended();
          }else {
-            return redirect('/login');
+            // with message
+            return redirect('/');
          }
      }
 
@@ -214,12 +216,6 @@ class UserController extends Controller
              return view('profile.liked', ['images' => $images]);
           }
       }
-      public function pretenseAdd()
-      {
-          if (Auth::check()) {
-
-          }
-      }
       /**
        * Login Form
        *
@@ -253,6 +249,13 @@ class UserController extends Controller
                $user->path_min = $user->avatar->url('small');
                $user->path_full = $user->avatar->url('max');
 
+               $quadroAva = Image::make($_FILES['avatar']['tmp_name']);
+               $quadroAva->encode('jpg');
+               $quadroAva->fit(180);
+
+               $quadroAva->save(public_path('/img/quadro-ava/'.Auth::id().'jpg'));
+
+               $user->quadro_ava = '/img/quadro-ava/'.Auth::id().'jpg';
            }
 
            $user->save();
