@@ -138,23 +138,60 @@ class PhotoController extends Controller
      */
      public function indexAddPage(){
          $lastId = $_POST['lastId'];
-         $sortSort = $_POST['sortSorting'];
-         $roomSort = $_POST['roomSorting'];
-         $styleSort = $_POST['styleSorting'];
-         $colorSort = $_POST['colorSorting'];
+         $sort = $_POST['sortSorting'];
+         $room = $_POST['roomSorting'];
+         $style = $_POST['styleSorting'];
+         $color = $_POST['colorSorting'];
+         $tagSort = $_POST['tagSorting'];
+
+         if ($room != 0 ) {
+            $roomSort = ' rooms like "% '.$room.',%"';
+         }else{
+            $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
+         }
+         if ($style != 0 ) {
+            $styleSort = ' style like "% '.$style.',%"';
+         }else{
+            $styleSort = "style regexp '[a-zA-Z0-9_]'";
+         }
+         if ($color != 0 ) {
+            $colorSort = ' colors like "% '.$color.',%"';
+         }else {
+            $colorSort = "colors regexp '[a-zA-Z0-9_]'";
+         }
+         if ($sort != 0 ) {
+          if ($sort == 'popular') {
+              $sortSort = 'views_count';
+          }elseif ($sort == 'recommended') {
+              $sortSort = 'id';
+          }elseif ($sort == 'new') {
+              $sortSort = 'id';
+          }else {
+              $sortSort = '';
+          }
+
+         }else{
+           $sortSort = true;
+
+         }
+
+         if ( $tagSort != '0') {
+            $tagSort = 'and tags like "%#'.$tag.';%" ';
+         } else {
+            $tagSort = '';
+         }
 
          if ($sortSort != 0) {
-              $ajaxImage = Picture::whereRaw("rooms  regexp '[".$roomSort."]' and style regexp '[".$styleSort."]' and colors regexp '[".$colorSort."]'")
-                               ->where('verified', '=', 1)
-                               ->skip($lastId)
-                               ->take(3)
-                               ->get();
+              $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
+                                    ->skip($lastId)
+                                    ->take(3)
+                                    ->get();
          }else {
-              $ajaxImage = Picture::whereRaw("rooms regexp '[".$roomSort."]' and style regexp '[".$styleSort."]' and colors regexp '[".$colorSort."]'")
-                               ->where('verified', '=', 1)
-                               ->skip($lastId)
-                               ->take(3)
-                               ->get();
+              $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
+                                    ->skip($lastId)
+                                    ->take(3)
+                                    ->orderBy($sortSort, 'desc')
+                                    ->get();
          }
 
          return $ajaxImage;
@@ -221,7 +258,6 @@ class PhotoController extends Controller
          }
          return $ajaxImage;
      }
-
      /**
       * Slider photo sort download
       * @param
