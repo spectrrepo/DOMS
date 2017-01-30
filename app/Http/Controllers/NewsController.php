@@ -42,7 +42,7 @@ class NewsController extends Controller
 
         $variantRes = "";
         if (!empty($_FILES['variants']['tmp_name'])){
-            foreach (Input::file('variants') as $variantItem) {
+            foreach ($_FILES['variants']['tmp_name'] as $variantItem) {
                 $view = new NewsVariant();
                 $view->news_variant = $variantItem;
                 $view->save();
