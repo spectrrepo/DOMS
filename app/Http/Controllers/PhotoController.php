@@ -498,7 +498,6 @@ class PhotoController extends Controller
 
         $image = new Picture();
 
-        $lastId = Picture::orderBy('id', 'desc')->first();
         $img = Image::make($_FILES['photo']['tmp_name']);
 
         $watermark = Image::make(public_path('/img/watermark-files/poloska.png'));
@@ -548,6 +547,7 @@ class PhotoController extends Controller
                  $image->style = $style;
              }
         }
+        $lastId = Picture::orderBy('id', 'desc')->first();
         $variantRes = " ";
         if (!empty($_FILES['files']['tmp_name'])){
 
@@ -595,7 +595,6 @@ class PhotoController extends Controller
         $updateIinfo = Picture::find($addInfo->id);
         $img2 = Image::make($_FILES['photo']['tmp_name']);
         $img2->crop(400, 400);
-     //    $img2->resize(400, 400);
         $img2->encode('jpg');
         $img2->save(public_path('/img/quadro/'.$addInfo->id.'.jpg'));
         $updateIinfo->quadro_photo = '/img/quadro/'.$addInfo->id.'.jpg';

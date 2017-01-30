@@ -12,7 +12,7 @@ $( document ).ready(function() {
                     'post_id' : post_id,
                     'user_id' : user_id
           },
-          url:'http://localhost:8000/liked',
+          url:'/liked',
 
           success: function () {
                 $('.uk-icon-star').addClass('active-favorite');

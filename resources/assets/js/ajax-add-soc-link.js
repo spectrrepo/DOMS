@@ -28,7 +28,7 @@ $( document ).ready(function() {
                 'link' : link,
                 'user_id' : user_id
            },
-           url:'http://localhost:8000/add_links',
+           url:'/add_links',
            success: function () {
              $('input[name=link]').val('');
              $('#dialogLinkAdd').fadeOut();
@@ -77,7 +77,7 @@ $( document ).ready(function() {
                       'old_link' : old_link,
                       'user_id' : user_id
                  },
-                 url:'http://localhost:8000/edit_links',
+                 url:'/edit_links',
                  success: function () {
                    $('input[name=link]').val('');
                    $('#dialogLinkAdd').fadeOut();
@@ -108,7 +108,7 @@ $( document ).ready(function() {
                          'link' : link,
                          'user_id' : user_id
                },
-               url:'http://localhost:8000/delete_links',
+               url:'/delete_links',
 
                success: function () {
                  $('input[name=link]').val('');

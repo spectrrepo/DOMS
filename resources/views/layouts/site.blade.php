@@ -3,7 +3,7 @@
 @section('common-content')
 <div class="site-wrapper">
 <div class="conteiner">
-  @if (URL::current() != URL::to('http://localhost:8000/news'))
+  @if (!(preg_match('[/news]', URL::current())))
     @include('../helpers.sidebar_main')
   @endif
   <div class="clear"></div>
@@ -12,7 +12,7 @@
   @show
   <div class="clear"></div>
 </div>
-@if ( URL::current() != URL::to('http://localhost:8000/news'))
+@if (!(preg_match('[/news]', URL::current())))
   <meta name="sortSort" content="{{ $sortSorting }}">
   <meta name="colorSort" content="{{ $colorSorting }}">
   <meta name="styleSort" content="{{ $styleSorting }}">
