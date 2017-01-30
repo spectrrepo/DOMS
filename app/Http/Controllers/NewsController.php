@@ -36,9 +36,7 @@ class NewsController extends Controller
         $news->title = $_POST['title'];
         $news->description = $_POST['min_description'];
         $news->full_description = $_POST['full_description'];
-        if (!empty($_FILES['main_photo']['tmp_name'])){
             $news->news = $_FILES['main_photo'];
-        }
 
         $variantRes = "";
         if (!empty($_FILES['variants']['tmp_name'])){
