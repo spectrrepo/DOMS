@@ -1,6 +1,6 @@
 @extends('layouts.profile')
 @section('profile-content')
-{{ Form::open(array('url' => '/edit_news/'.$news->id, 'files' => 'true'))}}
+{{ Form::open(array('url' => '/edit_new/'.$news->id, 'files' => 'true'))}}
   <input class="title-add-news" type="text" name="title" value="{{$news->title}}" placeholder="заголовок новости">
   <div id="main-wrap-photo" class="wrap-main-dwnld-photo" title="Добавить изображение">
       <span class="add-photo-ico uk-icon-justify uk-icon-camera"></span>
