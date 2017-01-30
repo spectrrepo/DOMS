@@ -248,9 +248,7 @@ class UserController extends Controller
            $user->phone = $_POST["phone"];
            $user->skype = $_POST["skype"];
            $user->about = $_POST["about"];
-
-           if (File::isFile(Input::get('avatar'))) {
-
+           if(!empty($_FILES['avatar']['tmp_name'])){
                $user->avatar = $_FILES["avatar"];
                $user->path_min = $user->avatar->url('small');
                $user->path_full = $user->avatar->url('max');
