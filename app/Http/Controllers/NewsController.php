@@ -36,20 +36,24 @@ class NewsController extends Controller
         $news->title = $_POST['title'];
         $news->description = $_POST['min_description'];
         $news->full_description = $_POST['full_description'];
-        $news->news = $_FILES['main_photo'];
+        if (!empty($_FILES['main_photo']['tmp_name'])){
+            $news->news = $_FILES['main_photo'];
+        }
 
         $variantRes = "";
-        foreach (Input::file('variants') as $variantItem) {
-            $view = new NewsVariant();
-            $view->news_variant = $variantItem;
-            $view->save();
-            $addInfo = NewsVariant::orderBy('id', 'desc')
-                            ->first();
-            $updateVariantsInfo = NewsVariant::find($addInfo->id);
-            $updateVariantsInfo->file_path_full = $updateVariantsInfo->news_variant->url('max');
-            $variantRes .= $updateVariantsInfo->id;
-            $updateVariantsInfo->save();
+        if (!empty($_FILES['variants']['tmp_name'])){
+            foreach (Input::file('variants') as $variantItem) {
+                $view = new NewsVariant();
+                $view->news_variant = $variantItem;
+                $view->save();
+                $addInfo = NewsVariant::orderBy('id', 'desc')
+                                ->first();
+                $updateVariantsInfo = NewsVariant::find($addInfo->id);
+                $updateVariantsInfo->file_path_full = $updateVariantsInfo->news_variant->url('max');
+                $variantRes .= $updateVariantsInfo->id;
+                $updateVariantsInfo->save();
 
+            }
         }
         $news->variants = $variantRes;
         $news->save();
