@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 
 use Codesleeve\Stapler\ORM\EloquentTrait;
+use Mail;
+use Hash;
 
 class User extends Authenticatable implements StaplerableInterface
 {
@@ -36,10 +38,22 @@ class User extends Authenticatable implements StaplerableInterface
 
      public static function createBySocialProvider($providerUser)
      {
+
+        $password = Hash::make( str_random(12) );
+        $email = $providerUser->getEmail();
+        $name = $providerUser->getName();
+        Mail::send('emails.welcome', array('name' => $name,
+                                           'e_mail' => $email,
+                                           'password' => $password),
+        function($message)
+        {
+          $message->to($providerUser->getEmail(), $providerUser->getName())
+          ->subject('Вы зарегистрировались на сайте www.doms.design');
+        });
         return self::create([
-            'email' => $providerUser->getEmail(),
-            'name' => $providerUser->getName(),
-            'password' => '0',
+            'email' => $email,
+            'name' => $name,
+            'password' => $password,
             'status' => 'user',
             'phone' => 0
         ]);
