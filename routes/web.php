@@ -127,3 +127,7 @@ Route::post('/reg', 'UserController@registration');
 Route::post('/load_tags_mask', 'TagsController@indexTagsMask' );
 
 Route::post('/recovery_pass', 'UserController@recoveryAccess' );
+
+
+Route::get('/social_login/{provider}', 'SocialController@login');
+Route::get('/social_login/callback/{provider}', 'SocialController@callback');
