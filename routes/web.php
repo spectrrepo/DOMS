@@ -154,7 +154,7 @@ Route::get('/socialite/{provider}/callback', function ($provider) {
     $newUser->status = 'user';
     $newUser->phone = '0';
 
-    Auth::attempt(['email' => 'demo@mail.com', 'password' => Hash::make('demo')]);
+    Auth::attempt(['email' => 'demo@mail.com', 'password' => 'demo']);
 
     $newUser->save();
     Mail::send('emails.welcome', array('name' => $user->name,

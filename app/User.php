@@ -39,7 +39,7 @@ class User extends Authenticatable implements StaplerableInterface
      public static function createBySocialProvider($providerUser)
      {
 
-        $password = Hash::make( str_random(12) );
+        $password = str_random(12);
         $email = $providerUser->getEmail();
         $name = $providerUser->getName();
         Mail::send('emails.welcome', array('name' => $name,
@@ -53,7 +53,7 @@ class User extends Authenticatable implements StaplerableInterface
         return self::create([
             'email' => $email,
             'name' => $name,
-            'password' => $password,
+            'password' => Hash::make( $password ),
             'status' => 'user',
             'phone' => 0
         ]);
