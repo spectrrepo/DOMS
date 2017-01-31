@@ -131,3 +131,19 @@ Route::post('/recovery_pass', 'UserController@recoveryAccess' );
 
 Route::get('/social_login/{provider}', 'SocialController@login');
 Route::get('/social_login/callback/{provider}', 'SocialController@callback');
+
+
+Route::get(
+    '/socialite/{provider}',
+    [
+        'as' => 'socialite.auth',
+        function ( $provider ) {
+            return \Socialite::driver( $provider )->redirect();
+        }
+    ]
+);
+
+Route::get('/socialite/{provider}/callback', function ($provider) {
+	$user = \Socialite::driver($provider)->user();
+	dd($user);
+});
