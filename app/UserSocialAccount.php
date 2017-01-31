@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserSocialAccount extends Model
 {
-    protected $table = ‘user_social_account’;   
+    protected $table = 'user_social_account';   
     protected $fillable = ['user_id', 'provider_user_id', 'provider'];
 
     public function user()
