@@ -34,10 +34,17 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+
     'vkontakte' => [
         'client_id' => env('5785005'),
         'client_secret' => env('WT3hEaeDKvxaVpbtJ8Sa'),
         'redirect' => env('http://188.225.72.64/social_login/callback/vkontakte'),
+    ],
+
+    'facebook' => [
+	    'client_id' => env('1830580383883779'),
+	    'client_secret' => env('dbe26b0b88321996997c5c5487c1ac4a'),
+	    'redirect' => env('http://188.225.72.64/socialite/callback/facebook'),
     ],
 
 ];
