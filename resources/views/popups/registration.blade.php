@@ -5,8 +5,8 @@
     <div class="clear"></div>
     <div class="b-soc-net-login">
       <span class="title-text">Войти через социальные сети</span>
-      <span class="uk-icon-justify uk-icon-facebook-f fb"></span>
-      <span class="uk-icon-justify uk-icon-vk vk"></span>
+      <a href="/socialite/facebook" class="uk-icon-justify uk-icon-facebook-f fb"></a>
+      <a href="/social_login/vkontakte" class="uk-icon-justify uk-icon-vk vk"></a>
       <span class="not-wor-text">
         Не беспокойтесь, мы никогда не сделаем пост без вашего разрешения
       </span>

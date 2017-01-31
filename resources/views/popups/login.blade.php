@@ -3,8 +3,8 @@
     <span class="close uk-icon-justify uk-icon-remove popup-close"></span>
     <span class="title">Авторизация</span>
     <div class="b-soc-log">
-      <span class="uk-icon-justify uk-icon-facebook-f fb"></span>
-      <span class="uk-icon-justify uk-icon-vk vk"></span>
+      <a href="/socialite/facebook" class="uk-icon-justify uk-icon-facebook-f fb"></a>
+      <a href="/social_login/vkontakte"class="uk-icon-justify uk-icon-vk vk"></a>
       <div class="clear"></div>
     </div>
     <div class="clear"></div>

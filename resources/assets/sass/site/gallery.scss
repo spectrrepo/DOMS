@@ -28,8 +28,14 @@ ul {
     background: white;
     cursor: pointer;
 }
-.menu-item:hover {
-    // color: white;
+.menu-item:hover >.ungle-item {
+    color: white;
+}
+.menu-item:hover > .ungle-item:hover {
+    color: white;
+}
+.menu-item:hover > .ungle-item::after {
+    color: white;
 }
 .menu-item:hover > span {
     // color: white;
@@ -40,7 +46,7 @@ ul {
     font-weight: bold;
     line-height: 28px;
     position: absolute;
-    right: 0px;
+    right: 5px;
     z-index: 19;
 }
 .input-search {

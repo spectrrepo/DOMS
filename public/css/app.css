@@ -7552,13 +7552,22 @@ ul {
   background: white;
   cursor: pointer; }
 
+.menu-item:hover > .ungle-item {
+  color: white; }
+
+.menu-item:hover > .ungle-item:hover {
+  color: white; }
+
+.menu-item:hover > .ungle-item::after {
+  color: white; }
+
 .ungle-item {
   float: right;
   font-size: 17px;
   font-weight: bold;
   line-height: 28px;
   position: absolute;
-  right: 0px;
+  right: 5px;
   z-index: 19; }
 
 .input-search {
@@ -9095,7 +9104,7 @@ a.btn-prew span {
 .click-ready {
   display: block;
   float: left;
-  width: 113%;
+  width: 103%;
   position: relative;
   box-sizing: border-box;
   border-radius: 5px;

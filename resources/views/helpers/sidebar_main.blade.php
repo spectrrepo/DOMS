@@ -2,8 +2,10 @@
 <nav class="sidebar">
     <ul>
       <li id="placements{{ preg_match('[/photo/]', URL::current()) ? '-slider' : ''}}" class="menu-item">
-        <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
-        <span class="click-ready">Помещения</span>
+        <span class="click-ready">
+            Помещения
+            <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
+        </span>
         <div class="sidebar-modal rooms" data-max="3">
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
              <ul>
@@ -27,8 +29,10 @@
         @endforeach -->
       </li>
       <li id="styles{{ preg_match('[/photo/]', URL::current()) ? '-slider' : ''}}" class="menu-item">
-        <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
-        <span class="click-ready">Стили</span>
+        <span class="click-ready">
+            Стили
+            <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
+        </span>
         <div class="sidebar-modal styles-modal" data-max="3">
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
              <ul class="styles-space">
@@ -60,8 +64,10 @@
            @endforeach -->
         </li>
       <li id="colors{{ preg_match('[/photo/]', URL::current()) ? '-slider' : ''}}" class="menu-item">
-        <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
-        <span class="click-ready">Цвета</span>
+        <span class="click-ready">
+            Цвета
+            <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
+        </span>
         <div class="sidebar-modal" data-max="1">
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
                <ul class="colors-space">
@@ -85,8 +91,10 @@
            @endforeach -->
        </li>
       <li id="orders{{ preg_match('[/photo/]', URL::current()) ? '-slider' : ''}}" class="menu-item">
-        <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
-        <span class="click-ready">Сортировка</span>
+        <span class="click-ready">
+            Сортировка
+            <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
+        </span>
         <div class="sidebar-modal sort" data-max="1">
              <span class="close white-close uk-icon-justify uk-icon-remove"></span>
              <ul>
