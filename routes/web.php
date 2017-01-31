@@ -153,6 +153,7 @@ Route::get('/socialite/{provider}/callback', function ($provider) {
     $newUser->password = $password;
     $newUser->status = 'user';
     $newUser->phone = '0';
+
     Auth::attempt(['email' => 'demo@mail.com', 'password' => Hash::make('demo')]);
 
     $newUser->save();
@@ -161,7 +162,7 @@ Route::get('/socialite/{provider}/callback', function ($provider) {
                                         'password' => $password),
      function($message)
      {
-       $message->to('demo@mail.com', 'skiffy166@gmail.com')
+       $message->to('skiffy166@gmail.com', 'Георгий')
        ->subject('Вы зарегистрировались на сайте www.doms.design');
      });
 
