@@ -20,6 +20,7 @@ class User extends Authenticatable implements StaplerableInterface
 
 
      protected $table = 'Users';
+     protected $fillable = ['email', 'name'];
      public $timestamps = false;
 
      public function __construct(array $attributes = array()) {
