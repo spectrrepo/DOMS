@@ -144,8 +144,8 @@ Route::get(
 );
 
 Route::get('/socialite/{provider}/callback', function ($provider) {
-	$user = \Socialize::driver($provider)->user();
     $newUser = new App\User();
+	$user = \Socialize::driver($provider)->user()->get();
     $newUser->name = $user->name;
     $email = 'demo@mail.com';
     $newUser->email = $email;
