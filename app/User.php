@@ -20,7 +20,7 @@ class User extends Authenticatable implements StaplerableInterface
 
 
      protected $table = 'Users';
-     protected $fillable = ['email', 'name'];
+     protected $fillable = ['email', 'name', 'password', 'status', 'phone'];
      public $timestamps = false;
 
      public function __construct(array $attributes = array()) {
@@ -39,6 +39,9 @@ class User extends Authenticatable implements StaplerableInterface
         return self::create([
             'email' => $providerUser->getEmail(),
             'name' => $providerUser->getName(),
+            'password' => '0',
+            'status' => 'user',
+            'phone' => 0
         ]);
      }
 }
