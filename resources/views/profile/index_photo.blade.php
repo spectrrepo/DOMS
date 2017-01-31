@@ -20,17 +20,17 @@
         <div class="b-contact-data">
           <div class="contact-item">
               <span class="contact-item-name">email</span>
-              <a href="mailto:{{ $user->e_mail }}" class="contact-item-value"> {{ $user->e_mail }} </a>
+              <a href="mailto:{{ $user->email }}" class="contact-item-value"> {{ $user->email }} </a>
               <div class="clear"></div>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">skype</span>
-              <a  href="skype:{{ $user->e_mail }}" class="contact-item-value"> {{ $user->skype }} </a>
+              <a  href="skype:{{ $user->email }}" class="contact-item-value"> {{ $user->skype }} </a>
               <div class="clear"></div>
           </div>
           <div class="contact-item">
               <span class="contact-item-name">телефон</span>
-              <a href="tellto:{{ $user->e_mail }}" class="contact-item-value"> {{ $user->phone }} </a>
+              <a href="tellto:{{ $user->email }}" class="contact-item-value"> {{ $user->phone }} </a>
               <div class="clear"></div>
           </div>
           <div class="contact-item">

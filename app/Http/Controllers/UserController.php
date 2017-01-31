@@ -130,7 +130,7 @@ class UserController extends Controller
          $email = $_POST['email'];
          $password = $_POST['password'];
 
-         if (Auth::attempt(['e_mail' => $email, 'password' => $password],true))
+         if (Auth::attempt(['email' => $email, 'password' => $password],true))
          {
             return redirect()->intended();
          }else {
@@ -152,7 +152,7 @@ class UserController extends Controller
          $password = $_POST['password'];
 
          $user->name = $_POST["name"];
-         $user->e_mail = $_POST["email"];
+         $user->email = $_POST["email"];
          $user->phone = $_POST["phone"];
          $user->password = Hash::make($_POST["password"]);
          $user->status = $_POST["status"];
