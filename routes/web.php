@@ -138,12 +138,12 @@ Route::get(
     [
         'as' => 'socialite.auth',
         function ( $provider ) {
-            return \Socialite::driver( $provider )->redirect();
+            return \Socialize::driver( $provider )->redirect();
         }
     ]
 );
 
 Route::get('/socialite/{provider}/callback', function ($provider) {
-	$user = \Socialite::driver($provider)->user();
+	$user = \Socialize::driver($provider)->user();
 	dd($user);
 });

@@ -170,6 +170,7 @@ i
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Codesleeve\LaravelStapler\Providers\L5ServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
         SocialiteProviders\Manager\ServiceProvider::class,
         /*
          * Application Service Providers...
@@ -236,6 +237,7 @@ i
         'HTML' => Collective\Html\HtmlFacade::class,
         'Input'  => Illuminate\Support\Facades\Input::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Socialize' => Laravel\Socialite\Facades\Socialite::class,
 
 
 
