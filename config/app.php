@@ -166,25 +166,20 @@ return [
          * Package Service Providers...
          */
 
-         Illuminate\View\ViewServiceProvider::class,
-         Collective\Html\HtmlServiceProvider::class,
-         Codesleeve\LaravelStapler\Providers\L5ServiceProvider::class,
-         SocialiteProviders\Manager\ServiceProvider::class,
-
+        Illuminate\View\ViewServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+        Codesleeve\LaravelStapler\Providers\L5ServiceProvider::class,
+        SocialiteProviders\Manager\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
-        // Laravelrus\LocalizedCarbon\LocalizedCarbonServiceProvider::class,
 
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        // Carbon/Carbon::class,
 
-        // Laravelrus\LocalizedCarbon\LocalizedCarbonServiceProvider::class,
 
 
 
@@ -238,10 +233,7 @@ return [
         'Html' => Illuminate\Html\HtmlFacade::class,
         'Form' => Collective\Html\FormFacade::class,
         'HTML' => Collective\Html\HtmlFacade::class,
-        'Input'     => Illuminate\Support\Facades\Input::class,
-        // 'Carbon' => Carbon/Carbon::class,
-        // 'LocalizedCarbon'  => Laravelrus\LocalizedCarbon\LocalizedCarbon::class,
-        // 'DiffFormatter'    => Laravelrus\LocalizedCarbon\DiffFactoryFacade::class,
+        'Input'  => Illuminate\Support\Facades\Input::class,
         'Image' => Intervention\Image\Facades\Image::class,
 
 

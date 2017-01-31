@@ -34,5 +34,10 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+    'vkontakte' => [
+        'client_id' => env('5785005'),
+        'client_secret' => env('WT3hEaeDKvxaVpbtJ8Sa'),
+        'redirect' => env('http://127.0.0.1:8000/social_login/callback/vkontakte'),
+    ],
 
 ];
