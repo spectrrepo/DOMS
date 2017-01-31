@@ -44,7 +44,7 @@ return [
     'facebook' => [
 	    'client_id' => '1830580383883779',
 	    'client_secret' => 'dbe26b0b88321996997c5c5487c1ac4a',
-	    'redirect' => 'http://188.225.72.64/socialite/callback/facebook',
+	    'redirect' => 'http://188.225.72.64/socialite/facebook/callback',
     ],
 
 ];
