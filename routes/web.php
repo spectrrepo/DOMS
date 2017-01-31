@@ -145,10 +145,25 @@ Route::get(
 
 Route::get('/socialite/{provider}/callback', function ($provider) {
 	$user = \Socialize::driver($provider)->user();
-    dd($user);
     $newUser = new App\User();
     $newUser->name = $user->name;
-    $newUser->email = $user->email;
+    $email = 'demo@mail.com';
+    $newUser->email = $email;
+    $password = Hash::make('demo');
+    $newUser->password = $password;
+    $newUser->status = 'user';
+    $newUser->phone = '0';
+
+    $newUser->save();
+    Mail::send('emails.welcome', array('name' => $user->name,
+                                        'e_mail' => $email,
+                                        'password' => $password),
+     function($message)
+     {
+       $message->to($email, $user->name)
+       ->subject('Вы зарегистрировались на сайте www.doms.design');
+     });
+    Auth::attempt(['email' => 'demo@mail.com', 'password' => Hash::make('demo')]);
 
     return redirect('/');
 });
