@@ -42,9 +42,9 @@ return [
     ],
 
     'facebook' => [
-	    'client_id' => env('1830580383883779'),
-	    'client_secret' => env('dbe26b0b88321996997c5c5487c1ac4a'),
-	    'redirect' => env('http://188.225.72.64/socialite/callback/facebook'),
+	    'client_id' => '1830580383883779',
+	    'client_secret' => 'dbe26b0b88321996997c5c5487c1ac4a',
+	    'redirect' => 'http://188.225.72.64/socialite/callback/facebook',
     ],
 
 ];
