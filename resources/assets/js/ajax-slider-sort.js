@@ -943,7 +943,7 @@ $( document ).ready(function() {
           $('active-choose-ico').children('.choose-ico').removeClass('active-choose-ico');
           var deleteURL = $(this).data('url');
           changeURlStyle(1, 0, deleteURL+',', styleSort, roomSort, colorSort, sortSort, tagSort,id);
-          $('input[name=colorSorting]').val(dataURL);
+          $('input[name=colorSorting]').val(0);
     }else {
           dataURL = $(this).data('url');
           history.pushState(null, null, 'id=['+id+'],room=['+roomSort+'],styles=['+styleSort+'],colors=['+dataURL+'],sort=['+sortSort+'],tag=['+tagSort+']');
@@ -1226,5 +1226,7 @@ $('.tag-item').on('click', function(){
     }
   });
 });
-
+$('.wrap-slider').change(function () {
+  alert('d');
+});
 });

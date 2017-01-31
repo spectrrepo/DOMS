@@ -1280,7 +1280,7 @@ $( document ).ready(function() {
                   'styleSorting': styleSorting,
                   'roomSorting': roomSorting,
                   'colorSorting': colorSorting,
-                  'tagSorting': tagSorting
+                  'tag': tagSorting
           },
           url:'/pagination_index',
 
@@ -1291,8 +1291,8 @@ $( document ).ready(function() {
                       '],styles=['+styleSorting+
                       '],colors=['+colorSorting+
                       '],sort=['+sortSorting+
-                      '],tag=["'+tagSorting+
-                      '"]" class="item-gallery" data-grid-prepared="true"style="position:absolute;">' +
+                      '],tag=['+tagSorting+']" class="item-gallery" '+
+                      'data-grid-prepared="true"style="position:absolute;">' +
                       '<div class="uk-panel-box">' +
                         '<img src="'+data[i].min_path+'">'+
                        '</div>' +
@@ -3032,7 +3032,7 @@ $( document ).ready(function() {
           $('active-choose-ico').children('.choose-ico').removeClass('active-choose-ico');
           var deleteURL = $(this).data('url');
           changeURlStyle(1, 0, deleteURL+',', styleSort, roomSort, colorSort, sortSort, tagSort,id);
-          $('input[name=colorSorting]').val(dataURL);
+          $('input[name=colorSorting]').val(0);
     }else {
           dataURL = $(this).data('url');
           history.pushState(null, null, 'id=['+id+'],room=['+roomSort+'],styles=['+styleSort+'],colors=['+dataURL+'],sort=['+sortSort+'],tag=['+tagSort+']');
@@ -3315,7 +3315,9 @@ $('.tag-item').on('click', function(){
     }
   });
 });
-
+$('.wrap-slider').change(function () {
+  alert('d');
+});
 });
 
 $( document ).ready(function() {

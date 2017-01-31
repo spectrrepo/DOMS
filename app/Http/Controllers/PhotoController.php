@@ -142,7 +142,7 @@ class PhotoController extends Controller
          $room = $_POST['roomSorting'];
          $style = $_POST['styleSorting'];
          $color = $_POST['colorSorting'];
-         $tagSort = $_POST['tagSorting'];
+         $tag = $_POST['tag'];
 
          if ($room != 0 ) {
             $roomSort = ' rooms like "% '.$room.',%"';
@@ -175,7 +175,7 @@ class PhotoController extends Controller
 
          }
 
-         if ( $tagSort != '0') {
+         if ( $tag != '0') {
             $tagSort = 'and tags like "%#'.$tag.';%" ';
          } else {
             $tagSort = '';
@@ -717,7 +717,11 @@ class PhotoController extends Controller
          }
         }
         $image->save();
-        return redirect()->back();
+        if (Auth::user()->status == 'moderator') {
+             return redirect()->back();
+        } else {
+             return redirect('/profile/'.Auth::id())->with('check', 'true');
+        }
     }
 
     public function deleteView()

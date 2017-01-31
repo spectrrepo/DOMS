@@ -18,7 +18,7 @@ $( document ).ready(function() {
                   'styleSorting': styleSorting,
                   'roomSorting': roomSorting,
                   'colorSorting': colorSorting,
-                  'tagSorting': tagSorting
+                  'tag': tagSorting
           },
           url:'/pagination_index',
 
@@ -29,8 +29,8 @@ $( document ).ready(function() {
                       '],styles=['+styleSorting+
                       '],colors=['+colorSorting+
                       '],sort=['+sortSorting+
-                      '],tag=["'+tagSorting+
-                      '"]" class="item-gallery" data-grid-prepared="true"style="position:absolute;">' +
+                      '],tag=['+tagSorting+']" class="item-gallery" '+
+                      'data-grid-prepared="true"style="position:absolute;">' +
                       '<div class="uk-panel-box">' +
                         '<img src="'+data[i].min_path+'">'+
                        '</div>' +
