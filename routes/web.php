@@ -145,4 +145,5 @@ Route::get(
 
 Route::get('/socialite/{provider}/callback', function ($provider) {
 	$user = \Socialize::driver($provider)->user();
+    return redirect('/');
 });
