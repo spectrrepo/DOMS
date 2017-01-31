@@ -15,7 +15,7 @@
                     margin-bottom:20px">
             <a href="http://domspectr.ru" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=ru&amp;q=http://domspectr.ru&amp;source=gmail&amp;ust=1479229835212000&amp;usg=AFQjCNGU0FlaaK45ccCSJrGgteUqBRPMOg">
                 <img class="m_8616352476841260153logo CToWUd"
-                     src="http://188.225.72.64/logotipyi.5802.png"
+                     src="https://ci6.googleusercontent.com/proxy/iDKIQho71BQ66Eu6DJpUrwuD2ooQpXOxrJ49Q-l5cuBAzgla-CKGee8vlVUs05GWipKqDq2KUdF4VpgWnD-XoF7XjHlq24Y=s0-d-e1-ft#http://domspectr.ru/assets/images/letter-logo.jpg"
                      alt="Лого">
             </a>
         </div>
@@ -34,7 +34,7 @@
                 background-color:#323232;
                 margin:0 20px;
                 padding:10px 20px">
-        <img src="http://188.225.72.64/img/logo-doms.png" class="CToWUd">
+        <img src="https://ci4.googleusercontent.com/proxy/3W3W185lgXekoPeUxwxatX-5vLOLBWINHg1KD8T0TcJcg3M9yz1qD6s7kCljgIdE2AEfzZ3gITFquuCjZAbrnIyBjeIG=s0-d-e1-ft#http://domspectr.ru/assets/images/logo-doms.png" class="CToWUd">
         <div class="yj6qo"></div>
         <div class="adL"></div>
     </div>

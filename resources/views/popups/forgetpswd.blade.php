@@ -5,8 +5,8 @@
     <p class="recover-text">
       Введите адрес электронной почты Вашего аккаунта
     </p>
-    {{ Form::open() }}
-    <input class="recover-text-inp" type="text" name="name" value="">
+    {{ Form::open(array('url' => '/recovery_pass')) }}
+    <input class="recover-text-inp" type="text" name="e_mail" value="">
     <button class="recover-submit uk-icon-justify uk-icon-reply" type="submit" name="name">
     </button>
     {{ Form::close() }}

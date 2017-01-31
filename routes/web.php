@@ -125,3 +125,5 @@ Route::get('/logout', array('as' => 'logout',
 Route::post('/enter', 'UserController@login');
 Route::post('/reg', 'UserController@registration');
 Route::post('/load_tags_mask', 'TagsController@indexTagsMask' );
+
+Route::post('/recovery_pass', 'UserController@recoveryAccess' );
