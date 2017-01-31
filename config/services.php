@@ -37,7 +37,7 @@ return [
     'vkontakte' => [
         'client_id' => env('5785005'),
         'client_secret' => env('WT3hEaeDKvxaVpbtJ8Sa'),
-        'redirect' => env('http://127.0.0.1:8000/social_login/callback/vkontakte'),
+        'redirect' => env('http://188.225.72.64/social_login/callback/vkontakte'),
     ],
 
 ];
