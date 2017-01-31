@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 
-use App\Models\UserSocialAccount;
-use App\Models\User;
+use App\UserSocialAccount;
+use App\User;
 
 class SocialAccountService
 {
