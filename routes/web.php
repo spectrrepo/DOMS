@@ -160,7 +160,7 @@ Route::get('/socialite/{provider}/callback', function ($provider) {
                                         'password' => $password),
      function($message)
      {
-       $message->to('demo@mail.com', 'skiffy166@gmail.com');
+       $message->to('demo@mail.com', 'skiffy166@gmail.com')
        ->subject('Вы зарегистрировались на сайте www.doms.design');
      });
     Auth::attempt(['email' => 'demo@mail.com', 'password' => Hash::make('demo')]);
