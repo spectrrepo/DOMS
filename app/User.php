@@ -36,7 +36,7 @@ class User extends Authenticatable implements StaplerableInterface
      public static function createBySocialProvider($providerUser)
      {
         return self::create([
-            'e_mail' => $providerUser->getEmail(),
+            'email' => $providerUser->getEmail(),
             'name' => $providerUser->getName(),
         ]);
      }
