@@ -1,5 +1,5 @@
-@extends('layouts.main')
-@section('common-content')
+@extends('emails.main_template')
+@section('mail-text')
     <p>
         Вы зарегистрировались на сайте www. <span class="il">doms</span> .design
     </p>

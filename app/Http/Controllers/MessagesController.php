@@ -36,9 +36,9 @@ class MessagesController extends Controller
 
         Mail::raw($_POST['text'], function($message)
         {
-            $message->from($_POST['e_mail'], $_POST['name']);
+            $message->from('info@domspectr.ru', 'DOMS');
 
-            $message->to('skiffy166@gmail.com')->subject('Вопросы и предложения');
+            $message->to($_POST['e_mail'])->subject('Вопросы и предложения');
         });
 
         $messages->save();
@@ -83,8 +83,8 @@ class MessagesController extends Controller
         {
             $message->from('info@domspectr.ru', 'DOMS');
 
-            $message->to($_POST['mail_send']);
+            $message->to($_POST['mail_send'])->subject($_POST['thema']);
         });
-
+        return redirect()->back();
     }
 }

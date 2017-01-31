@@ -156,18 +156,18 @@ class UserController extends Controller
          $user->phone = $_POST["phone"];
          $user->password = Hash::make($_POST["password"]);
          $user->status = $_POST["status"];
-         Mail::send('emails.welcome', array('name' => $_POST['name'],
-                                            'e_mail' => $_POST['email'],
-                                            'password' => $_POST['password']),
-                                             function($message)
-         {
-            $message->to($_POST["email"], $_POST['name'])
-                    ->subject('Вы зарегистрировались на сайте www.doms.design');
-         });
 
          $user->save();
 
          Auth::attempt(['e_mail' => $email, 'password' => $password]);
+         Mail::send('emails.welcome', array('name' => $_POST['name'],
+         'e_mail' => $_POST['email'],
+         'password' => $_POST['password']),
+         function($message)
+         {
+             $message->to($_POST["email"], $_POST['name'])
+             ->subject('Вы зарегистрировались на сайте www.doms.design');
+         });
          return redirect()->back();
      }
 
@@ -189,16 +189,19 @@ class UserController extends Controller
       */
      public function recoveryAccess()
      {
-         $user = User::where('e_mail', '=', $_POST['e_mail'])->get();
+         $user = User::where('e_mail', '=', $_POST['e_mail'])->first();
          if (!empty($user)) {
-             $new_pasword  = str_random(12);
-             $user->password = Hash::make( $new_pasword );
-             Mail::send('emails.recovery', array('new_pasword' => $new_pasword),
+             $new_password  = str_random(12);
+             $user->password = Hash::make( $new_password );
+             Mail::send('emails.recovery', array('new_password' => $new_password),
                                                  function($message)
              {
-                $message->to($user->e_mail, $user->name)
+                $message->to($_POST['e_mail'], User::where('e_mail', '=', $_POST['e_mail'])
+                                                    ->first()
+                                                    ->name)
                         ->subject('Ваш новый пароль на сайте www.doms.design');
              });
+             return redirect('/');
          } else {
              return redirect('/');
          }
