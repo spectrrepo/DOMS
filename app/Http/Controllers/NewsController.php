@@ -78,9 +78,9 @@ class NewsController extends Controller
         $news->description = $_POST["min_description"];
         $news->full_description = $_POST["full_description"];
 
-        if ( !isset($_FILES["main_photo"])) {
+        
             $news->news = $_FILES['main_photo'];
-        }
+        
 
         if ( !isset($_FILES["variants"])) {
             foreach (Input::file('variants') as $variantItem) {

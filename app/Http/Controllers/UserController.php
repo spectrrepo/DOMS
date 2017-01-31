@@ -13,6 +13,7 @@ use Auth;
 use Hash;
 use DB;
 use Image;
+use Mail;
 
 use App\User;
 use App\Style;
@@ -155,6 +156,14 @@ class UserController extends Controller
          $user->phone = $_POST["phone"];
          $user->password = Hash::make($_POST["password"]);
          $user->status = $_POST["status"];
+         Mail::send('emails.welcome', array('name' => $_POST['name'],
+                                            'e_mail' => $_POST['email'],
+                                            'password' => $_POST['password']),
+                                             function($message)
+         {
+            $message->to($_POST["email"], $_POST['name'])
+                    ->subject('Вы зарегистрировались на сайте www.doms.design');
+         });
 
          $user->save();
 
@@ -173,6 +182,28 @@ class UserController extends Controller
          return redirect('/');
      }
 
+     /**
+      * Login Form
+      *
+      * @return Response
+      */
+     public function recoveryAccess()
+     {
+         $user = User::where('e_mail', '=', $_POST['e_mail'])->get();
+         if (!empty($user)) {
+             $new_pasword  = str_random(12);
+             $user->password = Hash::make( $new_pasword );
+             Mail::send('emails.recovery', array('new_pasword' => $new_pasword),
+                                                 function($message)
+             {
+                $message->to($user->e_mail, $user->name)
+                        ->subject('Ваш новый пароль на сайте www.doms.design');
+             });
+         } else {
+             return redirect('/');
+         }
+
+     }
      /**
       * Login Form
       *

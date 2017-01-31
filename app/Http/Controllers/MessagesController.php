@@ -34,11 +34,11 @@ class MessagesController extends Controller
         $messages->e_mail = $_POST['e_mail'];
         $messages->text_message = $_POST['text'];
 
-        Mail::raw('Текст письма', function($message)
+        Mail::raw($_POST['text'], function($message)
         {
-            $message->from('info@domspectr.ru', 'DOMS');
+            $message->from($_POST['e_mail'], $_POST['name']);
 
-            $message->to('skiffy166@gmail.com');
+            $message->to('skiffy166@gmail.com')->subject('Вопросы и предложения');
         });
 
         $messages->save();
@@ -78,13 +78,12 @@ class MessagesController extends Controller
      *
      */
     public function askOnMail () {
-        $thema = $_POST['thema'];
         $text = $_POST['text'];
         Mail::raw($text, function($message)
         {
-            $message->from('us@example.com', 'Laravel');
+            $message->from('info@domspectr.ru', 'DOMS');
 
-            $message->to('skiffy166@gmail.com');
+            $message->to($_POST['mail_send']);
         });
 
     }
