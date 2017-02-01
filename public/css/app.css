@@ -6882,7 +6882,6 @@ html {
 
 .btn-dwnld {
   width: 100%;
-  height: 50px;
   background: #333333;
   color: white;
   text-align: center;
@@ -6892,7 +6891,9 @@ html {
   display: block;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  font: 400 14px/20px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  font: 400 14px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
+  height: 40px;
+  border-radius: 5px; }
 
 .btn-dwnld:hover {
   background: #666666; }
@@ -7238,7 +7239,8 @@ html {
   text-align: center;
   background: #cadede;
   cursor: pointer;
-  margin-left: 20px; }
+  margin-left: 20px;
+  position: relative; }
 
 .col-news-big {
   width: 90%;
@@ -7384,6 +7386,17 @@ html {
 
 .ico-liked {
   float: right; }
+
+.ico-news {
+  position: absolute;
+  bottom: -8px;
+  right: -8px; }
+
+.ico-news-hearth {
+  color: red; }
+
+.ico-news-star {
+  color: #ffcc00; }
 
 pre {
   font: 400 14px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -7625,10 +7638,10 @@ ul {
 
 .news-title {
   border-bottom: 1px solid #cccccc;
-  width: 89%;
   margin-top: 60px;
   padding-bottom: 5px;
-  font-size: 15px; }
+  font-size: 15px;
+  width: 94%; }
 
 .b-text-news {
   padding-left: 10px;
@@ -8261,7 +8274,7 @@ a.btn-prew span {
   display: block;
   color: #ffffff;
   cursor: pointer;
-  height: 25px;
+  height: 58px;
   width: 25px;
   position: absolute;
   top: 0;
@@ -8390,7 +8403,7 @@ a.btn-prew span {
   padding: 5px;
   background: white;
   float: left;
-  width: 50%; }
+  width: 54%; }
 
 .hover-effect-person {
   text-align: center;
@@ -8415,7 +8428,7 @@ a.btn-prew span {
   width: 44%;
   height: 32px;
   margin-left: 35px;
-  margin-left: 6%; }
+  margin-left: 2%; }
 
 .b-item-sex {
   text-align: center;
@@ -8443,7 +8456,8 @@ a.btn-prew span {
   background: white;
   border-radius: 5px;
   height: 114px;
-  margin-top: 10px; }
+  margin-top: 10px;
+  box-sizing: border-box; }
 
 .b-spec-info {
   float: left;
@@ -8495,10 +8509,13 @@ a.btn-prew span {
 
 .edit-name-item {
   width: 32%;
-  line-height: 25px; }
+  line-height: 23px; }
+
+.soc-edit-name {
+  line-height: 57px; }
 
 .edit-value-item {
-  height: 25px;
+  height: 23px;
   background: white;
   border: 1px solid #D8D7D7;
   margin-bottom: 2px;
@@ -8578,11 +8595,11 @@ a.btn-prew span {
 
 .list-links {
   float: left;
-  width: 55%;
+  width: 68%;
   height: 25px; }
 
 .item-links {
-  display: inline-block;
+  display: block;
   list-style: none;
   background: #cccccc;
   color: white;
@@ -8594,13 +8611,14 @@ a.btn-prew span {
   margin-bottom: 3px;
   cursor: pointer;
   -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease; }
+  transition: all 0.3s ease;
+  margin: 0 0 2px 2px;
+  float: left; }
 
 .item-links:hover {
   color: #cccccc; }
 
 .open-di-link {
-  display: inline-block;
   list-style: none;
   background: #cccccc;
   color: white;
@@ -8612,7 +8630,10 @@ a.btn-prew span {
   margin-bottom: 3px;
   cursor: pointer;
   -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease; }
+  transition: all 0.3s ease;
+  display: block;
+  float: left;
+  margin: 0 0 2px 2px; }
 
 .open-di-link:hover {
   color: black; }
@@ -8910,6 +8931,9 @@ a.btn-prew span {
   cursor: pointer;
   font-size: 14px; }
 
+.error {
+  border: 1px solid #ff6c6c; }
+
 .modal-reg {
   width: 900px;
   max-height: 615px;
@@ -9089,7 +9113,7 @@ a.btn-prew span {
   padding: 20px;
   box-sizing: border-box;
   position: absolute;
-  background: rgba(0, 0, 0, 0.7);
+  background-color: rgba(51, 51, 51, 0.8);
   border-radius: 4px;
   z-index: 1000;
   left: 20%;
@@ -9161,16 +9185,21 @@ a.btn-prew span {
 
 .choose-ico {
   color: rgba(119, 246, 0, 0.2);
-  font-size: 20px;
+  font-size: 14px;
   float: left;
   opacity: 0;
+  line-height: 20px;
   -webkit-transition: 0.3s ease all;
   transition: 0.3s ease all; }
 
+.choose-ico-color {
+  position: absolute;
+  right: 0; }
+
 .active-choose-ico {
   opacity: 1;
-  font-size: 23px;
-  color: #77f600; }
+  color: #77f600;
+  font-size: 15px; }
 
 .item-moodal-sidebar {
   list-style: none; }
@@ -9290,7 +9319,8 @@ a.btn-prew span {
   width: 35px;
   margin: 3%;
   box-sizing: border-box;
-  cursor: pointer; }
+  cursor: pointer;
+  position: relative; }
 
 .colors-space-item:hover {
   -ms-box-shadow: 0 0 1px 1px #ffffff;

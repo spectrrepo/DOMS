@@ -2,7 +2,8 @@
 @section('profile-content')
 {{ Form::open(array('url' => '/edit_new/'.$news->id, 'files' => 'true'))}}
   <input class="title-add-news" type="text" name="title" value="{{$news->title}}" placeholder="заголовок новости">
-  <div id="main-wrap-photo" class="wrap-main-dwnld-photo" title="Добавить изображение">
+  <div id="main-wrap-photo" class="wrap-main-dwnld-photo" title="Добавить изображение"
+  style="background:url({{$news->file_path_full}}) center no-repeat; background-size:cover;">
       <span class="add-photo-ico uk-icon-justify uk-icon-camera"></span>
       <span class="add-photo-text">Добавить изображение</span>
       <input id="file" class="dwnld-file-input" type="file" name="main_photo">

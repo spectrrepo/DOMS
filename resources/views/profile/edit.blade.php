@@ -3,7 +3,7 @@
   <div class="wrap-personal-information edit-line-profile">
     {{ Form::open( array('id'=> 'editUser', 'url' => '/update/profile', 'files' => 'true') ) }}
       <div class="b-photo-person" id="photo-person">
-          <img src="{{ $user->quadro_ava }}" alt="" />
+          <img src="{{ empty($user->quadro_ava) ? '/img/user.png' : $user->quadro_ava }}" alt="" />
           <div class="hover-effect-person uk-icon-justify uk-icon-pencil"></div>
           <input id="photo" type="file" name="avatar">
       </div>
@@ -31,7 +31,7 @@
             <input class="contact-item-value edit-value-item" type="text"type="text" name="skype" value="{{ $user->skype }}">
             <span class="contact-item-name edit-name-item">телефон</span>
             <input class="contact-item-value edit-value-item" type="text" name="phone" value="{{ $user->phone }}">
-            <span class="contact-item-name edit-name-item">соц.сети</span>
+            <span class="contact-item-name edit-name-item soc-edit-name">соц.сети</span>
             <span class="list-links">
               <?php $i = 0; ?>
               @foreach ($links as $link_item)
@@ -42,6 +42,7 @@
               <li class="open-di-link uk-icon-plus open-modal-link" data-action="addLinks">
                   <input class="contact-item-value soc-set-edit" type="hidden" name="soc_net">
               </li>
+              <div class="clear"></div>
             </span>
           </div>
           <input type="submit" class="save-info-user" value="Сохранить">

@@ -34,14 +34,14 @@ $( document ).ready(function() {
                    '<span class="remove-comment uk-icon-justify '+
                    'uk-icon-remove"><span class="delete_comment_id" '+
                    'data-id="'+data[i].id+'"></span></span> '+
-                   '<a style="background:url('+data[i].userPhoto+
+                   '<a style="background:url('+data[i].user_quadro_ava+
                    ')center no-repeat;background-size:cover;'+
-                   ')" href="/profile/'+data[i].author_id+
+                   ')" href="/profile/'+data[i].user_id+
                    '" class="b-photo-comment"></a>'+
                    '<div class="b-comment">'+
-                   '<a href="/profile/'+data[i].author_id+'" class="b-name-comment" '+
+                   '<a href="/profile/'+data[i].user_id+'" class="b-name-comment" '+
                    ' >'+
-                   data[i].userName+
+                   data[i].user_name+
                    '</a><div class="b-text-comment">'+
                    data[i].text_comment+
                    '</div><div class="b-date-comment">'+
@@ -50,14 +50,14 @@ $( document ).ready(function() {
               }
               else {
                 $('<div class="b-comment-wrap">'+
-                '<a style="background:url('+data[i].userPhoto+
+                '<a style="background:url('+data[i].user_quadro_ava+
                 ')center no-repeat;background-size:cover;'+
-                +')" href="/profile/'+data[i].author_id+
+                +')" href="/profile/'+data[i].user_id+
                 '" class="b-photo-comment"></a>'+
                 '<div class="b-comment">'+
-                '<a href="/profile/'+data[i].author_id+'" class="b-name-comment" '+
+                '<a href="/profile/'+data[i].user_id+'" class="b-name-comment" '+
                 ' >'+
-                data[i].userName+
+                data[i].user_name+
                 '</a><div class="b-text-comment">'+
                 data[i].text_comment+
                 '</div><div class="b-date-comment">'+

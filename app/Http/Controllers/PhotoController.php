@@ -101,7 +101,6 @@ class PhotoController extends Controller
                             ->get();
                             if (empty($images->toArray())) {
                               $ajaxImage = 'error_download';
-                              // dd($ajaxImage);
                            }
        }else {
            $images = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
@@ -464,8 +463,17 @@ class PhotoController extends Controller
                     ->get();
         $views = View::where('post_id', '=', $id)->get();
 
-        $comments = Comment::where('post_id', '=', $id)->get();
-
+        $comments = DB::select('SELECT Comments.id,
+                                       Users.id AS user_id,
+                                       Images.id AS image_id,
+                                       Users.name AS user_name,
+                                       Users.quadro_ava AS user_quadro_ava,
+                                       Comments.text_comment AS text_comment,
+                                       Comments.rus_date AS rus_date
+                                FROM   Comments JOIN Users
+                                ON     Comments.user_id=Users.id
+                                JOIN   Images ON Images.id = Comments.post_id
+                                WHERE  Images.id='.$id);
         $allComments = Comment::join('Users', 'Users.id', '=', 'Comments.user_id')->get();
 
 
@@ -731,6 +739,13 @@ class PhotoController extends Controller
         $views->delete();
         dd($views);
         return 'true';
+    }
+
+    public function allPhotoSite()
+    {
+        $images = DB::table('Images')->paginate(10);
+
+        return view('moderator.all_photo_site', ['images' => $images]);
     }
 
 }

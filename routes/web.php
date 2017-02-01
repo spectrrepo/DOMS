@@ -51,6 +51,7 @@ Route::get('/profile/admin/slides', array('as' => 'slide',
 Route::get('/profile/admin/answer_mail/{id}', 'MessagesController@mailIndexItem');
 Route::get('/profile/admin/edit_copyrights', array('as' => 'pretense',
                                                     'uses' => 'CopyrightController@index'));
+Route::get('/profile/admin/allPhoto', 'PhotoController@allPhotoSite');
 
 Route::post('/delete_copyright', 'CopyrightController@delete');
 Route::post('/delete_comments/{id}', 'CommentController@delete');

@@ -543,7 +543,7 @@ return j.call(r(a),c)})),b))for(;i>h;h++)b(a[h],c,g?d:d.call(a[h],h,b(a[h],c)));
 });
 
 $( document ).ready(function() {
-  
+
   var dataURL = 0,
       csrftoken = $('meta[name=_token]').attr('content');
       var queue = 1;
@@ -1171,6 +1171,13 @@ $('.ajax-search').on('submit', function(){
     /*
      *  Simple image gallery. Uses default settings
      */
+     $(document).ready(function () {
+       $('.confirm-form-delete').on('submit', function () {
+         if(confirm('Вы уверены?')) {
+           $('#userform').submit();
+         }
+       });
+     });
 
 });
 
@@ -1347,12 +1354,12 @@ $( document ).ready(function() {
                     '<span class="delete_comment_id" data-id="'+data.id+'"></span>'+
                     '</span>'+
                     '<a href="/profile/'+data.user_id +
-                    '" class="b-photo-comment" style="background:url('+data.userPhoto+')'+
+                    '" class="b-photo-comment" style="background:url('+data.user_quadro_ava+')'+
                     'center no-repeat;background-size:cover;"></a>' +
                     '<div class="b-comment">' +
                       '<a href="/profile/'+
                       data.user_id +'" class="b-name-comment"> ' +
-                        data.userName +
+                        data.user_name +
                       '</a>' +
                       '<div class="b-text-comment">' +
                         data.text_comment +
@@ -1560,14 +1567,14 @@ $( document ).ready(function() {
                    '<span class="remove-comment uk-icon-justify '+
                    'uk-icon-remove"><span class="delete_comment_id" '+
                    'data-id="'+data[i].id+'"></span></span> '+
-                   '<a style="background:url('+data[i].userPhoto+
+                   '<a style="background:url('+data[i].user_quadro_ava+
                    ')center no-repeat;background-size:cover;'+
-                   ')" href="/profile/'+data[i].author_id+
+                   ')" href="/profile/'+data[i].user_id+
                    '" class="b-photo-comment"></a>'+
                    '<div class="b-comment">'+
-                   '<a href="/profile/'+data[i].author_id+'" class="b-name-comment" '+
+                   '<a href="/profile/'+data[i].user_id+'" class="b-name-comment" '+
                    ' >'+
-                   data[i].userName+
+                   data[i].user_name+
                    '</a><div class="b-text-comment">'+
                    data[i].text_comment+
                    '</div><div class="b-date-comment">'+
@@ -1576,14 +1583,14 @@ $( document ).ready(function() {
               }
               else {
                 $('<div class="b-comment-wrap">'+
-                '<a style="background:url('+data[i].userPhoto+
+                '<a style="background:url('+data[i].user_quadro_ava+
                 ')center no-repeat;background-size:cover;'+
-                +')" href="/profile/'+data[i].author_id+
+                +')" href="/profile/'+data[i].user_id+
                 '" class="b-photo-comment"></a>'+
                 '<div class="b-comment">'+
-                '<a href="/profile/'+data[i].author_id+'" class="b-name-comment" '+
+                '<a href="/profile/'+data[i].user_id+'" class="b-name-comment" '+
                 ' >'+
-                data[i].userName+
+                data[i].user_name+
                 '</a><div class="b-text-comment">'+
                 data[i].text_comment+
                 '</div><div class="b-date-comment">'+
@@ -3500,6 +3507,92 @@ $( document ).ready(function() {
   });
 
 
+    function save () {
+      $('#save-link-form').submit(function (e) {
+          e.preventDefault();
+          var csrftoken = $('meta[name=_token]').attr('content'),
+              link = $('input[name=link]').val(),
+              user_id = $('input[name=user_id]').val();
+              old_link = $('input[name=old_link]').val();
+
+          $.ajax({
+              type:'POST',
+              data: {
+                   '_token'  : csrftoken,
+                   'link' : link,
+                   'old_link' : old_link,
+                   'user_id' : user_id
+              },
+              url:'/edit_links',
+              success: function () {
+                $('input[name=link]').val('');
+                $('#dialogLinkAdd').fadeOut();
+                $('.uk-alert').remove();
+                $('#editUser').prepend(
+                   '<div class="uk-alert uk-alert-success" data-uk-alert=""'+
+                   'style="display: block;">'+
+                   '<a href="" class="uk-alert-close uk-close"></a>'+
+                   '<p>Ссылка изменена</p></div>');
+                  $('li.item-links[data-id='+$('#save-link-form').data('id')+']')
+                             .children('input.soc-set-edit')
+                             .val(link);
+                 setTimeout(function(){$('.uk-alert').css({'height':'0'}).remove()}, 10000)
+
+              }
+          });
+          return false;
+      });
+    }
+    function deleteLink () {
+      $('#delete-btn').on('click', function () {
+        var csrftoken = $('meta[name=_token]').attr('content'),
+            link = $('input[name=link]').val(),
+            user_id = $('input[name=user_id]').val();
+
+        $.ajax({
+            type:'POST',
+            data: {
+                      '_token'  : csrftoken,
+                      'link' : link,
+                      'user_id' : user_id
+            },
+            url:'/delete_links',
+
+            success: function () {
+              $('input[name=link]').val('');
+              $('#dialogLinkAdd').fadeOut();
+              $('#editUser').prepend(
+                 '<div class="uk-alert uk-alert-success" data-uk-alert=""'+
+                 'style="display: block;">'+
+                 '<a href="" class="uk-alert-close uk-close"></a>'+
+                 '<p>Ссылка удалена</p></div>');
+             $('li[data-id='+$('#save-link-form').data('id')+']').remove();
+             setTimeout(function(){$('.uk-alert').css({'height':'0'}).remove()}, 10000)
+
+            }
+        });
+    });
+  }
+  function openModalLink (){
+    $('.open-modal-link').on('click', function () {
+
+        $('.links-control').removeAttr('id')
+                           .attr('id', 'save-link-form');
+        $('input[name=old_link]').val($(this).children('input.soc-set-edit').val());
+        $('input[name=link]').val($(this).children('input.soc-set-edit').val())
+        $('#save-link-form').attr('data-id', $(this).data('id'));
+
+        $('h3.title-form').empty()
+                          .append('Изменить ссылку для '+
+                          $(this).children('input.soc-set-edit').val()+' или '+
+                '<span id="delete-btn" class="remove-this-links">удалить</span>');
+
+        $('.mini-modal-submit').removeClass('uk-icon-plus')
+                               .addClass('uk-icon-save')
+      $('#dialogLinkAdd').fadeIn();
+      deleteLink();
+    });
+  }
   $('.open-modal-link').on('click', function () {
     if ($(this).data('action') === 'addLinks') {
 
@@ -3524,13 +3617,13 @@ $( document ).ready(function() {
                 'user_id' : user_id
            },
            url:'/add_links',
-           success: function () {
+           success: function (data) {
              $('input[name=link]').val('');
              $('#dialogLinkAdd').fadeOut();
              $('.open-di-link').before(
                '<li class="item-links uk-icon-external-link '+
-                'open-modal-link" data-action="editLinks">'+
-               '<input class="contact-item-value soc-set-edit" name="soc_net"'+
+                'open-modal-link" data-action="editLinks"data-id="'+data.id+'">'+
+               '<input class="contact-item-value soc-set-edit" name="soc_net'+data.id+'"'+
                'value="'+link+'" type="hidden"></li>');
              $('.uk-alert').remove();
              $('#editUser').prepend(
@@ -3538,7 +3631,9 @@ $( document ).ready(function() {
                 'style="display: block;">'+
                 '<a href="" class="uk-alert-close uk-close"></a>'+
                 '<p>Ссылка добавлена</p></div>');
-             setTimeout(function(){$('.uk-alert').css({'height':'0'}).remove()}, 10000)
+                save();
+                openModalLink();
+             setTimeout(function(){$('.uk-alert').css({'height':'0'}).remove()}, 10000);
            }
          });
          return false;
@@ -3557,68 +3652,10 @@ $( document ).ready(function() {
 
       $('.mini-modal-submit').removeClass('uk-icon-plus')
                              .addClass('uk-icon-save')
-         $('#save-link-form').submit(function (e) {
-             e.preventDefault();
-             var csrftoken = $('meta[name=_token]').attr('content'),
-                 link = $('input[name=link]').val(),
-                 user_id = $('input[name=user_id]').val();
-                 old_link = $('input[name=old_link]').val();
 
-             $.ajax({
-                 type:'POST',
-                 data: {
-                      '_token'  : csrftoken,
-                      'link' : link,
-                      'old_link' : old_link,
-                      'user_id' : user_id
-                 },
-                 url:'/edit_links',
-                 success: function () {
-                   $('input[name=link]').val('');
-                   $('#dialogLinkAdd').fadeOut();
-                   $('.uk-alert').remove();
-                   $('#editUser').prepend(
-                      '<div class="uk-alert uk-alert-success" data-uk-alert=""'+
-                      'style="display: block;">'+
-                      '<a href="" class="uk-alert-close uk-close"></a>'+
-                      '<p>Ссылка изменена</p></div>');
-                     $('li.item-links[data-id='+$('#save-link-form').data('id')+']')
-                                .children('input.soc-set-edit')
-                                .val(link);
-                    setTimeout(function(){$('.uk-alert').css({'height':'0'}).remove()}, 10000)
-
-                 }
-             });
-             return false;
-         });
-         $('#delete-btn').on('click', function () {
-           var csrftoken = $('meta[name=_token]').attr('content'),
-               link = $('input[name=link]').val(),
-               user_id = $('input[name=user_id]').val();
-
-           $.ajax({
-               type:'POST',
-               data: {
-                         '_token'  : csrftoken,
-                         'link' : link,
-                         'user_id' : user_id
-               },
-               url:'/delete_links',
-
-               success: function () {
-                 $('input[name=link]').val('');
-                 $('#dialogLinkAdd').fadeOut();
-                 $('#editUser').prepend(
-                    '<div class="uk-alert uk-alert-success" data-uk-alert=""'+
-                    'style="display: block;">'+
-                    '<a href="" class="uk-alert-close uk-close"></a>'+
-                    '<p>Ссылка удалена</p></div>');
-                $('li[data-id='+$('#save-link-form').data('id')+']').remove();
-                setTimeout(function(){$('.uk-alert').css({'height':'0'}).remove()}, 10000)
-
-               }
-           });
-         });
+      deleteLink();
+      save();
+      openModalLink();
     }
     $('#dialogLinkAdd').fadeIn();
   });
@@ -3809,6 +3846,62 @@ $( document ).ready(function() {
   $('#close-modal-description').on('click', function(){
     $('#modalDescriptionFull').fadeOut();
     $('.description-scroll-place').empty();
+  });
+});
+
+$(document).ready(function() {
+  $('#enter').on('submit', function(e) {
+    $('#p-info').remove();
+    if (($('.modal-login-inp').val() === '')) {
+          e.preventDefault();
+           $('<p id="p-info" style="color:red">Не верно введен логин или пароль</p>')
+               .prependTo(this);
+           return false;
+    }else {
+      return true;
+    }
+  });
+});
+
+$(document).ready(function(){
+  $('#feedback').on('submit', function (e) {
+    e.preventDefault();
+    if (($('.input-feedback').val() === '')
+       || $('.textarea-feddback').val() === '') {
+         $(this).children().addClass('error');
+         return false;
+    }else {
+      return true;
+    }
+  });
+  $('#feedback').children().on('click', function() {
+    $(this).removeClass('error');
+  });
+});
+
+$(document).ready(function(){
+  $('#recovery-pass').on('submit', function (e) {
+    e.preventDefault();
+    if ($(this).children('.recover-text-inp').val() === ""){
+      $('<p id="p-info" style="color:red">Введите свой логин</p>')
+      .prependTo(this);
+      return false;
+    } else {
+      return true;
+    }
+  });
+});
+
+$(document).ready(function(){
+  $('#registr').on('submit', function (e) {
+    if ($('.input-reg').val() === "") {
+          e.preventDefault();
+          $('<p id="p-info" style="color:red">Заполните все поля формы</p>')
+          .prependTo('#registr');
+          return false;
+    } else {
+      return true;
+    }
   });
 });
 

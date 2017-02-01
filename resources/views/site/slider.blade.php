@@ -2,6 +2,12 @@
 @extends('layouts.site')
 @section('site-content')
  <div class="content  uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights">
+   @if (Session::get('check') == 'true')
+    <div class="uk-alert uk-alert-success" data-uk-alert=""style="display: block;width: 72%;margin-bottom: 27px;">
+      <a href="" class="uk-alert-close uk-close"></a>
+      <p>Пароль успешно отправлен на адрес электронной почты: {{ Auth::user()->email }}</p>
+    </div>
+   @endif
    <div class="col-slider-comment">
    <div id="hide-pole-tag" class="title-tag" style="margin-bottom:10px;">
          <span class="title-slider-tag" style="float:left;">Поиск по тегам:</span>
@@ -168,21 +174,20 @@
               </div>
               <div class="b-all-comment">
                 @foreach ( $comments as $comment )
-
                   <div class="b-comment-wrap">
                      @if (Auth::check())
                         {!! Auth::user()->id === $comment->user_id ? HTML::decode('<span class="remove-comment uk-icon-justify uk-icon-remove"><span class="delete_comment_id" data-id="'.$comment->id.'"></span></span>') : ''!!}
                      @endif
-                    <a style="background:url({{ $comment->userPhoto }}) center no-repeat;background-size:cover;"href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-photo-comment"></a>
+                    <a style="background:url({{ empty($comment->user_quadro_ava) ? '/img/user.png' : $comment->user_quadro_ava }}) center no-repeat;background-size:cover;"href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-photo-comment"></a>
                     <div class="b-comment">
-                      <a href="{{ URL::to('profile/'.$comment->userName) }}" class="b-name-comment">
-                        {{ $comment->userName }}
+                      <a href="{{ URL::to('profile/'.$comment->user_name) }}" class="b-name-comment">
+                        {{ $comment->user_name }}
                       </a>
                       <div class="b-text-comment">
                         {{ $comment->text_comment }}
                       </div>
                       <div class="b-date-comment">
-                        <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($comment->date)->formatLocalized('%d %b %Y') ?>
+                        <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($comment->rus_date)->formatLocalized('%d %b %Y') ?>
                       </div>
                     </div>
                   </div>

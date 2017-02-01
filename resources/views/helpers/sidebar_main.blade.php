@@ -73,7 +73,7 @@
                <ul class="colors-space">
                @foreach ($colors as $color)
                  <li class="colors-space-item" data-color="{{ $color->RGB }}" data-url="{{ $color->id }}" style="background:{{ $color->RGB }};">
-                   <span class="choose-ico uk-icon-justify uk-icon-check"></span>
+                   <span class="choose-ico choose-ico-color uk-icon-justify uk-icon-check"></span>
                  </li>
                @endforeach
                <div class="clear"></div>
@@ -175,6 +175,11 @@
    <div class="popup-text-news">
       {{ $news->full_description }}
    </div>
+   <?php $newsViews = \App\NewsVariant::where('new_id', '=', $news->id)->get();
+       foreach ($newsViews as $item){
+          echo "<img src='{{ $item->file_path_full }}'/>";
+       }
+   ?>
 </div>
 <div class="date-and-all-news">
       <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($news->news_updated_at)->formatLocalized('%d %b %Y') ?>

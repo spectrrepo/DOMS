@@ -95,8 +95,8 @@
     </div>
   </div>
   <div class="clear"></div>
-  {{ Form::open(array('url' => '/delete_verification_image/'.$image->id))}}
-  <button class="btn-dwnld" style="width:50%;margin-left:21%;" type="submit" name="button">
+  {{ Form::open(array('class' => 'confirm-form-delete', 'url' => '/delete_verification_image/'.$image->id))}}
+  <button class="btn-dwnld" style="width: 19%;left: 21%;margin-top: -78px;position: absolute;" type="submit" name="button">
       <span class="save-text">Удалить изображение</span>
       <span class="save-ico uk-icon-justify uk-icon-save"></span>
   </button>

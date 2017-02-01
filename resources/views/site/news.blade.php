@@ -1,6 +1,12 @@
 @extends('layouts.site')
 @section('site-content')
 <div class="content">
+  @if (Session::get('check') == 'true')
+    <div class="uk-alert uk-alert-success" data-uk-alert=""style="display: block;">
+      <a href="" class="uk-alert-close uk-close"></a>
+      <p>Пароль успешно отправлен на адрес электронной почты: {{ Auth::user()->email }}</p>
+    </div>
+  @endif
   <h3 class="liked-title">Новости</h3>
   <div class="uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights" data-uk-grid>
     @foreach ( $news as $new )
@@ -28,6 +34,11 @@
       <div class="popup-text-news">
         {{ $new->full_description }}
       </div>
+      <?php $newsViews = \App\NewsVariant::where('new_id', '=', $new->id)->get();
+           foreach ($newsViews as $item){
+              echo "<img src='$item->file_path_full'/>";
+           }
+      ?>
     </div>
   </div>
   @endforeach

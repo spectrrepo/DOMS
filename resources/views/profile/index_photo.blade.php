@@ -3,7 +3,7 @@
 
 <div class="wrap-personal-information">
   <div class="b-photo-person">
-     <img src="{{ $user->quadro_ava}}" alt="Автопортрет {{ Auth::user()->id }}" />
+     <img src="{{ empty($user->quadro_ava) ? '/img/user.png' : $user->quadro_ava }}" alt="Автопортрет {{ Auth::user()->id }}" />
   </div>
     <div class="b-persobal-information">
         <div class="b-name-person">

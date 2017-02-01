@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-  
+
   var dataURL = 0,
       csrftoken = $('meta[name=_token]').attr('content');
       var queue = 1;
@@ -627,5 +627,12 @@ $('.ajax-search').on('submit', function(){
     /*
      *  Simple image gallery. Uses default settings
      */
+     $(document).ready(function () {
+       $('.confirm-form-delete').on('submit', function () {
+         if(confirm('Вы уверены?')) {
+           $('#userform').submit();
+         }
+       });
+     });
 
 });

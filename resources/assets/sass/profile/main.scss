@@ -233,6 +233,7 @@
     background: #cadede;
     cursor: pointer;
     margin-left: 20px;
+    position: relative;
 }
 .col-news-big {
     width: 90%;
@@ -377,4 +378,15 @@
 }
 .ico-liked {
     float: right;
+}
+.ico-news {
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+}
+.ico-news-hearth {
+    color: red;
+}
+.ico-news-star {
+    color: #ffcc00;
 }

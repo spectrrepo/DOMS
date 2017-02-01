@@ -12,7 +12,7 @@
       </span>
       <div class="clear"></div>
     </div>
-    {{ Form::open(array('url' => '/reg')) }}
+    {{ Form::open(array('id'=>'registr', 'url' => '/reg')) }}
     <div class="b-form-inputs">
       <span class="title-text bottom-line">Или зарегистрироваться через адрес электронной почты</span>
       <div class="wrap-reg-inp">

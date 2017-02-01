@@ -14,11 +14,10 @@
         <span class="uk-icon-justify uk-icon-vk round-vk"></span>
       </div>
       <div class="clear"></div>
-      {{ Form::open(array('url' => '/send_mail' ) ) }}
-      <input class="input-feedback left" required="" type="text" name="name" value="" placeholder="Имя">
-      <input class="input-feedback right" required="" type="text" name="e_mail" value="" placeholder="E-mail">
-      <div class="clear"></div>
-      <textarea class="textarea-feedback" required="" name="text" rows="8" cols="40"></textarea>
+      {{ Form::open(array('id'=>'feedback','url' => '/send_mail' ) ) }}
+      <input class="input-feedback left" type="text" name="name" required value="" placeholder="Имя">
+      <input class="input-feedback right" type="text" name="e_mail" required value="" placeholder="E-mail">
+      <textarea class="textarea-feedback" name="text" required rows="8" cols="40"></textarea>
       <input class="feedback-submit" type="submit" value="Отправить сообщение">
       {{ Form::close() }}
       <div class="clear"></div>

@@ -42,12 +42,12 @@ $( document ).ready(function() {
                     '<span class="delete_comment_id" data-id="'+data.id+'"></span>'+
                     '</span>'+
                     '<a href="/profile/'+data.user_id +
-                    '" class="b-photo-comment" style="background:url('+data.userPhoto+')'+
+                    '" class="b-photo-comment" style="background:url('+data.user_quadro_ava+')'+
                     'center no-repeat;background-size:cover;"></a>' +
                     '<div class="b-comment">' +
                       '<a href="/profile/'+
                       data.user_id +'" class="b-name-comment"> ' +
-                        data.userName +
+                        data.user_name +
                       '</a>' +
                       '<div class="b-text-comment">' +
                         data.text_comment +

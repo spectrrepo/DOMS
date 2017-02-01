@@ -7,9 +7,14 @@
       <a href="" class="uk-alert-close uk-close"></a>
       <p>Фото добавлено</p>
     </div>
+  @elseif (Session::get('check') == 'delete')
+    <div class="uk-alert uk-alert-success" data-uk-alert=""style="display: block;">
+      <a href="" class="uk-alert-close uk-close"></a>
+      <p>Фото успешно удалено</p>
+    </div>
   @endif
     <div class="b-photo-person">
-          <img src="{{ $user->quadro_ava }}" alt="" />
+          <img src="{{ empty($user->quadro_ava) ? '/img/user.png' : $user->quadro_ava }}" alt="" />
     </div>
     <div class="b-persobal-information">
         <div class="b-name-person">
@@ -67,21 +72,34 @@
       </ul>
     </div>
     <div class="b-personal-news">
+      {{-- +"type": "favorite"
+   +"img_id": 44
+   +"date_event": null
+   +"quadro_ava_user_event": "/img/quadro-ava/17jpg"
+   +"user_name_event": "Администратор"
+   +"id_user_event": 17
+   +"img_photo": "/system/App/Picture/photos/000/000/044/max/f.jpg"
+   +"user_id_add": 17
+   +"name_user_add": "Администратор"
+   +"quadro_ava_add": "/img/quadro-ava/17jpg"
+   +"views_count": 241
+   +"likes_count": 1
+   +"favs_count": 1 --}}
       @foreach ($images as $image)
         <div class="b-person-post">
           <div class="col-news-min">
-              <div class="b-portret-blogger" style="background:url({{ !($image->path_full === null ) ? $image->path_full : '' }}) center no-repeat;
+              <div class="b-portret-blogger" style="background:url({{ !($image->quadro_ava_add === null ) ? $image->quadro_ava_add : '' }}) center no-repeat;
                                                     background-size: cover;"></div>
           </div>
           <div class="col-news-big">
-              <div class="b-name-redactor"><a href="/profile/{{$image->id}}">{{$image->name}}</a></div>
+              <div class="b-name-redactor"><a href="/profile/{{$image->user_id_add}}">{{$image->name_user_add}}</a></div>
               <div class="b-post-body">
                 <div class="b-photo-post">
-                  <img src="{{$image->full_path}}" class="img-post" alt="" />
+                  <img src="{{$image->img_photo}}" class="img-post" alt="" />
                 </div>
                 <div class="b-iformation">
                   <div class="b-date">
-                    <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($image->photo_updated_at)->formatLocalized('%d %b %Y') ?>
+                    <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($image->date_event)->formatLocalized('%d %b %Y') ?>
                   </div>
                   <div class="b-statistics">
                     <div class="b-item-stat">
@@ -106,7 +124,7 @@
                     </div>
                     <div class="b-item-stat">
                       <span class="ico uk-icon-justify uk-icon-star"></span>
-                      <span class="num-stat">{{ !empty($image->likes_count) ? $image->likes_count : '0' }}</span>
+                      <span class="num-stat">{{ !empty($image->favs_count) ? $image->favs_count : '0' }}</span>
                       <span class="tooltip-stat margin-liked-tooltip">
                         <span class="text-tooltip-stat">
                          избранное
@@ -120,6 +138,48 @@
               </div>
               <div class="clear"></div>
           </div>
+          @if ($image->type === 'favorite')
+            <div class="col-news-min">
+              <div class="b-portret-blogger"
+                   style="background:url(
+                   {{ !($image->quadro_ava_user_event === null ) ? $image->quadro_ava_user_event : '' }}) center no-repeat;
+                          background-size: cover;">
+                    <span class="ico ico-news ico-news-star uk-icon-justify uk-icon-star"></span>
+              </div>
+            </div>
+            <div class="col-news-big">
+              <div class="b-name-redactor">
+                <a href="/profile/{{$image->id_user_event}}">
+                  {{$image->user_name_event}}
+                </a>
+                <span class="">добавил(а) фотографию в избранное</span>
+                <p class="">
+                  <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($image->date_event)->formatLocalized('%d %b %Y') ?>
+                </p>
+              </div>
+            </div>
+          @elseif ($image->type === 'like')
+            <div class="col-news-min">
+              <div class="b-portret-blogger"
+                   style="background:url(
+                   {{ !($image->quadro_ava_user_event === null ) ? $image->quadro_ava_user_event : '' }}) center no-repeat;
+                          background-size: cover;">
+                  <span class="ico ico-news ico-news-hearth uk-icon-justify uk-icon-heart"></span>
+              </div>
+            </div>
+            <div class="col-news-big">
+              <div class="b-name-redactor">
+                <a href="/profile/{{$image->id_user_event}}">
+                  {{$image->user_name_event}}
+                </a>
+                <span class="">оценил(a) фотографию</span>
+                <p class="">
+                  <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($image->date_event)->formatLocalized('%d %b %Y') ?>
+                </p>
+              </div>
+            </div>
+          @endif
+
           <div class="clear"></div>
     </div>
     @endforeach

@@ -11,7 +11,7 @@ use App\News;
 use App\NewsVariant;
 
 use Input;
-
+use Image;
 
 class NewsController extends Controller
 {
@@ -36,28 +36,32 @@ class NewsController extends Controller
         $news->title = $_POST['title'];
         $news->description = $_POST['min_description'];
         $news->full_description = $_POST['full_description'];
-            $news->news = $_FILES['main_photo'];
+        $news->news = $_FILES['main_photo'];
+        $news->variants = 'f';
+        $news->save();
 
         $variantRes = "";
         if (!empty($_FILES['variants']['tmp_name'])){
             foreach ($_FILES['variants']['tmp_name'] as $variantItem) {
+                $item = Image::make($variantItem);
+                $item->encode('jpg');
+                $item->save(public_path('/img/12.jpg'));
                 $view = new NewsVariant();
-                $view->news_variant = $variantItem;
+                $view->news_variant = public_path('/img/12.jpg');
+                $view->new_id = News::orderBy('id', 'desc')->first()->id;
                 $view->save();
                 $addInfo = NewsVariant::orderBy('id', 'desc')
-                                ->first();
+                ->first();
                 $updateVariantsInfo = NewsVariant::find($addInfo->id);
                 $updateVariantsInfo->file_path_full = $updateVariantsInfo->news_variant->url('max');
                 $variantRes .= $updateVariantsInfo->id;
                 $updateVariantsInfo->save();
-
             }
         }
-        $news->variants = $variantRes;
-        $news->save();
         $addInfo = News::orderBy('id', 'desc')
                         ->first();
         $updateIinfo = News::find($addInfo->id);
+        $updateIinfo->variants = $variantRes;
         $updateIinfo->file_path_full = $updateIinfo->news->url('max');
         $updateIinfo->file_path_min = $updateIinfo->news->url('small');
         $updateIinfo->save();
@@ -78,22 +82,27 @@ class NewsController extends Controller
         $news->description = $_POST["min_description"];
         $news->full_description = $_POST["full_description"];
 
-        
+        if ( !empty($_FILES['main_photo']['tmp_name'])) {
             $news->news = $_FILES['main_photo'];
-        
+        }
 
-        if ( !isset($_FILES["variants"])) {
-            foreach (Input::file('variants') as $variantItem) {
+        $variantRes = "";
+        if ( !empty($_FILES["variants"]['tmp_name'][0])) {
+            // dd($_FILES);
+            foreach ($_FILES['variants']['tmp_name'] as $variantItem) {
+                $item = Image::make($variantItem);
+                $item->encode('jpg');
+                $item->save(public_path('/img/12.jpg'));
                 $view = new NewsVariant();
-                $view->news_variant = $variantItem;
+                $view->news_variant = public_path('/img/12.jpg');
+                $view->new_id = News::orderBy('id', 'desc')->first()->id;
                 $view->save();
                 $addInfo = NewsVariant::orderBy('id', 'desc')
-                                ->first();
+                ->first();
                 $updateVariantsInfo = NewsVariant::find($addInfo->id);
                 $updateVariantsInfo->file_path_full = $updateVariantsInfo->news_variant->url('max');
                 $variantRes .= $updateVariantsInfo->id;
                 $updateVariantsInfo->save();
-
             }
             $news->variants = $variantRes;
         }

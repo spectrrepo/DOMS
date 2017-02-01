@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Picture;
+use Illuminate\Support\Facades\DB;
 
 use App\Comment;
 use Auth;
@@ -122,9 +123,18 @@ class SliderController extends Controller
 
     public function dwnldComments()
     {
-
-      $id = $_POST['id'];
-      $comments = Comment::where('post_id', '=', $id)->get();
+       $id = $_POST['id'];
+       $comments = DB::select('SELECT Comments.id,
+                                      Users.id AS user_id,
+                                      Images.id AS image_id,
+                                      Users.name AS user_name,
+                                      Users.quadro_ava AS user_quadro_ava,
+                                      Comments.text_comment AS text_comment,
+                                      Comments.rus_date AS rus_date
+                                FROM  Comments JOIN Users
+                                ON    Comments.user_id=Users.id
+                                JOIN  Images ON Images.id = Comments.post_id
+                                WHERE Images.id='.$id);
       return $comments;
     }
 

@@ -8,9 +8,9 @@
       <div class="clear"></div>
     </div>
     <div class="clear"></div>
-    {{ Form::open(array('url' => '/enter'))}}
-    <input class="modal-login-inp" type="text" name="email" placeholder="E-mail">
-    <input class="modal-login-inp" type="password" name="password" placeholder="Пароль">
+    {{ Form::open(array('id'=> 'enter','url' => '/enter'))}}
+    <input class="modal-login-inp" type="text" required name="email" placeholder="E-mail">
+    <input class="modal-login-inp" type="password" required name="password" placeholder="Пароль">
     <a id="recover-pswd">
       <span  class="forget-link">Забыли пароль?</span>
     </a>

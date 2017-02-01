@@ -14,7 +14,7 @@
       <a href="{{ URL::to('profile/'.Auth::id()) }}" class="logining-item logining-item-top">{{ Auth::user()->name }}</a>
       <a href="{{URL::route('logout')}}" class="logining-item">Выход</a>
       <a href="{{ URL::to('profile/'.Auth::id()) }}">
-          <div class="login-portret" style="background:url({{ Auth::user()->avatar->url() }}) center no-repeat; background-size:cover;">
+          <div class="login-portret" style="background:url({{ empty(Auth::user()->quadro_ava) ? '/img/user.png' : Auth::user()->quadro_ava }}) center no-repeat; background-size:cover;">
           </div>
       </a>
       @else
