@@ -57,7 +57,8 @@ class UserController extends Controller
                           Likeds.date AS date_event,
                           Users.quadro_ava AS quadro_ava_user_event,
                           Users.name AS user_name_event,
-                          Users.id AS id_user_event
+                          Users.id AS id_user_event,
+                          Users.sex AS sex_user_event
                     FROM Likeds JOIN Users ON Likeds.user_id = Users.id)
 
                     UNION
@@ -67,7 +68,8 @@ class UserController extends Controller
                           Likes.date AS date_event,
                           Users.quadro_ava AS quadro_ava_user_event,
                           Users.name AS user_name_event,
-                          Users.id AS id_user_event
+                          Users.id AS id_user_event,
+                          Users.sex AS sex_user_event
                     FROM Likes JOIN Users ON Likes.user_id = Users.id)) AS t1
                JOIN(
                     SELECT Images.id AS img_id,
@@ -84,7 +86,6 @@ class UserController extends Controller
              $results = DB::select('(select * from Likes) union (select * from Likeds)');
              $user = User::find($id);
              $links = Social::where('user', '=', $id)->get();
-            //  dd($images);
              return View('profile.index', [ 'id' => $id,
                                             'user' => $user,
                                             'images' => $images,

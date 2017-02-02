@@ -2,7 +2,7 @@
 @section('profile-content')
 <h3 class="liked-title margin-bottom-10">Комментарии</h3>
 @foreach ($comments as $comment)
-<div class="item-admin-row">
+<div class="item-admin-row {{ $comment->status=='not_read' ? 'none-check': '' }}">
   <div class="cell-item-admin id-cell">
     {{ $comment->id}}
   </div>

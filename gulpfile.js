@@ -19,7 +19,6 @@ elixir(mix => {
       .scripts([
         "jquery.min.js",
         "uikit.min.js",
-        "owl.carousel.min.js",
         "grid.js",
         "popup.js",
         "upload.js",
@@ -42,7 +41,9 @@ elixir(mix => {
         "validation/entering.js",
         "validation/send-feedback.js",
         "validation/recovery-pass.js",
-        "validation/registration.js"
+        "validation/registration.js",
+        "about-popup-slider.js",
+        "read-new-comment.js"
     ],'public/js/app.js')
        .copy('resources/assets/fonts/*.*', 'public/css/fonts/');
 });

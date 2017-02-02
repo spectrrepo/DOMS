@@ -2,7 +2,7 @@
 @section('profile-content')
 <h3 class="liked-title margin-bottom-10">Претензии</h3>
 @foreach ($copyrights as $copyright)
-<div class="item-admin-row">
+<div class="item-admin-row {{ $copyright->status=='not_read' ? 'none-check': '' }}">
   <div class="cell-item-admin id-cell">
     {{ $copyright->id }}
   </div>
@@ -13,7 +13,7 @@
     {{ $copyright->message }}
   </div>
   <div class="cell-item-admin id-cell">
-    <img src="{{ $copyright->photo_pretense->url('max') }}"/>
+    <img class="img-inside-cell" src="{{ $copyright->photo_pretense->url('max') }}"/>
   </div>
   <div class="cell-item-admin id-cell">
     {{ $copyright->user_author_id }}

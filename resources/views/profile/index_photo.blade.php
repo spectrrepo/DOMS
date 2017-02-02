@@ -59,7 +59,7 @@
 
 
       @if ((!empty($userImages)))
-      <div class=" b-personal-news content  content-your-photo uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-5 tm-grid-heights" data-uk-grid>
+      <div class=" b-personal-news download-user-place content  content-your-photo uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-5 tm-grid-heights" data-uk-grid>
           @foreach ($userImages as $userImage)
               <a href="/profile/admin/verification/{{ $userImage->id }}" class="item-gallery" style="position:absolute" data-grid-prepared="true">
                 <div class="uk-panel-box" >

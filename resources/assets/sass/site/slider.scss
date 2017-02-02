@@ -61,10 +61,6 @@
   vertical-align: middle;
   display: inline-block;
 }
-.item {
-  height: 200px;
-  text-align: center;
-}
 .img-slider {
   max-height: 100%;
   max-width: 100%;
@@ -306,7 +302,6 @@ a.btn-prew span {
   padding-top: 4px;
 }
    /*###and comments###*/
-.b-comments{}
 .b-com-title{
   width: 100%;
   display: block;
@@ -328,8 +323,11 @@ a.btn-prew span {
 }
 .b-comment {
   float: left;
-  margin-left: 10px;
-  margin-top: 3px;
+  padding-left: 10px;
+  padding-top: 3px;
+  width: 90%;
+  box-sizing: border-box;
+  padding-right: 14px;
 }
 .remove-comment {
   position: absolute;
@@ -388,6 +386,8 @@ a.btn-prew span {
 }
 .b-text-comment{
   font-size: 14px;
+  width: 100%;
+  margin-bottom: 24px;
 }
 .b-date-comment{
   color: #b8b3b0;

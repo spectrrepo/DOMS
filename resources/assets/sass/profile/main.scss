@@ -19,6 +19,15 @@
 .uk-alert {
   display: none;
 }
+.indicators{
+  background: #333333;
+  color: white;
+  padding: 3px;
+  border-radius: 2px;
+}
+.none-check {
+  background: #d2e1f8;
+}
 /*#############block with personal informstion and photo###################*/
 .liked-title {
     border-bottom: 1px solid #ccc;
@@ -168,7 +177,7 @@
     border-radius: 5px;
     border: 1px solid #cccccc;
     margin-bottom: 20px;
-    padding-bottom: 13px;
+    border-bottom: none;
 }
 .b-setting-switcher {
     width: 100%;
@@ -218,6 +227,8 @@
 .b-person-post {
     width: 100%;
     height: auto;
+    border-bottom: 1px solid #ccc;
+    padding-top: 5px;
 }
 .col-news-min {
     float: left;
@@ -245,9 +256,20 @@
     box-sizing: border-box;
 }
 .b-name-redactor {
-    color: green;
     margin-bottom: 15px;
     cursor: pointer;
+}
+.b-name-redactor a {
+    font-size: 14px;
+}
+.event-text{
+    font-size: 12px;
+    color: gray;
+}
+.date-event-text {
+    color: #cccccc;
+    font-size: 14px;
+    margin-top: 5px;
 }
 .b-post-body {
     border-radius: 5px;
@@ -389,4 +411,7 @@
 }
 .ico-news-star {
     color: #ffcc00;
+}
+.download-user-place {
+  border: 1px solid #ccc;
 }

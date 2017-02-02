@@ -2,7 +2,7 @@
 @section('profile-content')
 <h3 class="liked-title margin-bottom-10">Сообщения</h3>
 @foreach ($messages as $message)
-<div class="item-admin-row">
+<div class="item-admin-row {{ $message->status=='not_read' ? 'none-check': '' }}">
 
   <div class="cell-item-admin name-cell">
     {{ $message->name }}

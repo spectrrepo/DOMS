@@ -87,10 +87,11 @@ class CopyrightController extends Controller
         $copyright = Pretense::find($id);
         $imageChange = Picture::find($copyright->post_id);
         $imageChange->author_id = $copyright->user_pretense_id;
+        $copyright->status = 'read';
+        $copyright->save();
         $imageChange->save();
 
-        $copyright->delete();
-
+        // $copyright->delete();
         return redirect()->back();
 
     }

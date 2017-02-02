@@ -152,8 +152,16 @@
                 <a href="/profile/{{$image->id_user_event}}">
                   {{$image->user_name_event}}
                 </a>
-                <span class="">добавил(а) фотографию в избранное</span>
-                <p class="">
+                <span class="event-text">
+                  @if ($image->sex_user_event == 1 )
+                    добавил фотографию в избранное
+                  @elseif ($image->sex_user_event == 2)
+                    добавила фотографию в избранное
+                  @else
+                    добавил(а) фотографию в избранное
+                  @endif
+                </span>
+                <p class="date-event-text">
                   <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($image->date_event)->formatLocalized('%d %b %Y') ?>
                 </p>
               </div>
@@ -172,8 +180,16 @@
                 <a href="/profile/{{$image->id_user_event}}">
                   {{$image->user_name_event}}
                 </a>
-                <span class="">оценил(a) фотографию</span>
-                <p class="">
+                <span class="event-text">
+                  @if ($image->sex_user_event == 1 )
+                    оценил фотографию
+                  @elseif ($image->sex_user_event == 2)
+                    оценилa фотографию
+                  @else
+                    оценил(a) фотографию
+                  @endif
+                </span>
+                <p class="date-event-text">
                   <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($image->date_event)->formatLocalized('%d %b %Y') ?>
                 </p>
               </div>

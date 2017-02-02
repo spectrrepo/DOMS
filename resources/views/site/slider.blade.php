@@ -187,7 +187,7 @@
                         {{ $comment->text_comment }}
                       </div>
                       <div class="b-date-comment">
-                        <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($comment->rus_date)->formatLocalized('%d %b %Y') ?>
+                        {{ $comment->rus_date }}
                       </div>
                     </div>
                   </div>

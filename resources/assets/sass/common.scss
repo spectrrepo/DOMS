@@ -80,7 +80,7 @@ nav ul li a:hover {
     text-decoration: none;
 }
 .logo {
-    padding-left: 33px;
+    padding-left: 41px;
     padding-top: 8px;
     height: 100%;
     width: 20%;
@@ -104,20 +104,21 @@ nav ul li a:hover {
     height: 100%;
     cursor: pointer;
     transition: all 0.3s ease;
-    line-height: 44px;
     width: 100px;
     text-align: center;
     font-size: 16px;
     font-weight: normal;
+    line-height: 49px;
 }
 .plus-photo {
     display: block;
     float: left;
     height: 100%;
     cursor: pointer;
-    line-height: 44px;
+    line-height: 49px;
     width: 50px;
     text-align: center;
+    font-size: 12px;
 }
 .main-item:hover, .plus-photo:hover {
     background: #222222;
@@ -151,7 +152,7 @@ nav ul li a:hover {
     position: absolute;
     top: 7px;
     z-index: 100000000000000000000000000000000000000000000000;
-    right: 25px;
+    right: 40px;
 }
 .item-about {
     height: 44px;
@@ -174,7 +175,7 @@ nav ul li a:hover {
     position: relative;
     display: block;
     float: right;
-    padding-right: 25px;
+    padding-right: 40px;
     width: 34.334%;
     box-sizing: border-box;
     height: 100%;
