@@ -1,8 +1,8 @@
 $(document).ready(function(){
   $('#feedback').on('submit', function (e) {
-    e.preventDefault();
     if (($('.input-feedback').val() === '')
        || $('.textarea-feddback').val() === '') {
+         e.preventDefault();
          $(this).children().addClass('error');
          return false;
     }else {

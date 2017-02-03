@@ -1,6 +1,7 @@
 $( document ).ready(function() {
   $('#description-pole h3').on('click', function(){
-    $('<h3></h3>').appendTo('.description-scroll-place')
+    $('<h3 class="title-description-popup"></h3>')
+                  .appendTo('.description-scroll-place')
                   .text($(this).text());
     $('<p></p>').appendTo('.description-scroll-place')
                 .text($('#description-pole p').text());

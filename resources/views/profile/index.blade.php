@@ -72,19 +72,6 @@
       </ul>
     </div>
     <div class="b-personal-news">
-      {{-- +"type": "favorite"
-   +"img_id": 44
-   +"date_event": null
-   +"quadro_ava_user_event": "/img/quadro-ava/17jpg"
-   +"user_name_event": "Администратор"
-   +"id_user_event": 17
-   +"img_photo": "/system/App/Picture/photos/000/000/044/max/f.jpg"
-   +"user_id_add": 17
-   +"name_user_add": "Администратор"
-   +"quadro_ava_add": "/img/quadro-ava/17jpg"
-   +"views_count": 241
-   +"likes_count": 1
-   +"favs_count": 1 --}}
       @foreach ($images as $image)
         <div class="b-person-post">
           <div class="col-news-min">

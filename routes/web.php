@@ -4,141 +4,20 @@
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| This file is where you may define all of the routes that are handled
-| by your application. Just tell Laravel the URIs it should respond
-| to using a Closure or controller method. Build something great!
-|
 */
 
 /*
-/ This is routing on pages of site
+/ These routes , which guests have access
 */
 Route::get('/', function(){
     return redirect('/room=[0],styles=[0],colors=[0],sort=[0],tag=[0]');
 });
 Route::get('/room=[{room?}],styles=[{style?}],colors=[{color?}],sort=[{sort?}],tag=[{tag?}]', 'PhotoController@index');
-Route::get('/photo/id=[{id}],room=[{room?}],styles=[{style?}],colors=[{color?}],sort=[{sort?}],tag=[{tag?}]', array('uses' => 'PhotoController@indexItem'));
-Route::get('/news', array('uses' => 'NewsController@Index'));
+Route::get('/photo/id=[{id}],room=[{room?}],styles=[{style?}],colors=[{color?}],sort=[{sort?}],tag=[{tag?}]', ['uses' => 'PhotoController@indexItem']);
+Route::get('/news', ['uses' => 'NewsController@Index']);
 
-/*
-/ This is routing on pages of profile
+/*login, registration and more
 */
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/profile/{id}', array('uses' => 'UserController@index'));
-    Route::get('/profile/add/photo', array('as' => 'add',
-                                           'uses' => 'UserController@indexAdd'));
-    Route::get('/profile/edit/user', array('as' => 'edit',
-                                           'uses' => 'UserController@editUser'));
-    Route::get('/profile/liked/photo', array('as' => 'liked',
-                                             'uses' => 'UserController@likedIndex'));
-    Route::get('/profile/{id}/your_photo', array('uses' => 'UserController@yourPhotoUpload'));
-});
-/*
-/ This is routing on pages of moderator
-*/
-Route::get('/profile/admin/verification', array('as' => 'verified',
-                                                'uses' => 'UserController@confirmationsPage'));
-Route::get('/profile/admin/add_news', array('as' => 'news',
-                                            'uses' => 'UserController@addNewsPage'));
-Route::get('/profile/admin/verification/{id}', array('uses' => 'UserController@confirmationItemPage'));
-Route::get('/profile/admin/add_news_item', array('uses' => 'UserController@addNewsItem'));
-Route::get('/profile/admin/comments', array('as' => 'comments',
-                                            'before' => 'auth',
-                                            'uses' => 'CommentController@index'));
-Route::get('/profile/admin/messages', array('as' => 'messages',
-                                            'uses' => 'MessagesController@mailIndex'));
-Route::get('/profile/admin/copyrights', array('as' => 'copyright',
-                                            'uses' => 'CopyrightController@index'));
-Route::get('/profile/admin/edit_page_news/{id}','NewsController@editPageIndex');
-Route::get('/profile/admin/edit_copyrights', array('as' => 'pretense',
-                                                    'uses' => 'CopyrightController@index'));
-Route::get('/profile/admin/photo/all', 'PhotoController@allPhotoSite');
-Route::get('/profile/admin/answer_mail/{id}', 'MessagesController@mailIndexItem');
-
-Route::post('/send_mail',array('as' => 'sendMail',
-                               'uses' => 'MessagesController@sendMail'));
-
-/*
-/ This is routing on pages of moderator
-*/
-Route::get('/profile/admin/edit_page_styles/{id}','StylesController@editPageIndex');
-Route::get('/profile/admin/tags_edit', array('as' => 'tags_edit',
-                                             'uses' => 'UserController@editTagsPage'));
-Route::get('/profile/admin/styles_edit', array('as' => 'styles_edit',
-                                               'uses' => 'UserController@editStylesPage'));
-Route::get('/profile/admin/rooms_edit', array('as' => 'rooms_edit',
-                                              'uses' => 'UserController@editRoomsPage'));
-Route::get('/profile/admin/add_style_item', array('uses' => 'UserController@addStyleItem'));
-Route::get('/profile/admin/slides', array('as' => 'slide',
-                                            'uses' => 'ChangeSlideController@index'));
-
-
-Route::post('/answer_mail', 'MessagesController@askOnMail');
-
-Route::post('/delete_copyright', 'CopyrightController@delete');
-Route::post('/delete_comments/{id}', 'CommentController@delete');
-Route::post('/delete_message/{id}', 'MessagesController@deleteMail');
-Route::post('/delete_slide', 'ChangeSlideController@delete');
-Route::post('/delete_verification_image/{id}','UserController@deleteVerificationImage');
-Route::post('/delete_tag/{id}','TagsController@delete');
-Route::post('/delete_style/{id}','StylesController@delete');
-Route::post('/delete_room/{id}','RoomsController@delete');
-Route::post('/delete_news/{id}', 'NewsController@delete');
-Route::post('/delete_comment', 'CommentController@delete');
-Route::post('/delete_view', 'PhotoController@deleteView');
-Route::post('/delete_links', 'UserController@deleteSocLink');
-Route::post('/delete_liked', 'UserController@likedDelete');
-Route::post('/delete_like', 'LikeController@delete');
-
-Route::post('/save_copyright', 'CopyrightController@saveNewCopyright');
-Route::post('/add_slide', 'ChangeSlideController@add');
-Route::post('/add_copyright', 'CopyrightController@add');
-Route::post('/add_photo_site/{id}','PhotoController@addPhotoSite');
-Route::post('/add_tags','TagsController@add');
-Route::post('/add_rooms','RoomsController@add');
-Route::post('/add_styles','StylesController@add');
-Route::post('/add_news', 'NewsController@addNews');
-Route::post('/add_links', 'UserController@addSocLink');
-Route::post('/add_photo', 'PhotoController@add');
-Route::post('/comment', 'CommentController@add');
-Route::post('/like', 'LikeController@add');
-Route::post('/liked', 'UserController@likedAdd');
-
-Route::post('/edit_slide', 'ChangeSlideController@change');
-Route::post('/edit_tag/{id}','TagsController@edit');
-Route::post('/edit_style/{id}','StylesController@edit');
-Route::post('/edit_room/{id}','RoomsController@edit');
-Route::post('/edit_new/{id}','NewsController@edit');
-Route::post('/edit_links','UserController@editSocLink');
-Route::post('/update/profile', 'UserController@changeYourself');
-
-Route::post('/read_new_comment', 'CommentController@changeStatus');
-Route::post('/pagination_index', 'PhotoController@indexAddPage');
-Route::post('/pagination_news', 'UserController@ajaxDownloadUpdate');
-
-Route::post('/load_slides', 'SliderController@dwnldPhotoSlider');
-Route::post('/load_views', 'SliderController@dwnldViewsForPhoto');
-Route::post('/load_tags', 'SliderController@dwnldTags');
-Route::post('/load_comments', 'SliderController@dwnldComments');
-Route::post('/load_like', 'SliderController@dwnldLikeWhom');
-Route::post('/load_info_slide', 'SliderController@dwnldInfoPhoto');
-Route::post('/load_user', 'SliderController@dwnldPhotoUser');
-Route::post('/load_zoom_photo', 'SliderController@loadZoomPhoto');
-Route::post('/load_active_like', 'SliderController@loadActiveLike');
-Route::post('/load_active_favorite', 'SliderController@loadActiveLiked');
-Route::post('/load_sort_photo', 'PhotoController@loadSortPhoto');
-Route::post('/load_sort_photo_slider', 'PhotoController@loadSortPhotoSlider');
-Route::post('/load_tags_mask', 'TagsController@indexTagsMask' );
-
-
-Route::get('/logout', array('as' => 'logout',
-                            'uses' => 'UserController@logout'));
-Route::post('/enter', 'UserController@login');
-Route::post('/reg', 'UserController@registration');
-Route::post('/recovery_pass', 'UserController@recoveryAccess' );
-Route::get('/social_login/{provider}', 'SocialController@login');
-Route::get('/social_login/callback/{provider}', 'SocialController@callback');
 Route::get(
     '/socialite/{provider}',
     [
@@ -172,4 +51,109 @@ Route::get('/socialite/{provider}/callback', function ($provider) {
      });
 
     return redirect('/');
+});
+Route::get('/logout',['as' => 'logout', 'uses' => 'UserController@logout']);
+Route::get('/social_login/{provider}', 'SocialController@login');
+Route::get('/social_login/callback/{provider}', 'SocialController@callback');
+Route::post('/enter', 'UserController@login');
+Route::post('/reg', 'UserController@registration');
+Route::post('/recovery_pass', 'UserController@recoveryAccess' );
+/*only view all users
+*/
+Route::get('/profile/{id}', ['uses' => 'UserController@index']);
+/*callback all people
+*/
+Route::post('/send_mail', ['as' => 'sendMail', 'uses' => 'MessagesController@sendMail']);
+
+Route::post('/load_slides', 'SliderController@dwnldPhotoSlider');
+Route::post('/load_views', 'SliderController@dwnldViewsForPhoto');
+Route::post('/load_tags', 'SliderController@dwnldTags');
+Route::post('/load_comments', 'SliderController@dwnldComments');
+Route::post('/load_like', 'SliderController@dwnldLikeWhom');
+Route::post('/load_info_slide', 'SliderController@dwnldInfoPhoto');
+Route::post('/load_user', 'SliderController@dwnldPhotoUser');
+Route::post('/load_zoom_photo', 'SliderController@loadZoomPhoto');
+Route::post('/load_active_like', 'SliderController@loadActiveLike');
+Route::post('/load_active_favorite', 'SliderController@loadActiveLiked');
+Route::post('/load_sort_photo', 'PhotoController@loadSortPhoto');
+Route::post('/load_sort_photo_slider', 'PhotoController@loadSortPhotoSlider');
+Route::post('/load_tags_mask', 'TagsController@indexTagsMask' );
+
+/*
+/ These routes , which users have access
+*/
+Route::group(['middleware' => 'role:user,moderator,admin'], function () {
+    /*View user pages
+    */
+    Route::get('/profile/admin/verification/{id}', ['uses' => 'UserController@confirmationItemPage']);
+    Route::get('/profile/add/photo', ['as' => 'add', 'uses' => 'UserController@indexAdd']);
+    Route::get('/profile/edit/user', ['as' => 'edit', 'uses' => 'UserController@editUser']);
+    Route::get('/profile/liked/photo', ['as' => 'liked', 'uses' => 'UserController@likedIndex']);
+    Route::get('/profile/{id}/your_photo', ['uses' => 'UserController@yourPhotoUpload']);
+
+    Route::post('/delete_liked', 'UserController@likedDelete');
+    Route::post('/delete_like', 'LikeController@delete');
+    Route::post('/pagination_news', 'UserController@ajaxDownloadUpdate');
+    Route::post('/update/profile', 'UserController@changeYourself');
+    Route::post('/add_photo_site/{id}','PhotoController@addPhotoSite');
+    Route::post('/add_links', 'UserController@addSocLink');
+    Route::post('/add_photo', 'PhotoController@add');
+    Route::post('/comment', 'CommentController@add');
+    Route::post('/like', 'LikeController@add');
+    Route::post('/liked', 'UserController@likedAdd');
+    Route::post('/edit_links','UserController@editSocLink');
+    Route::post('/pagination_index', 'PhotoController@indexAddPage');
+
+});
+
+/*
+/ These routes , which moderators have access
+*/
+Route::group(['middleware' => 'role:0,moderator,admin'], function () {
+
+    Route::get('/profile/admin/verification', ['as' => 'verified', 'uses' => 'UserController@confirmationsPage']);
+    Route::get('/profile/admin/add_news', ['as' => 'news', 'uses' => 'UserController@addNewsPage']);
+    Route::get('/profile/admin/add_news_item', ['uses' => 'UserController@addNewsItem']);
+    Route::get('/profile/admin/comments', ['as' => 'comments', 'before' => 'auth', 'uses' => 'CommentController@index']);
+    Route::get('/profile/admin/messages', ['as' => 'messages','uses' => 'MessagesController@mailIndex']);
+    Route::get('/profile/admin/copyrights', ['as' => 'copyright', 'uses' => 'CopyrightController@index']);
+    Route::get('/profile/admin/edit_page_news/{id}','NewsController@editPageIndex');
+    Route::get('/profile/admin/edit_copyrights', ['as' => 'pretense', 'uses' => 'CopyrightController@index']);
+    Route::get('/profile/admin/photo/all', 'PhotoController@allPhotoSite');
+    Route::get('/profile/admin/answer_mail/{id}', 'MessagesController@mailIndexItem');
+    Route::post('/read_new_comment', 'CommentController@changeStatus');
+    Route::post('/add_news', 'NewsController@addNews');
+    Route::post('/answer_mail', 'MessagesController@askOnMail');
+    Route::post('/delete_copyright', 'CopyrightController@delete');
+    Route::post('/delete_comments/{id}', 'CommentController@delete');
+    Route::post('/delete_message/{id}', 'MessagesController@deleteMail');
+    Route::post('/edit_new/{id}','NewsController@edit');
+    Route::post('/save_copyright', 'CopyrightController@saveNewCopyright');
+    Route::post('/add_copyright', 'CopyrightController@add');
+
+});
+
+/*
+/ These routes , which admins have access
+*/
+Route::group(['middleware' => 'role:0,0,admin'], function () {
+    Route::get('/profile/admin/edit_page_styles/{id}','StylesController@editPageIndex');
+    Route::get('/profile/admin/tags_edit', ['as' => 'tags_edit', 'uses' => 'UserController@editTagsPage']);
+    Route::get('/profile/admin/styles_edit', ['as' => 'styles_edit', 'uses' => 'UserController@editStylesPage']);
+    Route::get('/profile/admin/rooms_edit', ['as' => 'rooms_edit', 'uses' => 'UserController@editRoomsPage']);
+    Route::get('/profile/admin/add_style_item', ['uses' => 'UserController@addStyleItem']);
+    Route::get('/profile/admin/slides', ['as' => 'slide', 'uses' => 'ChangeSlideController@index']);
+
+    Route::post('/edit_slide', 'ChangeSlideController@change');
+    Route::post('/edit_tag/{id}','TagsController@edit');
+    Route::post('/edit_style/{id}','StylesController@edit');
+    Route::post('/edit_room/{id}','RoomsController@edit');
+
+    Route::post('/add_slide', 'ChangeSlideController@add');
+    Route::post('/add_tags','TagsController@add');
+    Route::post('/add_rooms','RoomsController@add');
+    Route::post('/add_styles','StylesController@add');
+
+    Route::post('/delete_links', 'UserController@deleteSocLink');
+
 });

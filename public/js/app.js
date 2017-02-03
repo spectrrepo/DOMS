@@ -3854,7 +3854,8 @@ $( document ).ready(function() {
 
 $( document ).ready(function() {
   $('#description-pole h3').on('click', function(){
-    $('<h3></h3>').appendTo('.description-scroll-place')
+    $('<h3 class="title-description-popup"></h3>')
+                  .appendTo('.description-scroll-place')
                   .text($(this).text());
     $('<p></p>').appendTo('.description-scroll-place')
                 .text($('#description-pole p').text());
@@ -3882,9 +3883,9 @@ $(document).ready(function() {
 
 $(document).ready(function(){
   $('#feedback').on('submit', function (e) {
-    e.preventDefault();
     if (($('.input-feedback').val() === '')
        || $('.textarea-feddback').val() === '') {
+         e.preventDefault();
          $(this).children().addClass('error');
          return false;
     }else {
@@ -3981,6 +3982,13 @@ $(document).ready(function () {
           $('.id-cell:contains("'+commentId+'")').parent().removeClass('none-check');
         }
     });
+  });
+});
+
+$(document).ready(function () {
+  $('.btn-all-comments').on('click', function () {
+    $('.b-comment-wrap').fadeIn();
+    $('.btn-all-comments').fadeOut();
   });
 });
 

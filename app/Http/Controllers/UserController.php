@@ -83,7 +83,6 @@ class UserController extends Controller
                     FROM Users JOIN Images ON Users.id=Images.author_id) AS t2
                ON t1.img_id=t2.img_id
                ORDER BY date_event;");
-             $results = DB::select('(select * from Likes) union (select * from Likeds)');
              $user = User::find($id);
              $links = Social::where('user', '=', $id)->get();
              return View('profile.index', [ 'id' => $id,
@@ -366,7 +365,6 @@ class UserController extends Controller
                foreach ($tags as $tag) {
                     $tagAll .= $tag->title.';';
                }
-               $uri = 'admin';
                $views = View::where('post_id', '=', $id)->get();
                $image = Picture::find($id);
 
@@ -377,7 +375,6 @@ class UserController extends Controller
                                                                 'rooms' => $rooms,
                                                                 'tagAll' => $tagAll,
                                                                 'colors' => $colors,
-                                                                'uri' => $uri,
                                                                 'image' => $image]);
 
            }else {

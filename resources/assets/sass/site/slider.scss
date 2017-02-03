@@ -313,6 +313,20 @@ a.btn-prew span {
   height: auto;
   width: 100%;
 }
+.btn-all-comments{
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  background-color: #333333;
+  opacity: .9;
+  padding: 15px;
+  box-sizing: border-box;
+  color: white;
+  transition: all 0.3s ease;
+}
+.btn-all-comments:hover {
+  opacity: .7;
+}
 .b-comment-wrap{
   width: 100%;
   position: relative;
@@ -374,7 +388,7 @@ a.btn-prew span {
 }
 .b-photo-comment{
   width: 10%;
-  height: 100px;
+  height: auto;
   background: black;
   float: left;
   border-radius: 5px;
@@ -544,4 +558,13 @@ a.btn-prew span {
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.b-description-slide {
+  max-height: 305px;
+  overflow: hidden;
+  margin-bottom: 1px;
+}
+.title-description-popup {
+  color: white;
 }

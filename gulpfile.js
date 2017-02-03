@@ -43,7 +43,8 @@ elixir(mix => {
         "validation/recovery-pass.js",
         "validation/registration.js",
         "about-popup-slider.js",
-        "read-new-comment.js"
+        "read-new-comment.js",
+        "common.js"
     ],'public/js/app.js')
        .copy('resources/assets/fonts/*.*', 'public/css/fonts/');
 });

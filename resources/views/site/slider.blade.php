@@ -143,11 +143,14 @@
                 <span class="text-tooltip-stat">
                   Понравилось
                   <span id="like-whom-pole">
+                     <?php $i = 0; ?>
                     @foreach ($likeWhom as $like)
-                      <a class="mini-avatar"
-                      href="/user/{{ $like->id }}"
-                      title="{{ $like->name }}">
-                      <img src="{{ $like->path_min }}"></a>
+                       <?php if($i >3) break;?>
+                          <a class="mini-avatar"
+                          href="/user/{{ $like->id }}"
+                          title="{{ $like->name }}">
+                          <img src="{{ $like->path_min }}"></a>
+                       <?php $i++;?>
                     @endforeach
                   </span>
                 </span>
@@ -173,12 +176,16 @@
                 Коментарии
               </div>
               <div class="b-all-comment">
+              <div>
+                 <?php $i = 0; ?>
                 @foreach ( $comments as $comment )
-                  <div class="b-comment-wrap">
+                  <div class="b-comment-wrap" {{ $i==2 ? 'style=display:none' : '' }}>
                      @if (Auth::check())
                         {!! Auth::user()->id === $comment->user_id ? HTML::decode('<span class="remove-comment uk-icon-justify uk-icon-remove"><span class="delete_comment_id" data-id="'.$comment->id.'"></span></span>') : ''!!}
                      @endif
-                    <a style="background:url({{ empty($comment->user_quadro_ava) ? '/img/user.png' : $comment->user_quadro_ava }}) center no-repeat;background-size:cover;"href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-photo-comment"></a>
+                    <a href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-photo-comment">
+                       <img src="{{ empty($comment->user_quadro_ava) ? '/img/user.png' : $comment->user_quadro_ava }}" alt="" />
+                    </a>
                     <div class="b-comment">
                       <a href="{{ URL::to('profile/'.$comment->user_name) }}" class="b-name-comment">
                         {{ $comment->user_name }}
@@ -191,8 +198,11 @@
                       </div>
                     </div>
                   </div>
-
+                  <?php $i++; ?>
                 @endforeach
+              </div>
+              <div class="clear"></div>
+              <div class="btn-all-comments">Показать все комментарии</div>
               </div>
               @if (Auth::check())
                         <div class="b-add-comment">
@@ -250,7 +260,7 @@
                 </div>
                 <div id="description-pole" class="view-photo-slide" {{ empty($image->description) ? 'style=display:none;' : '' }}>
                   <h3>{{$image->title}}</h3>
-                  <p>
+                  <p class="b-description-slide">
                    {{ $image->description }}
                   </p>
                 </div>
