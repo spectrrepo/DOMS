@@ -1,8 +1,13 @@
 $( document ).ready(function() {
   $('#current-position, #current-position-zoom').text($('.active-slide').index()+1);
   var id, newLocal;
-
-
+    function loadAllPhoto (btn) {
+      $(btn).on('click', function () {
+        $('.b-comment-wrap').fadeIn();
+        $(btn).fadeOut();
+      });
+    }
+    loadAllPhoto('.btn-all-comments');
   /**
    * Represents a book.
    * @constructor
@@ -24,10 +29,12 @@ $( document ).ready(function() {
 
         success: function (data) {
           var btn, quadro_ava, style;
-          if (data === 'error_comments'){
+          $('.btn-all-comments').remove();
+          if (data.length == 0){
             $('.b-all-comment').empty();
           }else {
             $('.b-all-comment').empty();
+            $('<div></div>').appendTo('.b-all-comment');
             for(var i=0; i<data.length; i++) {
               if (parseInt(authID) === parseInt(data[i].user_id)) {
                 btn = '<span class="remove-comment uk-icon-justify '+
@@ -62,7 +69,10 @@ $( document ).ready(function() {
                 data[i].rus_date+
                 '</div></div></div>').appendTo('.b-all-comment');
             }
-            // $(btnTwo).appendTo('.b-all-comment');
+
+            $('<div class="clear"></div>').appendTo('.b-all-comment');
+            $(btnTwo).appendTo('.b-all-comment');
+            loadAllPhoto('.btn-all-comments');
           }
         }
       });

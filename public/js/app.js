@@ -1303,10 +1303,6 @@ $( document ).ready(function() {
 });
 
 $( document ).ready(function() {
-  $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.823});
-    $(window).resize(function() {
-      $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.823});
-    });
   $('.remove-comment').on('click', function(){
     var csrftoken = $('meta[name=_token]').attr('content'),
         id = $(this).children('.delete_comment_id').data('id'),
@@ -1341,18 +1337,17 @@ $( document ).ready(function() {
           success: function (data) {
             $('.input-comment').val('');
                   if (data[0].user_quadro_ava === null) {
-                    '/img/user.png';
                     $('<div class="b-comment-wrap">' +
                       '<span class="remove-comment uk-icon-justify uk-icon-remove">'+
                       '<span class="delete_comment_id" data-id="'+data[0].id+'"></span>'+
                       '</span>'+
                       '<a href="/profile/'+data[0].user_id +
-                      '" class="b-photo-comment" style="background:url(/img/user.png)'+
-                      'center no-repeat;background-size:cover;"></a>' +
+                      '" class="b-photo-comment">'+
+                      '<img src="/img/user.png" alt=""></a>' +
                       '<div class="b-comment">' +
                         '<a href="/profile/'+
                         data[0].user_id +'" class="b-name-comment"> ' +
-                          data.user_name +
+                          data[0].user_name +
                         '</a>' +
                         '<div class="b-text-comment">' +
                           data[0].text_comment +
@@ -1369,9 +1364,8 @@ $( document ).ready(function() {
                     '<span class="delete_comment_id" data-id="'+data.id+'"></span>'+
                     '</span>'+
                     '<a href="/profile/'+data[0].user_id +
-                    '" class="b-photo-comment" style="background:url('+
-                    data[0].user_quadro_ava+')'+
-                    'center no-repeat;background-size:cover;"></a>' +
+                    '" class="b-photo-comment">'+
+                    '<img src="'+data[0].user_quadro_ava+'"></a>' +
                     '<div class="b-comment">' +
                       '<a href="/profile/'+
                       data[0].user_id +'" class="b-name-comment"> ' +
@@ -1551,8 +1545,13 @@ $( document ).ready(function() {
 $( document ).ready(function() {
   $('#current-position, #current-position-zoom').text($('.active-slide').index()+1);
   var id, newLocal;
-
-
+    function loadAllPhoto (btn) {
+      $(btn).on('click', function () {
+        $('.b-comment-wrap').fadeIn();
+        $(btn).fadeOut();
+      });
+    }
+    loadAllPhoto('.btn-all-comments');
   /**
    * Represents a book.
    * @constructor
@@ -1574,10 +1573,12 @@ $( document ).ready(function() {
 
         success: function (data) {
           var btn, quadro_ava, style;
-          if (data === 'error_comments'){
+          $('.btn-all-comments').remove();
+          if (data.length == 0){
             $('.b-all-comment').empty();
           }else {
             $('.b-all-comment').empty();
+            $('<div></div>').appendTo('.b-all-comment');
             for(var i=0; i<data.length; i++) {
               if (parseInt(authID) === parseInt(data[i].user_id)) {
                 btn = '<span class="remove-comment uk-icon-justify '+
@@ -1612,7 +1613,10 @@ $( document ).ready(function() {
                 data[i].rus_date+
                 '</div></div></div>').appendTo('.b-all-comment');
             }
-            // $(btnTwo).appendTo('.b-all-comment');
+
+            $('<div class="clear"></div>').appendTo('.b-all-comment');
+            $(btnTwo).appendTo('.b-all-comment');
+            loadAllPhoto('.btn-all-comments');
           }
         }
       });
@@ -4042,11 +4046,30 @@ $(document).ready(function () {
   });
 });
 
-$(document).ready(function () {
-  $('.btn-all-comments').on('click', function () {
-    $('.b-comment-wrap').fadeIn();
-    $('.btn-all-comments').fadeOut();
+$( document ).ready(function () {
+  $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.823});
+
+  $(window).resize(function() {
+    $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.823});
   });
+
+  // $('#allPhotoLikes').on('click', function () {
+  //   var id = $('.active-slide').data('id'),
+  //       csrftoken = $('meta[name=_token]').attr('content');
+  //   $.ajax({
+  //     type:'POST',
+  //     data: {
+  //               '_token'  : csrftoken,
+  //               'id': id
+  //     },
+  //     url:'/load_comments',
+  //
+  //     success: function (data) {
+  //         for(var i=0; i<data.length; i++) {
+  //         }
+  //     }
+  //   });
+  // });
 });
 
 //# sourceMappingURL=app.js.map

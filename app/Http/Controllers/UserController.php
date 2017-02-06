@@ -200,6 +200,8 @@ class UserController extends Controller
       */
      public function registration()
      {
+       $findUser = User::where('email', '=', $_POST['email'])->first();
+       if (!empty($findUser)) {
          $user = new User();
 
          $email = $_POST['email'];
@@ -227,6 +229,9 @@ class UserController extends Controller
              ->subject('Вы зарегистрировались на сайте www.doms.design');
          });
          return redirect()->back();
+       } else {
+         return redirect()->with('bad_reg', 'true');
+       }
      }
 
      /**
@@ -280,6 +285,10 @@ class UserController extends Controller
          $image->favs_count += 1;
          $image->save();
          $liked->save();
+         $needLiked = Liked::orderBy('id', 'desc')->first();
+         setlocale(LC_TIME, 'ru_RU.utf8');
+         $needLiked->rus_date = \Carbon\Carbon::parse($needLiked->date)->formatLocalized('%d %b %Y');
+         $needLiked->save();
          return 'deleteLiked';
 
       }

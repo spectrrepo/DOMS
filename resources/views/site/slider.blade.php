@@ -202,7 +202,9 @@
                 @endforeach
               </div>
               <div class="clear"></div>
-              <div class="btn-all-comments">Показать все комментарии</div>
+              @if ( count($comments) >= 3)
+                <div class="btn-all-comments">Показать все комментарии</div>
+              @endif
               </div>
               @if (Auth::check())
                         <div class="b-add-comment">

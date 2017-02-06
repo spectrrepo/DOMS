@@ -15,6 +15,11 @@
     {{ Form::open(array('id'=>'registr', 'url' => '/reg')) }}
     <div class="b-form-inputs">
       <span class="title-text bottom-line">Или зарегистрироваться через адрес электронной почты</span>
+      @if (Session::get('bad_reg') == 'true')
+        <p style="color:red">
+          Пользователь с таким e-mail уже зарегистрирован на сайте!
+        </p>
+      @endif
       <div class="wrap-reg-inp">
         <span class="label">Имя</span>
         <input class="input-reg" type="text" name="name" >

@@ -35,6 +35,10 @@ class LikeController extends Controller
         $image->likes_count += 1;
         $image->save();
         $like->save();
+        $needLike = Like::orderBy('id', 'desc')->first();
+        setlocale(LC_TIME, 'ru_RU.utf8');
+        $needLike->rus_date = \Carbon\Carbon::parse($needLike->date)->formatLocalized('%d %b %Y');
+        $needLike->save();
         $countLike = Picture::find($_POST['post_id'])->likes_count;
         return $countLike;
     }
