@@ -1,6 +1,12 @@
 @extends('layouts.profile')
 @section('profile-content')
 <div class="big-col">
+        <a class="edit-link-ava" href="/profile/{{ $user->id }}">
+          <img src="{{ $user->quadro_ava }}" alt="" />
+        </a>
+        <a class="edit-link-link" href="/profile/{{ $user->id }}"> {{ $user->name }} </a>
+        <div class="clear"></div>
+        <hr>
         <div class="help-text">Для удобства поиска твоего изображения на сайте заполни ка можно больше параметров</div>
         <div class="b-dwnld-img">
           {{ Form::open(array('url' => '/add_photo_site/'.$image->id, 'files' => 'true')) }}
@@ -100,6 +106,5 @@
       <span class="save-text">Удалить изображение</span>
       <span class="save-ico uk-icon-justify uk-icon-save"></span>
   </button>
-  <input type="hidden" name="uri" value="{{ $uri }}">
   {{ Form::close()}}
   @endsection

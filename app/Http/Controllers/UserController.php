@@ -82,7 +82,7 @@ class UserController extends Controller
                           Images.favs_count AS favs_count
                     FROM Users JOIN Images ON Users.id=Images.author_id) AS t2
                ON t1.img_id=t2.img_id
-               ORDER BY date_event;");
+               ORDER BY date_event LIMIT 2;");
              $user = User::find($id);
              $links = Social::where('user', '=', $id)->get();
              return View('profile.index', [ 'id' => $id,
@@ -96,12 +96,39 @@ class UserController extends Controller
      }
      public function ajaxDownloadUpdate () {
          $lastUpdate = $_POST['lastId'];
-         $images =  Picture::join('Users', 'Images.author_id', '=', 'Users.id')
-                           ->join('Likes', 'Images.id', '=', 'Likes.post_id')
-                           ->join('Likeds', 'Images.id', '=', 'Likeds.post_id')
-                           ->skip($lastUpdate)
-                           ->take(1)
-                           ->get();
+         $images =  $images = DB::select(
+           "SELECT * FROM (
+               (SELECT 'favorite' AS type,
+                      Likeds.post_id AS img_id,
+                      Likeds.date AS date_event,
+                      Users.quadro_ava AS quadro_ava_user_event,
+                      Users.name AS user_name_event,
+                      Users.id AS id_user_event,
+                      Users.sex AS sex_user_event
+                FROM Likeds JOIN Users ON Likeds.user_id = Users.id)
+
+                UNION
+
+               (SELECT 'like' AS type,
+                      Likes.post_id AS img_id,
+                      Likes.date AS date_event,
+                      Users.quadro_ava AS quadro_ava_user_event,
+                      Users.name AS user_name_event,
+                      Users.id AS id_user_event,
+                      Users.sex AS sex_user_event
+                FROM Likes JOIN Users ON Likes.user_id = Users.id)) AS t1
+           JOIN(
+                SELECT Images.id AS img_id,
+                      Images.full_path AS img_photo,
+                      Users.id AS user_id_add,
+                      Users.name AS name_user_add,
+                      Users.quadro_ava AS quadro_ava_add,
+                      Images.views_count AS views_count,
+                      Images.likes_count AS likes_count,
+                      Images.favs_count AS favs_count
+                FROM Users JOIN Images ON Users.id=Images.author_id) AS t2
+           ON t1.img_id=t2.img_id
+           ORDER BY date_event LIMIT 10 OFFSET ".$lastUpdate.";");
          return $images;
      }
      public function yourPhotoUpload ()
@@ -185,9 +212,11 @@ class UserController extends Controller
          if (!empty($_POST['status'])) {
              $user->status = $_POST["status"];
          }
-
          $user->save();
-
+         $lastIdUser = User::orderBy('id', 'desc')->first()->id;
+         DB::table('users_roles')->insert(
+            array('user_id' => $lastIdUser, 'role_id' => 3)
+         );
          Auth::attempt(['email' => $email, 'password' => $password]);
          Mail::send('emails.welcome', array('name' => $_POST['name'],
          'e_mail' => $_POST['email'],
@@ -251,7 +280,7 @@ class UserController extends Controller
          $image->favs_count += 1;
          $image->save();
          $liked->save();
-         return 'true';
+         return 'deleteLiked';
 
       }
 
@@ -259,10 +288,11 @@ class UserController extends Controller
       {
         $liked = Liked::where('post_id', '=', $_POST['post_id'])
                       ->where('user_id', '=', $_POST['user_id']);
+        $image = Picture::find($_POST['post_id']);
         $image->favs_count -= 1;
         $image->save();
         $liked->delete();
-        return 'true';
+        return 'liked';
       }
       /**
        * Login Form

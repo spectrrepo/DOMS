@@ -1573,37 +1573,35 @@ $( document ).ready(function() {
         url:'/load_comments',
 
         success: function (data) {
-          var btn;
+          var btn, quadro_ava, style;
           if (data === 'error_comments'){
             $('.b-all-comment').empty();
           }else {
             $('.b-all-comment').empty();
             for(var i=0; i<data.length; i++) {
               if (parseInt(authID) === parseInt(data[i].user_id)) {
-                 $('<div class="b-comment-wrap">'+
-                   '<span class="remove-comment uk-icon-justify '+
-                   'uk-icon-remove"><span class="delete_comment_id" '+
-                   'data-id="'+data[i].id+'"></span></span> '+
-                   '<a style="background:url('+data[i].user_quadro_ava+
-                   ')center no-repeat;background-size:cover;'+
-                   ')" href="/profile/'+data[i].user_id+
-                   '" class="b-photo-comment"></a>'+
-                   '<div class="b-comment">'+
-                   '<a href="/profile/'+data[i].user_id+'" class="b-name-comment" '+
-                   ' >'+
-                   data[i].user_name+
-                   '</a><div class="b-text-comment">'+
-                   data[i].text_comment+
-                   '</div><div class="b-date-comment">'+
-                   data[i].rus_date+
-                   '</div></div></div>').appendTo('.b-all-comment');
+                btn = '<span class="remove-comment uk-icon-justify '+
+                      'uk-icon-remove"><span class="delete_comment_id" '+
+                      'data-id="'+data[i].id+'"></span></span>';
+              } else {
+                btn = '';
               }
-              else {
-                $('<div class="b-comment-wrap">'+
-                '<a style="background:url('+data[i].user_quadro_ava+
-                ')center no-repeat;background-size:cover;'+
-                +')" href="/profile/'+data[i].user_id+
-                '" class="b-photo-comment"></a>'+
+              if ( data[i].user_quadro_ava !== null) {
+                quadro_ava = data[i].user_quadro_ava;
+              } else {
+                quadro_ava = '/img/user.png';
+              }
+              if ( i >= 2 ) {
+                style = 'style="display:none"';
+                btnTwo = '<div class="btn-all-comments">Показать все комментарии</div>';
+              } else {
+                style = '';
+                btnTwo = '';
+              }
+              $('<div class="b-comment-wrap" '+style+'>'+ btn +
+                '<a href="/profile/'+data[i].user_id+
+                '" class="b-photo-comment">'+
+                '<img src="'+quadro_ava+'"></a>'+
                 '<div class="b-comment">'+
                 '<a href="/profile/'+data[i].user_id+'" class="b-name-comment" '+
                 ' >'+
@@ -1613,8 +1611,8 @@ $( document ).ready(function() {
                 '</div><div class="b-date-comment">'+
                 data[i].rus_date+
                 '</div></div></div>').appendTo('.b-all-comment');
-              }
             }
+            // $(btnTwo).appendTo('.b-all-comment');
           }
         }
       });
@@ -1955,7 +1953,7 @@ $( document ).ready(function() {
    * @param {string} author - The author of the book.
    */
 
-  function actveLiked() {
+  function activeLiked() {
     var id = $('.active-slide').data('id'),
         csrftoken = $('meta[name=_token]').attr('content');
     $.ajax({
@@ -3359,13 +3357,13 @@ $( document ).ready(function() {
           },
           url:url,
 
-          success: function () {
-            if ( url === '/liked') {
-              $('.uk-icon-star').addClass('active-favorite');
-              $('input[name=url-liked]').val('/delete_liked');
-            }else {
-              $('.uk-icon-star').removeClass('active-favorite');
+          success: function (data) {
+            if ( data === 'liked') {
+              $('#num_liked').removeClass('active-favorite');
               $('input[name=url-liked]').val('/liked');
+            }else{
+              $('#num_liked').addClass('active-favorite');
+              $('input[name=url-liked]').val('/delete_liked');
             }
 
           }
@@ -3480,35 +3478,94 @@ $( document ).ready(function() {
           url:'/pagination_news',
 
           success: function (data) {
+            var icoEvent, textAboutEvent, quadro_ava_add,
+                quadro_ava_user_event, views_count, likes_count, favs_count;
             for (var i = 0; i < data.length; i++) {
+              if (data[i].type === 'favorite'){
+                icoEvent = '<span class="ico ico-news ico-news-star uk-icon-justify uk-icon-star"></span>';
+                if (data[i].sex_user_event === 1 ){
+                  textAboutEvent = ' добавил фотографию в избранное';
+                }
+                else if (data[i].sex_user_event === 2){
+                  textAboutEvent = ' добавила фотографию в избранное';
+                }
+                else{
+                  textAboutEvent = ' добавил(а) фотографию в избранное';
+                }
+              } else if (data[i].type === 'like'){
+                icoEvent = '<span class="ico ico-news ico-news-star uk-icon-justify uk-icon-heart"></span>';
+                if (data[i].sex_user_event === 1 ){
+                  textAboutEvent = ' оценил фотографию';
+                }
+                else if (data[i].sex_user_event === 2){
+                  textAboutEvent = ' оценилa фотографию';
+                }
+                else{
+                  textAboutEvent = ' оценил(a) фотографию';
+                }
+              }
+
+              if (data[i].quadro_ava_add !== null) {
+                quadro_ava_add = data[i].quadro_ava_add;
+              }else {
+                quadro_ava_add = '/img/user.png';
+              }
+              if (data[i].quadro_ava_user_event != null) {
+                  quadro_ava_user_event = data[i].quadro_ava_user_event;
+              } else {
+                  quadro_ava_user_event = '/img/user.png';
+              }
+              if (data[i].views_count !== null) {
+                views_count = data[i].views_count;
+              } else {
+                views_count = '0';
+              }
+              if (data[i].likes_count !== null) {
+                likes_count = data[i].likes_count;
+              } else {
+                likes_count = '0';
+              }
+              if (data[i].favs_count !== null) {
+                favs_count = data[i].favs_count;
+              } else {
+                favs_count = '0';
+              }
+
               $('<div class="b-person-post"><div class="col-news-min">'+
-              '<div class="b-portret-blogger" style="background:url('+data[i].path_full+')'+
-              'center no-repeat;background-size: cover;"></div>'+
-              '</div><div class="col-news-big">'+
-              '<div class="b-name-redactor"><a href="'+data[i].user_upload_id+'">'+data[i].name+'</a></div>'+
-              '<div class="b-post-body"><a href="'+data[i].id+'" class="b-photo-post">'+
-              '<img src="'+data[i].full_path+'" class="img-post" alt="">'+
-              '</a><div class="b-iformation"><div class="b-date">'+
-              +data[i].photo_update_at+
-              '</div><div class="b-statistics"><div class="b-item-stat">'+
-              '<span class="ico uk-icon-justify uk-icon-eye"></span>'+
-              '<span class="num-stat">'+data[i].views_count+'</span>'+
-              '<span class="tooltip-stat other-margin-tooltip1">'+
+              '<div class="b-portret-blogger"><img src="'+ quadro_ava_add +'"/>'+
+              '</div></div><div class="col-news-big">'+
+              '<div class="b-name-redactor">'+
+              '<a href="/profile/'+data[i].user_id_add+'">'+data[i].name_user_add+'</a></div>'+
+              '<div class="b-post-body"><div class="b-photo-post">'+
+              '<img src="'+data[i].img_photo+'" class="img-post" alt="" />'+
+              '</div><div class="b-iformation"><div class="b-date">'+
+              data[i].date_event+'</div><div class="b-statistics">'+
+              '<div class="b-item-stat"><span class="ico uk-icon-justify uk-icon-eye"></span>'+
+              '<span class="num-stat">'+ views_count +'</span>'+
+              '<span class="tooltip-stat margin-num-comment-tooltip">'+
               '<span class="text-tooltip-stat">количество просмотров</span>'+
               '<span class="triangle-tooltip-stat"></span>'+
               '</span></div><div class="b-item-stat">'+
               '<span class="ico uk-icon-justify uk-icon-heart"></span>'+
-              '<span class="num-stat">'+data[i].likes_count+'</span>'+
-              '<span class="tooltip-stat other-margin-tooltip2">'+
-              '<span class="text-tooltip-stat">понравилось'+
-              '</span><span class="triangle-tooltip-stat"></span>'+
+              '<span class="num-stat">'+ likes_count +'</span>'+
+              '<span class="tooltip-stat margin-like-tooltip">'+
+              '<span class="text-tooltip-stat">понравилось</span>'+
+              '<span class="triangle-tooltip-stat"></span>'+
               '</span></div><div class="b-item-stat">'+
               '<span class="ico uk-icon-justify uk-icon-star"></span>'+
-              '<span class="num-stat">'+data[i].favs_count+'</span>'+
-              '<span class="tooltip-stat"><span class="text-tooltip-stat">избранное'+
-              '</span><span class="triangle-tooltip-stat"></span>'+
-              '</span></div></div></div><div class="clear"></div></div>'+
-              '<div class="clear"></div></div><div class="clear"></div></div>')
+              '<span class="num-stat">'+ favs_count +'</span>'+
+              '<span class="tooltip-stat margin-liked-tooltip">'+
+              '<span class="text-tooltip-stat">избранное</span>'+
+              '<span class="triangle-tooltip-stat"></span>'+
+              '</span></div></div></div><div class="clear"></div>'+
+              '</div><div class="clear"></div></div>'+
+              '<div class="col-news-min">'+
+              '<div class="b-portret-blogger"><img src="'+ quadro_ava_user_event +'"/>'+icoEvent+'</div></div>'+
+              '<div class="col-news-big"><div class="b-name-redactor">'+
+              '<a href="/profile/data[i].id_user_event">'+data[i].user_name_event+
+              '</a><span class="event-text">'+textAboutEvent+'</span>'+
+              '<p class="date-event-text">'+data[i].date_event+
+              '</p></div></div><div class="clear"></div></div>')
               .appendTo('.b-personal-news');
             }
 

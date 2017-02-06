@@ -268,6 +268,12 @@ a.btn-prew span {
   color: #333;
   line-height: 20px;
 }
+.active-favorite {
+  color: #ffcc00;
+}
+.active-like {
+  color: #ff3300;
+}
 .b-pretense {
   color: #993399;
   border: 1px solid #cccccc;
@@ -393,6 +399,7 @@ a.btn-prew span {
   float: left;
   border-radius: 5px;
   cursor: pointer;
+  overflow: hidden;
 }
 .b-name-comment{
   cursor: pointer;
@@ -511,7 +518,7 @@ a.btn-prew span {
   font-family: "FontAwesome";
   font-size: 48px;
   display: block;
-  color: #ffffff;
+  color: #444;
   cursor: pointer;
   height: 58px;
   width: 25px;
@@ -520,7 +527,7 @@ a.btn-prew span {
   bottom: 0;
   margin: auto;
   opacity: 0.7;
-  text-shadow: 1px 1px 1px #cccccc;
+  // text-shadow: 1px 1px 1px #cccccc;
 }
 .min-nav-views:hover {
   opacity: 1;

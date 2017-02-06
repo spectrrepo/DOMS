@@ -110,6 +110,18 @@ ul {
     padding-bottom: 5px;
     font-size: 15px;
     width: 94%;
+    padding-left: 6px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding-top: 5px;
+    display: block;
+    color: #444;
+}
+.news-title:hover {
+    background: #444;
+    color: white;
+    border-radius: 3px;
 }
 .b-text-news {
     padding-left: 10px;

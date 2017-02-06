@@ -75,8 +75,9 @@
       @foreach ($images as $image)
         <div class="b-person-post">
           <div class="col-news-min">
-              <div class="b-portret-blogger" style="background:url({{ !($image->quadro_ava_add === null ) ? $image->quadro_ava_add : '' }}) center no-repeat;
-                                                    background-size: cover;"></div>
+              <div class="b-portret-blogger">
+                <img src="{{ !($image->quadro_ava_add === null ) ? $image->quadro_ava_add : '/img/user.png' }}"/>
+              </div>
           </div>
           <div class="col-news-big">
               <div class="b-name-redactor"><a href="/profile/{{$image->user_id_add}}">{{$image->name_user_add}}</a></div>
@@ -155,10 +156,8 @@
             </div>
           @elseif ($image->type === 'like')
             <div class="col-news-min">
-              <div class="b-portret-blogger"
-                   style="background:url(
-                   {{ !($image->quadro_ava_user_event === null ) ? $image->quadro_ava_user_event : '' }}) center no-repeat;
-                          background-size: cover;">
+              <div class="b-portret-blogger">
+                  <img src="{{ !($image->quadro_ava_user_event === null ) ? $image->quadro_ava_user_event : '/img/user.png' }}"/>
                   <span class="ico ico-news ico-news-hearth uk-icon-justify uk-icon-heart"></span>
               </div>
             </div>

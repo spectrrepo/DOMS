@@ -145,9 +145,9 @@
     </div>
 </nav>
 @if (!(preg_match('[/news]', URL::current())))
-<div class="news-title">
+<a href="/news" class="news-title">
    Новости
-</div>
+</a>
 <div class="news">
     <div class="b-news">
 

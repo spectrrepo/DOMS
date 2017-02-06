@@ -23,37 +23,35 @@ $( document ).ready(function() {
         url:'/load_comments',
 
         success: function (data) {
-          var btn;
+          var btn, quadro_ava, style;
           if (data === 'error_comments'){
             $('.b-all-comment').empty();
           }else {
             $('.b-all-comment').empty();
             for(var i=0; i<data.length; i++) {
               if (parseInt(authID) === parseInt(data[i].user_id)) {
-                 $('<div class="b-comment-wrap">'+
-                   '<span class="remove-comment uk-icon-justify '+
-                   'uk-icon-remove"><span class="delete_comment_id" '+
-                   'data-id="'+data[i].id+'"></span></span> '+
-                   '<a style="background:url('+data[i].user_quadro_ava+
-                   ')center no-repeat;background-size:cover;'+
-                   ')" href="/profile/'+data[i].user_id+
-                   '" class="b-photo-comment"></a>'+
-                   '<div class="b-comment">'+
-                   '<a href="/profile/'+data[i].user_id+'" class="b-name-comment" '+
-                   ' >'+
-                   data[i].user_name+
-                   '</a><div class="b-text-comment">'+
-                   data[i].text_comment+
-                   '</div><div class="b-date-comment">'+
-                   data[i].rus_date+
-                   '</div></div></div>').appendTo('.b-all-comment');
+                btn = '<span class="remove-comment uk-icon-justify '+
+                      'uk-icon-remove"><span class="delete_comment_id" '+
+                      'data-id="'+data[i].id+'"></span></span>';
+              } else {
+                btn = '';
               }
-              else {
-                $('<div class="b-comment-wrap">'+
-                '<a style="background:url('+data[i].user_quadro_ava+
-                ')center no-repeat;background-size:cover;'+
-                +')" href="/profile/'+data[i].user_id+
-                '" class="b-photo-comment"></a>'+
+              if ( data[i].user_quadro_ava !== null) {
+                quadro_ava = data[i].user_quadro_ava;
+              } else {
+                quadro_ava = '/img/user.png';
+              }
+              if ( i >= 2 ) {
+                style = 'style="display:none"';
+                btnTwo = '<div class="btn-all-comments">Показать все комментарии</div>';
+              } else {
+                style = '';
+                btnTwo = '';
+              }
+              $('<div class="b-comment-wrap" '+style+'>'+ btn +
+                '<a href="/profile/'+data[i].user_id+
+                '" class="b-photo-comment">'+
+                '<img src="'+quadro_ava+'"></a>'+
                 '<div class="b-comment">'+
                 '<a href="/profile/'+data[i].user_id+'" class="b-name-comment" '+
                 ' >'+
@@ -63,8 +61,8 @@ $( document ).ready(function() {
                 '</div><div class="b-date-comment">'+
                 data[i].rus_date+
                 '</div></div></div>').appendTo('.b-all-comment');
-              }
             }
+            // $(btnTwo).appendTo('.b-all-comment');
           }
         }
       });
@@ -405,7 +403,7 @@ $( document ).ready(function() {
    * @param {string} author - The author of the book.
    */
 
-  function actveLiked() {
+  function activeLiked() {
     var id = $('.active-slide').data('id'),
         csrftoken = $('meta[name=_token]').attr('content');
     $.ajax({

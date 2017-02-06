@@ -13,13 +13,13 @@ $( document ).ready(function() {
           },
           url:url,
 
-          success: function () {
-            if ( url === '/liked') {
-              $('.uk-icon-star').addClass('active-favorite');
-              $('input[name=url-liked]').val('/delete_liked');
-            }else {
-              $('.uk-icon-star').removeClass('active-favorite');
+          success: function (data) {
+            if ( data === 'liked') {
+              $('#num_liked').removeClass('active-favorite');
               $('input[name=url-liked]').val('/liked');
+            }else{
+              $('#num_liked').addClass('active-favorite');
+              $('input[name=url-liked]').val('/delete_liked');
             }
 
           }

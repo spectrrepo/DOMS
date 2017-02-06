@@ -179,7 +179,7 @@
               <div>
                  <?php $i = 0; ?>
                 @foreach ( $comments as $comment )
-                  <div class="b-comment-wrap" {{ $i==2 ? 'style=display:none' : '' }}>
+                  <div class="b-comment-wrap" {{ $i>=2 ? 'style=display:none' : '' }}>
                      @if (Auth::check())
                         {!! Auth::user()->id === $comment->user_id ? HTML::decode('<span class="remove-comment uk-icon-justify uk-icon-remove"><span class="delete_comment_id" data-id="'.$comment->id.'"></span></span>') : ''!!}
                      @endif
@@ -207,10 +207,10 @@
               @if (Auth::check())
                         <div class="b-add-comment">
                           <form class="comment-add-form">
-                            <input type="text" name="comment" class="input-comment" placeholder="Комментировать">
+                            <input type="text" name="comment" autocomplete="off" class="input-comment" placeholder="Комментировать">
                             <input type="hidden" name="post_id" value="{{ $image->id }}">
                             <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                            <button class="submit-comment" type="submit">
+                            <button class="submit-comment" type="submit" >
                               <span class="uk-icon-justify uk-icon-plus"></span>
                             </button>
                           </form>
