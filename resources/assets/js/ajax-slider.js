@@ -370,7 +370,7 @@ $( document ).ready(function() {
             $('<a class="mini-avatar"'+
               'href="/user/'+data[i].id+'"'+
               'title="'+data[i].name+'">'+
-              '<img src="'+data[i].path_min+'"></a>').appendTo('#like-whom-pole');
+              '<img src="'+data[i].quadro_ava+'"></a>').appendTo('#like-whom-pole');
           }
         }
       }

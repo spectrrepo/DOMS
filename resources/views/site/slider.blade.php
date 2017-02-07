@@ -19,6 +19,7 @@
           @include('popups.modal_racourse')
           @include('popups.modal_description')
           @include('popups.law')
+          @include('popups.likes')
          <div class="wrap-slider">
            @foreach ($images as $image_el)
             @if ($image_el->id === $image->id)
@@ -149,7 +150,7 @@
                           <a class="mini-avatar"
                           href="/user/{{ $like->id }}"
                           title="{{ $like->name }}">
-                          <img src="{{ $like->path_min }}"></a>
+                          <img src="{{ $like->quadro_ava }}"></a>
                        <?php $i++;?>
                     @endforeach
                   </span>

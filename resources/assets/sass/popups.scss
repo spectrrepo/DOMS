@@ -904,7 +904,8 @@
 // ==============================================================
 // ===== modal for slider views =================================
 
-.zoom-slider-views {
+.zoom-slider-views,
+.all-likes-popup {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -1202,4 +1203,42 @@
   position: absolute;
   z-index: -1;
   opacity: 0;
+}
+// style for like popup
+.place-likes {
+  text-align: left;
+  width: 64%;
+  margin: 0 auto;
+  height: auto;
+}
+.scroll-place-like {
+  overflow-y: scroll;
+  width: 100%;
+  height: 100%;
+}
+.item-like {
+  display: inline-block;
+  height: auto;
+  width: 14.657%;
+  margin: 1%;
+  text-align: center;
+}
+.like-portret{
+  height: auto;
+  width: 100%;
+  display: block;
+  margin-bottom: 7px;
+  transition: all 0.4s ease;
+}
+.item-like:hover .like-portret {
+  box-shadow: 0 0 3px 3px #666666;
+}
+.name-like {
+  color: white;
+}
+.name-like:hover {
+  color: white;
+}
+.close-likes {
+  right: 14px;
 }

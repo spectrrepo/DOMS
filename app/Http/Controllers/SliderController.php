@@ -208,4 +208,16 @@ class SliderController extends Controller
 
         return $zoomPhoto;
     }
+    public function loadAllLikes ()
+    {
+        $id = $_POST['id'];
+
+        $allLikes = Like::where('post_id', '=', $id)->get();
+        $likeWhom = array();
+        foreach ($allLikes as $like) {
+            $user = User::find($like->user_id);
+            array_push( $likeWhom, $user);
+        }
+        return $likeWhom;
+    }
 }

@@ -78,7 +78,7 @@ Route::post('/load_active_favorite', 'SliderController@loadActiveLiked');
 Route::post('/load_sort_photo', 'PhotoController@loadSortPhoto');
 Route::post('/load_sort_photo_slider', 'PhotoController@loadSortPhotoSlider');
 Route::post('/load_tags_mask', 'TagsController@indexTagsMask' );
-
+Route::post('/load_all_likes', 'SliderController@loadAllLikes');
 /*
 / These routes , which users have access
 */

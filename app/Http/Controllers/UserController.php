@@ -51,43 +51,93 @@ class UserController extends Controller
     public function index($id)
      {  if(Auth::check()){
              $images = DB::select(
-               "SELECT * FROM (
-                   (SELECT 'favorite' AS type,
-                          Likeds.post_id AS img_id,
-                          Likeds.date AS date_event,
-                          Users.quadro_ava AS quadro_ava_user_event,
-                          Users.name AS user_name_event,
-                          Users.id AS id_user_event,
-                          Users.sex AS sex_user_event
-                    FROM Likeds JOIN Users ON Likeds.user_id = Users.id)
+             "SELECT * FROM (
+                        (SELECT 'favorite' AS type,
+                               Likeds.post_id AS img_id,
+                               Likeds.date AS date_event,
+                               Likeds.date_rus AS date_rus_event,
+                               '' AS comment_text,
+                               '' AS comment_status,
+                               Users.quadro_ava AS quadro_ava_user_event,
+                               Users.name AS user_name_event,
+                               Users.id AS id_user_event,
+                               Users.sex AS sex_user_event
+                         FROM Likeds JOIN Users ON Likeds.user_id = Users.id)
 
-                    UNION
+                         UNION
 
-                   (SELECT 'like' AS type,
-                          Likes.post_id AS img_id,
-                          Likes.date AS date_event,
-                          Users.quadro_ava AS quadro_ava_user_event,
-                          Users.name AS user_name_event,
-                          Users.id AS id_user_event,
-                          Users.sex AS sex_user_event
-                    FROM Likes JOIN Users ON Likes.user_id = Users.id)) AS t1
-               JOIN(
-                    SELECT Images.id AS img_id,
-                          Images.full_path AS img_photo,
-                          Users.id AS user_id_add,
-                          Users.name AS name_user_add,
-                          Users.quadro_ava AS quadro_ava_add,
-                          Images.views_count AS views_count,
-                          Images.likes_count AS likes_count,
-                          Images.favs_count AS favs_count
-                    FROM Users JOIN Images ON Users.id=Images.author_id) AS t2
-               ON t1.img_id=t2.img_id
-               ORDER BY date_event LIMIT 2;");
+                        (SELECT 'like' AS type,
+                               Likes.post_id AS img_id,
+                               Likes.date AS date_event,
+                               Likes.date_rus AS date_rus_event,
+                               '' AS comment_text,
+                               '' AS comment_status,
+                               Users.quadro_ava AS quadro_ava_user_event,
+                               Users.name AS user_name_event,
+                               Users.id AS id_user_event,
+                               Users.sex AS sex_user_event
+                         FROM Likes JOIN Users ON Likes.user_id = Users.id)
+
+                         UNION
+
+                         (SELECT   'comment' AS type,
+                                  Comments.post_id AS img_id,
+                                  Comments.date AS date_event,
+                                  Comments.rus_date AS date_rus_event,
+                                  Comments.text_comment AS comment_text,
+                                  Comments.status AS comment_status,
+                                  Users.quadro_ava AS quadro_ava_user_event,
+                                  Users.name AS user_name_event,
+                                  Comments.user_id AS id_user_event,
+                                  Users.sex AS sex_user_event
+                         FROM Comments JOIN Users ON Comments.user_id = Users.id
+                         WHERE Comments.status='read')) AS t1
+                    JOIN(
+                         SELECT Images.id AS img_id,
+                               Images.full_path AS img_photo,
+                               Users.id AS user_id_add,
+                               Users.name AS name_user_add,
+                               Users.quadro_ava AS quadro_ava_add,
+                               Images.views_count AS views_count,
+                               Images.likes_count AS likes_count,
+                               Images.favs_count AS favs_count
+                         FROM Users JOIN Images ON Users.id=Images.author_id) AS t2
+                    ON t1.img_id=t2.img_id
+                    ORDER BY date_event ;");
+
+             $commentsImage = DB::select(
+                    "SELECT Comments.user_id AS comment_user_id,
+                             Comments.post_id AS img_id,
+                             Comments.text_comment AS comment_text,
+                             Comments.rus_date AS comment_date,
+                             Comments.status AS comment_status,
+                             Users.name AS comment_user_name,
+                             Users.quadro_ava AS comment_quadro_ava
+                      FROM Comments JOIN Users ON Comments.user_id = Users.id
+                      JOIN Images ON Comments.post_id = Images.id
+                      WHERE Comments.status='read'
+                      ORDER BY Comments.rus_date;");
+             $news_tpl = array();
+             $news = array();
+             for ($i = 1; $i < count($images); $i++ ){
+                 if ($images[$i]->date_rus_event != $images[$i-1]->date_rus_event) {
+                     for ( $j = 0; $j < count($images); $j++){
+                         if (($images[$i]->date_rus_event == $images[$j]->date_rus_event)) {
+                             array_push($news_tpl, $images[$j]);
+                         }
+                     }
+                     array_push($news, $news_tpl);
+                     $news_tpl = array();
+                 }
+             }
+             dd($news, $images);
+
              $user = User::find($id);
              $links = Social::where('user', '=', $id)->get();
              return View('profile.index', [ 'id' => $id,
                                             'user' => $user,
                                             'images' => $images,
+                                            'commentsImage' => $commentsImage,
                                             'links' => $links]);
         }else {
             return redirect('/login');
@@ -201,7 +251,7 @@ class UserController extends Controller
      public function registration()
      {
        $findUser = User::where('email', '=', $_POST['email'])->first();
-       if (!empty($findUser)) {
+       if (empty($findUser)) {
          $user = new User();
 
          $email = $_POST['email'];
@@ -230,7 +280,7 @@ class UserController extends Controller
          });
          return redirect()->back();
        } else {
-         return redirect()->with('bad_reg', 'true');
+         return redirect('/')->with('bad_reg', 'true');
        }
      }
 
@@ -284,12 +334,11 @@ class UserController extends Controller
          $image = Picture::find($_POST['post_id']);
          $image->favs_count += 1;
          $image->save();
-         $liked->save();
-         $needLiked = Liked::orderBy('id', 'desc')->first();
+         $liked->date = \Carbon\Carbon::parse();
          setlocale(LC_TIME, 'ru_RU.utf8');
-         $needLiked->rus_date = \Carbon\Carbon::parse($needLiked->date)->formatLocalized('%d %b %Y');
-         $needLiked->save();
-         return 'deleteLiked';
+         $liked->date_rus = \Carbon\Carbon::parse()->formatLocalized('%d %b %Y');
+         $liked->save();
+         return 'delete_liked';
 
       }
 

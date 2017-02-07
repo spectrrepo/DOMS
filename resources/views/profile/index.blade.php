@@ -124,6 +124,28 @@
                 </div>
                 <div class="clear"></div>
               </div>
+              @foreach ($commentsImage as $comment)
+                @if ($comment->img_id == $image->img_id)
+                  <div class="b-comment-wrap">
+                    <a href="/profile/{{ $comment->comment_user_id }}" class="b-photo-comment">
+                       <img src="{{ !($comment->comment_quadro_ava === null ) ? $comment->comment_quadro_ava : '/img/user.png' }}" alt="">
+                    </a>
+                    <div class="b-comment">
+                      <a href="/profile/{{ $comment->comment_user_id }}" class="b-name-comment">
+                        {{ $comment->comment_user_name }}
+                      </a>
+                      <div class="b-text-comment">
+                        {{ $comment->comment_text }}
+                      </div>
+                      <div class="b-date-comment">
+                        {{ $comment->comment_date }}
+                      </div>
+                    </div>
+                  </div>
+                    {{-- <span>{{ $comment->img_id }}</span> --}}
+                    {{-- <span>{{ $comment->comment_status }}</span> --}}
+                @endif
+             @endforeach
               <div class="clear"></div>
           </div>
           @if ($image->type === 'favorite')
