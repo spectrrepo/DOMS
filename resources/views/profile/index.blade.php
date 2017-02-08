@@ -56,9 +56,7 @@
         </div>
     </div>
 </div>
-@if ($id != Auth::user()->id)
 
-@else
 <div class="separate-title">
   Лента
 </div>
@@ -72,27 +70,27 @@
       </ul>
     </div>
     <div class="b-personal-news">
-      @foreach ($images as $image)
+        @foreach($news as $newItem => $item)
         <div class="b-person-post">
           <div class="col-news-min">
               <div class="b-portret-blogger">
-                <img src="{{ !($image->quadro_ava_add === null ) ? $image->quadro_ava_add : '/img/user.png' }}"/>
+                <img src="{{ !($item[0]->quadro_ava_add === null ) ? $item[0]->quadro_ava_add : '/img/user.png' }}"/>
               </div>
           </div>
           <div class="col-news-big">
-              <div class="b-name-redactor"><a href="/profile/{{$image->user_id_add}}">{{$image->name_user_add}}</a></div>
+              <div class="b-name-redactor"><a href="/profile/{{$item[0]->user_id_add}}">{{$item[0]->name_user_add}}</a></div>
               <div class="b-post-body">
                 <div class="b-photo-post">
-                  <img src="{{$image->img_photo}}" class="img-post" alt="" />
+                  <img src="{{$item[0]->img_photo}}" class="img-post" alt="" />
                 </div>
                 <div class="b-iformation">
                   <div class="b-date">
-                    <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($image->date_event)->formatLocalized('%d %b %Y') ?>
+                  {{ $item[0]->date_rus_event }}
                   </div>
                   <div class="b-statistics">
                     <div class="b-item-stat">
                       <span class="ico uk-icon-justify uk-icon-eye"></span>
-                      <span class="num-stat">{{ !empty($image->views_count) ? $image->views_count : '0' }}</span>
+                      <span class="num-stat">{{ !empty($item[0]->views_count) ? $item[0]->views_count : '0' }}</span>
                       <span class="tooltip-stat margin-num-comment-tooltip">
                         <span class="text-tooltip-stat">
                           количество просмотров
@@ -102,7 +100,7 @@
                     </div>
                     <div class="b-item-stat">
                       <span class="ico uk-icon-justify uk-icon-heart"></span>
-                      <span class="num-stat">{{ !empty($image->likes_count) ? $image->likes_count : '0' }}</span>
+                      <span class="num-stat">{{ !empty($item[0]->likes_count) ? $item[0]->likes_count : '0' }}</span>
                       <span class="tooltip-stat margin-like-tooltip">
                         <span class="text-tooltip-stat">
                           понравилось
@@ -112,7 +110,7 @@
                     </div>
                     <div class="b-item-stat">
                       <span class="ico uk-icon-justify uk-icon-star"></span>
-                      <span class="num-stat">{{ !empty($image->favs_count) ? $image->favs_count : '0' }}</span>
+                      <span class="num-stat">{{ !empty($item[0]->favs_count) ? $item[0]->favs_count : '0' }}</span>
                       <span class="tooltip-stat margin-liked-tooltip">
                         <span class="text-tooltip-stat">
                          избранное
@@ -122,93 +120,123 @@
                     </div>
                   </div>
                 </div>
-                <div class="clear"></div>
               </div>
-              @foreach ($commentsImage as $comment)
-                @if ($comment->img_id == $image->img_id)
+              <div class="clear"></div>
+            @foreach($item  as  $key)
+              @if ($key->type == 'comment')
+                @if (current($key) != last($key))
                   <div class="b-comment-wrap">
-                    <a href="/profile/{{ $comment->comment_user_id }}" class="b-photo-comment">
-                       <img src="{{ !($comment->comment_quadro_ava === null ) ? $comment->comment_quadro_ava : '/img/user.png' }}" alt="">
+                    <a href="/profile/{{ $key->id_user_event }}" class="b-photo-comment">
+                      <img src="{{ !($key->quadro_ava_user_event === null ) ? $key->quadro_ava_user_event : '/img/user.png'}}" alt="">
                     </a>
                     <div class="b-comment">
-                      <a href="/profile/{{ $comment->comment_user_id }}" class="b-name-comment">
-                        {{ $comment->comment_user_name }}
+                      <a href="/profile/{{ $key->id_user_event }}" class="b-name-comment">
+                        {{ $key->user_name_event }}
                       </a>
                       <div class="b-text-comment">
-                        {{ $comment->comment_text }}
+                        {{ $key->comment_text }}
                       </div>
                       <div class="b-date-comment">
-                        {{ $comment->comment_date }}
+                        {{ $key->date_rus_event }}
                       </div>
                     </div>
+                    <div class="clear"></div>
+                    <hr>
                   </div>
-                    {{-- <span>{{ $comment->img_id }}</span> --}}
-                    {{-- <span>{{ $comment->comment_status }}</span> --}}
-                @endif
+                 @endif
+               @endif
              @endforeach
-              <div class="clear"></div>
-          </div>
-          @if ($image->type === 'favorite')
-            <div class="col-news-min">
-              <div class="b-portret-blogger"
-                   style="background:url(
-                   {{ !($image->quadro_ava_user_event === null ) ? $image->quadro_ava_user_event : '' }}) center no-repeat;
-                          background-size: cover;">
-                    <span class="ico ico-news ico-news-star uk-icon-justify uk-icon-star"></span>
-              </div>
-            </div>
-            <div class="col-news-big">
-              <div class="b-name-redactor">
-                <a href="/profile/{{$image->id_user_event}}">
-                  {{$image->user_name_event}}
-                </a>
-                <span class="event-text">
-                  @if ($image->sex_user_event == 1 )
-                    добавил фотографию в избранное
-                  @elseif ($image->sex_user_event == 2)
-                    добавила фотографию в избранное
-                  @else
-                    добавил(а) фотографию в избранное
-                  @endif
-                </span>
-                <p class="date-event-text">
-                  <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($image->date_event)->formatLocalized('%d %b %Y') ?>
-                </p>
-              </div>
-            </div>
-          @elseif ($image->type === 'like')
-            <div class="col-news-min">
-              <div class="b-portret-blogger">
-                  <img src="{{ !($image->quadro_ava_user_event === null ) ? $image->quadro_ava_user_event : '/img/user.png' }}"/>
-                  <span class="ico ico-news ico-news-hearth uk-icon-justify uk-icon-heart"></span>
-              </div>
-            </div>
-            <div class="col-news-big">
-              <div class="b-name-redactor">
-                <a href="/profile/{{$image->id_user_event}}">
-                  {{$image->user_name_event}}
-                </a>
-                <span class="event-text">
-                  @if ($image->sex_user_event == 1 )
-                    оценил фотографию
-                  @elseif ($image->sex_user_event == 2)
-                    оценилa фотографию
-                  @else
-                    оценил(a) фотографию
-                  @endif
-                </span>
-                <p class="date-event-text">
-                  <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($image->date_event)->formatLocalized('%d %b %Y') ?>
-                </p>
-              </div>
-            </div>
-          @endif
+             </div>
+             <?php $j=0; ?>
+             @foreach($item  as  $key)
+             @if (($key->type == 'like'))
 
+               <?php $j++ ; if ($j >1) break; ?>
+               <div class="">
+                 <div class="col-news-min">
+                   <div class="b-portret-blogger">
+                       <img src="{{ !($key->quadro_ava_user_event === null ) ? $key->quadro_ava_user_event : '/img/user.png' }}"/>
+                       <span class="ico ico-news ico-news-hearth uk-icon-justify uk-icon-heart"></span>
+                   </div>
+                 </div>
+                 <div class="col-news-big">
+                   <div class="b-name-redactor">
+                     <a href="/profile/{{$key->id_user_event}}">
+                       {{$key->user_name_event}}
+                     </a>
+                     <span class="event-text">
+                       @if ($key->sex_user_event == 1 )
+                         оценил фотографию
+                       @elseif ($key->sex_user_event == 2)
+                         оценилa фотографию
+                       @elseif (count($item) > 1)
+                         и ещё {{ count($item) }} человека оценили фотографию
+                         <div class="clear"></div>
+                         @for ($i = 1; $i < count($item); $i++)
+                           @if (($item[$i]->type == 'like'))
+                             <div style="display:inline-block;width:50px;">
+                               <img src="/img/user.png" alt="" />
+                             </div>
+                           @endif
+                         @endfor
+                       @endif
+                     </span>
+                     <p class="date-event-text">
+                       {{ $key->date_rus_event }}
+                     </p>
+                   </div>
+                 </div>
+                 <div class="clear"></div>
+               </div>
+               @endif
+               @endforeach
+               <?php $k=0; ?>
+               @foreach($item  as  $key)
+               @if ($key->type == 'favorite')
+                <?php $k++ ; if ($k >1) break; ?>
+                <div class="">
+                 <div class="col-news-min">
+                   <div class="b-portret-blogger">
+                       <img src="{{ !($key->quadro_ava_user_event === null ) ? $key->quadro_ava_user_event : '/img/user.png' }}"/>
+                       <span class="ico ico-news ico-news-star uk-icon-justify uk-icon-star"></span>
+                   </div>
+                 </div>
+                 <div class="col-news-big">
+                   <div class="b-name-redactor">
+                     <a href="/profile/{{$key->id_user_event}}">
+                       {{$key->user_name_event}}
+                     </a>
+                     <span class="event-text">
+                       @if ($key->sex_user_event == 1 )
+                         добавил фотографию в избранное
+                       @elseif ($key->sex_user_event == 2)
+                         добавила фотографию в избранное
+                       @elseif (count($item) > 1)
+                         и ещё {{ count($item) }} человека оценили фотографию
+                         <div class="clear"></div>
+                         @for ($i = 1; $i < count($item); $i++)
+                           @if (($item[$i]->type == 'favorite'))
+                             <div style="display:inline-block;width:50px;">
+                               <img src="/img/user.png" alt="" />
+                             </div>
+                           @endif
+                         @endfor
+                       @endif
+                     </span>
+                     <p class="date-event-text">
+                       {{ $key->date_rus_event }}
+                     </p>
+                   </div>
+                 </div>
+                 <div class="clear"></div>
+                 </div>
+               @endif
+             @endforeach
           <div class="clear"></div>
-    </div>
-    @endforeach
+        </div>
+        @endforeach
+      </div>
     <div class="clear"></div>
-    </div>
 </div>
 <div class="btn-dwnld-new">
   Загрузить ещё

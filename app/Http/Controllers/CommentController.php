@@ -69,8 +69,6 @@ class CommentController extends Controller
         $comment->post_id = $_POST['post_id'];
         $comment->user_id = $_POST['user_id'];
         $user = User::find($_POST['user_id']);
-        $comment->userPhoto = $user->path_full;
-        $comment->userName = $user->name;
         $comment->text_comment = $_POST['comment'];
         $image = Picture::find($_POST['post_id']);
         $image->comments_count += 1;

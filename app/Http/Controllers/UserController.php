@@ -105,22 +105,13 @@ class UserController extends Controller
                     ON t1.img_id=t2.img_id
                     ORDER BY date_event ;");
 
-             $commentsImage = DB::select(
-                    "SELECT Comments.user_id AS comment_user_id,
-                             Comments.post_id AS img_id,
-                             Comments.text_comment AS comment_text,
-                             Comments.rus_date AS comment_date,
-                             Comments.status AS comment_status,
-                             Users.name AS comment_user_name,
-                             Users.quadro_ava AS comment_quadro_ava
-                      FROM Comments JOIN Users ON Comments.user_id = Users.id
-                      JOIN Images ON Comments.post_id = Images.id
-                      WHERE Comments.status='read'
-                      ORDER BY Comments.rus_date;");
              $news_tpl = array();
              $news = array();
-             for ($i = 1; $i < count($images); $i++ ){
-                 if ($images[$i]->date_rus_event != $images[$i-1]->date_rus_event) {
+             $last_el = (object)['date_rus_event' => 'may'];
+             array_push($images, $last_el);
+
+             for ($i = 0; $i < count($images)-1; $i++ ){
+                 if ($images[$i]->date_rus_event != $images[$i+1]->date_rus_event) {
                      for ( $j = 0; $j < count($images); $j++){
                          if (($images[$i]->date_rus_event == $images[$j]->date_rus_event)) {
                              array_push($news_tpl, $images[$j]);
@@ -130,14 +121,13 @@ class UserController extends Controller
                      $news_tpl = array();
                  }
              }
-             dd($news, $images);
 
              $user = User::find($id);
              $links = Social::where('user', '=', $id)->get();
+
              return View('profile.index', [ 'id' => $id,
                                             'user' => $user,
-                                            'images' => $images,
-                                            'commentsImage' => $commentsImage,
+                                            'news' => $news,
                                             'links' => $links]);
         }else {
             return redirect('/login');

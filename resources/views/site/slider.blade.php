@@ -198,6 +198,7 @@
                         {{ $comment->rus_date }}
                       </div>
                     </div>
+                    <div class="clear"></div>
                   </div>
                   <?php $i++; ?>
                 @endforeach
