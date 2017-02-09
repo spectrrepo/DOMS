@@ -7068,7 +7068,8 @@ html {
   background: #cadede;
   cursor: pointer;
   margin-left: 20px;
-  position: relative; }
+  position: relative;
+  display: block; }
 
 .col-news-big {
   width: 90%;
@@ -7108,7 +7109,8 @@ html {
   margin-top: 10px;
   background: gray;
   height: auto;
-  cursor: pointer; }
+  cursor: pointer;
+  display: block; }
 
 .b-iformation {
   bottom: 0px;
@@ -7952,7 +7954,8 @@ a.btn-prew span {
   height: auto;
   width: 100%; }
 
-.btn-all-comments {
+.btn-all-comments,
+.btn-all-comments-news {
   width: 100%;
   text-align: center;
   cursor: pointer;
@@ -7964,7 +7967,8 @@ a.btn-prew span {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease; }
 
-.btn-all-comments:hover {
+.btn-all-comments:hover,
+.btn-all-comments-news:hover {
   opacity: .7; }
 
 .b-comment-wrap {
@@ -8121,14 +8125,32 @@ a.btn-prew span {
   z-index: 1; }
 
 .item-view-min {
-  -webkit-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-  width: 100%;
+  width: 80%;
   height: 100%;
   position: absolute;
+  cursor: pointer;
   top: 0;
+  left: 0;
   right: 0;
-  cursor: pointer; }
+  bottom: 0;
+  margin: auto; }
+
+.item-view-min:after {
+  font-family: "FontAwesome";
+  content: "\f00e";
+  line-height: 150px;
+  font-size: 60px;
+  width: 100%;
+  height: 100%;
+  background: black;
+  color: white;
+  opacity: 0;
+  display: block;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease; }
+
+.item-view-min:hover:after {
+  opacity: 0.4; }
 
 .item-view-min img {
   height: auto;

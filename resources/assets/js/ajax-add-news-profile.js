@@ -1,4 +1,9 @@
 $( document ).ready(function() {
+  $('.btn-all-comments-news').on('click', function() {
+      $(this).next().children().fadeIn();
+      $(this).remove();
+  });
+
   $('.btn-dwnld-new').on('click', function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
           lastIdJS = $('.b-person-post').length;

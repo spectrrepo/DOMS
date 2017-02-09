@@ -720,6 +720,7 @@ $( document ).ready(function() {
 
           }
           $('input[name=roomSorting]').val(dataURL);
+          ajaxRequest(roomSort, styleSort, colorSort, sortSort);
         }else {
 
           var replaceString = $(this).data('url');
@@ -1611,7 +1612,7 @@ $( document ).ready(function() {
                 data[i].text_comment+
                 '</div><div class="b-date-comment">'+
                 data[i].rus_date+
-                '</div></div></div>').appendTo('.b-all-comment');
+                '</div></div><div class="clear"></div></div>').appendTo('.b-all-comment');
             }
 
             $('<div class="clear"></div>').appendTo('.b-all-comment');
@@ -1805,7 +1806,7 @@ $( document ).ready(function() {
 
   function userInfoDownload() {
     var id = $('.active-slide').data('id'),
-    csrftoken = $('meta[name=_token]').attr('content');
+             csrftoken = $('meta[name=_token]').attr('content');
     $.ajax({
       type:'POST',
       data: {
@@ -1819,15 +1820,18 @@ $( document ).ready(function() {
           $('.author-portret').empty();
           $('.author-name').empty();
         }else {
-          $('.b-pretense a').attr('href','/profile/'+data.author_id);
-          if (!('path_min' in data)) {
+          $('.b-pretense a').attr('href','/profile/'+data.id);
+          if (!(data.quadro_ava === null)) {
             $('.author-portret').empty();
+            $('.author-portret-zoom').empty();
+            $('<img src="/img/user.png">').appendTo('.author-portret');
+            $('<img src="/img/user.png">').appendTo('.author-portret-zoom');
           }else {
             $('<img src="'+data.userPhoto+'">').appendTo('.author-portret');
             $('<img src="'+data.userPhoto+'">').appendTo('.author-portret-zoom');
           }
-          $('.author-name').text(data.userName);
-          $('.author-name-zoom').text(data.userName);
+          $('.author-name').text(data.name);
+          $('.author-name-zoom').text(data.name);
         }
       }
     });
@@ -3469,6 +3473,11 @@ $( document ).ready(function() {
 });
 
 $( document ).ready(function() {
+  $('.btn-all-comments-news').on('click', function() {
+      $(this).next().children().fadeIn();
+      $(this).remove();
+  });
+
   $('.btn-dwnld-new').on('click', function() {
       var csrftoken = $('meta[name=_token]').attr('content'),
           lastIdJS = $('.b-person-post').length;
@@ -4064,7 +4073,7 @@ $( document ).ready(function () {
   $('.like').mouseleave(function(){
     $('.margin-like-tooltip').show();
   });
-
+  
   $('footer').on('click', function () {
     var id = $('.active-slide').data('id'),
         csrftoken = $('meta[name=_token]').attr('content');

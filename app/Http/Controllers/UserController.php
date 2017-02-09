@@ -53,6 +53,7 @@ class UserController extends Controller
              $images = DB::select(
              "SELECT * FROM (
                         (SELECT 'favorite' AS type,
+                               '' AS comment_id,
                                Likeds.post_id AS img_id,
                                Likeds.date AS date_event,
                                Likeds.date_rus AS date_rus_event,
@@ -67,6 +68,7 @@ class UserController extends Controller
                          UNION
 
                         (SELECT 'like' AS type,
+                               '' AS comment_id,
                                Likes.post_id AS img_id,
                                Likes.date AS date_event,
                                Likes.date_rus AS date_rus_event,
@@ -81,6 +83,7 @@ class UserController extends Controller
                          UNION
 
                          (SELECT   'comment' AS type,
+                                  Comments.Id AS comment_id,
                                   Comments.post_id AS img_id,
                                   Comments.date AS date_event,
                                   Comments.rus_date AS date_rus_event,
@@ -93,7 +96,7 @@ class UserController extends Controller
                          FROM Comments JOIN Users ON Comments.user_id = Users.id
                          WHERE Comments.status='read')) AS t1
                     JOIN(
-                         SELECT Images.id AS img_id,
+                         SELECT Images.id AS id,
                                Images.full_path AS img_photo,
                                Users.id AS user_id_add,
                                Users.name AS name_user_add,
@@ -102,8 +105,8 @@ class UserController extends Controller
                                Images.likes_count AS likes_count,
                                Images.favs_count AS favs_count
                          FROM Users JOIN Images ON Users.id=Images.author_id) AS t2
-                    ON t1.img_id=t2.img_id
-                    ORDER BY date_event ;");
+                    ON t1.img_id=t2.id
+                    ORDER BY date_event;");
 
              $news_tpl = array();
              $news = array();
@@ -121,10 +124,8 @@ class UserController extends Controller
                      $news_tpl = array();
                  }
              }
-
              $user = User::find($id);
              $links = Social::where('user', '=', $id)->get();
-
              return View('profile.index', [ 'id' => $id,
                                             'user' => $user,
                                             'news' => $news,

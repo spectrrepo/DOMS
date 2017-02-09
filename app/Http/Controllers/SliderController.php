@@ -10,6 +10,7 @@ use App\Comment;
 use Auth;
 
 use App\Like;
+use App\Liked;
 
 use App\User;
 use App\View;
@@ -160,7 +161,8 @@ class SliderController extends Controller
     public function dwnldPhotoUser()
     {
       $id = $_POST['id'];
-      $user = Picture::find($id);
+      $pic = Picture::find($id);
+      $user = User::find($pic->author_id);
       return $user;
     }
 

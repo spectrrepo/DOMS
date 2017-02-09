@@ -184,6 +184,7 @@ $( document ).ready(function() {
 
           }
           $('input[name=roomSorting]').val(dataURL);
+          ajaxRequest(roomSort, styleSort, colorSort, sortSort);
         }else {
 
           var replaceString = $(this).data('url');
