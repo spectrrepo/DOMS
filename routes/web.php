@@ -109,12 +109,13 @@ Route::group(['middleware' => 'role:user,moderator,admin'], function () {
 /*
 / These routes , which moderators have access
 */
+
 Route::group(['middleware' => 'role:0,moderator,admin'], function () {
 
+    Route::get('/profile/admin/comments', ['as' => 'comments','uses' => 'CommentController@index']);
     Route::get('/profile/admin/verification', ['as' => 'verified', 'uses' => 'UserController@confirmationsPage']);
     Route::get('/profile/admin/add_news', ['as' => 'news', 'uses' => 'UserController@addNewsPage']);
     Route::get('/profile/admin/add_news_item', ['uses' => 'UserController@addNewsItem']);
-    Route::get('/profile/admin/comments', ['as' => 'comments', 'before' => 'auth', 'uses' => 'CommentController@index']);
     Route::get('/profile/admin/messages', ['as' => 'messages','uses' => 'MessagesController@mailIndex']);
     Route::get('/profile/admin/copyrights', ['as' => 'copyright', 'uses' => 'CopyrightController@index']);
     Route::get('/profile/admin/edit_page_news/{id}','NewsController@editPageIndex');

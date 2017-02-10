@@ -135,7 +135,8 @@ class SliderController extends Controller
                                 FROM  Comments JOIN Users
                                 ON    Comments.user_id=Users.id
                                 JOIN  Images ON Images.id = Comments.post_id
-                                WHERE Images.id='.$id);
+                                WHERE Images.id='.$id
+                                AND Comments.status = 'read');
       return $comments;
     }
 

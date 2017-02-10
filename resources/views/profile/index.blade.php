@@ -265,7 +265,7 @@
   </div>
   <div class="clear"></div>
 </div>
-<div class="btn-dwnld-new">
+{{-- <div class="btn-dwnld-new">
   Загрузить ещё
-</div>
+</div> --}}
 @endsection

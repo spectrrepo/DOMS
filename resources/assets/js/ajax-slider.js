@@ -28,14 +28,28 @@ $( document ).ready(function() {
         url:'/load_comments',
 
         success: function (data) {
-          var btn, quadro_ava, style;
+          var btn, quadro_ava, style, comment_last_id, count;
           $('.btn-all-comments').remove();
           if (data.length == 0){
             $('.b-all-comment').empty();
           }else {
             $('.b-all-comment').empty();
             $('<div></div>').appendTo('.b-all-comment');
+            count = data.length;
+            if ( (count > 3) && (comment_last_id != '') ) {
+              if (count+1 === 4) {
+                 ending = 'я';
+              }else {
+                 ending = 'ев';
+              }
+              btnTwo = '<div class="btn-all-comments">Показать все '+count+' комментари'+ending+'</div>';
+            } else {
+              btnTwo = '';
+            }
+            $(btnTwo).appendTo('.b-all-comment');
+
             for(var i=0; i<data.length; i++) {
+              comment_last_id = data.id;
               if (parseInt(authID) === parseInt(data[i].user_id)) {
                 btn = '<span class="remove-comment uk-icon-justify '+
                       'uk-icon-remove"><span class="delete_comment_id" '+
@@ -48,12 +62,11 @@ $( document ).ready(function() {
               } else {
                 quadro_ava = '/img/user.png';
               }
-              if ( i >= 2 ) {
+
+              if ((i <= count-3)&&( count>3 )) {
                 style = 'style="display:none"';
-                btnTwo = '<div class="btn-all-comments">Показать все комментарии</div>';
-              } else {
+              }else {
                 style = '';
-                btnTwo = '';
               }
               $('<div class="b-comment-wrap" '+style+'>'+ btn +
                 '<a href="/profile/'+data[i].user_id+
@@ -69,9 +82,7 @@ $( document ).ready(function() {
                 data[i].rus_date+
                 '</div></div><div class="clear"></div></div>').appendTo('.b-all-comment');
             }
-
             $('<div class="clear"></div>').appendTo('.b-all-comment');
-            $(btnTwo).appendTo('.b-all-comment');
             loadAllPhoto('.btn-all-comments');
           }
         }

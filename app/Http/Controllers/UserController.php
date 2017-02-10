@@ -124,6 +124,7 @@ class UserController extends Controller
                      $news_tpl = array();
                  }
              }
+            //  $news = array_slice($newss, 0, 5);
              $user = User::find($id);
              $links = Social::where('user', '=', $id)->get();
              return View('profile.index', [ 'id' => $id,
@@ -137,39 +138,81 @@ class UserController extends Controller
      }
      public function ajaxDownloadUpdate () {
          $lastUpdate = $_POST['lastId'];
-         $images =  $images = DB::select(
-           "SELECT * FROM (
-               (SELECT 'favorite' AS type,
-                      Likeds.post_id AS img_id,
-                      Likeds.date AS date_event,
-                      Users.quadro_ava AS quadro_ava_user_event,
-                      Users.name AS user_name_event,
-                      Users.id AS id_user_event,
-                      Users.sex AS sex_user_event
-                FROM Likeds JOIN Users ON Likeds.user_id = Users.id)
+         $images = DB::select(
+         "SELECT * FROM (
+                    (SELECT 'favorite' AS type,
+                           '' AS comment_id,
+                           Likeds.post_id AS img_id,
+                           Likeds.date AS date_event,
+                           Likeds.date_rus AS date_rus_event,
+                           '' AS comment_text,
+                           '' AS comment_status,
+                           Users.quadro_ava AS quadro_ava_user_event,
+                           Users.name AS user_name_event,
+                           Users.id AS id_user_event,
+                           Users.sex AS sex_user_event
+                     FROM Likeds JOIN Users ON Likeds.user_id = Users.id)
 
-                UNION
+                     UNION
 
-               (SELECT 'like' AS type,
-                      Likes.post_id AS img_id,
-                      Likes.date AS date_event,
-                      Users.quadro_ava AS quadro_ava_user_event,
-                      Users.name AS user_name_event,
-                      Users.id AS id_user_event,
-                      Users.sex AS sex_user_event
-                FROM Likes JOIN Users ON Likes.user_id = Users.id)) AS t1
-           JOIN(
-                SELECT Images.id AS img_id,
-                      Images.full_path AS img_photo,
-                      Users.id AS user_id_add,
-                      Users.name AS name_user_add,
-                      Users.quadro_ava AS quadro_ava_add,
-                      Images.views_count AS views_count,
-                      Images.likes_count AS likes_count,
-                      Images.favs_count AS favs_count
-                FROM Users JOIN Images ON Users.id=Images.author_id) AS t2
-           ON t1.img_id=t2.img_id
-           ORDER BY date_event LIMIT 10 OFFSET ".$lastUpdate.";");
+                    (SELECT 'like' AS type,
+                           '' AS comment_id,
+                           Likes.post_id AS img_id,
+                           Likes.date AS date_event,
+                           Likes.date_rus AS date_rus_event,
+                           '' AS comment_text,
+                           '' AS comment_status,
+                           Users.quadro_ava AS quadro_ava_user_event,
+                           Users.name AS user_name_event,
+                           Users.id AS id_user_event,
+                           Users.sex AS sex_user_event
+                     FROM Likes JOIN Users ON Likes.user_id = Users.id)
+
+                     UNION
+
+                     (SELECT   'comment' AS type,
+                              Comments.Id AS comment_id,
+                              Comments.post_id AS img_id,
+                              Comments.date AS date_event,
+                              Comments.rus_date AS date_rus_event,
+                              Comments.text_comment AS comment_text,
+                              Comments.status AS comment_status,
+                              Users.quadro_ava AS quadro_ava_user_event,
+                              Users.name AS user_name_event,
+                              Comments.user_id AS id_user_event,
+                              Users.sex AS sex_user_event
+                     FROM Comments JOIN Users ON Comments.user_id = Users.id
+                     WHERE Comments.status='read')) AS t1
+                JOIN(
+                     SELECT Images.id AS id,
+                           Images.full_path AS img_photo,
+                           Users.id AS user_id_add,
+                           Users.name AS name_user_add,
+                           Users.quadro_ava AS quadro_ava_add,
+                           Images.views_count AS views_count,
+                           Images.likes_count AS likes_count,
+                           Images.favs_count AS favs_count
+                     FROM Users JOIN Images ON Users.id=Images.author_id) AS t2
+                ON t1.img_id=t2.id
+                ORDER BY date_event;");
+
+         $news_tpl = array();
+         $newss = array();
+         $last_el = (object)['date_rus_event' => 'may'];
+         array_push($images, $last_el);
+
+         for ($i = 0; $i < count($images)-1; $i++ ){
+             if ($images[$i]->date_rus_event != $images[$i+1]->date_rus_event) {
+                 for ( $j = 0; $j < count($images); $j++){
+                     if (($images[$i]->date_rus_event == $images[$j]->date_rus_event)) {
+                         array_push($news_tpl, $images[$j]);
+                     }
+                 }
+                 array_push($newss, $news_tpl);
+                 $news_tpl = array();
+             }
+         }
+         $images = array_slice($newss, $lastUpdate, $lastUpdate+4);
          return $images;
      }
      public function yourPhotoUpload ()

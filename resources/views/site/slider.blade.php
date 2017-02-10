@@ -178,9 +178,16 @@
               </div>
               <div class="b-all-comment">
               <div>
-                 <?php $i = 0; ?>
+                <?php $i = 0; ?>
+                <?php $comment_last_id = ''; $j = 0;
+                foreach ($comments as $comment)
+                   { $comment_last_id = $comment->id; $count = $j++ ;} $k = 0?>
+                   @if (($count >= 3)&&($comment_last_id != ''))
+                      <div class="btn-all-comments">Показать все {{ $count+1 }} комментари{{ $count+1==4 ? 'я':'ев' }}</div>
+                   @endif
                 @foreach ( $comments as $comment )
-                  <div class="b-comment-wrap" {{ $i>=2 ? 'style=display:none' : '' }}>
+                  <div class="b-comment-wrap" {{ ($k<=$count-3)&&($count>=3) ? 'style=display:none' : '' }}>
+                     <?php $k++; ?>
                      @if (Auth::check())
                         {!! Auth::user()->id === $comment->user_id ? HTML::decode('<span class="remove-comment uk-icon-justify uk-icon-remove"><span class="delete_comment_id" data-id="'.$comment->id.'"></span></span>') : ''!!}
                      @endif
@@ -204,9 +211,6 @@
                 @endforeach
               </div>
               <div class="clear"></div>
-              @if ( count($comments) >= 3)
-                <div class="btn-all-comments">Показать все комментарии</div>
-              @endif
               </div>
               @if (Auth::check())
                         <div class="b-add-comment">
