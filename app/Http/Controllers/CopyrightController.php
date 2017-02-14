@@ -90,8 +90,6 @@ class CopyrightController extends Controller
         $copyright->status = 'read';
         $copyright->save();
         $imageChange->save();
-
-        // $copyright->delete();
         return redirect()->back();
 
     }

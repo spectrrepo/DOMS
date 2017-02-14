@@ -1,5 +1,5 @@
 <?php
-
+// checked, but questions
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -118,14 +118,16 @@ class SliderController extends Controller
     public function dwnldViewsForPhoto()
     {
       $id = $_POST['id'];
-      $views = View::where('post_id', '=', $id)->get();
+      $views = View::select('id', 'path_full', 'path_min')
+                    ->where('post_id', '=', $id)
+                    ->get();
       return $views;
     }
 
     public function dwnldComments()
     {
        $id = $_POST['id'];
-       $comments = DB::select('SELECT Comments.id,
+       $comments = DB::select("SELECT Comments.id,
                                       Users.id AS user_id,
                                       Images.id AS image_id,
                                       Users.name AS user_name,
@@ -135,15 +137,18 @@ class SliderController extends Controller
                                 FROM  Comments JOIN Users
                                 ON    Comments.user_id=Users.id
                                 JOIN  Images ON Images.id = Comments.post_id
-                                WHERE Images.id='.$id
-                                AND Comments.status = 'read');
+                                WHERE Images.id=".$id."
+                                AND Comments.status = 'read'");
       return $comments;
     }
 
     public function dwnldInfoPhoto()
     {
       $id = $_POST['id'];
-      $photoInfo = Picture::find($id);
+      $photoInfo = Picture::select('id', 'views_count', 'comments_count',
+                                    'full_path', 'likes_count', 'description', 'title')
+                           ->where('id', '=', $id)
+                           ->get();
       return $photoInfo;
     }
 
@@ -153,7 +158,9 @@ class SliderController extends Controller
       $likes = Like::where('post_id', '=', $id)->get();
       $likeWhom = array();
       foreach ($likes as $like) {
-          $user = User::find($like->user_id);
+          $user = User::select('id', 'name', 'quadro_ava')
+                       ->where('id', '=', $like->user_id)
+                       ->get();
           array_push( $likeWhom, $user);
       }
       return $likeWhom;
@@ -163,7 +170,9 @@ class SliderController extends Controller
     {
       $id = $_POST['id'];
       $pic = Picture::find($id);
-      $user = User::find($pic->author_id);
+      $user = User::select('id', 'quadro_ava', 'name')
+                   ->where('id', '=', $pic->author_id)
+                   ->get();
       return $user;
     }
 
@@ -179,11 +188,15 @@ class SliderController extends Controller
     public function loadActiveLike()
     {
         $id = $_POST['id'];
-        $findLike = Like::where('post_id', '=', $id)
-                        ->where('user_id', '=', Auth::user()->id);
-        if ( $findLike->count() !== 0 ) {
-            $response = 'success';
-        } else {
+        if (Auth::check()) {
+            $findLike = Like::where('post_id', '=', $id)
+                            ->andWhere('user_id', '=', Auth::user()->id);
+            if ( $findLike->count() !== 0 ) {
+                $response = 'success';
+            } else {
+                $response = 'error';
+            }
+        }else {
             $response = 'error';
         }
 
@@ -193,23 +206,18 @@ class SliderController extends Controller
     public function loadActiveLiked()
     {
         $id = $_POST['id'];
-        $findLiked = Liked::where('post_id', '=', $id)
-                         ->where('user_id', '=', Auth::user()->id);
-        if ( $findLiked->count() !== 0 ) {
-            $response = 'success';
-        } else {
+        if (Auth::check()) {
+            $findLiked = Liked::where('post_id', '=', $id)
+                             ->where('user_id', '=', Auth::user()->id);
+            if ( $findLiked->count() !== 0 ) {
+                $response = 'success';
+            } else {
+                $response = 'error';
+            }
+        }else {
             $response = 'error';
         }
-
         return $response;
-    }
-    public function loadZoomPhoto()
-    {
-        $id = $_POST['id'];
-        $image = Picture::find($id);
-        $zoomPhoto = $image->photo->url();
-
-        return $zoomPhoto;
     }
     public function loadAllLikes ()
     {

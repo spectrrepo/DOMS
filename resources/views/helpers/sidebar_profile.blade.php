@@ -7,9 +7,9 @@
     <li class="menu-item-profile {{ preg_match('[/liked/photo]', URL::current()) ? 'menu-item-profile-active' : '' }}"><a href="{{ URL::route('liked') }}">Избранное</a></li>
      @if ((Auth::user()->status === 'moderator') || (Auth::user()->status === 'admin'))
       <?php
-            $comments = Illuminate\Support\Facades\DB::table('Comments')->where('status', '=', 'not_read')->count();
-            $pretenses = Illuminate\Support\Facades\DB::table('copyright')->where('status', '=', 'not_read')->count();
-            $messagesMail = Illuminate\Support\Facades\DB::table('Message_mail')->where('status', '=', 'not_read')->count();
+        $comments = Illuminate\Support\Facades\DB::table('Comments')->where('status', '=', 'not_read')->count();
+        $pretenses = Illuminate\Support\Facades\DB::table('copyright')->where('status', '=', 'not_read')->count();
+        $messagesMail = Illuminate\Support\Facades\DB::table('Message_mail')->where('status', '=', 'not_read')->count();
       ?>
 
       <li class="menu-item-profile"><a href="{{ URL::route('verified') }}">Изображения на проверку</a></li>

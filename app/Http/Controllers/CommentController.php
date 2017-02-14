@@ -76,18 +76,18 @@ class CommentController extends Controller
         $comment->rus_date = \Carbon\Carbon::parse(\Carbon\Carbon::now())->formatLocalized('%d %b %Y');
         $image->save();
         $comment->save();
-        $lastComment = DB::select('SELECT Comments.id,
-                                       Users.id AS user_id,
-                                       Images.id AS image_id,
-                                       Users.name AS user_name,
-                                       Users.quadro_ava AS user_quadro_ava,
-                                       Comments.text_comment AS text_comment,
-                                       Comments.rus_date AS rus_date
-                                FROM   Comments JOIN Users
-                                ON     Comments.user_id=Users.id
-                                JOIN   Images ON Images.id = Comments.post_id
-                                WHERE  Images.id='.$_POST['post_id'].
-                                ' ORDER BY id DESC LIMIT 1;');
+        $lastComment = DB::select('SELECT  Comments.id,
+                                           Users.id AS user_id,
+                                           Images.id AS image_id,
+                                           Users.name AS user_name,
+                                           Users.quadro_ava AS user_quadro_ava,
+                                           Comments.text_comment AS text_comment,
+                                           Comments.rus_date AS rus_date
+                                    FROM   Comments JOIN Users
+                                    ON     Comments.user_id=Users.id
+                                    JOIN   Images ON Images.id = Comments.post_id
+                                    WHERE  Images.id='.$_POST['post_id'].
+                                    ' ORDER BY id DESC LIMIT 1;');
         return $lastComment;
     }
 

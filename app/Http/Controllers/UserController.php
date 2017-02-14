@@ -124,7 +124,6 @@ class UserController extends Controller
                      $news_tpl = array();
                  }
              }
-            //  $news = array_slice($newss, 0, 5);
              $user = User::find($id);
              $links = Social::where('user', '=', $id)->get();
              return View('profile.index', [ 'id' => $id,
@@ -272,7 +271,6 @@ class UserController extends Controller
          {
             return redirect()->intended();
          }else {
-            // with message
             return redirect('/');
          }
      }
@@ -354,53 +352,7 @@ class UserController extends Controller
          }
 
      }
-     /**
-      * Login Form
-      *
-      * @return Re@extends('layouts.profile')
-      */
-     public function likedAdd()
-     {
-         $liked = new Liked();
 
-         $liked->post_id = $_POST['post_id'];
-         $liked->user_id = $_POST['user_id'];
-         $image = Picture::find($_POST['post_id']);
-         $image->favs_count += 1;
-         $image->save();
-         $liked->date = \Carbon\Carbon::parse();
-         setlocale(LC_TIME, 'ru_RU.utf8');
-         $liked->date_rus = \Carbon\Carbon::parse()->formatLocalized('%d %b %Y');
-         $liked->save();
-         return 'delete_liked';
-
-      }
-
-      public function likedDelete()
-      {
-        $liked = Liked::where('post_id', '=', $_POST['post_id'])
-                      ->where('user_id', '=', $_POST['user_id']);
-        $image = Picture::find($_POST['post_id']);
-        $image->favs_count -= 1;
-        $image->save();
-        $liked->delete();
-        return 'liked';
-      }
-      /**
-       * Login Form
-       *
-       * @return Response
-       */
-      public function likedIndex()
-      {
-          if (Auth::check()){
-             $images =  Picture::join('Likeds','Images.id', '=', 'Likeds.post_id' )
-                             ->where('Likeds.user_id', '=', Auth::id())
-                             ->get();
-                            //  dd($images);
-             return view('profile.liked', ['images' => $images]);
-          }
-      }
       /**
        * Login Form
        *
@@ -445,116 +397,5 @@ class UserController extends Controller
 
            $user->save();
            return redirect()->back();
-       }
-
-    //    moderator
-       public function addNewsPage()
-       {
-           $news = News::all();
-           return view('moderator.add_news', ['news' => $news]);
-       }
-       public function editRoomsPage()
-       {
-           $rooms = Room::paginate(10);
-           return view('moderator.edit_rooms', ['rooms' => $rooms]);
-       }
-       public function editStylesPage()
-       {
-           $styles = Style::paginate(10);
-           return view('moderator.edit_styles', ['styles' => $styles]);
-       }
-       public function editTagsPage()
-       {
-           $tags = Tag::paginate(10);
-           return view('moderator.edit_tags', ['tags' => $tags]);
-       }
-       public function confirmationsPage()
-       {
-           $images = Picture::where('verified', '=', false)->paginate(10);
-           return view('moderator.wait_confirmation', ['images' => $images]);
-       }
-       public function confirmationItemPage($id)
-       {
-           $imageId = Picture::find($id);
-           $needUser = User::find($imageId->author_id);
-           if ((Auth::user()->status === 'moderator' ) || (Auth::user()->id === $needUser->id)) {
-               $user = User::find( Auth::id() );
-               $styles = Style::all();
-               $rooms = Room::all();
-               $colors = Color::all();
-               $tags = Tag::where('post_id', '=', $id)->get();
-               $tagAll = '';
-               foreach ($tags as $tag) {
-                    $tagAll .= $tag->title.';';
-               }
-               $views = View::where('post_id', '=', $id)->get();
-               $image = Picture::find($id);
-
-               return view('moderator.wait_confirmation_item', ['user' => $user,
-                                                                'styles' => $styles,
-                                                                'tags' => $tags,
-                                                                'views' => $views,
-                                                                'rooms' => $rooms,
-                                                                'tagAll' => $tagAll,
-                                                                'colors' => $colors,
-                                                                'image' => $image]);
-
-           }else {
-               return redirect('/profile/'.Auth::user()->id);
-           }
-       }
-       public function addNewsItem()
-       {
-           return view('moderator.news');
-       }
-       public function addStyleItem()
-       {
-           return view('moderator.style');
-       }
-       public function deleteVerificationImage($id)
-       {
-           $image = Picture::find($id)->delete();
-           if ( Auth::user()->status == 'moderator') {
-               return redirect('/profile/admin/verification');
-           }else {
-               return redirect('/profile/'.Auth::user()->id)->with('check', 'delete');
-           }
-       }
-
-       public function addSocLink (){
-           $link = $_POST['link'];
-           $user_id = $_POST['user_id'];
-
-           $newLink = new Social();
-           $newLink->link = $link;
-           $newLink->user = $user_id;
-           $newLink->save();
-           $linkId = Social::where('user', '=', $user_id)
-                            ->orderBy('id', 'desc')
-                            ->first();
-           return $linkId;
-
-       }
-
-       public function deleteSocLink () {
-           $link = $_POST['link'];
-           $user_id = $_POST['user_id'];
-
-           $deleteLink = Social::where('link', '=', $link)
-                               ->where('user', '=', $user_id)
-                               ->delete();
-           return 'true';
-       }
-
-       public function editSocLink () {
-           $link = $_POST['link'];
-           $user_id = $_POST['user_id'];
-           $old_link = $_POST['old_link'];
-
-           $editLink = Social::where('link', '=', $old_link)
-                              ->where('user', '=', $user_id)
-                              ->update(array('link' => $link));
-
-           return 'true';
        }
 }

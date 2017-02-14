@@ -733,15 +733,6 @@ class PhotoController extends Controller
         }
     }
 
-    public function deleteView()
-    {
-        $id = $_POST['id'];
-        $views = View::find($id);
-        $views->delete();
-        dd($views);
-        return 'true';
-    }
-
     public function allPhotoSite()
     {
         $images = DB::table('Images')->paginate(10);

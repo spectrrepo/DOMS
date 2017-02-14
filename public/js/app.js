@@ -1838,8 +1838,8 @@ $( document ).ready(function() {
             $('<img src="/img/user.png">').appendTo('.author-portret');
             $('<img src="/img/user.png">').appendTo('.author-portret-zoom');
           }else {
-            $('<img src="'+data.userPhoto+'">').appendTo('.author-portret');
-            $('<img src="'+data.userPhoto+'">').appendTo('.author-portret-zoom');
+            $('<img src="'+data.quadro_ava+'">').appendTo('.author-portret');
+            $('<img src="'+data.quadro_ava+'">').appendTo('.author-portret-zoom');
           }
           $('.author-name').text(data.name);
           $('.author-name-zoom').text(data.name);
@@ -1927,9 +1927,9 @@ $( document ).ready(function() {
           $('#like-whom-pole').empty();
           for(var i=0; i<data.length; i++) {
             $('<a class="mini-avatar"'+
-              'href="/user/'+data[i].id+'"'+
-              'title="'+data[i].name+'">'+
-              '<img src="'+data[i].quadro_ava+'"></a>').appendTo('#like-whom-pole');
+              'href="/user/'+data[i][0].id+'"'+
+              'title="'+data[i][0].name+'">'+
+              '<img src="'+data[i][0].quadro_ava+'"></a>').appendTo('#like-whom-pole');
           }
         }
       }
@@ -1992,30 +1992,6 @@ $( document ).ready(function() {
       }
     });
   }
-  /**
-   * Represents a book.
-   * @constructor
-   * @param {string} title - The title of the book.
-   * @param {string} author - The author of the book.
-   */
-function loadZoomPhoto() {
-  var id = $('.active-slide').data('id'),
-      csrftoken = $('meta[name=_token]').attr('content');
-  $.ajax({
-    type:'POST',
-    data: {
-              '_token'  : csrftoken,
-              'id': id
-    },
-    url:'/load_zoom_photo',
-
-    success: function (data) {
-        $('.img-max-center').attr('src', data);
-    }
-  });
-}
-
-
   $('.btn-nav, .nav-zoom').on('click', function () {
     var ret,direction = $(this).data('direction');
     if (direction === 'right') {
@@ -2037,7 +2013,6 @@ function loadZoomPhoto() {
           infoPhotoDownload();
           userInfoDownload();
           activeLike();
-          loadZoomPhoto();
           activeLiked();
       }else if ($('.active-slide').index() === $('.photo-item:last').index()) {
 
@@ -2063,7 +2038,6 @@ function loadZoomPhoto() {
         infoPhotoDownload();
         userInfoDownload();
         activeLike();
-        loadZoomPhoto();
         activeLiked();
       }
     } else if (direction === 'left') {
@@ -2089,7 +2063,6 @@ function loadZoomPhoto() {
           userInfoDownload();
           likeWhom();
           activeLike();
-          loadZoomPhoto();
           activeLiked();
         }
      }else {
@@ -2111,7 +2084,6 @@ function loadZoomPhoto() {
         infoPhotoDownload();
         userInfoDownload();
         activeLike();
-        loadZoomPhoto();
         activeLiked();
       }
     }

@@ -12,11 +12,4 @@
   @show
   <div class="clear"></div>
 </div>
-@if (!(preg_match('[/news]', URL::current())))
-  <meta name="sortSort" content="{{ $sortSorting }}">
-  <meta name="colorSort" content="{{ $colorSorting }}">
-  <meta name="styleSort" content="{{ $styleSorting }}">
-  <meta name="roomSort" content="{{ $roomSorting }}">
-  <meta name="tagSort" content="{{ $tagSorting }}">
-@endif
 @endsection

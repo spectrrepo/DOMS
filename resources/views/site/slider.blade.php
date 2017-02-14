@@ -9,17 +9,18 @@
     </div>
    @endif
    <div class="col-slider-comment">
-   <div id="hide-pole-tag" class="title-tag" style="margin-bottom:10px;">
-         <span class="title-slider-tag" style="float:left;">Поиск по тегам:</span>
-         <div class="tag-item">Привет</div>
-            <div class="clear"></div>
-   </div>
+     <div id="hide-pole-tag" class="title-tag" style="margin-bottom:10px;">
+       <span class="title-slider-tag" style="float:left;">Поиск по тегам:</span>
+       <div class="tag-item">Привет</div>
+       <div class="clear"></div>
+     </div>
      <div class="one-picture-place">
+       @include('helpers.last_news')
        <div class="b-photo-slider">
-          @include('popups.modal_racourse')
-          @include('popups.modal_description')
-          @include('popups.law')
-          @include('popups.likes')
+         @include('popups.modal_racourse')
+         @include('popups.modal_description')
+         @include('popups.law')
+         @include('popups.likes')
          <div class="wrap-slider">
            @foreach ($images as $image_el)
             @if ($image_el->id === $image->id)
@@ -132,6 +133,7 @@
                 <span class="triangle-tooltip-stat"></span>
               </span>
             </div>
+
             <div class="b-item-stat like">
                @if (Auth::check())
                   <input type="hidden" name="post_id" value="{{ $image->id }}">
@@ -158,128 +160,25 @@
                 <span class="triangle-tooltip-stat"></span>
               </span>
             </div>
-            <div class="b-item-stat view">
-              <span class="ico-slider uk-icon-justify uk-icon-eye"></span>
-              <span id="num_views"> {{ $image->views_count }}</span>
-              <span class="tooltip-stat other-margin-tooltip1">
-                <span class="text-tooltip-stat">
-                  Количество просмотров
-                </span>
-                <span class="triangle-tooltip-stat"></span>
-              </span>
-            </div>
+            @include('site.tooltip', ['data' => $image->views_count])
           </span>
 
         </div>
             </div>
-            <div class="b-comments">
-              <div class="b-com-title">
-                Коментарии
-              </div>
-              <div class="b-all-comment">
-              <div>
-                <?php $i = 0; ?>
-                <?php $comment_last_id = ''; $j = 0; $count = 0;
-                foreach ($comments as $comment)
-                   { $comment_last_id = $comment->id; $count = $j++ ;} $k = 0?>
-                   @if (($count >= 3)&&($comment_last_id != ''))
-                      <div class="btn-all-comments">Показать все {{ $count+1 }} комментари{{ $count+1==4 ? 'я':'ев' }}</div>
-                   @endif
-                @foreach ( $comments as $comment )
-                  <div class="b-comment-wrap" {{ ($k<=$count-3)&&($count>=3) ? 'style=display:none' : '' }}>
-                     <?php $k++; ?>
-                     @if (Auth::check())
-                        {!! Auth::user()->id === $comment->user_id ? HTML::decode('<span class="remove-comment uk-icon-justify uk-icon-remove"><span class="delete_comment_id" data-id="'.$comment->id.'"></span></span>') : ''!!}
-                     @endif
-                    <a href="{{ URL::to('profile/'.$comment->user_id) }}" class="b-photo-comment">
-                       <img src="{{ empty($comment->user_quadro_ava) ? '/img/user.png' : $comment->user_quadro_ava }}" alt="" />
-                    </a>
-                    <div class="b-comment">
-                      <a href="{{ URL::to('profile/'.$comment->user_name) }}" class="b-name-comment">
-                        {{ $comment->user_name }}
-                      </a>
-                      <div class="b-text-comment">
-                        {{ $comment->text_comment }}
-                      </div>
-                      <div class="b-date-comment">
-                        {{ $comment->rus_date }}
-                      </div>
-                    </div>
-                    <div class="clear"></div>
-                  </div>
-                  <?php $i++; ?>
-                @endforeach
-              </div>
-              <div class="clear"></div>
-              </div>
-              @if (Auth::check())
-                        <div class="b-add-comment">
-                          <form class="comment-add-form">
-                            <input type="text" name="comment" autocomplete="off" class="input-comment" placeholder="Комментировать">
-                            <input type="hidden" name="post_id" value="{{ $image->id }}">
-                            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                            <button class="submit-comment" type="submit" >
-                              <span class="uk-icon-justify uk-icon-plus"></span>
-                            </button>
-                          </form>
-                        </div>
-              @else
-                    <p>
-                    Только зарегистрированные пользователи могут оставить комментарий
-                    </p>
-              @endif
-            </div>
+            @include('site.slider_components.comments')
           </div>
             <div class="col-descreption-photo">
-                <div id="tag" class="title-tag" {{ $tags->count() > 1 ? '' : 'style=display:none;' }}>
-                  Тэги
-                </div>
-                <div class="pole-tag" {{ $tags->count() > 1 ? '': 'style=display:none;' }}>
-                  @foreach ( $tags as $tag )
-
-                    <div class="tag-item">{{ $tag->title }}</div>
-
-                  @endforeach
-                </div>
+               @include('site.slider_components.tags')
               <div class="clear"></div>
-                <div id="views" class="title-tag margin-title-tag" {{ $views->count() >= 1 ? '': 'style=display:none;' }}>
-                  Ракурсы
-                </div>
-                <div id="views-pole" class="view-photo-slide" {{ $views->count() >= 1 ? '': 'style=display:none;' }}>
-                  <div class="b-change-photo">
-                      @foreach ($views as $view)
-                        @if ($views[0] == $view)
-                           <div class="item-view-min active-view-min">
-                             <img src="{{ $view->path_min }}" alt="" />
-                           </div>
-                        @else
-                           <div class="item-view-min right-view-min">
-                             <img src="{{ $view->path_min }}" alt="" />
-                           </div>
-                        @endif
-
-                      @endforeach
-                  </div>
-                  <span class="min-nav-views prev-min-nav-views" data-direction="prev"></span>
-                  <span class="min-nav-views next-min-nav-views" data-direction="next"></span>
-                </div>
-                <div  id="description" class="title-tag margin-title-tag" {{ empty($image->description) ? 'style=display:none;' : '' }}>
-                   Описание
-                </div>
-                <div id="description-pole" class="view-photo-slide" {{ empty($image->description) ? 'style=display:none;' : '' }}>
-                  <h3>{{$image->title}}</h3>
-                  <p class="b-description-slide">
-                   {{ $image->description }}
-                  </p>
-                </div>
+               @include('site.slider_components.views')
+               @include('site.slider_components.description')
             </div>
             <div class="clear"></div>
           </div>
           </div>
-          @include('../popups.popup_for_slider')
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+         @include('../popups.popup_for_slider')
+         <input type="hidden" name="_token" value="{{ csrf_token() }}">
          <input type="hidden" name="lastId" value=" $imageLast->id ">
-
          <input type="hidden" name="sortSorting" value="{{ $sortSorting }}">
          <input type="hidden" name="styleSorting" value="{{ $styleSorting }}">
          <input type="hidden" name="roomSorting" value="{{ $roomSorting }}">

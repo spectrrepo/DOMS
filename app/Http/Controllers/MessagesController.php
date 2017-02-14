@@ -53,11 +53,11 @@ class MessagesController extends Controller
         return view('moderator.message', ['messages' => $messages]);
     }
     public function mailIndexItem ($id) {
-      $message = MessageMail::find($id);
-      $message->status = 'read';
-      $message->save();
-      
-      return view('moderator.message_answer', ['message' => $message]);
+        $message = MessageMail::find($id);
+        $message->status = 'read';
+        $message->save();
+
+        return view('moderator.message_answer', ['message' => $message]);
     }
     /**
      * @param

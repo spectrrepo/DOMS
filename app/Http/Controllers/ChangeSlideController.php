@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\Slides;
-use DB;
-use Image;
-use Input;
+use App\DB;
+use App\Image;
+use App\Input;
 
 
 
@@ -74,7 +74,7 @@ class ChangeSlideController extends Controller
         return redirect()->back();
 
     }
-
+//
     /**
      * @param
      *

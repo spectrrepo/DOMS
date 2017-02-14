@@ -7473,7 +7473,8 @@ ul {
   border: 1px solid #cccccc;
   width: 93.4%;
   margin-top: 10px;
-  border-radius: 5px; }
+  border-radius: 5px;
+  overflow: hidden; }
 
 .b-photo-news {
   width: 100%;
@@ -8261,14 +8262,12 @@ a.btn-prew span {
   font-size: 14px; }
 
 .modal-news {
-  width: 50.4%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   margin: auto;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  position: fixed;
+  position: absolute;
   background-color: rgba(51, 51, 51, 0.8);
   color: white;
   z-index: 200000000;
