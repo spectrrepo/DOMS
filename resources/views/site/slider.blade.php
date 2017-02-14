@@ -179,7 +179,7 @@
               <div class="b-all-comment">
               <div>
                 <?php $i = 0; ?>
-                <?php $comment_last_id = ''; $j = 0;
+                <?php $comment_last_id = ''; $j = 0; $count = 0;
                 foreach ($comments as $comment)
                    { $comment_last_id = $comment->id; $count = $j++ ;} $k = 0?>
                    @if (($count >= 3)&&($comment_last_id != ''))

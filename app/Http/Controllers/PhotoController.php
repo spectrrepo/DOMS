@@ -616,7 +616,7 @@ class PhotoController extends Controller
                   $variantRes .= $addViewInfo->id.',';
                   $updateViewInfo->path_min = $updateViewInfo->photo->url('small');
                   $updateViewInfo->path_full = $updateViewInfo->photo->url();
-                  $updateViewInfo->post_id = $lastId->id+1;
+                  $updateViewInfo->post_id = $lastId->id+ 1;
                   $updateViewInfo->save();
 
              }
