@@ -1,4 +1,4 @@
-
+{{-- TODO: тултипы сделать одной функцией --}}
 @extends('layouts.site')
 @section('site-content')
  <div class="content  uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights">

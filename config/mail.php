@@ -1,7 +1,6 @@
 <?php
 
 return [
-    // TODO: configuration this file
     /*
     |--------------------------------------------------------------------------
     | Mail Driver

@@ -1,3 +1,4 @@
+{{-- TODO:Divide this file --}}
 <div class="overlay" id="popup-registr">
   <div class="modal modal-reg">
     <span class="close uk-icon-justify uk-icon-remove popup-close"></span>

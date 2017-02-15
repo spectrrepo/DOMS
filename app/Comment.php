@@ -11,7 +11,7 @@ class Comment extends Model
      *
      * @var string
      */
-     protected $dates = ['date'];
-     protected $table = 'Comments';
-     public $timestamps = false;
+    protected $dates = ['date'];
+    protected $table = 'Comments';
+    public $timestamps = false;
 }

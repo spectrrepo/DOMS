@@ -11,8 +11,6 @@ use App\DB;
 use App\Image;
 use App\Input;
 
-
-
 /**
  * The ResultMessage class holds a message that can be returned
  * as a result of a process. The message has a severity and
@@ -30,8 +28,8 @@ class ChangeSlideController extends Controller
      * @return
      *
      */
-    public function index(){
-
+    public function index()
+    {
         $slides = DB::table('slides')->paginate(10);
 
         return view('moderator.slide_change', ['slides' => $slides]);
@@ -43,8 +41,8 @@ class ChangeSlideController extends Controller
      * @return
      *
      */
-    public function add(){
-
+    public function add()
+    {
         $slide = new Slides();
         $slide->text = $_POST['text'];
 
@@ -65,24 +63,22 @@ class ChangeSlideController extends Controller
      * @return
      *
      */
-    public function delete(){
-
+    public function delete()
+    {
         $id = $_POST['id'];
         $slide = Slides::find($id);
         $slide->delete();
 
         return redirect()->back();
-
     }
-//
     /**
      * @param
      *
      * @return
      *
      */
-    public function change(){
-
+    public function change()
+    {
         $id = $_POST['id'];
         $slide = Slides::find($id);
         if (Input::has('text')) {
@@ -97,7 +93,5 @@ class ChangeSlideController extends Controller
         $slide->save();
 
         return redirect()->back();
-
     }
-
 }

@@ -1,6 +1,6 @@
 @extends('layouts.profile')
 @section('profile-content')
-
+{{-- TODO:вынести общую шапку в отдельный файл --}}
 <div class="wrap-personal-information">
   <div class="b-photo-person">
      <img src="{{ empty($user->quadro_ava) ? '/img/user.png' : $user->quadro_ava }}" alt="Автопортрет {{ Auth::user()->id }}" />

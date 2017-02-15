@@ -21,7 +21,7 @@ use App\Liked;
 
 class FavoriteController extends Controller
 {
-  /**
+    /**
      * Login Form
      *
      * @return Re@extends('layouts.profile')
@@ -40,19 +40,18 @@ class FavoriteController extends Controller
         $liked->date_rus = \Carbon\Carbon::parse()->formatLocalized('%d %b %Y');
         $liked->save();
         return 'delete_liked';
+    }
 
-     }
-
-     public function delete()
-     {
-       $liked = Liked::where('post_id', '=', $_POST['post_id'])
+    public function delete()
+    {
+        $liked = Liked::where('post_id', '=', $_POST['post_id'])
                      ->where('user_id', '=', $_POST['user_id']);
-       $image = Picture::find($_POST['post_id']);
-       $image->favs_count -= 1;
-       $image->save();
-       $liked->delete();
-       return 'liked';
-     }
+        $image = Picture::find($_POST['post_id']);
+        $image->favs_count -= 1;
+        $image->save();
+        $liked->delete();
+        return 'liked';
+    }
      /**
       * Login Form
       *
@@ -60,11 +59,11 @@ class FavoriteController extends Controller
       */
      public function index()
      {
-         if (Auth::check()){
-            $images =  Picture::join('Likeds','Images.id', '=', 'Likeds.post_id' )
+         if (Auth::check()) {
+             $images =  Picture::join('Likeds', 'Images.id', '=', 'Likeds.post_id')
                             ->where('Likeds.user_id', '=', Auth::id())
                             ->get();
-            return view('profile.liked', ['images' => $images]);
+             return view('profile.liked', ['images' => $images]);
          }
      }
 }

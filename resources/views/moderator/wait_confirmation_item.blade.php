@@ -1,4 +1,5 @@
 @extends('layouts.profile')
+{{-- TODO: partition this file for few little elements --}}
 @section('profile-content')
 <div class="big-col">
         <a class="edit-link-ava" href="/profile/{{ $user->id }}">
