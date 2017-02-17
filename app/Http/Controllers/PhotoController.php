@@ -44,88 +44,93 @@ class PhotoController extends Controller
      * @return
      *
      */
+     private function sort($table, $tableCell, $itemSort){
+        if ($itemSort != 0) {
+             $arrayItemSort = explode(',',$itemSort);
+             $sortExpression = ' AND ';
+             foreach ( $arrayItemSort as $item){
+                  if (end($arrayItemSort) == current($arrayItemSort)) {
+                       $sortExpression .= $tableCell.'='.$item.' ';
+                  }else {
+                       $sortExpression .= $tableCell.'='.$item.' AND ';
+                  }
+             }
+             $sortCondition = ' JOIN   '.$table.'
+                                ON Images.id = '.$tableCell.' ';
+         } else {
+             $sortExpression = '';
+             $sortCondition = '';
+         }
+         $result = array('Expression' => $sortExpression,
+                         'Condition' => $sortCondition);
+         return $result;
+     }
+
+
+
      public function index($room = 0, $style = 0, $color = 0, $sort = 0, $tag = 0)
      {
-         if ($room != 0) {
-             $roomSort = ' rooms like "% '.$room.',%"';
-             $roomSorting = $room;
-         } else {
-             $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
-             $roomSorting = 0;
-         }
-         if ($style != 0) {
-             $styleSort = ' style like "% '.$style.',%"';
-             $styleSorting = $style;
-         } else {
-             $styleSort = "style regexp '[a-zA-Z0-9_]'";
-             $styleSorting = 0;
-         }
-         if ($color != 0) {
-             $colorSort = ' colors like "% '.$color.',%"';
-             $colorSorting = $color;
-         } else {
-             $colorSort = "colors regexp '[a-zA-Z0-9_]'";
-             $colorSorting = 0;
-         }
+
+         $roomsArray = $this->sort('img_rooms', 'img_rooms.room_id', $room);
+         $colorsArray = $this->sort('img_colors', 'img_colors.color_id', $color);
+         $stylesArray = $this->sort('img_styles', 'img_styles.style_id', $style);
+         /*********************************************************************/
          if ($sort != 0) {
              if ($sort == 'popular') {
-                 $sortSort = 'views_count';
+                 $sortSort = ' ORDER BY Images.views_count DESC ';
              } elseif ($sort == 'recommended') {
-                 $sortSort = 'id';
+                 $sortSort = ' ORDER BY Images.id DESC ';
              } elseif ($sort == 'new') {
-                 $sortSort = 'id';
+                 $sortSort = ' ORDER BY Images.id DESC ';
              } else {
-                 $sortSort = '';
+                 $sortSort = ' ';
              }
              $sortSorting = $sort;
          } else {
-             $sortSort = true;
+             $sortSort = ' ';
              $sortSorting = 0;
          }
-
+         /*********************************************************************/
          if ($tag != '0') {
-             $tagSort = 'and tags like "%#'.$tag.';%" ';
+             $tagSort = ' AND Tags.title="'.$tag.'" ';
+             $tagCondition = ' JOIN   Tags ON Images.id = Tags.post_id ';
          } else {
              $tagSort = '';
+             $tagCondition = ' ';
          }
-         
+         /*********************************************************************/
          $tagSorting = $tag;
          $colors = Color::all();
          $styles = Style::all();
          $rooms = Room::all();
          $news = News::orderBy('id', 'desc')->first();
-         if ($sort != 0) {
-             $images = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
-                            ->take(3)
-                            ->orderBy($sortSort, 'desc')
-                            ->get();
-             if (empty($images->toArray())) {
-                 $ajaxImage = 'error_download';
-             }
-         } else {
-             $images = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
-                            ->take(3)
-                            ->get();
-             $sortSort = false;
-             if (empty($images->toArray())) {
-                 $ajaxImage = 'error_download';
-             }
-         }
+         /*********************************************************************/
+
+         $images = DB::select(
+                      "SELECT Images.id AS id ,
+                              Images.min_path AS photo
+                       FROM   Images
+                       ".$colorsArray['Condition']."
+                       ".$roomsArray['Condition']."
+                       ".$stylesArray['Condition']."
+                       ".$tagCondition."
+                       ".$colorsArray['Expression']."
+                       ".$roomsArray['Expression']."
+                       ".$stylesArray['Expression']."
+                       ".$tagSort."
+                       GROUP BY Images.id
+                       ".$sortSort.";");
+         /*********************************************************************/
          return view('site.index', ['news' => $news,
                                   'colors' => $colors,
                                   'styles' => $styles,
                                   'rooms' =>  $rooms,
                                   'images' => $images,
-                                  'roomSorting' => $roomSorting,
-                                  'colorSorting' => $colorSorting,
-                                  'styleSorting' => $styleSorting,
-                                  'sortSorting' => $sortSorting,
-                                  'tagSorting' => $tagSorting,
+                                  'tag' => $tagSorting,
                                   'room' => $room,
                                   'style' => $style,
                                   'color' => $color,
-                                  'sort' => $sort,
-                                  'tag' => $tag]);
+                                  'sort' => $sort]);
      }
 
     /**
@@ -178,18 +183,6 @@ class PhotoController extends Controller
              $tagSort = '';
          }
 
-         if ($sortSort != 0) {
-             $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
-                                    ->skip($lastId)
-                                    ->take(3)
-                                    ->get();
-         } else {
-             $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
-                                    ->skip($lastId)
-                                    ->take(3)
-                                    ->orderBy($sortSort, 'desc')
-                                    ->get();
-         }
 
          return $ajaxImage;
      }
@@ -582,17 +575,17 @@ class PhotoController extends Controller
             $style = $_POST['style'];
             if (is_array($style)) {
                 foreach ($style as $styleItem) {
-                    DB::table('img_rooms')
+                    DB::table('img_styles')
                       ->insert(
                          ['img_id' => $lastId,
-                         'room_id' => $styleItem]
+                         'style_id' => $styleItem]
                          );
                 }
             } else {
-                DB::table('img_rooms')
+                DB::table('img_styles')
                  ->insert(
                     ['img_id' => $lastId,
-                    'room_id' => $style]
+                    'style_id' => $style]
                     );
             }
         }
@@ -610,6 +603,7 @@ class PhotoController extends Controller
                 $imgView = Image::make($variantItem);
                 $watermarkView = Image::make(public_path('/img/watermark-files/poloska.png'));
                 $watermarkHouseView = Image::make(public_path('/img/watermark-files/dom.png'));
+
                 $imgView->insert($watermarkView, 'top', 0, 0);
                 $imgView->insert($watermarkHouseView, 'bottom-right', 30, 30);
                 $imgView->save(public_path('/img/fv.jpg'));
@@ -618,9 +612,10 @@ class PhotoController extends Controller
                 $view->user_id = $_POST["author_id"];
                 $view->user_id = $_POST["author_id"];
                 $view->save();
+
                 $addViewInfo = View::where('user_id', '=', $_POST['author_id'])
-                  ->orderBy('id', 'desc')
-                  ->first();
+                                    ->orderBy('id', 'desc')
+                                    ->first();
                 $updateViewInfo = View::find($addViewInfo->id);
                 $updateViewInfo->path_min = $updateViewInfo->photo->url('small');
                 $updateViewInfo->path_full = $updateViewInfo->photo->url();
@@ -631,8 +626,8 @@ class PhotoController extends Controller
 
         $image->save();
         $addInfo = Picture::where('author_id', '=', $_POST['author_id'])
-                        ->orderBy('id', 'desc')
-                        ->first();
+                          ->orderBy('id', 'desc')
+                          ->first();
         $updateIinfo = Picture::find($addInfo->id);
         $img2 = Image::make($_FILES['photo']['tmp_name']);
         $img2->encode('jpg');

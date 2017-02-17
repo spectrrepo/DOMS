@@ -38,7 +38,7 @@
     @include('../popups.feedback')
     @include('../popups.forgetpswd')
     @include('../popups.login')
-    @include('../popups.registration')
+    @include('../popups.registration.index')
 
   </body>
 </html>

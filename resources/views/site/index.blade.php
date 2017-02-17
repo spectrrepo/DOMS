@@ -17,20 +17,20 @@
           data-grid-prepared="true"
           style="position:absolute;">
           <div class="uk-panel-box" >
-              <img src="{{ $image->min_path }}" >
+              <img src="{{ $image->photo }}" >
           </div>
       </a>
     @endforeach
   </div>
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" name="lastId" value=" $imageLast->id ">
-    <input type="hidden" name="sortSorting" value="{{ $sortSorting }}">
-    <input type="hidden" name="styleSorting" value="{{ $styleSorting }}">
-    <input type="hidden" name="roomSorting" value="{{ $roomSorting }}">
-    <input type="hidden" name="colorSorting" value="{{ $colorSorting }}">
-    <input type="hidden" name="tagSorting" value="{{ $tagSorting }}">
+    <input type="hidden" name="sortSorting" value="{{ $sort }}">
+    <input type="hidden" name="styleSorting" value="{{ $style }}">
+    <input type="hidden" name="roomSorting" value="{{ $room }}">
+    <input type="hidden" name="colorSorting" value="{{ $color }}">
+    <input type="hidden" name="tagSorting" value="{{ $tag }}">
 
-    @if ( $images->count() >= 3)
+    @if ( count($images) >= 3)
       <div class="b-next-page">
         Следущая страница
       </div>

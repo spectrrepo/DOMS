@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddLinkColorsTable extends Migration
+class CreateTableStatusDescription extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class AddLinkColorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('img_colors', function (Blueprint $table) {
-            $table->integer('img_id')->unsigned();
-            $table->integer('color_id')->unsigned();
-
+        Schema::create('status_description', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('nickname');
+            $table->string('img');
+            $table->text('text');
         });
     }
 
@@ -27,6 +29,6 @@ class AddLinkColorsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('img_colors');
+        chema::drop('status_description');
     }
 }

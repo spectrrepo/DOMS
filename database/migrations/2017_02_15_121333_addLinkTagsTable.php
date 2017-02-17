@@ -15,17 +15,7 @@ class AddLinkTagsTable extends Migration
     {
         Schema::create('img_tags', function (Blueprint $table) {
             $table->integer('img_id')->unsigned();
-            $table->foreign('img_id')
-                ->references('id')
-                ->on('Images')
-                ->onDelete('cascade');
-
             $table->integer('tags_id')->unsigned();
-            $table->foreign('tags_id')
-                ->references('id')
-                ->on('Tags')
-                ->onDelete('cascade');
-
         });
     }
 

@@ -50,6 +50,7 @@
     </div>
   </div>
   @include('../popups.links')
+  {{-- TODO:Убрать куда-нибудь по дальше этот скрипт --}}
   <script type="text/javascript">
     function FileSelect(evt) {
         var files = evt.target.files;

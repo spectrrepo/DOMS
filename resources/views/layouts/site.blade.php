@@ -4,7 +4,7 @@
 <div class="site-wrapper">
 <div class="conteiner">
   @if (!(preg_match('[/news]', URL::current())))
-    @include('../helpers.sidebar_main')
+    @include('../helpers.main_sidebar.sidebar_main')
   @endif
   <div class="clear"></div>
 </div>
