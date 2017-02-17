@@ -76,7 +76,7 @@
         <div class="b-person-post">
           <div class="col-news-min">
               <div class="b-portret-blogger">
-                <img src="{{ !($image->quadro_ava_add === null ) ? $image->quadro_ava_add : '/img/user.png' }}"/>
+                {{-- <img src="{{ ($image->quadro_ava_add !== null ) ? $image->quadro_ava_add : '/img/user.png' }}"/> --}}
               </div>
           </div>
           <div class="col-news-big">

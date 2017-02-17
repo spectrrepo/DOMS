@@ -119,6 +119,8 @@ class UserController extends Controller
                       ORDER BY Comments.rus_date;");
              $news_tpl = array();
              $news = array();
+             $last_el = ['date_rus_event' => 'may'];
+             array_push($images, (object)$last_el);
              for ($i = 1; $i < count($images); $i++ ){
                  if ($images[$i]->date_rus_event != $images[$i-1]->date_rus_event) {
                      for ( $j = 0; $j < count($images); $j++){
@@ -130,7 +132,7 @@ class UserController extends Controller
                      $news_tpl = array();
                  }
              }
-             dd($news, $images);
+             array_pop($images);
 
              $user = User::find($id);
              $links = Social::where('user', '=', $id)->get();
