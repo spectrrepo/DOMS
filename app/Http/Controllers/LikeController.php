@@ -8,7 +8,7 @@ use App\Http\Requests;
 
 use App\Like;
 use App\Picture;
-
+// checked
 /**
  * The ResultMessage class holds a message that can be returned
  * as a result of a process. The message has a severity and
@@ -28,16 +28,18 @@ class LikeController extends Controller
      */
     public function add(){
         $like = new Like();
-
         $like->post_id = $_POST['post_id'];
         $like->user_id = $_POST['user_id'];
         $image = Picture::find($_POST['post_id']);
         $image->likes_count += 1;
         $image->save();
+
         setlocale(LC_TIME, 'ru_RU.utf8');
         $like->date_rus = \Carbon\Carbon::parse()->formatLocalized('%d %b %Y');
         $like->save();
+
         $countLike = Picture::find($_POST['post_id'])->likes_count;
+
         return $countLike;
     }
 

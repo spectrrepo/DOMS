@@ -16,7 +16,7 @@ $( document ).ready(function () {
   $('.like').mouseleave(function(){
     $('.margin-like-tooltip').show();
   });
-
+  
   $('footer').on('click', function () {
     var id = $('.active-slide').data('id'),
         csrftoken = $('meta[name=_token]').attr('content');

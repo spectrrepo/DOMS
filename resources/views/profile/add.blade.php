@@ -1,5 +1,6 @@
 @extends('layouts.profile')
 @section('profile-content')
+  {{-- TODO: расчленить этот файл --}}
 <div class="big-col">
         <div class="help-text">Для удобства поиска твоего изображения на сайте заполни ка можно больше параметров</div>
         <div class="b-dwnld-img">

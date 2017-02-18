@@ -40,5 +40,4 @@
     @endforeach
     {{ $rooms->render() }}
 
-
 @endsection

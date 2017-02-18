@@ -19,44 +19,12 @@ use App\View;
 
 class ViewController extends Controller
 {
-
-    /**
-     * @param
-     *
-     * @return
-     *
-     */
-    public function edit (){
-
-    }
-
-    /**
-     * @param
-     *
-     * @return
-     *
-     */
-    public function delete () {
-
-    }
-
-    /**
-     * @param
-     *
-     * @return
-     *
-     */
-    public function add() {
-
-    }
-
-    /**
-     * @param
-     *
-     * @return
-     *
-     */
-    public function index() {
-
+  public function delete()
+    {
+        $id = $_POST['id'];
+        $views = View::find($id);
+        $views->delete();
+        dd($views);
+        return 'true';
     }
 }
