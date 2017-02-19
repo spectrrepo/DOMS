@@ -1,3 +1,22 @@
+import defaultMember from "module-name";
+/**
+* класс для работы с фото
+* @class Photo
+*/
+// addEventListener
+export class Photo {
+  constructor() {
+
+  }
+  HTML = '<a data-id="44" href="">''
+          '<div class="uk-panel-box">'
+              '<img src="/system/App/Picture/photos/000/000/044/small/f.jpg">'
+          '</div>'
+      </a>',
+  render = function(){
+
+  }
+}
 $( document ).ready(function() {
 
   $('.b-next-page').on('click', function() {

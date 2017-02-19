@@ -3,10 +3,6 @@ $( document ).ready(function() {
       csrftoken = $('meta[name=_token]').attr('content');
       var queue = 1;
       var queueStyle = 1;
-
-
-
-
         /**
          * Represents a book.
          * @constructor

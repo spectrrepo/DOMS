@@ -591,49 +591,4 @@ $('.ajax-search').on('submit', function(){
   });
   return false;
 });
-
-
-    $('#foot-about').on('click', function() {
-      $('#popup-about').fadeIn();
-    });
-
-    $('#foot-feedback').on('click', function() {
-      $('#popup-feedback').fadeIn();
-    });
-    $('.login').on('click', function() {
-      $('#login-popup').fadeIn();
-    });
-    $('#registration').on('click', function() {
-      $('#popup-registr').fadeIn();
-    });
-    $('#recover-pswd').on('click', function () {
-      $('.overlay').fadeOut();
-      $('#passwd-popup').fadeIn();
-    });
-    $('.popup-close').on('click', function() {
-      $('.overlay').fadeOut();
-    });
-
-    $(".owl-carousel").owlCarousel({
-
-        navigation : true,
-        slideSpeed : 300,
-        paginationSpeed : 400,
-        items : 1,
-        nav : true,
-        pagination : false,
-
-    });
-
-    /*
-     *  Simple image gallery. Uses default settings
-     */
-     $(document).ready(function () {
-       $('.confirm-form-delete').on('submit', function () {
-         if(confirm('Вы уверены?')) {
-           $('#userform').submit();
-         }
-       });
-     });
-
 });

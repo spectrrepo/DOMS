@@ -38,10 +38,3 @@ $(document).mouseup(function (e) {
         container.fadeOut();
     }
 });
-
-// $(document).mouseup(function (e) {
-//   var container = $(".sidebar-modal");
-//   if (container.has(e.target).length === 0){
-//       container.toggleClass('block-view');
-//   }
-// });

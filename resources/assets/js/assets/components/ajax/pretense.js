@@ -18,8 +18,6 @@ $( document ).ready(function() {
         postId = $('.active-slide').data('id'),
         textPretense = $('input[name=text_pretense]').val(),
         filePretense = new FormData($(this).get(0));
-        // filePretense.append('img', $('input[name=file_pretense]').prop('files')[0]);
-        // filePretense.append('img' , $('input[name=file_pretense]').prop('files')[0]);
     $.ajax({
         type:'POST',
         data: filePretense,
