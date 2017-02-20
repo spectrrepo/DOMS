@@ -3,7 +3,7 @@ import PhotoAbout from 'PhotoAbout';
 * Класс для описания фотографий
 * @class Description
 */
-export class Description extends PhotoAbout{
+export default class Description extends PhotoAbout{
   /**
   * Конструктор
   * @constructor Comment

@@ -3,7 +3,7 @@
 * @class Comment
 * @extends
 */
-export class Comment{
+export default class Comment{
   comment = $('.input-comment').val(),
   post_id = $('input[name=post_id]').val(),
   user_id = $('input[name=user_id]').val();

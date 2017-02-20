@@ -2,11 +2,11 @@
 * класс для работы с фильтром
 * @class Filter
 */
-export default class Filter {
+export default class Filtr {
   constructor() {
 
   }
-  limit =
+  limit: 3
   url =
   `
   room=['+dataURL+'],
@@ -14,19 +14,18 @@ export default class Filter {
   colors=['+colorSort+'],
   sort=['+sortSort+'],
   tag=['+tagSort+']
-  `
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // тут прочитай про работу с массивами. дабы не обосраться
-  // решена проблема количетсва
-  filtrComponation () {
+  `,
+  .push()  //- добавляет в конец массива
+  .shift() //- удаляет первый элемент массива
+  filtrComponation (string, ) {
     if (string.length < 3) {
-      string.append(num)
+      string.push();
     } else {
-      string[0].delete
-      stting[string.length] = 3
+      string.shift();
+      string.push();
     }
     return string;
-  }
+  },
   // добавил фильтр
   filtrAdd () {
     if (components < 3) {
@@ -35,7 +34,7 @@ export default class Filter {
       $(el)[0].remove();
       $(elNew).appendTo();
     }
-  }
+  },
   arraySort :
   {
     'room'   : '',
@@ -51,18 +50,18 @@ export default class Filter {
     <span class="name-sort-item">${title}</span>
     <i class="close-sort-item">×</i>
   </li>
-  `
-  active = ' active-choose-ico';
+  `,
+  active = ' active-choose-ico',
 
   overloadMemorizeValue() {
 
-  }
+  },
   changeURL(queueChange, dataURL, deleteURL, newUrl) {
 
-  }
+  },
   addElForList(dataList, title, where, elem) {
     this.HTML().appendTo(where);
-  }
+  },
   addActiveMenuItem(elem) {
     if ($(elem).next().is('.block-view')){
       $(elem).next().removeClass('block-view');
@@ -74,7 +73,7 @@ export default class Filter {
       $(elem).next().addClass('block-view');
       $(elem).addClass('active-menu-item');
     }
-  }
+  },
   ajaxRequest(roomSort, styleSort, colorSort, sortSort, tagSort) {
     $.ajax({
       type:'POST',
@@ -97,5 +96,5 @@ export default class Filter {
       }
     });
     addActiveMenuItem(elem)
-}
+  }
 }
