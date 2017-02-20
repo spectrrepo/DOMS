@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    /* TODO: make one class for sliders */
+    /**
+     *@слайдер_о_нас_ракурсы_маленькие_ракурсы_большие*/
     $('.nav-slide-about').on('click', function() {
         if ($(this).data('direction') === 'prev') {
             if ($('.item:first').hasClass('active-about')) {

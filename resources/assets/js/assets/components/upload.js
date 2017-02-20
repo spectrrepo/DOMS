@@ -1,6 +1,6 @@
 $( document ).ready(function() {
   var id = 1;
-
+// TODO:переделать в одну единственную функцию или класс
   function handleFileOneSelect(evt) {
       $('#main-wrap-photo span img').parent('span').remove();
       var files = evt.target.files; // FileList object

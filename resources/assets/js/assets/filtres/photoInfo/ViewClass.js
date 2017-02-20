@@ -1,23 +1,91 @@
+import PhotoAbout from 'PhotoAbout';
 /**
 * Класс для работы с видами фотографий
 * @class View
 */
-export class View{
-  path;
+export class View extends PhotoAbout{
+  /** Конструктор
+  * @constructor Comment
+  * @param
+  */
+  constructor ( ) {
+
+  }
+  let wrap='';
+  /**
+  * @property {object}
+  */
+  URL: 'load_views';
+  /**
+  * @property {object}
+  */
+  photoID: .get();
+  /**
+  * @property {object}
+  */
+  token : $('meta[name=_token]').attr('content');
+  /**
+  * @property {object}
+  */
   active : ' active-view-min';
+  /**
+  * @property {object}
+  */
   left : ' left-view-min';
+  /**
+  * @property {object}
+  */
   right : ' right-view-min';
-  HTML :
-    '<div class="item-view-min">'
-      '<img src="'+path+'" alt="" />'
-    '</div>';
+  /**
+  * Конструктор
+  * @method Comment
+  * @param
+  * @return
+  */
+  HTML(array){
+   `'<div class="item-view-min">'
+      '<img src="'${path}'" alt="" />'
+    '</div>'`
+  }
+  /**
+   * Конструктор
+   * @method Comment
+   * @param
+   * @return
+  */
+  getJSON () {
+
+  }
+  /**
+   * Конструктор
+   * @method Comment
+   * @param
+  */
+  clear (wrap) {
+
+  }
+  /**
+   * Конструктор
+   * @method Comment
+   * @param
+  */
   render () {
 
   }
-  hide (){
+  /**
+   * Конструктор
+   * @method Comment
+   * @param
+  */
+  hide (wrap){
 
   }
-  show () {
-    
+  /**
+   * Конструктор
+   * @method Comment
+   * @param
+  */
+  show (wrap) {
+
   }
 }

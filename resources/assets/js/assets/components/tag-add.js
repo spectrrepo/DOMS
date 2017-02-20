@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+  // TODO: придумать как соединить все функции тегов
   $('.btn-add-tag').on('click', function() {
     $('input[name=data-tags]').val($('input[name=data-tags]').val()+$('.input-tag-name').val()+';');
     $('<span class="item-tag-show">'+
