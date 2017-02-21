@@ -157,3 +157,68 @@ export default class Comment{
          <div class="clear"></div>`);
   }
 }
+var id = $('.active-slide').data('id'),
+      authID = $('meta[name=authID]').attr('content'),
+      csrftoken = $('meta[name=_token]').attr('content');
+      url: '/load_comments',
+
+      success: function(data) {
+          var btn, quadro_ava, style, comment_last_id, count;
+          $('.btn-all-comments').remove();
+          if (data.length == 0) {
+              $('.b-all-comment').empty();
+          } else {
+              $('.b-all-comment').empty();
+              $('<div></div>').appendTo('.b-all-comment');
+              count = data.length;
+              if ((count > 3) && (comment_last_id != '')) {
+                  if (count + 1 === 4) {
+                      ending = 'я';
+                  } else {
+                      ending = 'ев';
+                  }
+                  btnTwo = '<div class="btn-all-comments">Показать все ' + count + ' комментари' + ending + '</div>';
+              } else {
+                  btnTwo = '';
+              }
+              $(btnTwo).appendTo('.b-all-comment');
+
+              for (var i = 0; i < data.length; i++) {
+                  comment_last_id = data.id;
+                  if (parseInt(authID) === parseInt(data[i].user_id)) {
+                      btn = '<span class="remove-comment uk-icon-justify ' +
+                          'uk-icon-remove"><span class="delete_comment_id" ' +
+                          'data-id="' + data[i].id + '"></span></span>';
+                  } else {
+                      btn = '';
+                  }
+                  if (data[i].user_quadro_ava !== null) {
+                      quadro_ava = data[i].user_quadro_ava;
+                  } else {
+                      quadro_ava = '/img/user.png';
+                  }
+
+                  if ((i <= count - 3) && (count > 3)) {
+                      style = 'style="display:none"';
+                  } else {
+                      style = '';
+                  }
+                  $('<div class="b-comment-wrap" ' + style + '>' + btn +
+                      '<a href="/profile/' + data[i].user_id +
+                      '" class="b-photo-comment">' +
+                      '<img src="' + quadro_ava + '"></a>' +
+                      '<div class="b-comment">' +
+                      '<a href="/profile/' + data[i].user_id + '" class="b-name-comment" ' +
+                      ' >' +
+                      data[i].user_name +
+                      '</a><div class="b-text-comment">' +
+                      data[i].text_comment +
+                      '</div><div class="b-date-comment">' +
+                      data[i].rus_date +
+                      '</div></div><div class="clear"></div></div>').appendTo('.b-all-comment');
+              }
+              $('<div class="clear"></div>').appendTo('.b-all-comment');
+              loadAllPhoto('.btn-all-comments');
+          }
+      }
+  });

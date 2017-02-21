@@ -17,77 +17,7 @@ $(document).ready(function() {
      */
 
     function commentDownload() {
-        var id = $('.active-slide').data('id'),
-            authID = $('meta[name=authID]').attr('content'),
-            csrftoken = $('meta[name=_token]').attr('content');
-        $.ajax({
-            type: 'POST',
-            data: {
-                '_token': csrftoken,
-                'id': id
-            },
-            url: '/load_comments',
-
-            success: function(data) {
-                var btn, quadro_ava, style, comment_last_id, count;
-                $('.btn-all-comments').remove();
-                if (data.length == 0) {
-                    $('.b-all-comment').empty();
-                } else {
-                    $('.b-all-comment').empty();
-                    $('<div></div>').appendTo('.b-all-comment');
-                    count = data.length;
-                    if ((count > 3) && (comment_last_id != '')) {
-                        if (count + 1 === 4) {
-                            ending = 'я';
-                        } else {
-                            ending = 'ев';
-                        }
-                        btnTwo = '<div class="btn-all-comments">Показать все ' + count + ' комментари' + ending + '</div>';
-                    } else {
-                        btnTwo = '';
-                    }
-                    $(btnTwo).appendTo('.b-all-comment');
-
-                    for (var i = 0; i < data.length; i++) {
-                        comment_last_id = data.id;
-                        if (parseInt(authID) === parseInt(data[i].user_id)) {
-                            btn = '<span class="remove-comment uk-icon-justify ' +
-                                'uk-icon-remove"><span class="delete_comment_id" ' +
-                                'data-id="' + data[i].id + '"></span></span>';
-                        } else {
-                            btn = '';
-                        }
-                        if (data[i].user_quadro_ava !== null) {
-                            quadro_ava = data[i].user_quadro_ava;
-                        } else {
-                            quadro_ava = '/img/user.png';
-                        }
-
-                        if ((i <= count - 3) && (count > 3)) {
-                            style = 'style="display:none"';
-                        } else {
-                            style = '';
-                        }
-                        $('<div class="b-comment-wrap" ' + style + '>' + btn +
-                            '<a href="/profile/' + data[i].user_id +
-                            '" class="b-photo-comment">' +
-                            '<img src="' + quadro_ava + '"></a>' +
-                            '<div class="b-comment">' +
-                            '<a href="/profile/' + data[i].user_id + '" class="b-name-comment" ' +
-                            ' >' +
-                            data[i].user_name +
-                            '</a><div class="b-text-comment">' +
-                            data[i].text_comment +
-                            '</div><div class="b-date-comment">' +
-                            data[i].rus_date +
-                            '</div></div><div class="clear"></div></div>').appendTo('.b-all-comment');
-                    }
-                    $('<div class="clear"></div>').appendTo('.b-all-comment');
-                    loadAllPhoto('.btn-all-comments');
-                }
-            }
-        });
+        new Comment;
     }
 
     function openModalView(el) {
@@ -103,34 +33,7 @@ $(document).ready(function() {
      */
 
     function tagsDownload() {
-        var id = $('.active-slide').data('id'),
-            csrftoken = $('meta[name=_token]').attr('content');
-        $.ajax({
-            type: 'POST',
-            data: {
-                '_token': csrftoken,
-                'id': id
-            },
-            url: '/load_tags',
-
-            success: function(data) {
-                if (data === 'error_tags') {
-                    $('.pole-tag').empty();
-                    $('.pole-tag').fadeOut();
-                    $('#tag').fadeOut();
-
-                } else {
-                    $('.pole-tag').empty();
-                    $('.pole-tag').fadeIn();
-                    $('#tag').fadeIn();
-                    for (var i = 0; i < data.length; i++) {
-                        if (data[i].length != 0) {
-                            $('<div class="tag-item"></div').appendTo('.pole-tag').text(data[i]);
-                        }
-                    }
-                }
-            }
-        });
+        new Tag();
     }
 
     /**
@@ -141,57 +44,7 @@ $(document).ready(function() {
      */
 
     function viewsDownload() {
-        var id = $('.active-slide').data('id'),
-            csrftoken = $('meta[name=_token]').attr('content');
-        $.ajax({
-            type: 'POST',
-            data: {
-                '_token': csrftoken,
-                'id': id
-            },
-            url: '/load_views',
-
-            success: function(data) {
-                if (data.length === 1) {
-                    $('#views-pole').fadeIn();
-                    $('#views').fadeIn();
-                    $('.b-change-photo').empty();
-                    $('.min-nav-views').fadeOut()
-                    $('<li class="item-views-zoom active-slide-zoom-views">' +
-                            '<img class="img-views-zoom" src="' + data[0].path_full + '"></li>')
-                        .appendTo('.views-zoom-list');
-                    $('<div class="item-view-min active-view-min"><img src="' + data[0].path_min + '"></div>').appendTo('.b-change-photo');
-                    openModalView('.item-view-min');
-                } else if (data.length === 0) {
-                    $('#views-pole').fadeIn();
-                    $('#views').fadeIn();
-                    $('.b-change-photo').empty();
-                    $('#views').fadeOut();
-                    $('#views-pole').fadeOut();
-                } else {
-                    $('.b-change-photo').empty();
-                    $('.min-nav-views').fadeIn()
-                    $('#views').fadeIn();
-                    $('#views-pole').fadeIn();
-
-                    for (var i = 0; i < data.length; i++) {
-                        if (data[i] === data[0]) {
-                            $('<div class="item-view-min active-view-min"><img src="' + data[i].path_min + '"></div>').appendTo('.b-change-photo');
-                            $('<li class="item-views-zoom active-slide-zoom-views">' +
-                                    '<img class="img-views-zoom" src="' + data[i].path_full + '"></li>')
-                                .appendTo('.views-zoom-list');
-                        } else {
-                            $('<div class="item-view-min right-view-min"><img src="' + data[i].path_min + '"></div>').appendTo('.b-change-photo');
-                            $('<li class="item-views-zoom right-slide-zoom-views">' +
-                                    '<img class="img-views-zoom" src="' + data[i].path_full + '"></li>')
-                                .appendTo('.views-zoom-list');
-                        }
-                    }
-
-                }
-                openModalView('.item-view-min');
-            }
-        });
+        new VIew;
     }
 
     /**

@@ -79,3 +79,32 @@ $('#colors .choose-sort-item').children('.name-sort-item')
 $('#colors .choose-sort-item').css({
   'width': '40px'
 });
+
+var id = $('.active-slide').data('id'),
+        csrftoken = $('meta[name=_token]').attr('content');
+    $.ajax({
+        type: 'POST',
+        data: {
+            '_token': csrftoken,
+            'id': id
+        },
+        url: '/load_tags',
+
+        success: function(data) {
+            if (data === 'error_tags') {
+                $('.pole-tag').empty();
+                $('.pole-tag').fadeOut();
+                $('#tag').fadeOut();
+
+            } else {
+                $('.pole-tag').empty();
+                $('.pole-tag').fadeIn();
+                $('#tag').fadeIn();
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].length != 0) {
+                        $('<div class="tag-item"></div').appendTo('.pole-tag').text(data[i]);
+                    }
+                }
+            }
+        }
+    });
