@@ -606,6 +606,9 @@
   border-radius: 5px;
   width: 100%;
 }
+.choose-sort-item-color {
+  width: 40px;
+}
 .name-sort-item {
   margin: 0;
   padding: 0;
@@ -619,6 +622,12 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+.color-sort-item {
+  display: block;
+  margin: 2px;
+  height: 8px;
+  width: 18px;
 }
 .close-sort-item {
   font-size: 18px;

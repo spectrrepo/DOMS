@@ -24,12 +24,6 @@
   </div>
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" name="lastId" value=" $imageLast->id ">
-    <input type="hidden" name="sortSorting" value="{{ $sort }}">
-    <input type="hidden" name="styleSorting" value="{{ $style }}">
-    <input type="hidden" name="roomSorting" value="{{ $room }}">
-    <input type="hidden" name="colorSorting" value="{{ $color }}">
-    <input type="hidden" name="tagSorting" value="{{ $tag }}">
-
     @if ( count($images) >= 3)
       <div class="b-next-page">
         Следущая страница

@@ -1,10 +1,9 @@
-import PhotoAbout from 'PhotoAbout';
 /**
 * Класс тегов фото
 * @class Tags
 * @extends
 */
-export default class Tags extends PhotoAbout{
+export default class Tag{
   /** Конструктор
   * @constructor Tag
   * @param

@@ -69,8 +69,8 @@
                      <span class="tooltip-stat margin-full-scr-tooltip">
                      <span class="text-tooltip-stat">
                      Заявить права
-                   </span>
-                   <span class="triangle-tooltip-stat triangle-full-scr"></span>
+                     </span>
+                     <span class="triangle-tooltip-stat triangle-full-scr"></span>
                  </span>
                </div>
             @endif
@@ -148,7 +148,9 @@
                   <span id="like-whom-pole">
                      <?php $i = 0; ?>
                     @foreach ($likeWhom as $like)
-                       <?php if($i >3) break;?>
+                       <?php if ($i >3) {
+    break;
+}?>
                           <a class="mini-avatar"
                           href="/user/{{ $like->id }}"
                           title="{{ $like->name }}">
@@ -177,12 +179,4 @@
           </div>
           </div>
          @include('../popups.popup_for_slider')
-         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-         <input type="hidden" name="lastId" value=" $imageLast->id ">
-         <input type="hidden" name="sortSorting" value="{{ $sortSorting }}">
-         <input type="hidden" name="styleSorting" value="{{ $styleSorting }}">
-         <input type="hidden" name="roomSorting" value="{{ $roomSorting }}">
-         <input type="hidden" name="colorSorting" value="{{ $colorSorting }}">
-         <input type="hidden" name="tagSorting" value="{{ $tagSorting }}">
-         <input type="hidden" name="IdPhoto" value="{{ $image->id }}">
     @endsection

@@ -12,8 +12,9 @@
 Route::get('/', function(){
     return redirect('/room=[0],styles=[0],colors=[0],sort=[0],tag=[0]');
 });
-Route::get('/room=[{room?}],styles=[{style?}],colors=[{color?}],sort=[{sort?}],tag=[{tag?}]', 'PhotoController@index');
-Route::get('/photo/id=[{id}],room=[{room?}],styles=[{style?}],colors=[{color?}],sort=[{sort?}],tag=[{tag?}]', ['uses' => 'PhotoController@indexItem']);
+'/search?{room:room,styles:style,colors:color,sort:sort,tag:tag}'
+Route::get('/search?{"room":[{room}],"styles":[{style}]","colors":{color},"sort":"{sort}","tag":"{tag}"}', 'PhotoController@index');
+Route::get('/photo/search?{"id":{id},"room":[{room}],"styles":[{style}],"colors":{color},"sort":"{sort}","tag":"{tag}"}', ['uses' => 'PhotoController@indexItem']);
 Route::get('/news', ['uses' => 'NewsController@Index']);
 
 /*login, registration and more

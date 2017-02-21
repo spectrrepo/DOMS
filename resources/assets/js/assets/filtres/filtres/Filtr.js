@@ -1,33 +1,58 @@
+import PhotoClass from '../photo/Photo';
+import CommentClass from '../photoinfo/CommentClass';
+import DescriptionClass from '../photoinfo/DescriptionClass';
+import TagClass from '../photoinfo/TagsClass';
+import ViewClass from '../photoinfo/ViewClass';
+// import $ from '../../../vendor/jquery.min';
 /**
-* класс для работы с фильтром
+* класс для работы с фильтрами сайта для фото
 * @class Filter
 */
 export default class Filtr {
+  /**
+   * @constructor
+   */
   constructor() {
 
   }
-  limit: 3
-  url =
-  `
-  room=['+dataURL+'],
-  styles=['+styleSort+'],
-  colors=['+colorSort+'],
-  sort=['+sortSort+'],
-  tag=['+tagSort+']
-  `,
-  .push()  //- добавляет в конец массива
-  .shift() //- удаляет первый элемент массива
+  /**
+   * @private
+   */
+  limit: asda,
+  active = ' active-choose-ico',
+  /**
+   * @method  changeURL
+   * @param bool - boollean
+   * @return resultURL - строка
+   */
+  changeURL(param, value){
+     let diffURL;
+     var params = JSON.parse(decodeURIComponent(location.search.substr(1)))
+     params[param] = value;
+     JSON.stringify(params);
+     window.history.pushState(null, null, params);
+  },
+
+  /**
+   * @method filtrComponation
+   * @param string - string
+   * @param el - literal
+   * @return string - строка
+   */
   filtrComponation (string, ) {
     if (string.length < 3) {
-      string.push();
+      string.push(); //- добавляет в конец массива
     } else {
-      string.shift();
+      string.shift(); //- удаляет первый элемент массива
       string.push();
     }
     return string;
   },
-  // добавил фильтр
-  filtrAdd () {
+  /**
+   * @method filtrAdd - добавленеие фильтра
+   * @param array - элементы
+   */
+  filtrAdd (array) {
     if (components < 3) {
       (el).appendTo();
     }else{
@@ -35,33 +60,36 @@ export default class Filtr {
       $(elNew).appendTo();
     }
   },
-  arraySort :
-  {
-    'room'   : '',
-    'styles' : '',
-    'colors' : '',
-    'sort'   : ''
-    'tag'    : ''
+  /**
+   * @method subItem - добавленеие фильтра
+   * @param value - элементы
+   * @param color @default false
+   * @return result - шаблонная строка
+   */
+  subItem(value, color=false){
+    let liClassDop, spanClassDop, styleSpan;
+    if (color === true){
+      liClassDop = ' choose-sort-item-color';
+      spanClassDop = ' color-sort-item';
+      styleSpan = ` style="${background}"`;
+    } else {
+      liClassDop = '';
+      spanClassDop = '';
+      styleSpan = ``;
+    }
+    var result = `<li class="choose-sort-item ${liClassDop}">
+                    <span class="name-sort-item ${spanClassDop}"
+                      ${styleSpan}>${title}</span>
+                    <i class="close-sort-item">×</i>
+                  </li>`;
+    return result;
   },
-  HTML =
-  `
-  <li class="choose-sort-item" data-list="${variable}" '+
-    data-url="${$(elem).data('url')}">
-    <span class="name-sort-item">${title}</span>
-    <i class="close-sort-item">×</i>
-  </li>
-  `,
-  active = ' active-choose-ico',
-
-  overloadMemorizeValue() {
-
-  },
-  changeURL(queueChange, dataURL, deleteURL, newUrl) {
-
-  },
+  // добавление элемента подкатегории
   addElForList(dataList, title, where, elem) {
     this.HTML().appendTo(where);
   },
+  // добавление активного меню
+  toggle();
   addActiveMenuItem(elem) {
     if ($(elem).next().is('.block-view')){
       $(elem).next().removeClass('block-view');
@@ -73,28 +101,5 @@ export default class Filtr {
       $(elem).next().addClass('block-view');
       $(elem).addClass('active-menu-item');
     }
-  },
-  ajaxRequest(roomSort, styleSort, colorSort, sortSort, tagSort) {
-    $.ajax({
-      type:'POST',
-      data: data,
-      url: URL,
-
-      success: function (data) {
-        $('#pole').empty();
-        if ((data === 'error_download')) {
-          $('.b-next-page').fadeOut();
-          $('.info-text-message').fadeIn();
-        }else {
-          $('.info-text-message').fadeOut();
-          $('.b-next-page').fadeIn();
-          for(var i=0; i<data.length; i++) {
-            HTML().appendTo('#pole');
-
-          }
-        }
-      }
-    });
-    addActiveMenuItem(elem)
   }
 }

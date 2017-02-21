@@ -35,8 +35,8 @@
         {{ $new->full_description }}
       </div>
       <?php $newsViews = \App\NewsVariant::where('new_id', '=', $new->id)->get();
-           foreach ($newsViews as $item){
-              echo "<img src='$item->file_path_full'/>";
+           foreach ($newsViews as $item) {
+               echo "<img src='$item->file_path_full'/>";
            }
       ?>
     </div>

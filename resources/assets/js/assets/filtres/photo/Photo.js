@@ -1,20 +1,28 @@
-import Photo from '';
-export default class PhotoGallery extends PhotoClass {
+/**
+* Класс для описания фотографий
+* @class Photo
+*/
+export default class Photo{
   constructor() {
     this.render();
   }
   /*private properties*/
   let _URL : '/load_sort_photo',
-  _link (id,array ) {
-    `/photo/
-    id=[${id}],
-    room=[${room}],
-    styles=[${style}],
-    colors=[${color}],
-    sort=[${sort}],
-    tag=[${tag}]`
-  },
-
+  _csrftoken = $('meta[name=_token]').attr('content'),
+  _URL = '/load_sort_photo';
+  active:' active-slide',
+  right:' right-slide',
+  left:' left-slide',
+  HTML(){
+    `<div class="photo-item" data-id="${id}">
+      <img class="img-slider" src="${img_src}">
+     </div>`,
+  }
+  render (firstEl, finishEl){
+    for (variable of iterable) {
+      _HTML.appendTo();
+    }
+  }
   /**
    * @method getJSON - получение данных от сервера
    * @param id - адрес, на который посылается запрос
@@ -24,7 +32,7 @@ export default class PhotoGallery extends PhotoClass {
    */
   _HTML(id, path, array) {
     let string =
-    `<a data-id="44" href="${link(id,array)}"
+    `<a data-id="${id}" href="${link(id,array)}"
         class="item-gallery"
         data-grid-prepared="true"
         style="position: absolute;">
@@ -50,16 +58,6 @@ export default class PhotoGallery extends PhotoClass {
       success: function (d) {data=d}
     });
     return data;
-  },
-  /**
-   * @method getJSON - получение данных от сервера
-   * @param array - ассоциативный массив значений
-   * @param where - ассоциативный массив значений
-   */
-  render (array, where) {
-    for (object of item) {
-      HTML(id, path, array).appendTo()
-    }
   },
   /**
    *@method clear - clearing space with photo

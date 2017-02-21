@@ -1,9 +1,8 @@
-import PhotoAbout from 'PhotoAbout';
 /**
 * Класс для работы с видами фотографий
 * @class View
 */
-export default class View extends PhotoAbout{
+export default class View{
   /** Конструктор
   * @constructor Comment
   * @param
