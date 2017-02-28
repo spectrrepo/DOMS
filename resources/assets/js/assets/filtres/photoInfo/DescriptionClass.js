@@ -9,22 +9,9 @@ export default class Description{
   * @param
   */
   constructor () {
-
+    this.title = x;
+    this.description = y;
   }
-  /**
-  * @property {object}
-  */
-  let _URL = '';
-  let _token : $('meta[name=_token]').attr('content');
-  let _photoID:
-  /**
-  * @property {object}
-  */
-  _title =
-  /**
-  * @property {object}
-  */
-  _description =
   /**
   * Конструктор
   * @method Comment
@@ -39,17 +26,8 @@ export default class Description{
   * @param
   * @return
   */
-  get () {
-
-  }
-  /**
-  * Конструктор
-  * @method Comment
-  * @param
-  * @return
-  */
-  set() {
-
+  getJSON () {
+    // let _token : $('meta[name=_token]').attr('content');
   }
   /**
   * Конструктор

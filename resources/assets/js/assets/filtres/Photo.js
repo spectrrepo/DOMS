@@ -7,21 +7,16 @@ export default class Photo{
     this.render();
   }
   /*private properties*/
-  let _URL : '/load_sort_photo',
-  _csrftoken = $('meta[name=_token]').attr('content'),
-  _URL = '/load_sort_photo';
-  active:' active-slide',
-  right:' right-slide',
-  left:' left-slide',
-  HTML(){
+  // _csrftoken = $('meta[name=_token]').attr('content'),
+  HTML(id, img_src){
     `<div class="photo-item" data-id="${id}">
       <img class="img-slider" src="${img_src}">
-     </div>`,
+     </div>`
   }
-  render (firstEl, finishEl){
-    for (variable of iterable) {
-      _HTML.appendTo();
-    }
+  render (array){
+    array.forEach(function functionName() {
+      _HTML(iterable.id, iterable.img_src ).appendTo();
+    });
   }
   /**
    * @method getJSON - получение данных от сервера
@@ -41,8 +36,7 @@ export default class Photo{
         </div>
      </a>`;
      return string;
-  },
-
+  }
   /**
    * @method getJSON - получение данных от сервера
    * @param URL - адрес, на который посылается запрос
@@ -52,13 +46,14 @@ export default class Photo{
   _getJSON (_URL) {
     var data;
     $.ajax({
+      URL : '/load_sort_photo',
       type:'POST',
       data: DATA,
       url:URL,
       success: function (d) {data=d}
     });
     return data;
-  },
+  }
   /**
    *@method clear - clearing space with photo
    *@param area - clearing space with photo

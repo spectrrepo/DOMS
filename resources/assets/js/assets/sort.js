@@ -4,11 +4,6 @@ $( document ).ready(function() {
     $('.click-ready').removeClass('active-menu-item');
   });
 
-  // placements sort control
-  $('#placements span.click-ready').on('click', function () {
-     addActiveMenuItem(this);
-  });
-
   $('#placements .item-moodal-sidebar').on('click', function () {
     if (!($('#placements .item-moodal-sidebar').is('[data-queue=3]'))) {
         if($(this).is('[data-queue]')) {
@@ -57,13 +52,6 @@ $( document ).ready(function() {
         }
       }
     });
-  });
-
-
-
-  // styles sort control
-  $('#styles span.click-ready').on('click', function () {
-     addActiveMenuItem(this);
   });
 
   $('#styles .item-moodal-sidebar').on('click', function () {

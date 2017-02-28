@@ -10,11 +10,10 @@ export default class Tag{
   */
   constructor () {
 
-  },
-  /** @property @private*/
-  token : $('meta[name=_token]').attr('content');
-  URL: '/load_tags';
-  photoID: $().get();
+  }
+  photoID () {
+      $().get();
+  }
   HTML() {
      `<div class="tag-item">${tag}</div>`
   }
@@ -25,8 +24,10 @@ export default class Tag{
    * @return data
    */
   _getJSON (attribute){
+    URL: '/load_tags',
     let data;
     $.ajax({
+        token : $('meta[name=_token]').attr('content');
         type:'POST',
         data: data,
         url: URL,
@@ -49,7 +50,7 @@ export default class Tag{
   * @param wrao
   */
   hide (wrap) {
-    fadeOut();
+    fadeOut(wrap);
   }
   /**
   * @method show
@@ -63,48 +64,9 @@ export default class Tag{
   * @param json
   */
   render(json) {
-    for (variable of iterable) {
+    json.forEach( function functionName() {
       HTML().appendTo();
+    });
     }
   }
 }
-$('#colors .choose-sort-item').children('.name-sort-item')
-                    .css({
-                      'display': 'block',
-                      'margin': '2px',
-                      'height': '8px',
-                      'width': '18px',
-                      'background': $(this).data('color'),
-                    });
-$('#colors .choose-sort-item').css({
-  'width': '40px'
-});
-
-var id = $('.active-slide').data('id'),
-        csrftoken = $('meta[name=_token]').attr('content');
-    $.ajax({
-        type: 'POST',
-        data: {
-            '_token': csrftoken,
-            'id': id
-        },
-        url: '/load_tags',
-
-        success: function(data) {
-            if (data === 'error_tags') {
-                $('.pole-tag').empty();
-                $('.pole-tag').fadeOut();
-                $('#tag').fadeOut();
-
-            } else {
-                $('.pole-tag').empty();
-                $('.pole-tag').fadeIn();
-                $('#tag').fadeIn();
-                for (var i = 0; i < data.length; i++) {
-                    if (data[i].length != 0) {
-                        $('<div class="tag-item"></div').appendTo('.pole-tag').text(data[i]);
-                    }
-                }
-            }
-        }
-    });

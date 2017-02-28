@@ -2,12 +2,6 @@ $(document).ready(function() {
     $('#current-position, #current-position-zoom').text($('.active-slide').index() + 1);
     var id, newLocal;
 
-    function loadAllPhoto(btn) {
-        $(btn).on('click', function() {
-            $('.b-comment-wrap').fadeIn();
-            $(btn).fadeOut();
-        });
-    }
     loadAllPhoto('.btn-all-comments');
     /**
      * Represents a book.
@@ -18,12 +12,6 @@ $(document).ready(function() {
 
     function commentDownload() {
         new Comment;
-    }
-
-    function openModalView(el) {
-        $(el).on('click', function() {
-            $('#modalViewsZoom').fadeIn();
-        });
     }
     /**
      * Represents a book.
@@ -396,15 +384,5 @@ $(document).ready(function() {
                 activeLiked();
             }
         }
-    });
-
-    $('.popup-error-close').on('click', function() {
-        $('#popup-error-slider').fadeOut();
-    });
-    $('.full-scrn').on('click', function() {
-        $('#zoom-slider').fadeIn();
-    });
-    $('.slider-close').on('click', function() {
-        $('#zoom-slider').fadeOut();
     });
 });

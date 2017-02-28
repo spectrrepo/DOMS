@@ -1,4 +1,81 @@
 $( document ).ready(function() {
+  // TODO: придумать как соединить все функции тегов
+  $('.btn-add-tag').on('click', function() {
+    $('input[name=data-tags]').val($('input[name=data-tags]').val()+$('.input-tag-name').val()+';');
+    $('<span class="item-tag-show">'+
+      $('.input-tag-name').val()
+    +'</span>').appendTo('.wrap-add-tag');
+    $('.input-tag-name').val("");
+    $('.item-tag-show').click(function () {
+      var replaceString = $('input[name=data-tags]').val();
+      $('input[name=data-tags]').val(replaceString.replace($(this).text()+';', ''));
+      $(this).remove();
+    });
+    return false;
+  });
+
+  $('.input-tag-name').keyup(function(e) {
+    if(e.keyCode==13)
+     {
+          e.preventDefault();
+          $('input[name=data-tags]').val($('input[name=data-tags]').val()+$('.input-tag-name').val()+';');
+          $('<span class="item-tag-show">'+
+            $('.input-tag-name').val()
+            +'</span>').appendTo('.wrap-add-tag');
+          $('.input-tag-name').val("");
+          $('.item-tag-show').click(function () {
+            var replaceString = $('input[name=data-tags]').val();
+            $('input[name=data-tags]').val(replaceString.replace($(this).text()+';', ''));
+            $(this).remove();
+          });
+          return false;
+     }
+   });
+
+});
+$(document).mouseup(function (e) {
+    var container = $(".overlay");
+    if (container.has(e.target).length === 0){
+        container.fadeOut();
+    }
+});
+
+// tags finder
+// $('.ajax-search').on('submit', function(){
+//   var tag = $('input[name=colorSorting]').val();
+//
+//   $('input[name=tagSorting]').val(tag);
+//   $.ajax({
+//     type:'POST',
+//     data: {
+//               '_token'  : csrftoken,
+//               'sortSort': sortSort,
+//               'styleSort': styleSort,
+//               'roomSort': roomSort,
+//               'colorSort': colorSort,
+//               'tag': tag
+//     },
+//     url:'/load_sort_photo',
+//
+//     success: function (data) {
+//       $('#pole').empty();
+//       if (!(data === 'error_download')) {
+//         $('.info-text-message').fadeOut();
+//         $('.b-next-page').fadeIn();
+//         history.pushState(null, null, 'room=['+roomSort+'],styles=['+styleSort+'],colors=['+colorSort+'],sort=["'+sortSort+'"],tag=["'+tag+'"]');
+//         for(var i=0; i<data.length; i++) {
+//
+//         }
+//       }
+//       else {
+//         $('.info-text-message').fadeIn();
+//         $('.b-next-page').fadeOut();
+//       }
+//     }
+//   });
+//   return false;
+// });
+$( document ).ready(function() {
   // ===========================================================================
   // ===========================================================================
   // ===========================================================================

@@ -1,9 +1,5 @@
 $(document).ready(function() {
 //TODO:сделать через addEventListener
-    $('#closeLink').on('click', function() {
-        $('#dialogLinkAdd').fadeOut();
-    });
-
 
     function save() {
         $('#save-link-form').submit(function(e) {

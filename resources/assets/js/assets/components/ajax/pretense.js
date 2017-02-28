@@ -1,11 +1,4 @@
 $( document ).ready(function() {
-  $('#close-modal-law').on('click', function() {
-    $('#modalLaw').fadeOut();
-  });
-
-  $('.b-pretense').on('click', function() {
-    $('#modalLaw').fadeIn();
-  });
 
   $('#pretense-file').on('change', function (){
     $('.wrap-file-modal-law').addClass('uk-icon-thumbs-o-up');

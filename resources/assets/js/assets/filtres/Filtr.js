@@ -1,8 +1,8 @@
-import PhotoClass from '../photo/Photo';
-import CommentClass from '../photoinfo/CommentClass';
-import DescriptionClass from '../photoinfo/DescriptionClass';
-import TagClass from '../photoinfo/TagsClass';
-import ViewClass from '../photoinfo/ViewClass';
+import {PhotoClass} from './photo/Photo';
+import {CommentClass} from './photoInfo/CommentClass';
+import {DescriptionClass} from './photoInfo/DescriptionClass';
+import {TagClass} from './photoInfo/TagClass';
+import {ViewClass} from './photoInfo/ViewClass';
 // import $ from '../../../vendor/jquery.min';
 /**
 * класс для работы с фильтрами сайта для фото
@@ -16,12 +16,7 @@ export default class Filtr {
 
   }
   /**
-   * @private
-   */
-  limit: asda,
-  active = ' active-choose-ico',
-  /**
-   * @method  changeURL
+   * @method changeURL
    * @param bool - boollean
    * @return resultURL - строка
    */
@@ -38,7 +33,7 @@ export default class Filtr {
      params[param] = value;
      JSON.stringify(params);
      window.history.pushState(null, null, params);
-  },
+  }
 
   /**
    * @method filtrComponation
@@ -46,7 +41,7 @@ export default class Filtr {
    * @param el - literal
    * @return string - строка
    */
-  filtrComponation (string, ) {
+  filtrComponation (string ) {
     if (string.length < 3) {
       string.push(); //- добавляет в конец массива
     } else {
@@ -54,7 +49,7 @@ export default class Filtr {
       string.push();
     }
     return string;
-  },
+  }
   /**
    * @method filtrAdd - добавленеие фильтра
    * @param array - элементы
@@ -66,7 +61,7 @@ export default class Filtr {
       $(el)[0].remove();
       $(elNew).appendTo();
     }
-  },
+  }
   /**
    * @method subItem - добавленеие фильтра
    * @param value - элементы
@@ -90,13 +85,13 @@ export default class Filtr {
                     <i class="close-sort-item">×</i>
                   </li>`;
     return result;
-  },
+  }
   // добавление элемента подкатегории
   addElForList(dataList, title, where, elem) {
     this.HTML().appendTo(where);
-  },
+  }
   // добавление активного меню
-  toggle();
+  // toggle();
   addActiveMenuItem(elem) {
     if ($(elem).next().is('.block-view')){
       $(elem).next().removeClass('block-view');
@@ -110,3 +105,14 @@ export default class Filtr {
     }
   }
 }
+// $('#colors .choose-sort-item').children('.name-sort-item')
+//                     .css({
+//                       'display': 'block',
+//                       'margin': '2px',
+//                       'height': '8px',
+//                       'width': '18px',
+//                       'background': $(this).data('color'),
+//                     });
+// $('#colors .choose-sort-item').css({
+//   'width': '40px'
+// });
