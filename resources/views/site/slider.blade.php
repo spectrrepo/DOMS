@@ -148,9 +148,7 @@
                   <span id="like-whom-pole">
                      <?php $i = 0; ?>
                     @foreach ($likeWhom as $like)
-                       <?php if ($i >3) {
-    break;
-}?>
+                       <?php if ($i >3) { break;}?>
                           <a class="mini-avatar"
                           href="/user/{{ $like->id }}"
                           title="{{ $like->name }}">

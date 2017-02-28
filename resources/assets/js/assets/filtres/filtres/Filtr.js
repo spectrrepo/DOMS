@@ -26,6 +26,13 @@ export default class Filtr {
    * @return resultURL - строка
    */
   changeURL(param, value){
+    var URL = JSON.parse(
+                window.location.pathname
+                               .replace('/filtr=', '')
+                               .replace('%7B','{')
+                               .replace('%7D', '}')
+                               .replace(/%22/g,'"')
+              );
      let diffURL;
      var params = JSON.parse(decodeURIComponent(location.search.substr(1)))
      params[param] = value;
