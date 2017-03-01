@@ -1,3 +1,13 @@
+import Filtr from '.filtres/Filtr';
+import Filtr from '.lib/addNewsProfile';
+import Filtr from '.lib/constant';
+import Filtr from '.lib/functions';
+import Filtr from '.lib/link';
+import Filtr from '.lib/main_slider';
+import Filtr from '.lib/tags_functions';
+import Filtr from '.lib/user_activity';
+import Filtr from '.lib/validation'; 
+
 $( document ).ready(function () {
   $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.823});
   $(window).resize(function() {
@@ -5,6 +15,11 @@ $( document ).ready(function () {
   });
 });
 
+
+$('#current-position, #current-position-zoom').text($('.active-slide').index() + 1);
+var id, newLocal;
+
+loadAllPhoto('.btn-all-comments');
 // делегирование
 
 import Filtr from '/filtres/Filtr.js';

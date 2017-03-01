@@ -105,14 +105,3 @@ export default class Filtr {
     }
   }
 }
-// $('#colors .choose-sort-item').children('.name-sort-item')
-//                     .css({
-//                       'display': 'block',
-//                       'margin': '2px',
-//                       'height': '8px',
-//                       'width': '18px',
-//                       'background': $(this).data('color'),
-//                     });
-// $('#colors .choose-sort-item').css({
-//   'width': '40px'
-// });
