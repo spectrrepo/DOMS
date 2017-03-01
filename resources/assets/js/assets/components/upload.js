@@ -2,9 +2,8 @@ $( document ).ready(function() {
   var id = 1;
 // TODO:переделать в одну единственную функцию или класс
   function handleFileOneSelect(evt) {
-      $('#main-wrap-photo span img').parent('span').remove();
+    $('#main-wrap-photo span img').parent('span').remove();
       var files = evt.target.files; // FileList object
-      console.log(evt.target.files);
       // Loop through the FileList and render image files as thumbnails.
       for (var i = 0, f; f = files[i]; i++) {
 
@@ -46,7 +45,6 @@ $( document ).ready(function() {
         if (!f.type.match('image.*')) {
           continue;
         }
-        console.log(files[i]);
         var reader = new FileReader();
 
         // Closure to capture the file information.

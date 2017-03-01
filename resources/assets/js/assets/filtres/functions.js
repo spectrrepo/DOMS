@@ -3,31 +3,31 @@
 // ============================================================================
 
 /**
- * [photoID description]
- * @return {[type]} [description]
+ * @function photoID - возвращает id текущей фотографии
+ * @return integer
  */
 function photoID () {
   return $('.active-slide').data('id');
 }
 
 /**
- * [csrftoken description]
- * @return {[type]} [description]
+ * @function csrftoken - возвращает текущий токен приложения
+ * @return string
  */
 function csrftoken () {
   return $('meta[name=_token]').attr('content');
 }
 
 /**
- * [user_id description]
- * @return {[type]} [description]
+ * @function user_id - возвращает id пользователя
+ * @return string
  */
 function user_id () {
   return $('input[name=user_id]').val();
 }
 
 /**
- * [authID description]
+ * @function authID - хз чем отличается от id
  * @return {[type]} [description]
  */
 function authID () {
@@ -35,13 +35,12 @@ function authID () {
 }
 
 /**
- * [dwnldIndexPhoto description]
- * @param  {[type]} sortSorting  [description]
- * @param  {[type]} styleSorting [description]
- * @param  {[type]} roomSorting  [description]
- * @param  {[type]} colorSorting [description]
- * @param  {[type]} tagSorting   [description]
- * @return {[type]}              [description]
+ * @function dwnldIndexPhoto - подгрузка новых фотографий на главной странице
+ * @param  string - sortSorting  [description]
+ * @param  array - styleSorting [description]
+ * @param  array - roomSorting  [description]
+ * @param  integer - colorSorting [description]
+ * @param  string - tagSorting   [description]
  */
 function dwnldIndexPhoto(sortSorting, styleSorting, roomSorting, colorSorting, tagSorting) {
   var lastIdJS = $('#pole').children('.item-gallery:last-child').index();
