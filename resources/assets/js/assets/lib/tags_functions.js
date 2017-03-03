@@ -5,7 +5,7 @@
 /**
  * @functionaddTag - функция для добавления тега
  */
-export default function addTag() {
+export function addTag() {
     $('input[name=data-tags]').val($('input[name=data-tags]').val() + $('.input-tag-name').val() + ';');
     $('<span class="item-tag-show">' + $('.input-tag-name').val() + '</span>').appendTo('.wrap-add-tag');
     $('.input-tag-name').val("");
@@ -20,7 +20,7 @@ export default function addTag() {
 /**
  * @functionhiddenTagMask
  */
-export default function hiddenTagMask() {
+export function hiddenTagMask() {
     var container = $(".overlay");
     if (container.has(e.target).length === 0) {
         container.fadeOut();
@@ -30,7 +30,7 @@ export default function hiddenTagMask() {
 /**
  * @functionrenderPhoto
  */
-export default function renderPhoto() {
+export function renderPhoto() {
     $('input[name=tagSorting]').val(tag);
     var tag = $('input[name=tagSorting]').val();
     $.ajax({
@@ -65,7 +65,7 @@ export default function renderPhoto() {
 /**
  * @functionesc
  */
-export default function esc() {
+export function esc() {
     $('.popup-tag').keydown(function(e) {
         if (e.which === 27) {
             $('.popup-search-tag').empty();
@@ -77,7 +77,7 @@ export default function esc() {
  * @functionmoveTagMask - функция для передвижения при помощи клавиш ввверх и
  *                         вниз по вариантам тегов
  */
-export default function moveTagMask() {
+export function moveTagMask() {
     $('.popup-tag').keydown(function(e) {
         if (e.which === 38) { // клавиша вверх
             if ($('.drop-item-tag:first').hasClass('active-drop-item')) {
@@ -111,7 +111,7 @@ export default function moveTagMask() {
 /**
  * @functionenter -
  */
-export default function enter() {
+export function enter() {
     $('.ajax-input-search').keydown(function(e) {
         if ((e === 13) && ($('li').is('.active-drop-item'))) {
             e.preventDefault();
@@ -153,7 +153,7 @@ export default function enter() {
 /**
  * @functionrenderTagsMask - функция для вывода вариантов тегов
  */
-export default function renderTagsMask() {
+export function renderTagsMask() {
     $('.popup-tag').on('input', function() {
         $.ajax({
             type: 'POST',
@@ -192,7 +192,7 @@ export default function renderTagsMask() {
 /**
  * @functionform - функция для рендера фотографий при изменнении тега
  */
-export default function form() {
+export function form() {
     $.ajax({
         type: 'POST',
         data: {

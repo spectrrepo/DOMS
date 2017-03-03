@@ -6,33 +6,25 @@
  * @function photoID - возвращает id текущей фотографии
  * @return integer
  */
-export default function photoID () {
-  return $('.active-slide').data('id');
-}
+export var photoID = photoID => $('.active-slide').data('id');
 
 /**
  * @function csrftoken - возвращает текущий токен приложения
  * @return string
  */
-export default function csrftoken () {
-  return $('meta[name=_token]').attr('content');
-}
+export var csrftoken = csrftoken => $('meta[name=_token]').attr('content');
 
 /**
  * @function user_id - возвращает id пользователя
  * @return string
  */
-export default function user_id () {
-  return $('input[name=user_id]').val();
-}
+export var user_id = user_id => $('input[name=user_id]').val();
 
 /**
  * @function authID - хз чем отличается от id
  * @return {[type]} [description]
  */
-export default function authID () {
-  return $('meta[name=authID]').attr('content');
-}
+export var authID = authID => $('meta[name=authID]').attr('content');
 
 /**
  * @function dwnldIndexPhoto - подгрузка новых фотографий на главной странице
@@ -42,7 +34,7 @@ export default function authID () {
  * @param  integer - colorSorting - id цвета
  * @param  string - tagSorting - тег
  */
-export default function dwnldIndexPhoto(sortSorting,
+export function dwnldIndexPhoto(sortSorting,
                          styleSorting,
                          roomSorting,
                          colorSorting,
@@ -61,7 +53,7 @@ export default function dwnldIndexPhoto(sortSorting,
       },
       url:'/pagination_index',
 
-      success: export default function (data) {
+      success: function (data) {
         for(var i=0; i<data.length; i++) {
               $('<a href="/photo/id=['+data[i].id+
                   '],room=['+roomSorting+
@@ -83,7 +75,7 @@ export default function dwnldIndexPhoto(sortSorting,
  * @function openModalDescription - функция для открытия
  *                                  модального окна с описанием к фото
  */
-export default function openModalDescription () {
+export function openModalDescription () {
   $('.description-scroll-place').empty();
   $('<h3 class="title-description-popup"></h3>')
                 .appendTo('.description-scroll-place')
@@ -97,7 +89,7 @@ export default function openModalDescription () {
  * @function LoadAllComments
  * @param string - btn - элемент, принажатии на который показываются все комментарии
  */
-export default function loadAllComments(btn) {
+export function loadAllComments(btn) {
   $(btn).on('click', function() {
     $('.b-comment-wrap').fadeIn();
     $(btn).fadeOut();
@@ -108,7 +100,7 @@ export default function loadAllComments(btn) {
  * @function openModal - открытие модального окна
  * @param string - el - элемент, при клике на который открыватеся модальное окно
  */
-export default function openModal(el) {
+export function openModal(el) {
     $('.overlay').fadeOut();
     $(el).fadeIn();
 }
@@ -117,7 +109,7 @@ export default function openModal(el) {
  * @function closeModal - функция для закрытия модального окна
  * @param string - el - элемент, при клике на который закроется модальное окно
  */
-export default function closeModal (el) {
+export function closeModal (el) {
     $(el).fadeOut();
 }
 /**
@@ -127,7 +119,7 @@ export default function closeModal (el) {
  * @param string - rightEl - css class для правого элемента
  * @param string - el - css class для элемента слайдера
  */
-export default function slider (activeEl, leftEl, rightEl, el) {
+export function slider (activeEl, leftEl, rightEl, el) {
   if ($(this).data('direction') === 'prev') {
       if ($(el+':first').hasClass(activeEl)) {
             $(el+':not('+el+':last)').addClass(leftEl).removeClass(activeEl)
@@ -156,7 +148,7 @@ export default function slider (activeEl, leftEl, rightEl, el) {
 /**
  * @function readComment - прочтение нового комментария в админ панели
  */
-export default function readComment () {
+export function readComment () {
   var csrftoken = $('meta[name=_token]').attr('content'),
       commentId = parseInt($(this).children('.id-cell').text());
   $.ajax({
@@ -168,7 +160,7 @@ export default function readComment () {
       },
       url: '/read_new_comment',
 
-      success: export default function () {
+      success: function () {
         $('.id-cell:contains("'+commentId+'")').parent().removeClass('none-check');
       }
   });
@@ -176,7 +168,7 @@ export default function readComment () {
 
 
 var id = 1;
-export default function handleFileOneSelect(evt) {
+export function handleFileOneSelect(evt) {
     $('#main-wrap-photo span img').parent('span').remove();
     var files = evt.target.files; // FileList object
     // Loop through the FileList and render image files as thumbnails.
@@ -214,7 +206,7 @@ export default function handleFileOneSelect(evt) {
 
 document.getElementById('file').addEventListener('change', handleFileOneSelect, false);
 
-export default function handleFileSelect(evt) {
+export function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
 
     // Loop through the FileList and render image files as thumbnails.
@@ -257,12 +249,11 @@ export default function handleFileSelect(evt) {
 }
 
 $('#files').on('change', handleFileSelect);
-});
 
 /**
  * @function confirmModal
  */
-export default function confirmModal() {
+export function confirmModal() {
   if(confirm('Вы уверены?')) {
     $('#userform').submit();
   }
@@ -271,7 +262,7 @@ export default function confirmModal() {
 /**
  * @function deleteView - функция для удаления ракурса фотографии
  */
-export default function deleteView () {
+export function deleteView () {
   var csrftoken = $('meta[name=_token]').attr('content'),
   id = $('input[name=id]').val();
   $.ajax({
@@ -285,3 +276,25 @@ export default function deleteView () {
   });
   $(this).empty().remove();
 }
+
+
+
+
+//               count = data.length;
+//               if ((count > 3) && (comment_last_id != '')) {
+//                   if (count + 1 === 4) {
+//                       ending = 'я';
+//                   } else {
+//                       ending = 'ев';
+//                   }
+//                   btnTwo = '<div class="btn-all-comments">Показать все ' + count + ' комментари' + ending + '</div>';
+//               } else {
+//                   btnTwo = '';
+//               }
+//               $(btnTwo).appendTo('.b-all-comment');
+//
+//                   if ((i <= count - 3) && (count > 3)) {
+//                       style = 'style="display:none"';
+//                   } else {
+//                       style = '';
+//                   }

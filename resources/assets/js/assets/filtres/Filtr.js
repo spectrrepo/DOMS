@@ -1,19 +1,18 @@
-import {PhotoClass} from './photo/Photo';
-import {CommentClass} from './photoInfo/CommentClass';
-import {DescriptionClass} from './photoInfo/DescriptionClass';
-import {TagClass} from './photoInfo/TagClass';
-import {ViewClass} from './photoInfo/ViewClass';
-// import $ from '../../../vendor/jquery.min';
+import {Photo} from './Photo';
+import {Comment} from './photoInfo/Comment';
+import {Description} from './photoInfo/Description';
+import {Tag} from './photoInfo/Tag';
+import {View} from './photoInfo/View';
+
 /**
 * класс для работы с фильтрами сайта для фото
 * @class Filter
 */
-export default class Filtr {
+export class Filtr {
   /**
    * @constructor
    */
   constructor() {
-
   }
   /**
    * @method changeURL
@@ -68,30 +67,24 @@ export default class Filtr {
    * @param color @default false
    * @return result - шаблонная строка
    */
-  subItem(value, color=false){
-    let liClassDop, spanClassDop, styleSpan;
-    if (color === true){
-      liClassDop = ' choose-sort-item-color';
-      spanClassDop = ' color-sort-item';
-      styleSpan = ` style="${background}"`;
-    } else {
-      liClassDop = '';
-      spanClassDop = '';
-      styleSpan = ``;
-    }
-    var result = `<li class="choose-sort-item ${liClassDop}">
-                    <span class="name-sort-item ${spanClassDop}"
-                      ${styleSpan}>${title}</span>
-                    <i class="close-sort-item">×</i>
-                  </li>`;
-    return result;
+  subItem(el, color=false){
+
+    return `<li class="choose-sort-item ${color ? 'choose-sort-item-color' : ''}">
+                <span class="name-sort-item ${color ? 'color-sort-item' : ''}"
+                  style="${color ? background : ''}">${el.title}</span>
+                <i class="close-sort-item">×</i>
+            </li>`;
+
   }
   // добавление элемента подкатегории
+  /**
+   * @function addElForList - функция для добавления элемента подкатегории
+   *
+   */
   addElForList(dataList, title, where, elem) {
-    this.HTML().appendTo(where);
+    $(subItem(el, color)).appendTo(where);
   }
-  // добавление активного меню
-  // toggle();
+
   addActiveMenuItem(elem) {
     if ($(elem).next().is('.block-view')){
       $(elem).next().removeClass('block-view');
@@ -103,5 +96,14 @@ export default class Filtr {
       $(elem).next().addClass('block-view');
       $(elem).addClass('active-menu-item');
     }
+  }
+  /**
+   * @method result
+   */
+  result () {
+    photo = new Photo;
+    description = new DescriptionClass;
+    tag = new TagClass;
+    view = new ViewClass;
   }
 }

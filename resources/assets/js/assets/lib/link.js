@@ -6,7 +6,7 @@
  * @functionHTML - хтмл шаблон всплывающей подсказки
  * @return string
  */
-export default function HTML (text) {
+export function HTML (text) {
   '<div class="uk-alert uk-alert-success" data-uk-alert=""' +
   'style="display: block;">' +
   '<a href="" class="uk-alert-close uk-close"></a>' +
@@ -17,7 +17,7 @@ export default function HTML (text) {
  * @functionHTMLlink - хтмл шаблон всплывающей подсказки
  * @return string
  */
-export default function HTMLlink () {
+export function HTMLlink () {
   '<li class="item-links uk-icon-external-link ' +
   'open-modal-link" data-action="editLinks"data-id="' + data.id + '">' +
   '<input class="contact-item-value soc-set-edit" name="soc_net' + data.id + '"' +
@@ -28,7 +28,7 @@ export default function HTMLlink () {
  * @functiontextPopupLink - хтмл - шаблон для шапки мродального окна
  * @return string
  */
-export default function textPopupLink() {
+export function textPopupLink() {
   'Изменить ссылку для ' +
   $(this).children('input.soc-set-edit').val() + ' или ' +
   '<span id="delete-btn" class="remove-this-links">удалить</span>'
@@ -37,8 +37,8 @@ export default function textPopupLink() {
 /**
  * @functionaddLink - функция для добавления ссылки на соц сеть
  */
-export default function addLink () {
-  $('#add-link-form').submit(export default function(e) {
+export function addLink () {
+  $('#add-link-form').submit(function(e) {
       e.preventDefault();
       var link = $('input[name=link]').val();
       $.ajax({
@@ -49,15 +49,15 @@ export default function addLink () {
               'user_id': user_id
           },
           url: '/add_links',
-          success: export default function(data) {
+          success: function(data) {
               $('input[name=link]').val('');
               $('#dialogLinkAdd').fadeOut();
-              $('.open-di-link').before(;
+              $('.open-di-link').before();
               $('.uk-alert').remove();
               $('#editUser').prepend();
               save();
               openModalLink();
-              setTimeout(export default function() { $('.uk-alert').css({'height': '0'}).remove()
+              setTimeout(function() { $('.uk-alert').css({'height': '0'}).remove()
               }, 10000);
           }
       });
@@ -68,8 +68,8 @@ export default function addLink () {
 /**
  * @functionsave - функция для сохранения ссылки
  */
-export default function save() {
-  $('#save-link-form').submit(export default function(e) {
+export function save() {
+  $('#save-link-form').submit(function(e) {
   e.preventDefault();
   var link = $('input[name=link]').val(),
       old_link = $('input[name=old_link]').val();
@@ -83,14 +83,14 @@ export default function save() {
               'user_id': user_id
         },
         url: '/edit_links',
-        success: export default function() {
+        success: function() {
           $('input[name=link]').val('');
           $('#dialogLinkAdd').fadeOut();
           $('.uk-alert').remove();
-          $('#editUser').prepend(HTML());                       );
+          $('#editUser').prepend(HTML());
           $('li.item-links[data-id=' + $('#save-link-form').data('id') + ']')
                         .children('input.soc-set-edit').val(link);
-          setTimeout(export default function() {
+          setTimeout(function() {
             $('.uk-alert').css({'height': '0'}).remove()}, 10000)
           }
         });
@@ -101,8 +101,8 @@ export default function save() {
 /**
  * @functiondeleteLink - функция для удаления ссылки
  */
-export default function deleteLink() {
-  $('#delete-btn').on('click', export default function() {
+export function deleteLink() {
+  $('#delete-btn').on('click', function() {
       var link = $('input[name=link]').val();
       $.ajax({
           type: 'POST',
@@ -112,12 +112,12 @@ export default function deleteLink() {
                 'user_id': user_id
           },
           url: '/delete_links',
-          success: export default function() {
+          success: function() {
               $('input[name=link]').val('');
               $('#dialogLinkAdd').fadeOut();
               $('#editUser').prepend();
               $('li[data-id=' + $('#save-link-form').data('id') + ']').remove();
-              setTimeout(export default function() {$('.uk-alert').css({'height': '0'}).remove()
+              setTimeout(function() {$('.uk-alert').css({'height': '0'}).remove()
                     }, 10000)
                 }
             });
@@ -127,8 +127,8 @@ export default function deleteLink() {
 /**
  * @functionopenModalLink - функция для открытия модального окна
  */
-export default function openModalLink() {
-  $('.open-modal-link').on('click', export default function() {
+export function openModalLink() {
+  $('.open-modal-link').on('click', function() {
     $('.links-control').removeAttr('id').attr('id', 'save-link-form');
     $('input[name=old_link]').val($(this).children('input.soc-set-edit').val());
     $('input[name=link]').val($(this).children('input.soc-set-edit').val());
@@ -144,7 +144,7 @@ export default function openModalLink() {
 // ============================================================================
 // ============================================================================
 
-$('.open-modal-link').on('click', export default function() {
+$('.open-modal-link').on('click', function() {
   if ($(this).data('action') === 'addLinks') {
     $('h3.title-form').empty().text('Добавить ссылку');
     $('.mini-modal-submit').removeClass('uk-icon-save').addClass('uk-icon-plus');

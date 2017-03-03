@@ -46,7 +46,7 @@ elixir(mix => {
         // "read-new-comment.js",
         // "common.js"
     ],'public/js/app.js')
-       .rollup('assets/filtres/Filtr.js',
+       .rollup('assets/common.js',
                'public/js/all.js')
        .copy('resources/assets/fonts/*.*', 'public/css/fonts/');
 });

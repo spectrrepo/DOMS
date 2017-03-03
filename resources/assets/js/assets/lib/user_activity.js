@@ -1,11 +1,11 @@
 // ============================================================================
-// =================== file with export default function  for user action =====================
+// =================== file with export function  for user action =====================
 // ============================================================================
 
 /**
- * @export default export default function   like - функция для создания отметки о понравившемся фото
+ * @export export function   like - функция для создания отметки о понравившемся фото
  */
-export default function  like () {
+export function  like () {
   var csrftoken = $('meta[name=_token]').attr('content'),
       post_id = $('input[name=post_id]').val(),
       user_id = $('input[name=user_id]').val();
@@ -19,7 +19,7 @@ export default function  like () {
       },
       url:url,
 
-      success: export default function  (data) {
+      success: function  (data) {
             if ( url === '/like') {
               $('.uk-icon-heart').addClass('active-like');
               $('#value-like').text(data);
@@ -37,7 +37,7 @@ export default function  like () {
 /**
  * @function liked - функция для добавление в избранное
  */
-export default function  liked () {
+export function  liked () {
   var csrftoken = $('meta[name=_token]').attr('content'),
       post_id = $('input[name=post_id]').val(),
       user_id = $('input[name=user_id]').val(),
@@ -51,7 +51,7 @@ export default function  liked () {
       },
       url:url,
 
-      success: export default function  (data) {
+      success: function  (data) {
         if ( data === 'liked') {
           $('#num_liked').removeClass('active-favorite');
           $('input[name=url-liked]').val('/liked');
@@ -67,14 +67,14 @@ export default function  liked () {
 /**
  * @function changeIcoPretense - функция отслеживания процесса
  */
-export default function  changeIcoPretense () {
+export function  changeIcoPretense () {
   $('.wrap-file-modal-law').addClass('uk-icon-thumbs-o-up');
   $('.wrap-file-modal-law').removeClass('uk-icon-plus');
 }
 /**
  * @function sendPretense - функция для отправки претензии на сервер
  */
-export default function  sendPretense () {
+export function  sendPretense () {
   e.preventDefault();
   var csrftoken = $('input[name=_token]').val(),
       postId = $('.active-slide').data('id'),
@@ -87,7 +87,7 @@ export default function  sendPretense () {
       dataType: 'json',
       processData: false,
       contentType: false,
-      success: export default function  (data) {
+      success: function  (data) {
         $('#modalLaw').fadeOut();
         $('.b-pretense').text('OK');
       }
@@ -99,9 +99,8 @@ export default function  sendPretense () {
 /**
  * @function allPhotoLikes - вывод всех лайков с фото
  */
-export default function  allPhotoLikes () {
-  var id = const;
-      csrftoken = const;
+export function  allPhotoLikes () {
+  var id, csrftoken;
   $.ajax({
     type:'POST',
     data: {
@@ -110,7 +109,7 @@ export default function  allPhotoLikes () {
     },
     url:'/load_all_likes',
 
-    success: export default function  (data) {
+    success: function  (data) {
         $('.place-likes').empty();
         $('#allPhotoLikes').fadeIn();
         for(var i=0; i<data.length; i++) {

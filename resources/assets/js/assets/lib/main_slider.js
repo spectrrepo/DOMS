@@ -5,7 +5,7 @@
      * @param {string} author - The author of the book.
      */
 
-export default function commentDownload() {
+export function commentDownload() {
     new Comment;
 }
 /**
@@ -15,7 +15,7 @@ export default function commentDownload() {
      * @param {string} author - The author of the book.
      */
 
-export default function tagsDownload() {
+export function tagsDownload() {
     new Tag();
 }
 
@@ -26,7 +26,7 @@ export default function tagsDownload() {
      * @param {string} author - The author of the book.
      */
 
-export default function viewsDownload() {
+export function viewsDownload() {
     new VIew;
 }
 
@@ -37,7 +37,7 @@ export default function viewsDownload() {
      * @param {string} author - The author of the book.
      */
 
-export default function infoPhotoDownload() {
+export function infoPhotoDownload() {
     var id = $('.active-slide').data('id'),
         csrftoken = $('meta[name=_token]').attr('content');
     $.ajax({
@@ -107,7 +107,7 @@ export default function infoPhotoDownload() {
      * @param {string} author - The author of the book.
      */
 
-export default function userInfoDownload() {
+export function userInfoDownload() {
     var id = $('.active-slide').data('id'),
         csrftoken = $('meta[name=_token]').attr('content');
     $.ajax({
@@ -147,7 +147,7 @@ export default function userInfoDownload() {
      * @param {string} title - The title of the book.
      * @param {string} author - The author of the book.
      */
-export default function newPhotoDownload(direction) {
+export function newPhotoDownload(direction) {
     var id = $('.active-slide').data('id'),
         sortSort = $('input[name=sortSorting]').val(),
         roomSort = $('input[name=roomSorting]').val(),
@@ -197,7 +197,7 @@ export default function newPhotoDownload(direction) {
      * @param {string} author - The author of the book.
      */
 
-export default function likeWhom() {
+export function likeWhom() {
     var id = $('.active-slide').data('id'),
         csrftoken = $('meta[name=_token]').attr('content');
     $.ajax({
@@ -230,7 +230,7 @@ export default function likeWhom() {
      * @param {string} author - The author of the book.
      */
 
-export default function activeLike() {
+export function activeLike() {
     var id = $('.active-slide').data('id'),
         csrftoken = $('meta[name=_token]').attr('content');
     $.ajax({
@@ -258,7 +258,7 @@ export default function activeLike() {
      * @param {string} author - The author of the book.
      */
 
-export default function activeLiked() {
+export function activeLiked() {
     var id = $('.active-slide').data('id'),
         csrftoken = $('meta[name=_token]').attr('content');
     $.ajax({

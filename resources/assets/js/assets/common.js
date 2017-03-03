@@ -1,12 +1,13 @@
-import Filtr from '.filtres/Filtr';
-import Filtr from '.lib/addNewsProfile';
-import Filtr from '.lib/constant';
-import Filtr from '.lib/functions';
-import Filtr from '.lib/link';
-import Filtr from '.lib/main_slider';
-import Filtr from '.lib/tags_functions';
-import Filtr from '.lib/user_activity';
-import Filtr from '.lib/validation'; 
+import { Filtr } from './filtres/Filtr';
+import { photoID } from './lib/functions';
+import { deleteLink, save } from './lib/link';
+import { like,
+         liked,
+         changeIcoPretense,
+         sendPretense,
+         allPhotoLikes
+       } from './lib/user_activity';
+import { commonValid, validateBack } from './lib/validation';
 
 $( document ).ready(function () {
   $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.823});
@@ -22,7 +23,6 @@ var id, newLocal;
 loadAllPhoto('.btn-all-comments');
 // делегирование
 
-import Filtr from '/filtres/Filtr.js';
 var filtr = new Filtr;
 
 table.onclick = function(event) {
@@ -73,15 +73,15 @@ $('#recover-pswd').addEventListener(openModal('#passwd-popup'));
 $('').addEventListener(slider('.active-about',
                               '.left-about',
                               '.right-about',
-                              '.item' ))
+                              '.item' ));
 $('.min-nav-views').addEventListener(slider('.active-view-min',
                                             '.left-view-min',
                                             '.right-view-min',
-                                            '.item-view-min'))
-$('.nav-zoom-views').addEventListener(slider('.active-slide-zoom-views',
-                                             '.left-slide-zoom-views',
-                                             '.right-slide-zoom-views',
-                                             '.item-views-zoom')
+                                            '.item-view-min'));
+// $('.nav-zoom-views').addEventListener(slider('.active-slide-zoom-views',
+//                                              '.left-slide-zoom-views',
+//                                              '.right-slide-zoom-views',
+//                                              '.item-views-zoom');
 
 // попапы новостей
 $('.item-news-title').on('click', function(){
