@@ -1,6 +1,9 @@
 // ============================================================================
 // =============== file with functions, which use in app ======================
 // ============================================================================
+import { DWNLD_MAIN_PHOTO } from './constant';
+import { URL_READ_COM } from './constant';
+import { URL_DELETE_VIEWS } from './constant';
 
 /**
  * @function photoID - возвращает id текущей фотографии
@@ -34,11 +37,12 @@ export var authID = authID => $('meta[name=authID]').attr('content');
  * @param  integer - colorSorting - id цвета
  * @param  string - tagSorting - тег
  */
+// TODO:надо подумать
 export function dwnldIndexPhoto(sortSorting,
                          styleSorting,
                          roomSorting,
                          colorSorting,
-                         tagSorting) {
+                         tagSorting, obj) {
   var lastIdJS = $('#pole').children('.item-gallery:last-child').index();
   $.ajax({
       type:'POST',
@@ -51,21 +55,12 @@ export function dwnldIndexPhoto(sortSorting,
               'colorSorting': colorSorting,
               'tag': tagSorting
       },
-      url:'/pagination_index',
+      url:DWNLD_MAIN_PHOTO,
 
       success: function (data) {
         for(var i=0; i<data.length; i++) {
-              $('<a href="/photo/id=['+data[i].id+
-                  '],room=['+roomSorting+
-                  '],styles=['+styleSorting+
-                  '],colors=['+colorSorting+
-                  '],sort=['+sortSorting+
-                  '],tag=['+tagSorting+']" class="item-gallery" '+
-                  'data-grid-prepared="true"style="position:absolute;">' +
-                  '<div class="uk-panel-box">' +
-                    '<img src="'+data[i].min_path+'">'+
-                   '</div>' +
-                 '</a>').appendTo('.uk-grid-width-small-1-2');
+          $(obj(roomSorting, styleSorting, colorSorting, tagSorting, data[i].min_path))
+                .appendTo('.uk-grid-width-small-1-2');
         }
       }
   });
@@ -144,13 +139,11 @@ export function slider (activeEl, leftEl, rightEl, el) {
 // ============================================================================
 // ============================================================================
 // ============================================================================
-
 /**
  * @function readComment - прочтение нового комментария в админ панели
  */
 export function readComment () {
-  var csrftoken = $('meta[name=_token]').attr('content'),
-      commentId = parseInt($(this).children('.id-cell').text());
+  var commentId = parseInt($(this).children('.id-cell').text());
   $.ajax({
       type:'POST',
 
@@ -158,7 +151,7 @@ export function readComment () {
                 '_token'  : csrftoken,
                 'id' : commentId,
       },
-      url: '/read_new_comment',
+      url: URL_READ_COM,
 
       success: function () {
         $('.id-cell:contains("'+commentId+'")').parent().removeClass('none-check');
@@ -167,7 +160,6 @@ export function readComment () {
 }
 
 
-var id = 1;
 export function handleFileOneSelect(evt) {
     $('#main-wrap-photo span img').parent('span').remove();
     var files = evt.target.files; // FileList object
@@ -204,7 +196,6 @@ export function handleFileOneSelect(evt) {
     $('#main-wrap-photo').children('.add-photo-text').css({'display': 'none'});
 }
 
-document.getElementById('file').addEventListener('change', handleFileOneSelect, false);
 
 export function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
@@ -248,7 +239,6 @@ export function handleFileSelect(evt) {
     }
 }
 
-$('#files').on('change', handleFileSelect);
 
 /**
  * @function confirmModal
@@ -263,21 +253,45 @@ export function confirmModal() {
  * @function deleteView - функция для удаления ракурса фотографии
  */
 export function deleteView () {
-  var csrftoken = $('meta[name=_token]').attr('content'),
-  id = $('input[name=id]').val();
+  var id = $('input[name=id]').val();
   $.ajax({
     type:'POST',
     data: {
       '_token'  : csrftoken,
       'id'      : id
     },
-    url: '/delete_view',
+    url: URL_DELETE_VIEWS,
 
   });
   $(this).empty().remove();
 }
 
-
+/**
+ * @function addArrowForMoreInfo - вычисляет высоту и в зависимости от высоты
+ *                                 добавляет стрелку
+ */
+export function addArrowForMoreInfo () {
+  let height = parseInt($('pre').css('height'));
+  if (height > 119){
+    $('.b-about-person').append(
+      '<span class="to-bottom ico uk-icon-justify uk-icon-chevron-down"></span>'
+    );
+  }
+}
+/**
+ * @function showUserInfoMore - показывает вю информацию о пользоваетеле
+ */
+export function showUserInfoMore () {
+  if ($(this).hasClass('uk-icon-chevron-down')) {
+    $('.b-about-person').css({'height':'auto'});
+    $(this).removeClass('uk-icon-chevron-down')
+           .addClass('uk-icon-chevron-up');
+  } else {
+    $('.b-about-person').css({'height':'105px'});
+    $(this).removeClass('uk-icon-chevron-up')
+           .addClass('uk-icon-chevron-down');
+  }
+}
 
 
 //               count = data.length;

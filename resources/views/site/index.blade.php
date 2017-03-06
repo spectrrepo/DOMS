@@ -12,7 +12,7 @@
   <div id="pole" class="uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights" data-uk-grid>
     @foreach ( $images as $image)
         <a data-id="{{ $image->id }}"
-          href="/photo/id=[{{ $image->id }}],room=[{{ $room }}],styles=[{{ $style }}],colors=[{{ $color }}],sort=[{{ $sort }}],tag=[{{ $tag }}]"
+          href="/photo/filtr={'id':{{ $image->id }},'room':[{{ $room }}],'styles':[{{ $style }}],'colors':{{ $color }},'sort':'{{ $sort }}','tag':'{{ $tag }}'}"
           class="item-gallery"
           data-grid-prepared="true"
           style="position:absolute;">

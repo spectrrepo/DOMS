@@ -1,37 +1,45 @@
 //=============================================================================
 //=============== file with export default function for manipulation links ===================
 //=============================================================================
+import { ADD_LINK } from './constant';
+import { EDIT_LINK } from './constant';
+import { DEL_LINK } from './constant';
+import { csrftoken } from './functions';
+import { user_id } from './functions';
 
 /**
  * @functionHTML - хтмл шаблон всплывающей подсказки
  * @return string
  */
-export function HTML (text) {
-  '<div class="uk-alert uk-alert-success" data-uk-alert=""' +
-  'style="display: block;">' +
-  '<a href="" class="uk-alert-close uk-close"></a>' +
-  '<p>Ссылка '+text+'</p></div>'
+function HTML (text) {
+  return `<div class="uk-alert uk-alert-success" data-uk-alert=""
+               style="display: block;">
+             <a href="" class="uk-alert-close uk-close"></a>
+             <p>Ссылка ${text}</p>
+          </div>`;
 }
 
 /**
  * @functionHTMLlink - хтмл шаблон всплывающей подсказки
  * @return string
  */
-export function HTMLlink () {
-  '<li class="item-links uk-icon-external-link ' +
-  'open-modal-link" data-action="editLinks"data-id="' + data.id + '">' +
-  '<input class="contact-item-value soc-set-edit" name="soc_net' + data.id + '"' +
-  'value="' + link + '" type="hidden"></li>'
+function HTMLlink (data, link) {
+  return `<li class="item-links uk-icon-external-link
+          open-modal-link" data-action="editLinks"data-id="${data.id}">
+          <input class="contact-item-value soc-set-edit" name="soc_net${data.id}"
+           value="${link}" type="hidden"></li>`;
 }
 
 /**
  * @functiontextPopupLink - хтмл - шаблон для шапки мродального окна
  * @return string
  */
-export function textPopupLink() {
-  'Изменить ссылку для ' +
-  $(this).children('input.soc-set-edit').val() + ' или ' +
-  '<span id="delete-btn" class="remove-this-links">удалить</span>'
+function textPopupLink() {
+  return `Изменить ссылку для
+          ${$(this).children('input.soc-set-edit').val()} или 
+          <span id="delete-btn" class="remove-this-links">
+            удалить
+          </span>`;
 }
 
 /**
@@ -48,7 +56,7 @@ export function addLink () {
               'link': link,
               'user_id': user_id
           },
-          url: '/add_links',
+          url: ADD_LINK,
           success: function(data) {
               $('input[name=link]').val('');
               $('#dialogLinkAdd').fadeOut();
@@ -82,7 +90,7 @@ export function save() {
               'old_link': old_link,
               'user_id': user_id
         },
-        url: '/edit_links',
+        url: EDIT_LINK,
         success: function() {
           $('input[name=link]').val('');
           $('#dialogLinkAdd').fadeOut();
@@ -111,7 +119,7 @@ export function deleteLink() {
                 'link': link,
                 'user_id': user_id
           },
-          url: '/delete_links',
+          url: DEL_LINK,
           success: function() {
               $('input[name=link]').val('');
               $('#dialogLinkAdd').fadeOut();

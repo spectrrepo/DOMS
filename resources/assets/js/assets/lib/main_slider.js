@@ -1,52 +1,44 @@
-/**
-     * Represents a book.
-     * @constructor
-     * @param {string} title - The title of the book.
-     * @param {string} author - The author of the book.
-     */
+import { LOAD_INFO_PHOTO } from './constant';
+import { LOAD_ACTIVE_LIKE_PHOTO } from './constant';
+import { LOAD_ACTIVE_FAVORITE_PHOTO } from './constant';
+import { LOAD_AUTHOR_PHOTO } from './constant';
+import { LOAD_LIKE_PHOTO } from './constant';
+import { LOAD_MORE_PHOTO } from './constant';
 
-export function commentDownload() {
+import { photoID } from './functions';
+import { csrftoken } from './functions';
+
+/**
+ * @function commentDownload
+ */
+function commentDownload() {
     new Comment;
 }
 /**
-     * Represents a book.
-     * @constructor
-     * @param {string} title - The title of the book.
-     * @param {string} author - The author of the book.
-     */
-
-export function tagsDownload() {
+ * @function tagsDownload
+ */
+function tagsDownload() {
     new Tag();
 }
 
 /**
-     * Represents a book.
-     * @constructor
-     * @param {string} title - The title of the book.
-     * @param {string} author - The author of the book.
-     */
-
-export function viewsDownload() {
-    new VIew;
+ * @function viewsDownload
+ */
+function viewsDownload() {
+    new View;
 }
 
 /**
-     * Represents a book.
-     * @constructor
-     * @param {string} title - The title of the book.
-     * @param {string} author - The author of the book.
-     */
-
-export function infoPhotoDownload() {
-    var id = $('.active-slide').data('id'),
-        csrftoken = $('meta[name=_token]').attr('content');
+ * @function infoPhotoDownload
+ */
+function infoPhotoDownload() {
     $.ajax({
         type: 'POST',
         data: {
             '_token': csrftoken,
-            'id': id
+            'id': photoID
         },
-        url: '/load_info_slide',
+        url: LOAD_INFO_PHOTO,
 
         success: function(data) {
             if (!data.views_count) {
@@ -101,22 +93,17 @@ export function infoPhotoDownload() {
 }
 
 /**
-     * Represents a book.
-     * @constructor
-     * @param {string} title - The title of the book.
-     * @param {string} author - The author of the book.
-     */
+ * @function userInfoDownload
+ */
 
-export function userInfoDownload() {
-    var id = $('.active-slide').data('id'),
-        csrftoken = $('meta[name=_token]').attr('content');
+function userInfoDownload() {
     $.ajax({
         type: 'POST',
         data: {
             '_token': csrftoken,
-            'id': id
+            'id': photoID
         },
-        url: '/load_user',
+        url: LOAD_AUTHOR_PHOTO,
 
         success: function(data) {
             if (data === 'error_user') {
@@ -142,25 +129,21 @@ export function userInfoDownload() {
 }
 
 /**
-     * Represents a book.
-     * @constructor
-     * @param {string} title - The title of the book.
-     * @param {string} author - The author of the book.
-     */
-export function newPhotoDownload(direction) {
-    var id = $('.active-slide').data('id'),
-        sortSort = $('input[name=sortSorting]').val(),
+ * @function newPhotoDownload
+ * @param  string - direction
+ */
+function newPhotoDownload(direction) {
+    let sortSort = $('input[name=sortSorting]').val(),
         roomSort = $('input[name=roomSorting]').val(),
         styleSort = $('input[name=styleSorting]').val(),
         colorSort = $('input[name=colorSorting]').val(),
         tag = $('input[name=tagSorting]').val(),
-        currentPosition = +$('#current-position').text() + 1,
-        csrftoken = $('meta[name=_token]').attr('content');
+        currentPosition = +$('#current-position').text() + 1;
     $.ajax({
         type: 'POST',
         data: {
             '_token': csrftoken,
-            'id': id,
+            'id': photoID,
             'direction': direction,
             'sortSort': sortSort,
             'roomSort': roomSort,
@@ -169,7 +152,7 @@ export function newPhotoDownload(direction) {
             'tag': tag,
             'currentPosition': currentPosition
         },
-        url: '/load_slides ',
+        url: LOAD_MORE_PHOTO,
         async: false,
         success: function(data) {
             if (data === 'error_download') {
@@ -191,22 +174,16 @@ export function newPhotoDownload(direction) {
 }
 
 /**
-     * Represents a book.
-     * @constructor
-     * @param {string} title - The title of the book.
-     * @param {string} author - The author of the book.
-     */
-
-export function likeWhom() {
-    var id = $('.active-slide').data('id'),
-        csrftoken = $('meta[name=_token]').attr('content');
+ * @function likeWhom
+ */
+function likeWhom() {
     $.ajax({
         type: 'POST',
         data: {
             '_token': csrftoken,
-            'id': id
+            'id': photoID
         },
-        url: '/load_like',
+        url: LOAD_LIKE_PHOTO,
 
         success: function(data) {
             if (data === 'error_like') {
@@ -224,22 +201,17 @@ export function likeWhom() {
 }
 
 /**
-     * Represents a book.
-     * @constructor
-     * @param {string} title - The title of the book.
-     * @param {string} author - The author of the book.
-     */
-
-export function activeLike() {
-    var id = $('.active-slide').data('id'),
-        csrftoken = $('meta[name=_token]').attr('content');
+ * @function activeLike
+ */
+function activeLike() {
     $.ajax({
         type: 'POST',
         data: {
             '_token': csrftoken,
-            'id': id
+            'id': photoID
         },
-        url: '/load_active_like',
+
+        url: LOAD_ACTIVE_LIKE_PHOTO,
 
         success: function(data) {
             if (data === 'success') {
@@ -252,22 +224,16 @@ export function activeLike() {
 }
 
 /**
-     * Represents a book.
-     * @constructor
-     * @param {string} title - The title of the book.
-     * @param {string} author - The author of the book.
-     */
-
-export function activeLiked() {
-    var id = $('.active-slide').data('id'),
-        csrftoken = $('meta[name=_token]').attr('content');
+ * @function activeLiked
+ */
+function activeLiked() {
     $.ajax({
         type: 'POST',
         data: {
             '_token': csrftoken,
-            'id': id
+            'id': photoID
         },
-        url: '/load_active_favorite',
+        url: LOAD_ACTIVE_FAVORITE_PHOTO,
 
         success: function(data) {
             if (data === 'success') {
@@ -278,99 +244,104 @@ export function activeLiked() {
         }
     });
 }
-$('.btn-nav, .nav-zoom').on('click', function() {
-    var ret,
-        direction = $(this).data('direction');
+
+/**
+ * @function rightSliderChange
+ */
+function rightSliderChange () {
+  $('.active-slide').next().removeClass('right-slide').addClass('active-slide');
+  $('.active-slide:first').removeClass('active-slide').addClass('left-slide');
+  $('#current-position').text($('.active-slide').index() + 1);
+  $('#current-position-zoom').text($('.active-slide').index() + 1);
+  $('input[name=post_id]').val($('.active-slide').data('id'));
+
+  id = 'id=[' + $('.active-slide').data('id') + ']';
+  newLocal = window.location.href;
+  newLocal = newLocal.replace('id=[' + $('.active-slide').prev().data('id') + ']', id);
+  history.pushState('', '', newLocal);
+}
+
+/**
+ * @function leftSliderChange
+ */
+function leftSliderChange() {
+  $('.active-slide').prev().addClass('active-slide').removeClass('left-slide');
+  $('.active-slide:last').removeClass('active-slide').addClass('right-slide');
+  $('#current-position').text($('.active-slide').index() + 1);
+  $('#current-position-zoom').text($('.active-slide').index() + 1);
+  $('input[name=post_id]').val($('.active-slide').data('id'));
+
+  id = 'id=[' + $('.active-slide').data('id') + ']';
+  newLocal = window.location.href;
+  newLocal = newLocal.replace('id=[' + $('.active-slide').next().data('id') + ']', id);
+  history.pushState('', '', newLocal);
+}
+
+/**
+ * @function mainSliderPhoto - инициализация главного слайдера
+ */
+export function mainSliderPhoto() {
+
+    let ret,direction = $(this).data('direction');
+
     if (direction === 'right') {
-        if ($('.active-slide').index() + 1 === $('.photo-item:last').index()) {
-            newPhotoDownload(direction);
-            $('.active-slide').next().removeClass('right-slide').addClass('active-slide');
-            $('.active-slide:first').removeClass('active-slide').addClass('left-slide');
-            $('#current-position').text($('.active-slide').index() + 1);
-            $('#current-position-zoom').text($('.active-slide').index() + 1);
-            $('input[name=post_id]').val($('.active-slide').data('id'));
-            id = 'id=[' + $('.active-slide').data('id') + ']';
-            newLocal = window.location.href;
-            newLocal = newLocal.replace('id=[' + $('.active-slide').prev().data('id') + ']', id);
-            history.pushState('', '', newLocal);
-            commentDownload();
-            likeWhom();
-            tagsDownload();
-            viewsDownload();
-            infoPhotoDownload();
-            userInfoDownload();
-            activeLike();
-            activeLiked();
-        } else if ($('.active-slide').index() === $('.photo-item:last').index()) {
+      if ($('.active-slide').index() + 1 === $('.photo-item:last').index()) {
+        newPhotoDownload(direction);
 
-            $('#popup-error-slider').fadeIn();
+        rightSliderChange();
 
-        } else {
+        commentDownload();
+        likeWhom();
+        tagsDownload();
+        viewsDownload();
+        infoPhotoDownload();
+        userInfoDownload();
+        activeLike();
+        activeLiked();
+      } else if ($('.active-slide').index() === $('.photo-item:last').index()) {
 
-            $('.active-slide').next().removeClass('right-slide').addClass('active-slide');
-            $('.active-slide:first').removeClass('active-slide').addClass('left-slide');
-            $('#current-position').text($('.active-slide').index() + 1);
-            $('#current-position-zoom').text($('.active-slide').index() + 1);
-            $('input[name=post_id]').val($('.active-slide').data('id'));
-            id = 'id=[' + $('.active-slide').data('id') + ']';
-            newLocal = window.location.href;
-            newLocal = newLocal.replace('id=[' + $('.active-slide').prev().data('id') + ']', id);
-            history.pushState('', '', newLocal);
+        $('#popup-error-slider').fadeIn();
 
-            commentDownload();
-            tagsDownload();
-            likeWhom();
-            viewsDownload();
-            infoPhotoDownload();
-            userInfoDownload();
-            activeLike();
-            activeLiked();
-        }
+      } else {
+        rightSliderChange();
+
+        commentDownload();
+        tagsDownload();
+        likeWhom();
+        viewsDownload();
+        infoPhotoDownload();
+        userInfoDownload();
+        activeLike();
+        activeLiked();
+      }
     } else if (direction === 'left') {
+      if ($('.active-slide').index() === $('.photo-item:first').index()) {
+        newPhotoDownload(direction, ret);
         if ($('.active-slide').index() === $('.photo-item:first').index()) {
-            newPhotoDownload(direction, ret);
-            if ($('.active-slide').index() === $('.photo-item:first').index()) {
-                $('#popup-error-slider').fadeIn();
-            } else {
-                $('.active-slide').prev().addClass('active-slide').removeClass('left-slide');
-                $('.active-slide:last').removeClass('active-slide').addClass('right-slide');
-                $('#current-position').text($('.active-slide').index() + 1);
-                $('#current-position-zoom').text($('.active-slide').index() + 1);
-                $('input[name=post_id]').val($('.active-slide').data('id'));
-                id = 'id=[' + $('.active-slide').data('id') + ']';
-
-                newLocal = window.location.href;
-                newLocal = newLocal.replace('id=[' + $('.active-slide').next().data('id') + ']', id);
-                history.pushState('', '', newLocal);
-                commentDownload();
-                tagsDownload();
-                viewsDownload();
-                infoPhotoDownload();
-                userInfoDownload();
-                likeWhom();
-                activeLike();
-                activeLiked();
-            }
+            $('#popup-error-slider').fadeIn();
         } else {
-            $('.active-slide').prev().addClass('active-slide').removeClass('left-slide');
-            $('.active-slide:last').removeClass('active-slide').addClass('right-slide');
-            $('#current-position').text($('.active-slide').index() + 1);
-            $('#current-position-zoom').text($('.active-slide').index() + 1);
-            $('input[name=post_id]').val($('.active-slide').data('id'));
-            id = 'id=[' + $('.active-slide').data('id') + ']';
-
-            newLocal = window.location.href;
-            newLocal = newLocal.replace('id=[' + $('.active-slide').next().data('id') + ']', id);
-            history.pushState('', '', newLocal);
+            leftSliderChange();
 
             commentDownload();
-            likeWhom();
-            viewsDownload();
             tagsDownload();
+            viewsDownload();
             infoPhotoDownload();
             userInfoDownload();
+            likeWhom();
             activeLike();
             activeLiked();
         }
+      } else {
+        leftSliderChange();
+
+        commentDownload();
+        likeWhom();
+        viewsDownload();
+        tagsDownload();
+        infoPhotoDownload();
+        userInfoDownload();
+        activeLike();
+        activeLiked();
+      }
     }
-});
+}

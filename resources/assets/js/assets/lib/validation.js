@@ -25,7 +25,3 @@ export function  validateBack() {
         return true;
     }
 }
-
-$('#feedback').children().on('click', function () {
-    $(this).removeClass('error');
-});

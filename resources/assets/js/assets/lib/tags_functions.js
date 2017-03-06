@@ -3,7 +3,7 @@
 // ============================================================================
 
 /**
- * @functionaddTag - функция для добавления тега
+ * @function addTag - функция для добавления тега
  */
 export function addTag() {
     $('input[name=data-tags]').val($('input[name=data-tags]').val() + $('.input-tag-name').val() + ';');
@@ -18,7 +18,7 @@ export function addTag() {
 }
 
 /**
- * @functionhiddenTagMask
+ * @function hiddenTagMask
  */
 export function hiddenTagMask() {
     var container = $(".overlay");
@@ -28,7 +28,7 @@ export function hiddenTagMask() {
 }
 
 /**
- * @functionrenderPhoto
+ * @function renderPhoto
  */
 export function renderPhoto() {
     $('input[name=tagSorting]').val(tag);
@@ -63,7 +63,7 @@ export function renderPhoto() {
     return false;
 }
 /**
- * @functionesc
+ * @function esc
  */
 export function esc() {
     $('.popup-tag').keydown(function(e) {
@@ -74,7 +74,7 @@ export function esc() {
     });
 }
 /**
- * @functionmoveTagMask - функция для передвижения при помощи клавиш ввверх и
+ * @function moveTagMask - функция для передвижения при помощи клавиш ввверх и
  *                         вниз по вариантам тегов
  */
 export function moveTagMask() {
@@ -109,7 +109,7 @@ export function moveTagMask() {
     });
 }
 /**
- * @functionenter -
+ * @function enter -
  */
 export function enter() {
     $('.ajax-input-search').keydown(function(e) {
@@ -151,7 +151,7 @@ export function enter() {
 
 }
 /**
- * @functionrenderTagsMask - функция для вывода вариантов тегов
+ * @function renderTagsMask - функция для вывода вариантов тегов
  */
 export function renderTagsMask() {
     $('.popup-tag').on('input', function() {
@@ -190,7 +190,7 @@ export function renderTagsMask() {
     });
 }
 /**
- * @functionform - функция для рендера фотографий при изменнении тега
+ * @function form - функция для рендера фотографий при изменнении тега
  */
 export function form() {
     $.ajax({

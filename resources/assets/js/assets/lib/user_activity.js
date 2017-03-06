@@ -1,20 +1,22 @@
 // ============================================================================
-// =================== file with export function  for user action =====================
+// =================== file with export function  for user action =============
 // ============================================================================
+import { photoID } from './functions';
+import { csrftoken } from './functions';
+import { user_id } from './functions';
+import { ADD_COPY } from './constant';
+import { LOAD_LIKES } from './constant';
 
 /**
  * @export export function   like - функция для создания отметки о понравившемся фото
  */
 export function  like () {
-  var csrftoken = $('meta[name=_token]').attr('content'),
-      post_id = $('input[name=post_id]').val(),
-      user_id = $('input[name=user_id]').val();
-      url = $('input[name=url-like]').val();
+  let url = $('input[name=url-like]').val();
   $.ajax({
       type:'POST',
       data: {
                 '_token'  : csrftoken,
-                'post_id' : post_id,
+                'post_id' : photoID,
                 'user_id' : user_id
       },
       url:url,
@@ -38,15 +40,12 @@ export function  like () {
  * @function liked - функция для добавление в избранное
  */
 export function  liked () {
-  var csrftoken = $('meta[name=_token]').attr('content'),
-      post_id = $('input[name=post_id]').val(),
-      user_id = $('input[name=user_id]').val(),
-      url = $('input[name=url-liked]').val();
+  let url = $('input[name=url-liked]').val();
   $.ajax({
       type:'POST',
       data: {
                 '_token'  : csrftoken,
-                'post_id' : post_id,
+                'post_id' : photoID,
                 'user_id' : user_id
       },
       url:url,
@@ -71,6 +70,7 @@ export function  changeIcoPretense () {
   $('.wrap-file-modal-law').addClass('uk-icon-thumbs-o-up');
   $('.wrap-file-modal-law').removeClass('uk-icon-plus');
 }
+
 /**
  * @function sendPretense - функция для отправки претензии на сервер
  */
@@ -83,7 +83,7 @@ export function  sendPretense () {
   $.ajax({
       type:'POST',
       data: filePretense,
-      url: '/add_copyright',
+      url: ADD_COPY,
       dataType: 'json',
       processData: false,
       contentType: false,
@@ -100,14 +100,13 @@ export function  sendPretense () {
  * @function allPhotoLikes - вывод всех лайков с фото
  */
 export function  allPhotoLikes () {
-  var id, csrftoken;
   $.ajax({
     type:'POST',
     data: {
               '_token'  : csrftoken,
-              'id': id
+              'id': photoID
     },
-    url:'/load_all_likes',
+    url: LOAD_LIKES,
 
     success: function  (data) {
         $('.place-likes').empty();
