@@ -10,11 +10,10 @@
 / These routes , which guests have access
 */
 Route::get('/', function(){
-    return redirect('/filtr={"room":[0],"style":[0],"color":0,"sort":"0","tag":"0"}');
+    return redirect("/filtr={'room':[0],'style':[0],'color':0,'sort':'0','tag':'0'}");
 });
-// '/search?{room:room,styles:style,colors:color,sort:sort,tag:tag}'
 Route::get("/filtr={'room':[{room?}],'style':[{style?}],'color':{color?},'sort':'{sort?}','tag':'{tag?}'}", "PhotoController@index");
-Route::get("/photo/filtr={'id':{id},'room':[{room?}],'styles':[{style?}],'colors':{color?},'sort':'{sort?}','tag':'{tag?}'}", "PhotoController@indexItem");
+Route::get("/photo/id={id}&filtr={'room':[{room?}],'styles':[{style?}],'colors':{color?},'sort':'{sort?}','tag':'{tag?}'}", "PhotoController@indexItem");
 Route::get('/news', ['uses' => 'NewsController@Index']);
 
 /*login, registration and more

@@ -1,4 +1,3 @@
-{{-- TODO: тултипы сделать одной функцией --}}
 @extends('layouts.site')
 @section('site-content')
  <div class="content  uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights">
@@ -25,15 +24,15 @@
            @foreach ($images as $image_el)
             @if ($image_el->id === $image->id)
                 <div class="photo-item active-slide" data-id="{{ $image->id }}">
-                    <img class="img-slider" src="{{ $image_el->photo->url() }}" />
+                    <img class="img-slider" src="{{ $image_el->photo }}" />
                 </div>
             @elseif ($image_el->id < $image->id)
                 <div class="photo-item left-slide" data-id="{{ $image_el->id }}">
-                    <img class="img-slider" src="{{ $image_el->photo->url() }}" />
+                    <img class="img-slider" src="{{ $image_el->photo }}" />
                 </div>
             @else
                 <div class="photo-item right-slide" data-id="{{ $image_el->id }}">
-                    <img class="img-slider" src="{{ $image_el->photo->url() }}" />
+                    <img class="img-slider" src="{{ $image_el->photo }}" />
                 </div>
             @endif
            @endforeach
@@ -76,91 +75,14 @@
             @endif
           </span>
           <span class="num-page">
-            <span id="current-position"></span>/ <span id="all-photo">{{ $imageAll->count() }}</span>
+            <span id="current-position"></span>/ <span id="all-photo">{{ count($images) }}</span>
           </span>
           <span class="status-photo">
-            <div class="b-item-stat back-to-main">
-              <a href="/" class="ico-slider uk-icon-justify uk-icon-th-large"></a>
-              <span class="tooltip-stat margin-callback-tooltip">
-                <span class="text-tooltip-stat">
-                  Плитка
-                </span>
-                <span class="triangle-tooltip-stat triangle-callback"></span>
-              </span>
-            </div>
-            <div class="b-item-stat full-scrn">
-              <a class="ico-slider uk-icon-justify uk-icon-arrows-alt"></a>
-              <span class="tooltip-stat margin-full-scr-tooltip">
-                <span class="text-tooltip-stat">
-                  На весь экран
-                </span>
-                <span class="triangle-tooltip-stat triangle-full-scr"></span>
-              </span>
-            </div>
-            <div class="b-item-stat liked">
-              @if (Auth::check())
-                 <input type="hidden" name="post_id" value="{{ $image->id }}">
-                 <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                 <input type="hidden" name="url-liked" value="{{ $colorLiked ? '/delete_liked' : '/liked' }}">
-              @endif
-              <button
-              @if (Auth::check())
-                 id="num_liked"
-              @endif  class="{{ $colorLiked ? 'active-favorite ': ''}}ico-slider uk-icon-justify uk-icon-star"></button>
-              <span class="tooltip-stat margin-liked-tooltip">
-                <span class="text-tooltip-stat">
-                  Избранное
-                </span>
-                <span class="triangle-tooltip-stat"></span>
-              </span>
-            </div>
-            <div class="b-item-stat share">
-              <span class="ico-slider uk-icon-justify uk-icon-share-alt"></span>
-              <span class="tooltip-stat margin-share-tooltip">
-                <span class="text-tooltip-stat">
-                  Поделиться
-                </span>
-                <span class="triangle-tooltip-stat"></span>
-              </span>
-            </div>
-            <div class="b-item-stat comment">
-              <span class="ico-slider uk-icon-justify uk-icon-comments"></span>
-              <span id="num_comment">{{ $num_comment }}</span>
-              <span class="tooltip-stat margin-num-comment-tooltip">
-                <span class="text-tooltip-stat">
-                  Количество коментариев
-                </span>
-                <span class="triangle-tooltip-stat"></span>
-              </span>
-            </div>
-
-            <div class="b-item-stat like">
-               @if (Auth::check())
-                  <input type="hidden" name="post_id" value="{{ $image->id }}">
-                  <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                  <input type="hidden" name="url-like" value="{{ $colorLike ? '/delete_like' : '/like' }}">
-               @endif
-              <button class="{{ $colorLike ? 'active-like ': ''}}ico-slider uk-icon-justify uk-icon-heart"></button>
-              <span id="value-like">{{ $num_like }}</span>
-              <span class="tooltip-stat margin-like-tooltip">
-                <span class="text-tooltip-stat">
-                  Понравилось
-                  <span id="like-whom-pole">
-                     <?php $i = 0; ?>
-                    @foreach ($likeWhom as $like)
-                       <?php if ($i >3) { break;}?>
-                          <a class="mini-avatar"
-                          href="/user/{{ $like->id }}"
-                          title="{{ $like->name }}">
-                          <img src="{{ $like->quadro_ava }}"></a>
-                       <?php $i++;?>
-                    @endforeach
-                  </span>
-                </span>
-                <span class="triangle-tooltip-stat"></span>
-              </span>
-            </div>
-            @include('site.tooltip', ['data' => $image->views_count])
+             @include('site.tooltip', ['class' => 'back-to-main','link' => 'href="/"','icon' => 'th-large','id' => ' ','data' => false,'margin' => 'margin-callback-tooltip','text' => 'Плитка','triangle'=>'triangle-callback'])
+             @include('site.tooltip', ['class' => 'full-scrn','link' => ' ','icon' => 'arrows-alt','id' => ' ','data' => false,'margin' => 'margin-full-scr-tooltip','text' => 'На весь экран','triangle'=>'triangle-full-scr'])
+             @include('site.tooltip', ['class' => 'share','link' => ' ','icon' => 'share-alt','id' => ' ','data' => false,'margin' => 'margin-share-tooltip','text' => 'Поделиться','triangle'=>' '])
+             @include('site.tooltip', ['class' => 'comment','link' => ' ','icon' => 'comments','id' => 'num_comment','data' => $num_comment,'margin' => 'margin-num-comment-tooltip','text' => 'Количество коментариев','triangle'=>' '])
+             @include('site.tooltip', ['class' => 'view','link' => ' ','icon' => 'eye','id' => 'num_views','data' => $image->views,'margin' => 'other-margin-tooltip1','text' => 'Количество просмотров','triangle'=>' '])
           </span>
 
         </div>

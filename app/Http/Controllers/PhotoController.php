@@ -66,7 +66,7 @@ class PhotoController extends Controller
          return $result;
      }
 
-     private function sortSort () {
+     private function sortSort ( $sort ) {
           if ($sort != 0) {
             if ($sort == 'popular') {
                  $sortSort = ' ORDER BY Images.views_count DESC ';
@@ -82,9 +82,12 @@ class PhotoController extends Controller
             $sortSort = ' ';
             $sortSorting = 0;
          }
+         $result = array('Expression' => $sortSort,
+                         'Condition' => $sortSorting);
+         return $result;
      }
 
-     private function tagSort () {
+     private function tagSort ($tag) {
           if ($tag != '0') {
              $tagSort = ' AND Tags.title="'.$tag.'" ';
              $tagCondition = ' JOIN   Tags ON Images.id = Tags.post_id ';
@@ -92,8 +95,11 @@ class PhotoController extends Controller
              $tagSort = '';
              $tagCondition = ' ';
          }
+         $result = array('Expression' => $tagSort,
+                         'Condition' => $tagCondition);
+         return $result;
      }
-     private function activeColor($what)
+     private function activeColor($what, $id)
      {
           if ( $what == 'liked') {
                $activeThisUser = Liked::where('user_id', '=', Auth::id())
@@ -143,8 +149,8 @@ class PhotoController extends Controller
          $roomsArray = $this->sortCommon('img_rooms', 'img_rooms.room_id', $room);
          $colorsArray = $this->sortCommon('img_colors', 'img_colors.color_id', $color);
          $stylesArray = $this->sortCommon('img_styles', 'img_styles.style_id', $style);
-         $sortArray = $this->sortSort();
-         $tagArray = $this->tagSort();
+         $sortArray = $this->sortSort($sort);
+         $tagArray = $this->tagSort($tag);
 
          $colors = Color::all();
          $styles = Style::all();
@@ -153,18 +159,19 @@ class PhotoController extends Controller
 
          $images = DB::select(
                       "SELECT Images.id AS id ,
-                              Images.min_path AS photo
+                              Images.full_path AS photo
                        FROM   Images
                        ".$colorsArray['Condition']."
                        ".$roomsArray['Condition']."
                        ".$stylesArray['Condition']."
-                       ".$tagCondition."
+                       ".$tagArray['Condition']."
                        ".$colorsArray['Expression']."
                        ".$roomsArray['Expression']."
                        ".$stylesArray['Expression']."
-                       ".$tagSort."
+                       ".$tagArray['Expression']."
+                       WHERE Images.verified=true
                        GROUP BY Images.id
-                       ".$sortSort.";");
+                       ".$sortArray['Expression'].";");
 
          return view('site.index', ['news' => $news,
                                     'colors' => $colors,
@@ -383,40 +390,79 @@ class PhotoController extends Controller
      */
     public function indexItem($id, $room = 0, $style = 0, $color = 0, $sort = 0, $tag = 0)
     {
-        $roomsArray = $this->sort('img_rooms', 'img_rooms.room_id', $room);
-        $colorsArray = $this->sort('img_colors', 'img_colors.color_id', $color);
-        $stylesArray = $this->sort('img_styles', 'img_styles.style_id', $style);
-        $sortArray = $this->sortSort();
-        $tagArray = $this->tagSort();
+        $roomsArray = $this->sortCommon('img_rooms', 'img_rooms.room_id', $room);
+        $colorsArray = $this->sortCommon('img_colors', 'img_colors.color_id', $color);
+        $stylesArray = $this->sortCommon('img_styles', 'img_styles.style_id', $style);
+        $sortArray = $this->sortSort($sort);
+        $tagArray = $this->tagSort($tag);
 
-        $images = Picture::where('verified', '=', true)->where('id', '>=', $id)
-                                                       ->take(3)
-                                                       ->get();
-        $imageAll = Picture::where('verified', '=', true)->get()->count();
-        $imageCurrent = Picture::where('verified', '=', true)->where('id', '=', $id)
-                                                             ->first();
+        $images = DB::select(
+                             "SELECT Images.id AS id ,
+                                     Images.author_id AS author_id,
+                                     Images.full_path AS photo,
+                                     Images.views_count AS views,
+                                     Images.title AS title,
+                                     Images.description AS description
+                              FROM   Images
+                              ".$colorsArray['Condition']."
+                              ".$roomsArray['Condition']."
+                              ".$stylesArray['Condition']."
+                              ".$tagArray['Condition']."
+                              ".$colorsArray['Expression']."
+                              ".$roomsArray['Expression']."
+                              ".$stylesArray['Expression']."
+                              ".$tagArray['Expression']."
+                              WHERE Images.verified=true
+                              AND Images.id>=".$id."
+                              GROUP BY Images.id
+                              ".$sortArray['Expression'].";");
+        $num_image = count($images);
+        $imageCurrent = DB::select(
+                             "SELECT Images.id AS id ,
+                                     Images.author_id AS author_id,
+                                     Images.full_path AS photo,
+                                     Images.views_count AS views,
+                                     Images.title AS title,
+                                     Images.description AS description
+                              FROM   Images
+                              ".$colorsArray['Condition']."
+                              ".$roomsArray['Condition']."
+                              ".$stylesArray['Condition']."
+                              ".$tagArray['Condition']."
+                              ".$colorsArray['Expression']."
+                              ".$roomsArray['Expression']."
+                              ".$stylesArray['Expression']."
+                              ".$tagArray['Expression']."
+                              WHERE Images.verified=true
+                              AND Images.id=".$id."
+                              GROUP BY Images.id
+                              ".$sortArray['Expression'].";");
+        if (empty($imageCurrent)) {
+            $imageCurrent = Picture::whereRaw($roomsArray['Condition'].' and '
+                                      .$stylesArray['Condition'].' and '
+                                      .$colorsArray['Condition'])
+                            ->where('id', '>', $id)
+                            ->first();
 
-        if (empty($image)) {
-            $image = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
-                           ->where('id', '>', $id)
-                           ->first();
             if (empty($image)) {
-                $image = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
+                $imageCurrent = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
                                 ->where('id', '<', $id)
                                 ->first();
             } else {
-                $image = false;
+                $imageCurrent = false;
             }
         }
 
         $likes = Like::where('post_id', '=', $id)->get();
+        $num_like = $likes->count();
         $likeWhom = array();
         foreach ($likes as $like) {
-            $user = User::find($like->user_id);
+            $user = User::select('id as user_id', 'quadro_ava as portret', 'name')
+                         ->where('id', '=', $like->user_id)
+                         ->get()->toArray();
             array_push($likeWhom, $user);
         }
-
-        $user = User::find($imageCurrent->author_id);
+        $user = User::find($imageCurrent[0]->author_id);
         $colors = Color::all();
         $styles = Style::all();
         $rooms = Room::all();
@@ -424,6 +470,7 @@ class PhotoController extends Controller
 
         $tags = Tag::where('post_id', '=', $id)->where('title', '<>', '')->get();
         $views = View::where('post_id', '=', $id)->get();
+
         $comments = DB::select('SELECT Comments.id,
                                        Users.id AS user_id,
                                        Images.id AS image_id,
@@ -437,22 +484,20 @@ class PhotoController extends Controller
                                 WHERE  Images.id='.$id.
                                ' AND  Comments.status="read"');
 
-        $num_image = count(Picture::all());
-        $colorLike = $this->activeColor('like');
-        $colorLiked = $this->activeColor('liked');
+        $num_comment = count($comments);
+        $colorLike = $this->activeColor('like', $id);
+        $colorLiked = $this->activeColor('liked', $id);
 
-        $new_count = $image->views_count + 1;
-        $imageCurrent->views_count = $new_count;
-        $imageCurrent->save();
-
-        return view('site.slider', ['imageAll' => $imageAll,
-                                    'news' => $news,
+     //    $new_count = $image->views_count + 1;
+     //    $imageCurrent->views_count = $new_count;
+     //    $imageCurrent->save();
+        return view('site.slider', ['news' => $news,
                                     'user' => $user,
                                     'colors' => $colors,
                                     'styles' => $styles,
                                     'rooms' =>  $rooms,
                                     'images' => $images,
-                                    'image' => $image,
+                                    'image' => $imageCurrent[0],
                                     'comments' => $comments,
                                     'tags' => $tags,
                                     'views' => $views,
@@ -461,12 +506,7 @@ class PhotoController extends Controller
                                     'num_comment' => $num_comment,
                                     'colorLike' => $colorLike,
                                     'colorLiked' => $colorLiked,
-                                    'sortSorting' => $sortSorting,
-                                    'tagSorting' => $tagSorting,
-                                    'colorSorting' => $colorSorting,
-                                    'roomSorting' => $roomSorting,
-                                    'likeWhom' => $likeWhom,
-                                    'styleSorting' => $styleSorting]);
+                                    'likeWhom' => $likeWhom]);
     }
 
     /**
@@ -493,9 +533,10 @@ class PhotoController extends Controller
         $image->user_upload_id = $_POST['user_upload_id'];
         $image->verified = false;
         $lastId = Picture::orderBy('id', 'desc')->first()->id + 1;
-        $this->addJoinData(color 'img_colors' 'img_id'  'color_id');
-        $this->addJoinData(room 'img_rooms' 'img_id'  'room_id');
-        $this->addJoinData(style 'img_styles' 'img_id'  'style_id');
+
+        $this->addJoinData('color', 'img_colors', 'img_id',  'color_id');
+        $this->addJoinData('room', 'img_rooms', 'img_id',  'room_id');
+        $this->addJoinData('style', 'img_styles', 'img_id',  'style_id');
 
         $tags = explode(';', $_POST['data-tags']);
         foreach ($tags as $tag) {

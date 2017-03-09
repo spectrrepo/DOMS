@@ -1,7 +1,7 @@
 <div class="overlay" id="zoom-slider">
   <span class="close slider-close uk-icon-justify uk-icon-remove"></span>
   <div class="img-max-area">
-    <img class="img-max-center" src="{{ $image->photo->url() }}" alt="" />
+    <img class="img-max-center" src="{{ $image->photo }}" alt="" />
     <div class="navigation-zoom-slider">
       <span class="nav-zoom left uk-icon-justify uk-icon-chevron-left" data-direction="left"></span>
       <span class="nav-zoom right uk-icon-justify uk-icon-chevron-right" data-direction="right"></span>
@@ -18,7 +18,7 @@
     </span>
     <span class="num-page-zoom">
       <span id="current-position-zoom"></span>/
-      <span id="all-photo-zoom">{{ $imageAll->count() }}</span>
+      <span id="all-photo-zoom">{{ count($images) }}</span>
     </span>
     <span class="status-photo-zoom">
       <div class="b-item-stat comment">
@@ -33,7 +33,7 @@
       </div>
       <div class="b-item-stat view">
         <span class="ico-slider ico-slider-zoom uk-icon-justify uk-icon-eye"></span>
-        <span id="num_views_zoom"> {{ $image->views_count }}</span>
+        <span id="num_views_zoom"> {{ $image->views }} </span>
         <span class="tooltip-stat other-margin-tooltip1">
           <span class="text-tooltip-stat other-color">
             Количество просмотров
