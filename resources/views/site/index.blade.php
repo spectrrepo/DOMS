@@ -22,7 +22,6 @@
       </a>
     @endforeach
   </div>
-    <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" name="lastId" value=" $imageLast->id ">
     @if ( count($images) >= 3)
       <div class="b-next-page">

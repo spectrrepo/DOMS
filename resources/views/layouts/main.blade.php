@@ -5,10 +5,7 @@
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <meta name="_token" content="{{ csrf_token() }}">
-    <meta name="authID" content="
-    @if (Auth::check())
-      {{ Auth::user()->id }}
-    @endif">
+    <meta name="authID" content="{{ Auth::check() ? Auth::user()->id : '' }}">
     <title>
       @if (preg_match('[/photo/]', URL::current()))
         Галерея » DOMS - портал идей для дизайна интерьеров
@@ -25,7 +22,6 @@
       @endif
     </title>
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/all.js') }}"></script>
   </head>
   <body>
     @include('../helpers.header')
@@ -40,6 +36,5 @@
     @include('../popups.forgetpswd')
     @include('../popups.login')
     @include('../popups.registration.index')
-
   </body>
 </html>

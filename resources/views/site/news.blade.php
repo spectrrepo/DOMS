@@ -18,7 +18,7 @@
             {{ $new->description }}
           </p>
           <span class="item-news-date">
-            <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($new->news_updated_at)->formatLocalized('%d %b %Y') ?>
+            @php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($new->news_updated_at)->formatLocalized('%d %b %Y') @endphp
           </span>
         </div>
       </div>
@@ -34,11 +34,11 @@
       <div class="popup-text-news">
         {{ $new->full_description }}
       </div>
-      <?php $newsViews = \App\NewsVariant::where('new_id', '=', $new->id)->get();
+      @php $newsViews = \App\NewsVariant::where('new_id', '=', $new->id)->get();
            foreach ($newsViews as $item) {
                echo "<img src='$item->file_path_full'/>";
            }
-      ?>
+      @endphp
     </div>
   </div>
   @endforeach

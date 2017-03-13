@@ -1,5 +1,5 @@
-import { $, Jquery } from '../vendor/jquery.min';
-
+// import $ from '../vendor/jquery.min';
+// import jQuery from '../vendor/jquery.min';
 import { Filtr } from './filtres/Filtr';
 
 import { dwnldIndexPhoto } from './lib/functions';
@@ -40,8 +40,8 @@ import { form } from './lib/tags_functions';
 import { mainSliderPhoto } from './lib/main_slider';
 
 // инициализация главного слайдера
-// $().addEventListener('click', mainSliderPhoto(), false);
-// $().addEventListener('click', mainSliderPhoto(), false);
+$('.btn-nav').addEventListener('click', mainSliderPhoto(), false);
+$('.nav-zoom').addEventListener('click', mainSliderPhoto(), false);
 
 // работа с тегами
 // $().addEventListener('click', addTag(), false);

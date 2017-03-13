@@ -16,7 +16,8 @@ Route::get("/filtr={'room':[{room?}],'style':[{style?}],'color':{color?},'sort':
 Route::get("/photo/id={id}&filtr={'room':[{room?}],'styles':[{style?}],'colors':{color?},'sort':'{sort?}','tag':'{tag?}'}", "PhotoController@indexItem");
 Route::get('/news', ['uses' => 'NewsController@Index']);
 
-/*login, registration and more
+/*
+login, registration and more
 */
 Route::get(
     '/socialite/{provider}',
@@ -58,10 +59,12 @@ Route::get('/social_login/callback/{provider}', 'SocialController@callback');
 Route::post('/enter', 'UserController@login');
 Route::post('/reg', 'UserController@registration');
 Route::post('/recovery_pass', 'UserController@recoveryAccess' );
-/*only view all users
+/*
+only view all users
 */
 Route::get('/profile/{id}', ['uses' => 'UserController@index']);
-/*callback all people
+/*
+callback all people
 */
 Route::post('/send_mail', ['as' => 'sendMail', 'uses' => 'MessagesController@sendMail']);
 
@@ -83,7 +86,8 @@ Route::post('/load_all_likes', 'SliderController@loadAllLikes');
 / These routes , which users have access
 */
 Route::group(['middleware' => 'role:user,moderator,admin'], function () {
-    /*View user pages
+    /*
+    View user pages
     */
     Route::get('/profile/admin/verification/{id}', ['uses' => 'UserController@confirmationItemPage']);
     Route::get('/profile/add/photo', ['as' => 'add', 'uses' => 'UserController@indexAdd']);
@@ -94,20 +98,22 @@ Route::group(['middleware' => 'role:user,moderator,admin'], function () {
     Route::post('/delete_liked', 'FavoriteController@delete');
     Route::post('/delete_like', 'LikeController@delete');
     Route::post('/pagination_news', 'UserController@ajaxDownloadUpdate');
-    Route::post('/update/profile', 'UserController@changeYourself');
+
     Route::post('/add_photo_site/{id}','PhotoController@addPhotoSite');
     Route::post('/add_links', 'SocialController@add');
     Route::post('/add_photo', 'PhotoController@add');
     Route::post('/comment', 'CommentController@add');
     Route::post('/like', 'LikeController@add');
     Route::post('/liked', 'FavoriteController@add');
+
+    Route::post('/update/profile', 'UserController@changeYourself');
     Route::post('/edit_links','SocialController@edit');
     Route::post('/pagination_index', 'PhotoController@indexAddPage');
 
 });
 
 /*
-/ These routes , which moderators have access
+ These routes , which moderators have access
 */
 
 Route::group(['middleware' => 'role:0,moderator,admin'], function () {
@@ -122,22 +128,26 @@ Route::group(['middleware' => 'role:0,moderator,admin'], function () {
     Route::get('/profile/admin/edit_copyrights', ['as' => 'pretense', 'uses' => 'CopyrightController@index']);
     Route::get('/profile/admin/photo/all', 'PhotoController@allPhotoSite');
     Route::get('/profile/admin/answer_mail/{id}', 'MessagesController@mailIndexItem');
+
     Route::post('/read_new_comment', 'CommentController@changeStatus');
     Route::post('/add_news', 'NewsController@addNews');
     Route::post('/answer_mail', 'MessagesController@askOnMail');
+
     Route::post('/delete_copyright', 'CopyrightController@delete');
     Route::post('/delete_comments/{id}', 'CommentController@delete');
     Route::post('/delete_message/{id}', 'MessagesController@deleteMail');
+
     Route::post('/edit_new/{id}','NewsController@edit');
-    Route::post('/save_copyright', 'CopyrightController@saveNewCopyright');
     Route::post('/add_copyright', 'CopyrightController@add');
+    Route::post('/save_copyright', 'CopyrightController@saveNewCopyright');
 
 });
 
 /*
-/ These routes , which admins have access
+These routes , which admins have access
 */
 Route::group(['middleware' => 'role:0,0,admin'], function () {
+
     Route::get('/profile/admin/edit_page_styles/{id}','StylesController@editPageIndex');
     Route::get('/profile/admin/tags_edit', ['as' => 'tags_edit', 'uses' => 'UserController@editTagsPage']);
     Route::get('/profile/admin/styles_edit', ['as' => 'styles_edit', 'uses' => 'UserController@editStylesPage']);
