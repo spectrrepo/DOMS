@@ -20,7 +20,7 @@ export function addTag() {
 /**
  * @function hiddenTagMask
  */
-export function hiddenTagMask() {
+export function hiddenTagMask(e) {
     var container = $(".overlay");
     if (container.has(e.target).length === 0) {
         container.fadeOut();

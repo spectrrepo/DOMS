@@ -16,11 +16,6 @@ require('laravel-elixir-vue');
 elixir(mix => {
     mix.sass('app.scss', 'public/css/app.css')
     .rollup('assets/common.js',
-            'public/js/all.js')
-    .scripts([
-        "vendor/jquery.min.js",
-        "vendor/uikit.min.js",
-        "vendor/grid.js",
-        "assets/all.js"],'public/js/app.js')
+            'public/js/app.js')
     .copy('resources/assets/fonts/*.*', 'public/css/fonts/');
 });
