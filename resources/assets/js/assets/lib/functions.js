@@ -67,20 +67,6 @@ export function dwnldIndexPhoto(sortSorting,
 }
 
 /**
- * @function openModalDescription - функция для открытия
- *                                  модального окна с описанием к фото
- */
-export function openModalDescription () {
-  $('.description-scroll-place').empty();
-  $('<h3 class="title-description-popup"></h3>')
-                .appendTo('.description-scroll-place')
-                .text($(this).text());
-  $('<p></p>').appendTo('.description-scroll-place')
-              .text($('#description-pole p').text());
-  $('#modalDescriptionFull').fadeIn();
-}
-
-/**
  * @function LoadAllComments
  * @param string - btn - элемент, принажатии на который показываются все комментарии
  */
@@ -115,25 +101,25 @@ export function closeModal (el) {
  * @param string - el - css class для элемента слайдера
  */
 export function slider (activeEl, leftEl, rightEl, el) {
-  if ($(this).data('direction') === 'prev') {
-      if ($(el+':first').hasClass(activeEl)) {
-            $(el+':not('+el+':last)').addClass(leftEl).removeClass(activeEl)
-                                                      .removeClass(rightEl);
-            $(el+':last').addClass(activeEl).removeClass(rightEl);
-        } else {
-            $(activeEl).prev().addClass(activeEl).removeClass(leftEl);
-            $(activeEl+':last').removeClass(activeEl).addClass(rightEl);
-        }
-    } else {
-        if ($(el+':last').hasClass(activeEl)) {
-            $(el+':not('+el+'first)').addClass(rightEl).removeClass(activeEl)
-                                                       .removeClass(leftEl);
-            $(el+':first').addClass(activeEl).removeClass(leftEl);
-        } else {
-            $(activeEl).next().addClass(activeEl).removeClass(rightEl);
-            $(activeEl+':first').removeClass(activeEl).addClass(leftEl);
-        }
-    }
+    if ($(this).data('direction') === 'prev') {
+        if ($('.'+el+':first').hasClass(activeEl)) {
+              $('.'+el+':not(.'+el+':last)').addClass(leftEl).removeClass(activeEl)
+                                                        .removeClass(rightEl);
+              $('.'+el+':last').addClass(activeEl).removeClass(rightEl);
+          } else {
+              $('.'+activeEl).prev().addClass(activeEl).removeClass(leftEl);
+              $('.'+activeEl+':last').removeClass(activeEl).addClass(rightEl);
+          }
+      } else {
+          if ($('.'+el+':last').hasClass(activeEl)) {
+              $('.'+el+':not(.'+el+':first)').addClass(rightEl).removeClass(activeEl)
+                                                         .removeClass(leftEl);
+              $('.'+el+':first').addClass(activeEl).removeClass(leftEl);
+          } else {
+              $('.'+activeEl).next().addClass(activeEl).removeClass(rightEl);
+              $('.'+activeEl+':first').removeClass(activeEl).addClass(leftEl);
+          }
+      }
 }
 // ============================================================================
 // ============================================================================

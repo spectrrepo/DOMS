@@ -1,28 +1,12 @@
 @extends('layouts.profile')
 @section('profile-content')
 
-@include('elements.info_user')
+@include('profile.elements.info_user')
 <div class="separate-title">
   Лента
 </div>
 
 <div class="wrap-personal-news">
-<<<<<<< HEAD
-    <div class="b-setting-switcher">
-      <ul class="switcher">
-        <li class="item-swicher{{ substr_count(URL::current(), '/profile/') ? ' item-switcher-active': ' none' }}"><a href="{{ URL::to('/profile/'.Auth::id()) }}">Обновления</a></li>
-        <li class="item-swicher{{ substr_count(URL::current(), '/your_photo') ? ' item-switcher-active': ' none' }}"><a href="{{ URL::to('/profile/'.Auth::id().'/your_photo') }}">Фотографии</a></li>
-        <div class="clear"></div>
-      </ul>
-    </div>
-    <div class="b-personal-news">
-      @foreach ($images as $image)
-        <div class="b-person-post">
-          <div class="col-news-min">
-              <div class="b-portret-blogger">
-                {{-- <img src="{{ ($image->quadro_ava_add !== null ) ? $image->quadro_ava_add : '/img/user.png' }}"/> --}}
-              </div>
-=======
   <div class="b-setting-switcher">
     <ul class="switcher">
       <li class="item-swicher{{ substr_count(URL::current(), '/profile/') ? ' item-switcher-active': ' none' }}"><a href="{{ URL::to('/profile/'.Auth::id()) }}">Обновления</a></li>
@@ -41,7 +25,6 @@
         <div class="col-news-big">
           <div class="b-name-redactor">
             <a href="/profile/{{$item[0]->user_id_add}}">{{$item[0]->name_user_add}}</a>
->>>>>>> 11f247d384cf55c4becf2576d592496e70a20f5b
           </div>
           <div class="b-post-body">
             <a href="/photo/id=[{{ $item[0]->img_id }}],room=[0],styles=[0],colors=[0],sort=[0],tag=[0]" class="b-photo-post">

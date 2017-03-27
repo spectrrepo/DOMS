@@ -1,7 +1,6 @@
 import { Filtr } from './filtres/Filtr';
 
 import { dwnldIndexPhoto } from './lib/functions';
-import { openModalDescription } from './lib/functions';
 import { loadAllComments } from './lib/functions';
 import { openModal } from './lib/functions';
 import { closeModal } from './lib/functions';
@@ -85,42 +84,26 @@ import { mainSliderPhoto } from './lib/main_slider';
 
 })();
 
-// Инициализация слайдеров
+
+// инициализация слайдеров <--- !!! работает
 (function() {
 
-  $().on('click', function (){
-    slider (activeEl, leftEl, rightEl, el)
-  });
-
-  $().on('click', function (){
-    slider (activeEl, leftEl, rightEl, el)
-  });
-
-  $().on('click', function (){
-    slider (activeEl, leftEl, rightEl, el)
-  });
-
-})();
-
-// инициализация слайдеров
-(function() {
-
-     $('.modalDescriptionFull').on('click', function () {
-         slider('.active-about', '.left-about', '.right-about', '.item');
+     $('.nav-slide-about').on('click', function () {
+         slider('active-about', 'left-about', 'right-about', 'item');
      });
 
      $('.min-nav-views').on('click', function () {
-       slider('.active-view-min', '.left-view-min', '.right-view-min', '.item-view-min');
+       slider('active-view-min', 'left-view-min', 'right-view-min', 'item-view-min');
      });
 
      $('.nav-zoom-views').on('click', function () {
-       slider('.active-slide-zoom-views', '.left-slide-zoom-views', '.right-slide-zoom-views', '.item-views-zoom')
+       slider('active-slide-zoom-views', 'left-slide-zoom-views', 'right-slide-zoom-views', 'item-views-zoom')
      });
 
 })();
 
 
-// прослушка кнопок закрытия попапов
+// прослушка кнопок закрытия попапов <--- !!! работает
 (function() {
 
   $('.modalDescriptionFull').on('click', function () {
@@ -159,11 +142,15 @@ import { mainSliderPhoto } from './lib/main_slider';
     closeModal('#zoom-slider')
   });
 
+  $('#close-modal-description').on('click', function () {
+    closeModal('#modalDescriptionFull')
+  });
+
 })();
 
 
-// прослушка кнопок открытия попапов
-// (function() {
+// прослушка кнопок открытия попапов <--- !!! работает
+(function() {
 
   $('.full-scrn').on('click', function () {
     openModal('#zoom-slider');
@@ -178,7 +165,7 @@ import { mainSliderPhoto } from './lib/main_slider';
     openModal('#popup-feedback');
   });
   $('.login').on('click', function () {
-    openModalView('#login-popup');
+    openModal('#login-popup');
   });
   $('#registration').on('click', function () {
     openModal('#popup-registr');
@@ -186,27 +173,27 @@ import { mainSliderPhoto } from './lib/main_slider';
   $('#recover-pswd').on('click', function () {
     openModal('#passwd-popup');
   });
+  $('.item-view-min').on('click', function () {
+    openModal('#modalViewsZoom');
+  });
 
-// })();
+  $('#description-pole h3').on('click', function () {
+    openModal('#modalDescriptionFull');
+  });
+})();
 
-// Подгрузить все комментарии
+
+// Подгрузить все комментарии <--- !!! работает
 (function() {
 
-  $().on('click', function () {
-    loadAllComments(btn);
+  $('.btn-all-comments').on('click', function () {
+    loadAllComments(this);
   });
 
 })();
 
 
-// Открытие модального окна описания
-(function() {
-
-   $().on('click', openModalDescription);
-
-})();
-
-// Инициализация кнопки для показа полной информации о пользователе
+// Инициализация кнопки для показа полной информации о пользователе <----! Работает
 (function() {
 
   addArrowForMoreInfo();
@@ -214,7 +201,7 @@ import { mainSliderPhoto } from './lib/main_slider';
 
 })();
 
-// попапы новостей
+// попапы новостей <--- !!! работает
 (function() {
 
   $('.item-news-title').on('click', function(){
@@ -231,7 +218,7 @@ import { mainSliderPhoto } from './lib/main_slider';
   $('.liked button').on('click', liked);
   $('#pretense-file').on('change', changeIcoPretense);
   $('#formPretense').on('submit', sendPretense);
-  $('p.asd').on('click', allPhotoLikes);
+  // $('p.asd').on('click', allPhotoLikes);
 
 })();
 
@@ -239,15 +226,15 @@ import { mainSliderPhoto } from './lib/main_slider';
 (function() {
 
    $().on('submit', function(){
-    commonValid(text, where)
+    commonValid('text', 'form')
    });
    $().on('submit', function(){
-    commonValid(text, where)
+    commonValid('text', 'form')
    });
    $().on('submit', function(){
-    commonValid(text, where)
+    commonValid('text', 'form')
    });
-   $().on('submit', validateBack);
+   $('#feedback').on('submit', validateBack);
 
 })();
 
@@ -260,7 +247,7 @@ import { mainSliderPhoto } from './lib/main_slider';
 
 })();
 
-
+// <--- !!! работает
 (function() {
 
   $( document ).ready(function () {
@@ -274,26 +261,25 @@ import { mainSliderPhoto } from './lib/main_slider';
 
 
 
-
+// <--- !!! работает
 (function() {
 
   $('#current-position, #current-position-zoom').text($('.active-slide').index() + 1);
-  var id, newLocal;
 
 })();
 
 // делегирование
 
-// (function() {
-//
-//   var filtr = new Filtr;
-//
-//   table.onclick = function(event) {
-//     var target = event.target; // где был клик?
-//
-//     if (target.tagName != 'TD') return; // не на TD? тогда не интересует
-//
-//     highlight(target); // подсветить TD
-//   };
-//
-// })();
+(function() {
+
+  // var filtr = new Filtr;
+  //
+  // table.onclick = function(event) {
+  //   var target = event.target; // где был клик?
+  //
+  //   if (target.tagName != 'TD') return; // не на TD? тогда не интересует
+  //
+  //   highlight(target); // подсветить TD
+  // };
+
+})();

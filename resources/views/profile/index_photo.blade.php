@@ -1,7 +1,7 @@
 @extends('layouts.profile')
 @section('profile-content')
 
-@include('elements.info_user')
+@include('profile.elements.info_user')
 <div class="separate-title">
   Лента
 </div>
