@@ -43,10 +43,10 @@ class CopyrightController extends Controller
      */
     public function add(){
 
-
-        $copyright = new Pretense();
         $photo = Image::make($_FILES['file_pretense']['tmp_name']);
         $photo->save( public_path('/img/f.jpg'));
+
+        $copyright = new Pretense();
         $copyright->photo_pretense = public_path('/img/f.jpg');
         $copyright->post_id = $_POST['post_id'];
         $copyright->user_pretense_id = Auth::user()->id;
@@ -54,6 +54,7 @@ class CopyrightController extends Controller
         $copyright->message = $_POST['text_pretense'];
 
         $copyright->save();
+
         return 'true';
     }
 
@@ -85,11 +86,13 @@ class CopyrightController extends Controller
         $id = $_POST['id'];
 
         $copyright = Pretense::find($id);
-        $imageChange = Picture::find($copyright->post_id);
-        $imageChange->author_id = $copyright->user_pretense_id;
         $copyright->status = 'read';
         $copyright->save();
+
+        $imageChange = Picture::find($copyright->post_id);
+        $imageChange->author_id = $copyright->user_pretense_id;
         $imageChange->save();
+
         return redirect()->back();
 
     }

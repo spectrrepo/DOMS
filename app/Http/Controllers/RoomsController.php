@@ -13,7 +13,9 @@ class RoomsController extends Controller
 
     public function delete ($roomID) {
 
-        $room = Room::find($roomID)->delete();
+        $room = Room::find($roomID)
+                    ->delete();
+
         return redirect()->back();
 
     }
@@ -21,20 +23,20 @@ class RoomsController extends Controller
     public function add()
     {
         $room = new Room();
-
         $room->title = $_POST["title"];
         $room->save();
 
         return redirect()->back();
 
     }
+
     public function edit($id)
     {
         $room = Room::find($id);
-
         $room->title = $_POST["title-room"];
         $room->save();
 
         return redirect()->back();
     }
+
 }

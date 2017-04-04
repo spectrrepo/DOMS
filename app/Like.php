@@ -12,6 +12,8 @@ class Like extends Model
      * @var string
      */
      protected $dates = ['date'];
+
      protected $table = 'Likes';
+
      public $timestamps = false;
 }

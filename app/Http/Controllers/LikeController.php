@@ -27,14 +27,11 @@ class LikeController extends Controller
      *
      */
     public function add(){
+        setlocale(LC_TIME, 'ru_RU.utf8');
+
         $like = new Like();
         $like->post_id = $_POST['post_id'];
         $like->user_id = $_POST['user_id'];
-        $image = Picture::find($_POST['post_id']);
-        $image->likes_count += 1;
-        $image->save();
-
-        setlocale(LC_TIME, 'ru_RU.utf8');
         $like->date_rus = \Carbon\Carbon::parse()->formatLocalized('%d %b %Y');
         $like->save();
 
@@ -50,11 +47,11 @@ class LikeController extends Controller
      *
      */
     public function delete(){
+
         $like = Like::where('post_id', '=', $_POST['post_id'])
                     ->where('user_id', '=', $_POST['user_id']);
-        $image = Picture::find($_POST['post_id']);
-        $image->likes_count -= 1;
         $like->delete();
+
         return 'true';
     }
 
@@ -67,6 +64,7 @@ class LikeController extends Controller
 
         $Likes = Like::all();
         $num_like = count($like);
+        
         return $num_like;
 
     }

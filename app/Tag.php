@@ -13,6 +13,7 @@ class Tag extends Model
      */
 
      protected $table = 'Tags';
+
      public $timestamps = false;
 
 }

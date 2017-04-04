@@ -18,6 +18,7 @@ class View extends Model implements StaplerableInterface
      */
 
      protected $table = 'Views';
+
      public $timestamps = false;
 
      public function __construct(array $attributes = array()) {

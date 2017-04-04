@@ -28,30 +28,29 @@ class FavoriteController extends Controller
      */
     public function add()
     {
-        $liked = new Liked();
+        setlocale(LC_TIME, 'ru_RU.utf8');
 
+        $liked = new Liked();
         $liked->post_id = $_POST['post_id'];
         $liked->user_id = $_POST['user_id'];
-        $image = Picture::find($_POST['post_id']);
-        $image->favs_count += 1;
-        $image->save();
         $liked->date = \Carbon\Carbon::parse();
-        setlocale(LC_TIME, 'ru_RU.utf8');
         $liked->date_rus = \Carbon\Carbon::parse()->formatLocalized('%d %b %Y');
         $liked->save();
+
         return 'delete_liked';
     }
 
     public function delete()
     {
+
         $liked = Liked::where('post_id', '=', $_POST['post_id'])
                      ->where('user_id', '=', $_POST['user_id']);
-        $image = Picture::find($_POST['post_id']);
-        $image->favs_count -= 1;
-        $image->save();
         $liked->delete();
+
         return 'liked';
+
     }
+
      /**
       * Login Form
       *

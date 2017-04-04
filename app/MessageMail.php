@@ -15,5 +15,6 @@ class MessageMail extends Model
     protected $dates = ['date'];
 
     public $timestamps = false;
+    
     protected $table = 'Message_mail';
 }

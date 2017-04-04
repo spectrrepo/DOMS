@@ -35,6 +35,7 @@ class CommentController extends Controller
       $comments = DB::table('Images')
                     ->join('Comments', 'Comments.post_id', '=','Images.id')
                     ->paginate(10);
+
       return view('moderator.comments', ['comments' => $comments]);
 
     }
@@ -64,31 +65,16 @@ class CommentController extends Controller
      */
     public function add(){
 
-        $comment = new Comment();
+        setlocale(LC_TIME, 'ru_RU.utf8');
 
+        $comment = new Comment();
         $comment->post_id = $_POST['post_id'];
         $comment->user_id = $_POST['user_id'];
-        $user = User::find($_POST['user_id']);
         $comment->text_comment = $_POST['comment'];
-        $image = Picture::find($_POST['post_id']);
-        $image->comments_count += 1;
-        setlocale(LC_TIME, 'ru_RU.utf8');
         $comment->rus_date = \Carbon\Carbon::parse(\Carbon\Carbon::now())->formatLocalized('%d %b %Y');
-        $image->save();
         $comment->save();
-        $lastComment = DB::select('SELECT  Comments.id,
-                                           Users.id AS user_id,
-                                           Images.id AS image_id,
-                                           Users.name AS user_name,
-                                           Users.quadro_ava AS user_quadro_ava,
-                                           Comments.text_comment AS text_comment,
-                                           Comments.rus_date AS rus_date
-                                    FROM   Comments JOIN Users
-                                    ON     Comments.user_id=Users.id
-                                    JOIN   Images ON Images.id = Comments.post_id
-                                    WHERE  Images.id='.$_POST['post_id'].
-                                    ' ORDER BY id DESC LIMIT 1;');
-        return $lastComment;
+
+        return $comment;
     }
 
     /**
@@ -98,6 +84,7 @@ class CommentController extends Controller
      *
      */
     public function delete(){
+
       $id = $_POST['delete_comment_id'];
       $comment = Comment::find($id);
       $comment->delete();

@@ -42,6 +42,7 @@ class MessagesController extends Controller
         });
 
         $messages->save();
+
         return redirect()->back();
 
     }
@@ -52,13 +53,16 @@ class MessagesController extends Controller
 
         return view('moderator.message', ['messages' => $messages]);
     }
+
     public function mailIndexItem ($id) {
+
         $message = MessageMail::find($id);
         $message->status = 'read';
         $message->save();
 
         return view('moderator.message_answer', ['message' => $message]);
     }
+
     /**
      * @param
      *
@@ -80,13 +84,16 @@ class MessagesController extends Controller
      *
      */
     public function askOnMail () {
+
         $text = $_POST['text'];
+
         Mail::raw($text, function($message)
         {
             $message->from('info@domspectr.ru', 'DOMS');
 
             $message->to($_POST['mail_send'])->subject($_POST['thema']);
         });
+
         return redirect()->back();
     }
 }

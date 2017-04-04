@@ -20,7 +20,6 @@ class NewsController extends Controller
         $colors = Color::all();
         $styles = Style::all();
         $rooms = Room::all();
-
         $news = News::all();
 
         return view('site.news', ['news'  => $news,
@@ -29,10 +28,10 @@ class NewsController extends Controller
                                   'rooms' => $rooms,
                                  ]);
     }
+
     public function addNews()
     {
         $news = new News;
-
         $news->title = $_POST['title'];
         $news->description = $_POST['min_description'];
         $news->full_description = $_POST['full_description'];
@@ -43,41 +42,42 @@ class NewsController extends Controller
         $variantRes = "";
         if (!empty($_FILES['variants']['tmp_name'])){
             foreach ($_FILES['variants']['tmp_name'] as $variantItem) {
+
                 $item = Image::make($variantItem);
                 $item->encode('jpg');
                 $item->save(public_path('/img/12.jpg'));
+
                 $view = new NewsVariant();
                 $view->news_variant = public_path('/img/12.jpg');
                 $view->new_id = News::orderBy('id', 'desc')->first()->id;
                 $view->save();
-                $addInfo = NewsVariant::orderBy('id', 'desc')
-                ->first();
-                $updateVariantsInfo = NewsVariant::find($addInfo->id);
-                $updateVariantsInfo->file_path_full = $updateVariantsInfo->news_variant->url('max');
-                $variantRes .= $updateVariantsInfo->id;
-                $updateVariantsInfo->save();
+                $view->file_path_full = $view->news_variant->url('max');
+                $view->save();
+
+                $variantRes .= $view->id;
             }
         }
-        $addInfo = News::orderBy('id', 'desc')
-                        ->first();
-        $updateIinfo = News::find($addInfo->id);
-        $updateIinfo->variants = $variantRes;
-        $updateIinfo->file_path_full = $updateIinfo->news->url('max');
-        $updateIinfo->file_path_min = $updateIinfo->news->url('small');
-        $updateIinfo->save();
+
+        $news->variants = $variantRes;
+        $news->file_path_full = $news->news->url('max');
+        $news->file_path_min = $news->news->url('small');
+        $news->save();
 
         return redirect()->back();
 
     }
+
     public function delete($id)
     {
-        $news = News::find($id)->delete();
+        $news = News::find($id)
+                    ->delete();
+
         return redirect()->back();
     }
+
     public function edit ($id)
     {
         $news = News::find($id);
-
         $news->title = $_POST["title"];
         $news->description = $_POST["min_description"];
         $news->full_description = $_POST["full_description"];
@@ -88,32 +88,33 @@ class NewsController extends Controller
 
         $variantRes = "";
         if ( !empty($_FILES["variants"]['tmp_name'][0])) {
-            // dd($_FILES);
             foreach ($_FILES['variants']['tmp_name'] as $variantItem) {
+
                 $item = Image::make($variantItem);
                 $item->encode('jpg');
                 $item->save(public_path('/img/12.jpg'));
+
                 $view = new NewsVariant();
                 $view->news_variant = public_path('/img/12.jpg');
                 $view->new_id = News::orderBy('id', 'desc')->first()->id;
                 $view->save();
-                $addInfo = NewsVariant::orderBy('id', 'desc')
-                ->first();
-                $updateVariantsInfo = NewsVariant::find($addInfo->id);
-                $updateVariantsInfo->file_path_full = $updateVariantsInfo->news_variant->url('max');
-                $variantRes .= $updateVariantsInfo->id;
-                $updateVariantsInfo->save();
+                $view->file_path_full = $view->news_variant->url('max');
+                $view->save();
+
+                $variantRes .= $view->id;
             }
             $news->variants = $variantRes;
         }
-
         $news->update();
+
         return redirect()->back();
     }
+
     public function editPageIndex($id)
     {
         $news = News::find($id);
 
         return view('moderator.update_news',['news' => $news]);
     }
+
 }

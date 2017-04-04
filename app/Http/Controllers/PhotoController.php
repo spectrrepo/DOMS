@@ -6,26 +6,22 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Input;
+use Image;
+use Auth;
+
 use App\Picture;
 use App\News;
 use App\Comment;
-
 use App\Tag;
-
 use App\View;
-
 use App\Like;
 use App\Liked;
 use App\User;
 use App\Color;
 use App\Style;
 use App\Room;
-use Input;
-use Carbon\Carbon;
-
-use Image;
-use Auth;
-
 /**
  * The ResultMessage class holds a message that can be returned
  * as a result of a process. The message has a severity and
@@ -99,6 +95,7 @@ class PhotoController extends Controller
                          'Condition' => $tagCondition);
          return $result;
      }
+
      private function activeColor($what, $id)
      {
           if ( $what == 'liked') {
@@ -122,6 +119,7 @@ class PhotoController extends Controller
           return $colorActive;
 
      }
+
      private function addJoinData () {
           if (Input::has('color')) {
               $color = $_POST['color'];
@@ -161,17 +159,17 @@ class PhotoController extends Controller
                       "SELECT Images.id AS id ,
                               Images.full_path AS photo
                        FROM   Images
-                       ".$colorsArray['Condition']."
-                       ".$roomsArray['Condition']."
-                       ".$stylesArray['Condition']."
-                       ".$tagArray['Condition']."
-                       ".$colorsArray['Expression']."
-                       ".$roomsArray['Expression']."
-                       ".$stylesArray['Expression']."
-                       ".$tagArray['Expression']."
+                              ".$colorsArray['Condition']."
+                              ".$roomsArray['Condition']."
+                              ".$stylesArray['Condition']."
+                              ".$tagArray['Condition']."
+                              ".$colorsArray['Expression']."
+                              ".$roomsArray['Expression']."
+                              ".$stylesArray['Expression']."
+                              ".$tagArray['Expression']."
                        WHERE Images.verified=true
                        GROUP BY Images.id
-                       ".$sortArray['Expression'].";");
+                              ".$sortArray['Expression'].";");
 
          return view('site.index', ['news' => $news,
                                     'colors' => $colors,
@@ -297,6 +295,7 @@ class PhotoController extends Controller
         }
         return $ajaxImage;
     }
+
      /**
       * Slider photo sort download
       * @param
@@ -382,6 +381,7 @@ class PhotoController extends Controller
          }
          return $ajaxImage;
      }
+
     /**
      * @param
      *

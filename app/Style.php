@@ -16,7 +16,10 @@ class Style extends Model implements StaplerableInterface
      */
      use EloquentTrait;
 
+     protected $table = 'Styles';
+
      public $timestamps = false;
+
      public function __construct(array $attributes = array()) {
          $this->hasAttachedFile('photo', [
              'styles' => [
@@ -26,7 +29,5 @@ class Style extends Model implements StaplerableInterface
 
          parent::__construct($attributes);
      }
-
-     protected $table = 'Styles';
 
 }

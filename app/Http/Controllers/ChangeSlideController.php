@@ -43,17 +43,16 @@ class ChangeSlideController extends Controller
      */
     public function add()
     {
-        $slide = new Slides();
-        $slide->text = $_POST['text'];
 
-        $slide->save();
-
-        $slides = Slides::orderBy('id', 'desc')->first();
         $image = Image::make($_FILES['photo']['tmp_name']);
         $image->encode('jpg');
         $image->save(public_path('img/about-slider/slide-'.$slides->id.'.jpg'));
-        $slides->photo = '/img/about-slider/slide-'.$slides->id.'.jpg';
-        $slides->save();
+
+        $slide = new Slides();
+        $slide->text = $_POST['text'];
+        $slide->photo = '/img/about-slider/slide-'.$slides->id.'.jpg';
+        $slide->save();
+
         return redirect()->back();
     }
 
@@ -71,6 +70,7 @@ class ChangeSlideController extends Controller
 
         return redirect()->back();
     }
+
     /**
      * @param
      *
@@ -81,6 +81,7 @@ class ChangeSlideController extends Controller
     {
         $id = $_POST['id'];
         $slide = Slides::find($id);
+        
         if (Input::has('text')) {
             $slide->text = $_POST['text'];
         }
@@ -90,6 +91,7 @@ class ChangeSlideController extends Controller
             $image->encode('jpg');
             $image->save(public_path($slide->photo));
         }
+
         $slide->save();
 
         return redirect()->back();

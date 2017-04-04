@@ -19,26 +19,31 @@ class AdminController extends Controller
         $news = News::all();
         return view('moderator.add_news', ['news' => $news]);
     }
+
     public function editRoomsPage()
     {
         $rooms = Room::paginate(10);
         return view('moderator.edit_rooms', ['rooms' => $rooms]);
     }
+
     public function editStylesPage()
     {
         $styles = Style::paginate(10);
         return view('moderator.edit_styles', ['styles' => $styles]);
     }
+
     public function editTagsPage()
     {
         $tags = Tag::paginate(10);
         return view('moderator.edit_tags', ['tags' => $tags]);
     }
+
     public function confirmationsPage()
     {
         $images = Picture::where('verified', '=', false)->paginate(10);
         return view('moderator.wait_confirmation', ['images' => $images]);
     }
+
     public function confirmationItemPage($id)
     {
         $imageId = Picture::find($id);
@@ -69,14 +74,17 @@ class AdminController extends Controller
             return redirect('/profile/'.Auth::user()->id);
         }
     }
+
     public function addNewsItem()
     {
         return view('moderator.news');
     }
+
     public function addStyleItem()
     {
         return view('moderator.style');
     }
+
     public function deleteVerificationImage($id)
     {
         $image = Picture::find($id)->delete();
@@ -86,4 +94,5 @@ class AdminController extends Controller
             return redirect('/profile/'.Auth::user()->id)->with('check', 'delete');
         }
     }
+    
 }

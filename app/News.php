@@ -15,7 +15,10 @@ class News extends Model implements StaplerableInterface
      *
      * @var string
      */
+    protected $table = 'News';
+
     protected $fillable = ['news'];
+
     protected $dates = ['news_updated_at'];
 
     public $timestamps = false;
@@ -30,5 +33,4 @@ class News extends Model implements StaplerableInterface
 
         parent::__construct($attributes);
     }
-     protected $table = 'News';
 }

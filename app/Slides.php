@@ -16,6 +16,12 @@ class Slides extends Model implements StaplerableInterface
      */
     use EloquentTrait;
 
+    protected $dates = ['date'];
+
+    protected $table = 'slides';
+
+    public $timestamps = false;
+
     public function __construct(array $attributes = array()) {
         $this->hasAttachedFile('photo_slider', [
             'styles' => [
@@ -26,8 +32,5 @@ class Slides extends Model implements StaplerableInterface
 
         parent::__construct($attributes);
     }
-    protected $dates = ['date'];
 
-    public $timestamps = false;
-    protected $table = 'slides';
 }

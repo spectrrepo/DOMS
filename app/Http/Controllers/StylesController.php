@@ -29,7 +29,9 @@ class StylesController extends Controller
      */
     public function delete ($styleID) {
 
-        $tag = Style::find($styleID)->delete();
+        $tag = Style::find($styleID)
+                     ->delete();
+
         return redirect()->back();
 
     }
@@ -46,9 +48,7 @@ class StylesController extends Controller
         $style->name = $_POST["title"];
         $style->description = $_POST["description"];
         $style->alt_text = 'DOMS стили';
-
         $style->photo = $_FILES["photo"];
-
         $style->save();
 
         return redirect()->back();
@@ -61,6 +61,7 @@ class StylesController extends Controller
      *
      */
     public function editPageIndex($id) {
+
       $style = Style::find($id);
 
       return view('moderator.update_style',['style' => $style]);
@@ -69,7 +70,6 @@ class StylesController extends Controller
     public function edit($id)
     {
         $style = Style::find($id);
-
         $style->name = $_POST["title"];
         $style->description = $_POST["description"];
         $style->alt_text = 'DOMS стили';

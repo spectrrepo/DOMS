@@ -19,12 +19,15 @@ use App\View;
 
 class ViewController extends Controller
 {
+
   public function delete()
-    {
-        $id = $_POST['id'];
-        $views = View::find($id);
-        $views->delete();
-        dd($views);
-        return 'true';
-    }
+  {
+
+    $id = $_POST['id'];
+    $views = View::find($id);
+    $views->delete();
+
+    return 'true';
+  }
+
 }

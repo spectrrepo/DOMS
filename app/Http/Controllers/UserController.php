@@ -27,9 +27,6 @@ use App\Like;
 use App\Social;
 
 
-
-// TODO: include library for work with validation
-
 /**
  * The ResultMessage class holds a message that can be returned
  * as a result of a process. The message has a severity and
@@ -137,6 +134,7 @@ class UserController extends Controller
         }
 
      }
+
      public function ajaxDownloadUpdate () {
          $lastUpdate = $_POST['lastId'];
          $images = DB::select(
@@ -216,13 +214,13 @@ class UserController extends Controller
          $images = array_slice($newss, $lastUpdate, $lastUpdate+4);
          return $images;
      }
+
      public function yourPhotoUpload ()
      {
          if(Auth::check()){
              $id = Auth::id();
              $user = User::find($id);
-             $userImages = Picture::where('author_id', '=', $id)
-                                   ->get();
+             $userImages = Picture::where('author_id', '=', $id)->get();
              $links = Social::where('user', '=', $id)->get();
 
              return View('profile.index_photo', [ 'id' => $id,
@@ -239,7 +237,6 @@ class UserController extends Controller
      *
      * @return Response
      */
-
     public function indexAdd()
      {
          if(Auth::check()){
@@ -266,6 +263,7 @@ class UserController extends Controller
       */
      public function login()
      {
+
          $email = $_POST['email'];
          $password = $_POST['password'];
 
@@ -285,33 +283,33 @@ class UserController extends Controller
      public function registration()
      {
        $findUser = User::where('email', '=', $_POST['email'])->first();
+
        if (empty($findUser)) {
          $user = new User();
-
-         $email = $_POST['email'];
-         $password = $_POST['password'];
-
          $user->name = $_POST["name"];
          $user->email = $_POST["email"];
          $user->phone = $_POST["phone"];
          $user->password = Hash::make($_POST["password"]);
+
          if (!empty($_POST['status'])) {
              $user->status = $_POST["status"];
          }
          $user->save();
-         $lastIdUser = User::orderBy('id', 'desc')->first()->id;
+
          DB::table('users_roles')->insert(
-            array('user_id' => $lastIdUser, 'role_id' => 3)
+            array('user_id' => $user->id,
+                  'role_id' => 3)
          );
          Auth::attempt(['email' => $email, 'password' => $password]);
          Mail::send('emails.welcome', array('name' => $_POST['name'],
-         'e_mail' => $_POST['email'],
-         'password' => $_POST['password']),
+                                            'e_mail' => $_POST['email'],
+                                            'password' => $_POST['password']),
          function($message)
          {
              $message->to($_POST["email"], $_POST['name'])
              ->subject('Вы зарегистрировались на сайте www.doms.design');
          });
+
          return redirect()->back();
        } else {
          return redirect('/')->with('bad_reg', 'true');
@@ -336,18 +334,21 @@ class UserController extends Controller
       */
      public function recoveryAccess()
      {
-         $user = User::where('e_mail', '=', $_POST['e_mail'])->first();
+         $user = User::where('e_mail', '=', $_POST['e_mail'])
+                      ->first();
+
          if (!empty($user)) {
              $new_password  = str_random(12);
              $user->password = Hash::make( $new_password );
-             Mail::send('emails.recovery', array('new_password' => $new_password),
-                                                 function($message)
+
+             Mail::send('emails.recovery', array('new_password' => $new_password), function($message)
              {
                 $message->to($_POST['e_mail'], User::where('e_mail', '=', $_POST['e_mail'])
                                                     ->first()
                                                     ->name)
                         ->subject('Ваш новый пароль на сайте www.doms.design');
              });
+
              return redirect('/')->with('check','true');
          } else {
              return redirect('/');
@@ -369,6 +370,7 @@ class UserController extends Controller
                                             'links' => $links]);
            }
        }
+
        /**
         * Login Form
         *
@@ -383,6 +385,7 @@ class UserController extends Controller
            $user->phone = $_POST["phone"];
            $user->skype = $_POST["skype"];
            $user->about = $_POST["about"];
+
            if(!empty($_FILES['avatar']['tmp_name'])){
                $user->avatar = $_FILES["avatar"];
                $user->path_min = $user->avatar->url('small');
@@ -391,7 +394,6 @@ class UserController extends Controller
                $quadroAva = Image::make($_FILES['avatar']['tmp_name']);
                $quadroAva->encode('jpg');
                $quadroAva->fit(180);
-
                $quadroAva->save(public_path('/img/quadro-ava/'.Auth::id().'jpg'));
 
                $user->quadro_ava = '/img/quadro-ava/'.Auth::id().'jpg';
@@ -400,4 +402,5 @@ class UserController extends Controller
            $user->save();
            return redirect()->back();
        }
+
 }

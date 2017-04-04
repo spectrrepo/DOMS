@@ -9,6 +9,13 @@ use Codesleeve\Stapler\ORM\EloquentTrait;
 class Pretense extends Model implements StaplerableInterface
 {
      use EloquentTrait;
+
+     protected $dates = ['photo_pretense_updated_at'];
+
+     protected $table = 'copyright';
+
+     public $timestamps = false;
+
      public function __construct(array $attributes = array()) {
      $this->hasAttachedFile('photo_pretense', [
      'styles' => [
@@ -23,8 +30,5 @@ class Pretense extends Model implements StaplerableInterface
      *
      * @var string
      */
-     protected $dates = ['photo_pretense_updated_at'];
-     protected $table = 'copyright';
-     public $timestamps = false;
 
 }

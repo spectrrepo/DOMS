@@ -10,7 +10,10 @@ use Codesleeve\Stapler\ORM\EloquentTrait;
 class Picture extends Model implements StaplerableInterface
 {
     use EloquentTrait;
+
     protected $dates = ['photo_updated_at'];
+
+    protected $table = 'Images';
 
     protected $fillable = ['photo',
                            'title',
@@ -22,6 +25,8 @@ class Picture extends Model implements StaplerableInterface
                            'style',
                            'rooms' ];
 
+    public $timestamps = false;
+
     public function __construct(array $attributes = array()) {
         $this->hasAttachedFile('photo', [
             'styles' => [
@@ -32,15 +37,5 @@ class Picture extends Model implements StaplerableInterface
 
         parent::__construct($attributes);
     }
-    // neeed scope for main controller
 
-    /**
-     * table DB using model
-     *
-     * @var string
-     */
-
-     protected $table = 'Images';
-
-     public $timestamps = false;
 }

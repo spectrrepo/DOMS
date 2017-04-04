@@ -15,7 +15,10 @@ class NewsVariant extends Model implements StaplerableInterface
      *
      * @var string
      */
+    protected $table = 'News_variant_photo';
+
     protected $fillable = ['news_variant'];
+
     public $timestamps = false;
 
     public function __construct(array $attributes = array()) {
@@ -27,5 +30,4 @@ class NewsVariant extends Model implements StaplerableInterface
 
         parent::__construct($attributes);
     }
-     protected $table = 'News_variant_photo';
 }

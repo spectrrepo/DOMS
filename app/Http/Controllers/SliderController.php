@@ -121,11 +121,13 @@ class SliderController extends Controller
       $views = View::select('id', 'path_full', 'path_min')
                     ->where('post_id', '=', $id)
                     ->get();
+
       return $views;
     }
 
     public function dwnldComments()
     {
+
        $id = $_POST['id'];
        $comments = DB::select("SELECT Comments.id,
                                       Users.id AS user_id,
@@ -139,23 +141,35 @@ class SliderController extends Controller
                                 JOIN  Images ON Images.id = Comments.post_id
                                 WHERE Images.id=".$id."
                                 AND Comments.status = 'read'");
+
       return $comments;
+
     }
 
     public function dwnldInfoPhoto()
     {
+
       $id = $_POST['id'];
-      $photoInfo = Picture::select('id', 'views_count', 'comments_count',
-                                    'full_path', 'likes_count', 'description', 'title')
+      $photoInfo = Picture::select('id',
+                                   'views_count',
+                                   'comments_count',
+                                   'full_path',
+                                   'likes_count',
+                                   'description',
+                                   'title')
                            ->where('id', '=', $id)
                            ->get();
+
       return $photoInfo;
+
     }
 
     public function dwnldLikeWhom()
     {
+
       $id = $_POST['id'];
       $likes = Like::where('post_id', '=', $id)->get();
+
       $likeWhom = array();
       foreach ($likes as $like) {
           $user = User::select('id', 'name', 'quadro_ava')
@@ -163,25 +177,30 @@ class SliderController extends Controller
                        ->get();
           array_push( $likeWhom, $user);
       }
+
       return $likeWhom;
     }
 
     public function dwnldPhotoUser()
     {
+
       $id = $_POST['id'];
       $pic = Picture::find($id);
       $user = User::select('id', 'quadro_ava', 'name')
                    ->where('id', '=', $pic->author_id)
                    ->get();
+
       return $user;
     }
 
     public function dwnldTags()
     {
+
       $id = $_POST['id'];
       $image = Picture::find($id);
       $tagsString = $image->tags;
       $tags = explode(';',$tagsString);
+
       return $tags;
     }
 
@@ -217,18 +236,21 @@ class SliderController extends Controller
         }else {
             $response = 'error';
         }
+
         return $response;
     }
+
     public function loadAllLikes ()
     {
         $id = $_POST['id'];
-
         $allLikes = Like::where('post_id', '=', $id)->get();
+
         $likeWhom = array();
         foreach ($allLikes as $like) {
             $user = User::find($like->user_id);
             array_push( $likeWhom, $user);
         }
+
         return $likeWhom;
     }
 }

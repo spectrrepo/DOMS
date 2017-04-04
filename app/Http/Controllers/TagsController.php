@@ -47,6 +47,7 @@ class TagsController extends Controller
     public function delete ($tagID) {
 
         $tag = Tag::find($tagID)->delete();
+
         return redirect()->back();
 
     }
@@ -58,8 +59,8 @@ class TagsController extends Controller
      *
      */
     public function add() {
+        
       $tags = new Tag();
-
       $tags->title = $_POST["title"];
       $tags->post_id = 0;
       $tags->save();

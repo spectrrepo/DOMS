@@ -25,7 +25,9 @@ class SocialController extends Controller
         return redirect()->intended('/');
 
     }
+
     public function add (){
+
         $link = $_POST['link'];
         $user_id = $_POST['user_id'];
 
@@ -33,28 +35,29 @@ class SocialController extends Controller
         $newLink->link = $link;
         $newLink->user = $user_id;
         $newLink->save();
-        $linkId = Social::where('user', '=', $user_id)
-                         ->orderBy('id', 'desc')
-                         ->first();
+
+        $linkId = $newLink->id;
+
         return $linkId;
 
     }
 
     public function delete () {
+
         $link = $_POST['link'];
         $user_id = $_POST['user_id'];
-
         $deleteLink = Social::where('link', '=', $link)
                             ->where('user', '=', $user_id)
                             ->delete();
+
         return 'true';
     }
 
     public function edit () {
+
         $link = $_POST['link'];
         $user_id = $_POST['user_id'];
         $old_link = $_POST['old_link'];
-
         $editLink = Social::where('link', '=', $old_link)
                            ->where('user', '=', $user_id)
                            ->update(array('link' => $link));
