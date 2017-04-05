@@ -7,6 +7,8 @@ use App\Http\Controllers\SocialAccountService;
 use Laravel\Socialite\Facades\Socialite;
 
 use App\Social;
+use App\User;
+use Hash;
 
 class SocialController extends Controller
 {
@@ -15,7 +17,9 @@ class SocialController extends Controller
     {
         return Socialite::with($provider)->redirect();
     }
-
+    public function loginVK( $provider ) {
+        return \Socialize::driver( $provider )->redirect();
+    }
     public function callback(SocialAccountService $service, $provider)
     {
 
@@ -24,6 +28,31 @@ class SocialController extends Controller
         \Auth::login($user, true);
         return redirect()->intended('/');
 
+    }
+    public function callbackVK($provider) {
+        $newUser = new App\User();
+        $user = \Socialize::driver($provider)->user();
+        $newUser->name = $user->name;
+        $email = 'demo@mail.com';
+        $newUser->email = $email;
+        $password = Hash::make('demo');
+        $newUser->password = $password;
+        $newUser->status = 'user';
+        $newUser->phone = '0';
+
+        Auth::attempt(['email' => 'demo@mail.com', 'password' => 'demo']);
+
+        $newUser->save();
+        Mail::send('emails.welcome', array('name' => $user->name,
+                                            'e_mail' => $email,
+                                            'password' => $password),
+         function($message)
+         {
+           $message->to('skiffy166@gmail.com', 'Георгий')
+           ->subject('Вы зарегистрировались на сайте www.doms.design');
+         });
+
+        return redirect('/');
     }
 
     public function add (){
