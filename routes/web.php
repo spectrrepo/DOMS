@@ -14,34 +14,34 @@ Route::get('/', function(){
 });
 Route::get("/filtr={'room':[{room?}],'style':[{style?}],'color':{color?},'sort':'{sort?}','tag':'{tag?}'}", "PhotoController@index");
 Route::get("/photo/id={id}&filtr={'room':[{room?}],'styles':[{style?}],'colors':{color?},'sort':'{sort?}','tag':'{tag?}'}", "PhotoController@indexItem");
-Route::get('/news', ['uses' => 'NewsController@Index']);
+Route::get('/news', 'NewsController@Index');
 
 /*
 login, registration and more
 */
 Route::group(['prefix' => '/socialite'], function () {
-    Route::get('/{provider}', 'as' => 'socialite.auth', 'SocialController@callbackVK');
+    Route::get('/{provider}', 'SocialController@callbackVK')->name('socialite.auth');
     Route::get('/{provider}/callback', 'SocialController@callbackVK');
 });
 
-Route::group('/social_login', function () {
+Route::group(['prefix' => '/social_login'], function () {
     Route::get('/{provider}', 'SocialController@login');
     Route::get('/callback/{provider}', 'SocialController@callback');
 });
 
-Route::get('/logout',['as' => 'logout', 'uses' => 'UserController@logout']);
+Route::get('/logout','UserController@logout')->name('logout');
 Route::post('/enter', 'UserController@login');
 Route::post('/reg', 'UserController@registration');
 Route::post('/recovery_pass', 'UserController@recoveryAccess' );
 /*
 only view all users
 */
-Route::get('/profile/{id}', ['uses' => 'UserController@index']);
+Route::get('/profile/{id}', 'UserController@index');
 /*
 callback all people
 */
-Route::post('/send_mail', ['as' => 'sendMail', 'uses' => 'MessagesController@sendMail']);
-Route::group(['load'], function () {
+Route::post('/send_mail', 'MessagesController@sendMail')->name('sendMail');
+Route::group(['prefix' => 'load'], function () {
     Route::post('/slides', 'SliderController@dwnldPhotoSlider');
     Route::post('/views', 'SliderController@dwnldViewsForPhoto');
     Route::post('/tags', 'SliderController@dwnldTags');
@@ -64,27 +64,27 @@ Route::group(['middleware' => 'role:user,moderator,admin'], function () {
     /*
     View user pages
     */
-    Route::group('/profile', function () {
-        Route::get('/admin/verification/{id}', ['uses' => 'UserController@confirmationItemPage']);
-        Route::get('/add/photo', ['as' => 'add', 'uses' => 'UserController@indexAdd']);
-        Route::get('/edit/user', ['as' => 'edit', 'uses' => 'UserController@editUser']);
-        Route::get('/liked/photo', ['as' => 'liked', 'uses' => 'FavoriteController@index']);
-        Route::get('/{id}/your_photo', ['uses' => 'UserController@yourPhotoUpload']);
+    Route::group(['prefix' => '/profile'], function () {
+        Route::get('/admin/verification/{id}', 'UserController@confirmationItemPage');
+        Route::get('/add/photo', 'UserController@indexAdd')->name('add');
+        Route::get('/edit/user', 'UserController@editUser')->name('edit');
+        Route::get('/liked/photo', 'FavoriteController@index')->name('liked');
+        Route::get('/{id}/your_photo', 'UserController@yourPhotoUpload');
         Route::post('/update', 'UserController@changeYourself');
     });
 
-    Route::group('delete', function () {
+    Route::group(['prefix' => 'delete'], function () {
         Route::post('/liked', 'FavoriteController@delete');
         Route::post('/like', 'LikeController@delete');
     });
 
-    Route::group('add', function () {
+    Route::group(['prefix' => 'add'], function () {
         Route::post('/photo_site/{id}','PhotoController@addPhotoSite');
         Route::post('/links', 'SocialController@add');
         Route::post('/photo', 'PhotoController@add');
     });
 
-    Route::group('/pagination', function () {
+    Route::group(['prefix' => '/pagination'], function () {
         Route::post('/news', 'UserController@ajaxDownloadUpdate');
         Route::post('/index', 'PhotoController@indexAddPage');
     });
@@ -102,20 +102,20 @@ Route::group(['middleware' => 'role:user,moderator,admin'], function () {
 
 Route::group(['middleware' => 'role:0,moderator,admin'], function () {
 
-    Route::group('/profile/admin', function () {
-        Route::get('/comments', ['as' => 'comments','uses' => 'CommentController@index']);
-        Route::get('/verification', ['as' => 'verified', 'uses' => 'UserController@confirmationsPage']);
-        Route::get('/add_news', ['as' => 'news', 'uses' => 'UserController@addNewsPage']);
-        Route::get('/add_news_item', ['uses' => 'UserController@addNewsItem']);
-        Route::get('/messages', ['as' => 'messages','uses' => 'MessagesController@mailIndex']);
-        Route::get('/copyrights', ['as' => 'copyright', 'uses' => 'CopyrightController@index']);
+    Route::group(['prefix' => '/profile/admin'], function () {
+        Route::get('/comments', 'CommentController@index')->name('comments');
+        Route::get('/verification', 'UserController@confirmationsPage')->name('verified');
+        Route::get('/add_news', 'UserController@addNewsPage')->name('news');
+        Route::get('/add_news_item', 'UserController@addNewsItem']);
+        Route::get('/messages', 'MessagesController@mailIndex')->name('messages');
+        Route::get('/copyrights', 'CopyrightController@index')->name('copyright');
         Route::get('/edit_page_news/{id}','NewsController@editPageIndex');
-        Route::get('/edit_copyrights', ['as' => 'pretense', 'uses' => 'CopyrightController@index']);
+        Route::get('/edit_copyrights', 'CopyrightController@index')->name('pretense');
         Route::get('/photo/all', 'PhotoController@allPhotoSite');
         Route::get('/answer_mail/{id}', 'MessagesController@mailIndexItem');
     });
 
-    Route::group('delete', function () {
+    Route::group(['prefix' => 'delete'], function () {
         Route::post('/copyright', 'CopyrightController@delete');
         Route::post('/comments/{id}', 'CommentController@delete');
         Route::post('/message/{id}', 'MessagesController@deleteMail');
@@ -135,23 +135,23 @@ These routes , which admins have access
 */
 Route::group(['middleware' => 'role:0,0,admin'], function () {
 
-    Route::group(['/profile/admin'], function () {
+    Route::group(['prefix' => '/profile/admin'], function () {
         Route::get('/edit_page_styles/{id}','StylesController@editPageIndex');
-        Route::get('/tags_edit', ['as' => 'tags_edit', 'uses' => 'UserController@editTagsPage']);
-        Route::get('/styles_edit', ['as' => 'styles_edit', 'uses' => 'UserController@editStylesPage']);
-        Route::get('/rooms_edit', ['as' => 'rooms_edit', 'uses' => 'UserController@editRoomsPage']);
-        Route::get('/add_style_item', ['uses' => 'UserController@addStyleItem']);
-        Route::get('/slides', ['as' => 'slide', 'uses' => 'ChangeSlideController@index']);
+        Route::get('/tags_edit', 'UserController@editTagsPage'])->name('tags_edit');
+        Route::get('/styles_edit', 'UserController@editStylesPage'])->name('styles_edit');
+        Route::get('/rooms_edit', 'UserController@editRoomsPage'])->name('rooms_edit');
+        Route::get('/add_style_item', 'UserController@addStyleItem']);
+        Route::get('/slides', 'ChangeSlideController@index')->name('slide');
     });
 
-    Route::group(['edit'], function () {
+    Route::group(['prefix' => 'edit'], function () {
         Route::post('/slide', 'ChangeSlideController@change');
         Route::post('/tag/{id}','TagsController@edit');
         Route::post('/style/{id}','StylesController@edit');
         Route::post('/room/{id}','RoomsController@edit');
     });
 
-    Route::gtoup(['add'], function () {
+    Route::gtoup(['prefix' => 'add'], function () {
         Route::post('/slide', 'ChangeSlideController@add');
         Route::post('/tags','TagsController@add');
         Route::post('/rooms','RoomsController@add');

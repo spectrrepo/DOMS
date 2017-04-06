@@ -517,15 +517,15 @@ class PhotoController extends Controller
      */
     public function add()
     {
-        $image = new Picture();
-
-        $img = Image::make($_FILES['photo']['tmp_name']);
-
         $watermark = Image::make(public_path('/img/watermark-files/poloska.png'));
         $watermarkHouse = Image::make(public_path('/img/watermark-files/dom.png'));
-        $img->insert($watermark, 'top', 0, 0);
-        $img->insert($watermarkHouse, 'bottom-right', 30, 30);
-        $img->save(public_path('/img/f.jpg'));
+
+        $img = Image::make($_FILES['photo']['tmp_name'])
+                    ->insert($watermark, 'top', 0, 0)
+                    ->insert($watermarkHouse, 'bottom-right', 30, 30)
+                    ->save(public_path('/img/f.jpg'));
+
+        $image = new Picture();
         $image->photo = public_path('/img/f.jpg');
         $image->title = $_POST['title'];
         $image->description = $_POST['description'];
@@ -548,44 +548,36 @@ class PhotoController extends Controller
 
         if (!empty($_FILES['files']['tmp_name'])) {
             foreach ($_FILES['files']['tmp_name'] as $variantItem) {
-                $view = new View();
-                $imgView = Image::make($variantItem);
                 $watermarkView = Image::make(public_path('/img/watermark-files/poloska.png'));
                 $watermarkHouseView = Image::make(public_path('/img/watermark-files/dom.png'));
 
-                $imgView->insert($watermarkView, 'top', 0, 0);
-                $imgView->insert($watermarkHouseView, 'bottom-right', 30, 30);
-                $imgView->save(public_path('/img/fv.jpg'));
+                $imgView = Image::make($variantItem)
+                                ->insert($watermarkView, 'top', 0, 0);
+                                ->insert($watermarkHouseView, 'bottom-right', 30, 30);
+                                ->save(public_path('/img/fv.jpg'));
 
+                $view = new View();
                 $view->photo = public_path('/img/fv.jpg');
                 $view->user_id = $_POST["author_id"];
                 $view->user_id = $_POST["author_id"];
                 $view->save();
-
-                $addViewInfo = View::where('user_id', '=', $_POST['author_id'])
-                                    ->orderBy('id', 'desc')
-                                    ->first();
-                $updateViewInfo = View::find($addViewInfo->id);
-                $updateViewInfo->path_min = $updateViewInfo->photo->url('small');
-                $updateViewInfo->path_full = $updateViewInfo->photo->url();
-                $updateViewInfo->post_id = $lastId;
-                $updateViewInfo->save();
+                $view->path_min = $view->photo->url('small');
+                $view->path_full = $view->photo->url();
+                $view->post_id = $lastId;
+                $view->save();
             }
         }
 
         $image->save();
-        $addInfo = Picture::where('author_id', '=', $_POST['author_id'])
-                          ->orderBy('id', 'desc')
-                          ->first();
-        $updateIinfo = Picture::find($addInfo->id);
-        $img2 = Image::make($_FILES['photo']['tmp_name']);
-        $img2->encode('jpg');
-        $img2->fit(400);
-        $img2->save(public_path('/img/quadro/'.$addInfo->id.'.jpg'));
-        $updateIinfo->quadro_photo = '/img/quadro/'.$addInfo->id.'.jpg';
-        $updateIinfo->full_path = $updateIinfo->photo->url('max');
-        $updateIinfo->min_path = $updateIinfo->photo->url('small');
-        $updateIinfo->save();
+        $img2 = Image::make($_FILES['photo']['tmp_name'])
+                     ->encode('jpg')
+                     ->fit(400)
+                     ->save(public_path('/img/quadro/'.$addInfo->id.'.jpg'));
+
+        $image->quadro_photo = '/img/quadro/'.$addInfo->id.'.jpg';
+        $image->full_path = $image->photo->url('max');
+        $image->min_path = $image->photo->url('small');
+        $image->save();
 
         return redirect('/profile/'.Auth::user()->id)->with('check', 'true');
     }
@@ -600,6 +592,7 @@ class PhotoController extends Controller
         $image->title = $_POST['title'];
         $image->description = $_POST['description'];
         $image->verified = true;
+
         if (Input::has('style')) {
             $color = $_POST['color'];
             $colorRes = "";
@@ -613,6 +606,7 @@ class PhotoController extends Controller
                 $image->colors = $color;
             }
         }
+
         if (Input::has('style')) {
             $room = $_POST['room'];
             $roomRes = "";
@@ -625,6 +619,7 @@ class PhotoController extends Controller
                 $image->rooms = $room;
             }
         }
+
         if (Input::has('style')) {
             $style = $_POST['style'];
             $styleRes = "";
@@ -637,32 +632,32 @@ class PhotoController extends Controller
                 $image->style = $style;
             }
         }
+
         $variantRes = " ";
         if (!empty($_FILES['files']['tmp_name'])) {
             foreach ($_FILES['files']['tmp_name'] as $variantItem) {
-                $view = new View();
-                $imgView = Image::make($variantItem);
                 $watermarkView = Image::make(public_path('/img/watermark-files/poloska.png'));
                 $watermarkHouseView = Image::make(public_path('/img/watermark-files/dom.png'));
+
+                $imgView = Image::make($variantItem);
                 $imgView->insert($watermarkView, 'top', 0, 0);
                 $imgView->insert($watermarkHouseView, 'bottom-right', 30, 30);
                 $imgView->save(public_path('/img/fv.jpg'));
 
+                $view = new View();
                 $view->photo = public_path('/img/fv.jpg');
                 $view->user_id = $_POST["author_id"];
                 $view->user_id = $_POST["author_id"];
                 $view->save();
-                $addViewInfo = View::where('user_id', '=', $_POST['author_id'])
-          ->orderBy('id', 'desc')
-          ->first();
-                $updateViewInfo = View::find($addViewInfo->id);
-                $variantRes .= $addViewInfo->id.',';
-                $updateViewInfo->path_min = $updateViewInfo->photo->url('small');
-                $updateViewInfo->path_full = $updateViewInfo->photo->url();
-                $updateViewInfo->post_id = $id;
-                $updateViewInfo->save();
+                $view->path_min = $updateViewInfo->photo->url('small');
+                $view->path_full = $updateViewInfo->photo->url();
+                $view->post_id = $id;
+                $view->save();
+
+                $variantRes .= $view->id.',';
             }
         }
+
         $image->save();
         if (Auth::user()->status == 'moderator') {
             return redirect()->back();

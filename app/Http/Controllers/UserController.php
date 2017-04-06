@@ -48,30 +48,30 @@ class UserController extends Controller
     public function index($id)
      {  if(Auth::check()){
              $images = DB::select(
-             "SELECT * FROM (
-                        (SELECT 'favorite' AS type,
-                               '' AS comment_id,
-                               Likeds.post_id AS img_id,
-                               Likeds.date AS date_event,
-                               Likeds.date_rus AS date_rus_event,
-                               '' AS comment_text,
-                               '' AS comment_status,
-                               Users.quadro_ava AS quadro_ava_user_event,
-                               Users.name AS user_name_event,
-                               Users.id AS id_user_event,
-                               Users.sex AS sex_user_event
-                         FROM Likeds JOIN Users ON Likeds.user_id = Users.id)
+                 "SELECT * FROM (
+                            (SELECT 'favorite' AS type,
+                                   '' AS comment_id,
+                                   Likeds.post_id AS img_id,
+                                   Likeds.date AS date_event,
+                                   Likeds.date_rus AS date_rus_event,
+                                   '' AS comment_text,
+                                   '' AS comment_status,
+                                   Users.quadro_ava AS quadro_ava_user_event,
+                                   Users.name AS user_name_event,
+                                   Users.id AS id_user_event,
+                                   Users.sex AS sex_user_event
+                             FROM Likeds JOIN Users ON Likeds.user_id = Users.id)
 
-                         UNION
+                             UNION
 
-                        (SELECT 'like' AS type,
-                               '' AS comment_id,
-                               Likes.post_id AS img_id,
-                               Likes.date AS date_event,
-                               Likes.date_rus AS date_rus_event,
-                               '' AS comment_text,
-                               '' AS comment_status,
-                               Users.quadro_ava AS quadro_ava_user_event,
+                            (SELECT 'like' AS type,
+                                   '' AS comment_id,
+                                   Likes.post_id AS img_id,
+                                   Likes.date AS date_event,
+                                   Likes.date_rus AS date_rus_event,
+                                   '' AS comment_text,
+                                   '' AS comment_status,
+                                   Users.quadro_ava AS quadro_ava_user_event,
                                Users.name AS user_name_event,
                                Users.id AS id_user_event,
                                Users.sex AS sex_user_event
