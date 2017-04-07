@@ -35,7 +35,9 @@ use App\Social;
  * @author nagood
  *
  */
-
+// TODO: the two first method fixed:
+//         - index
+//         - ajaxDownloadUpdate
 class UserController extends Controller
 {
 

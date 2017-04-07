@@ -9,12 +9,12 @@
     </div>
     <div class="clear"></div>
     {{ Form::open(array('id'=> 'enter','url' => '/enter'))}}
-    <input class="modal-login-inp" type="text" required name="email" placeholder="E-mail">
-    <input class="modal-login-inp" type="password" required name="password" placeholder="Пароль">
-    <a id="recover-pswd">
-      <span  class="forget-link">Забыли пароль?</span>
-    </a>
-    <input class="modal-login-sbmt" type="submit" name="name" value="Войти">
+      <input class="modal-login-inp" type="text" required name="email" placeholder="E-mail">
+      <input class="modal-login-inp" type="password" required name="password" placeholder="Пароль">
+      <a id="recover-pswd">
+        <span  class="forget-link">Забыли пароль?</span>
+      </a>
+      <input class="modal-login-sbmt" type="submit" name="name" value="Войти">
     {{ Form::close()}}
     <div class="clear"></div>
     </div>

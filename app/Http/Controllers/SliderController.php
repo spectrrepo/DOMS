@@ -15,6 +15,7 @@ use App\Liked;
 use App\User;
 use App\View;
 
+// TODO: fix method dwnld photo slider 
 
 class SliderController extends Controller
 {
@@ -128,19 +129,21 @@ class SliderController extends Controller
     public function dwnldComments()
     {
 
-       $id = $_POST['id'];
-       $comments = DB::select("SELECT Comments.id,
-                                      Users.id AS user_id,
-                                      Images.id AS image_id,
-                                      Users.name AS user_name,
-                                      Users.quadro_ava AS user_quadro_ava,
-                                      Comments.text_comment AS text_comment,
-                                      Comments.rus_date AS rus_date
-                                FROM  Comments JOIN Users
-                                ON    Comments.user_id=Users.id
-                                JOIN  Images ON Images.id = Comments.post_id
-                                WHERE Images.id=".$id."
-                                AND Comments.status = 'read'");
+      $id = $_POST['id'];
+
+      $comments = DB::table('Comments')
+                    ->select('Comments.id',
+                             'Users.id AS user_id',
+                             'Images.id AS image_id',
+                             'Users.name AS user_name',
+                             'Users.quadro_ava AS user_quadro_ava',
+                             'Comments.text_comment AS text_comment',
+                             'Comments.rus_date AS rus_date' )
+                    ->join('Users', 'Comments.user_id', '=', 'Users.id')
+                    ->join('Images', 'Images.id', '=', 'Comments.post_id')
+                    ->where('Images.id', '=', $id)
+                    ->andWhere('Comments.status', '=', '"read"')
+                    ->get();
 
       return $comments;
 

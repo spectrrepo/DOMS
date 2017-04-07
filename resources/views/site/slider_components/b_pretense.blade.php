@@ -8,4 +8,4 @@
              <span class="triangle-tooltip-stat triangle-full-scr"></span>
          </span>
        </div>
-    @endif
+@endif

@@ -6,9 +6,9 @@
       Введите адрес электронной почты Вашего аккаунта
     </p>
     {{ Form::open(array('id' => 'recovery-pass','url' => '/recovery_pass')) }}
-    <input class="recover-text-inp" type="text" name="e_mail" required value="">
-    <button class="recover-submit uk-icon-justify uk-icon-reply" type="submit" name="name">
-    </button>
+      <input class="recover-text-inp" type="text" name="e_mail" required value="">
+      <button class="recover-submit uk-icon-justify uk-icon-reply" type="submit" name="name">
+      </button>
     {{ Form::close() }}
     <div class="clear"> </div>
   </div>

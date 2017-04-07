@@ -46,14 +46,14 @@
           <span class="b-pretens">
             <a href="/profile/{{ $user->id }}">
               <span class="author-portret">
-                  <img src=" {{ $user->avatar->url('small')}} " alt="" />
+                  <img src=" {{ $user->avatar->url('small')}}" alt="" />
               </span>
               <span class="author-name">{{ $user->name}}</span>
             </a>
             @include('site.slider_components.b_pretense')
           </span>
           <span class="num-page">
-            <span id="current-position"></span>/ <span id="all-photo">{{ count($images) }}</span>
+            <span id="current-position"></span>/<span id="all-photo">{{ count($images) }}</span>
           </span>
           <span class="status-photo">
              @include('site.slider_components.tooltip', ['class' => 'back-to-main','link' => 'href="/"','icon' => 'th-large','id' => ' ','data' => false,'margin' => 'margin-callback-tooltip','text' => 'Плитка','triangle'=>'triangle-callback'])

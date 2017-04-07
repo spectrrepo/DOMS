@@ -30,16 +30,17 @@ use App\Room;
  * @author nagood
  *
  */
-
+//:: TODO: indexItem znd more method fixe
 class PhotoController extends Controller
 {
 
-    /**
-     * @param
-     *
-     * @return
-     *
-     */
+     /**
+      * [sortCommon private method]
+      * @param  [string] $table     [description]
+      * @param  [string] $tableCell [description]
+      * @param  [string] $itemSort  [description]
+      * @return [array] $result [description]
+      */
      private function sortCommon($table, $tableCell, $itemSort){
         if ($itemSort != 0) {
              $arrayItemSort = explode(',',$itemSort);
@@ -62,53 +63,81 @@ class PhotoController extends Controller
          return $result;
      }
 
+     /**
+      * [sortSort - private method]
+      * @param  [string] $sort [description]
+      * @return [array] $result [description]
+      */
      private function sortSort ( $sort ) {
-          if ($sort != 0) {
-            if ($sort == 'popular') {
-                 $sortSort = ' ORDER BY Images.views_count DESC ';
-            } elseif ($sort == 'recommended') {
-                 $sortSort = ' ORDER BY Images.id DESC ';
-            } elseif ($sort == 'new') {
-                 $sortSort = ' ORDER BY Images.id DESC ';
-            } else {
-                 $sortSort = ' ';
+         if ($sort != 0) {
+            switch ($sort) {
+                    case 'popular':
+                         $sortSort = ' ORDER BY Images.views_count DESC ';
+                         break;
+
+                    case 'recommended':
+                         $sortSort = ' ORDER BY Images.id DESC ';
+                         break;
+
+                    case 'new':
+                         $sortSort = ' ORDER BY Images.id DESC ';
+                         break;
+
+                    default:
+                         $sortSort = ' ';
+                         break;
             }
             $sortSorting = $sort;
          } else {
             $sortSort = ' ';
             $sortSorting = 0;
          }
+
          $result = array('Expression' => $sortSort,
                          'Condition' => $sortSorting);
+
          return $result;
      }
 
+     /**
+      * [tagSort private method]
+      * @param  [string] $tag [description]
+      * @return [array] $result [description]
+      */
      private function tagSort ($tag) {
-          if ($tag != '0') {
+
+         if ($tag != '0') {
              $tagSort = ' AND Tags.title="'.$tag.'" ';
              $tagCondition = ' JOIN   Tags ON Images.id = Tags.post_id ';
          } else {
              $tagSort = '';
              $tagCondition = ' ';
          }
+
          $result = array('Expression' => $tagSort,
                          'Condition' => $tagCondition);
+
          return $result;
      }
 
+     /**
+      * [activeColor private method]
+      * @param  [string] $what [description]
+      * @param  [type] $id   [description]
+      * @return [type] $colorActive [description]
+      */
      private function activeColor($what, $id)
      {
           if ( $what == 'liked') {
                $activeThisUser = Liked::where('user_id', '=', Auth::id())
-                                     ->where('post_id', '=', $id)
-                                     ->get()
-                                     ->toArray();
+                                       ->where('post_id', '=', $id)
+                                       ->get()
+                                       ->toArray();
           } else {
                $activeThisUser = Like::where('user_id', '=', Auth::id())
-                                   ->where('post_id', '=', $id)
-                                   ->get()
-                                   ->toArray();
-
+                                      ->where('post_id', '=', $id)
+                                      ->get()
+                                      ->toArray();
           }
 
           if (!empty($activeThisUser)) {
@@ -116,26 +145,33 @@ class PhotoController extends Controller
           } else {
               $colorActive = false;
           }
+
           return $colorActive;
 
      }
 
-     private function addJoinData () {
-          if (Input::has('color')) {
-              $color = $_POST['color'];
-              if (is_array($color)) {
-                  foreach ($color as $colorItem) {
-                     DB::table('img_colors')
+     /**
+      * [addJoinData description]
+      * @param [type] $prop_name  [description]
+      * @param [type] $prop_table [description]
+      * @param [type] $id_prop    [description]
+      */
+     private function addJoinData ($prop_name, $prop_table, $id_prop) {
+          if (Input::has($prop_name)) {
+              $properties = $_POST[$prop_name];
+              if (is_array($properties)) {
+                  foreach ($properties as $colorItem) {
+                     DB::table($prop_table)
                           ->insert(
                              ['img_id' => $lastId,
                              'color_id' => $colorItem]
                             );
                   }
               } else {
-                  DB::table('img_colors')
+                  DB::table($prop_table)
                      ->insert(
                         ['img_id' => $lastId,
-                        'color_id' => $color]
+                        $id_prop => $properties]
                        );
               }
           }
@@ -441,13 +477,13 @@ class PhotoController extends Controller
             $imageCurrent = Picture::whereRaw($roomsArray['Condition'].' and '
                                       .$stylesArray['Condition'].' and '
                                       .$colorsArray['Condition'])
-                            ->where('id', '>', $id)
-                            ->first();
+                                    ->where('id', '>', $id)
+                                    ->first();
 
             if (empty($image)) {
                 $imageCurrent = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
-                                ->where('id', '<', $id)
-                                ->first();
+                                        ->where('id', '<', $id)
+                                        ->first();
             } else {
                 $imageCurrent = false;
             }
@@ -470,27 +506,27 @@ class PhotoController extends Controller
 
         $tags = Tag::where('post_id', '=', $id)->where('title', '<>', '')->get();
         $views = View::where('post_id', '=', $id)->get();
-
-        $comments = DB::select('SELECT Comments.id,
-                                       Users.id AS user_id,
-                                       Images.id AS image_id,
-                                       Users.name AS user_name,
-                                       Users.quadro_ava AS user_quadro_ava,
-                                       Comments.text_comment AS text_comment,
-                                       Comments.rus_date AS rus_date
-                                FROM   Comments JOIN Users
-                                ON     Comments.user_id=Users.id
-                                JOIN   Images ON Images.id = Comments.post_id
-                                WHERE  Images.id='.$id.
-                               ' AND  Comments.status="read"');
+        $comments = DB::table('Comments')
+                       ->select('Comments.id',
+                                'Users.id AS user_id',
+                                'Images.id AS image_id',
+                                'Users.name AS user_name',
+                                'Users.quadro_ava AS user_quadro_ava',
+                                'Comments.text_comment AS text_comment',
+                                'Comments.rus_date AS rus_date' )
+                       ->join('Users', 'Comments.user_id', '=', 'Users.id')
+                       ->join('Images', 'Images.id', '=', 'Comments.post_id')
+                       ->where('Images.id', '=', $id)
+                       ->andWhere('Comments.status', '=', '"read"')
+                    ->get();
 
         $num_comment = count($comments);
         $colorLike = $this->activeColor('like', $id);
         $colorLiked = $this->activeColor('liked', $id);
 
-     //    $new_count = $image->views_count + 1;
-     //    $imageCurrent->views_count = $new_count;
-     //    $imageCurrent->save();
+        $new_count = $image->views_count + 1;
+        $imageCurrent->views_count = $new_count;
+        $imageCurrent->save();
         return view('site.slider', ['news' => $news,
                                     'user' => $user,
                                     'colors' => $colors,
@@ -534,9 +570,9 @@ class PhotoController extends Controller
         $image->verified = false;
         $lastId = Picture::orderBy('id', 'desc')->first()->id + 1;
 
-        $this->addJoinData('color', 'img_colors', 'img_id',  'color_id');
-        $this->addJoinData('room', 'img_rooms', 'img_id',  'room_id');
-        $this->addJoinData('style', 'img_styles', 'img_id',  'style_id');
+        $this->addJoinData('color', 'img_colors',  'color_id');
+        $this->addJoinData('room', 'img_rooms',  'room_id');
+        $this->addJoinData('style', 'img_styles',  'style_id');
 
         $tags = explode(';', $_POST['data-tags']);
         foreach ($tags as $tag) {
@@ -582,56 +618,20 @@ class PhotoController extends Controller
         return redirect('/profile/'.Auth::user()->id)->with('check', 'true');
     }
 
-
     public function addPhotoSite($id)
     {
         $image = Picture::find($id);
-        if (!isset($_FILES['photo'])) {
-            $image->photo = $_FILES['photo'];
-        }
         $image->title = $_POST['title'];
         $image->description = $_POST['description'];
         $image->verified = true;
 
-        if (Input::has('style')) {
-            $color = $_POST['color'];
-            $colorRes = "";
-
-            if (is_array($color)) {
-                foreach ($color as $colorItem) {
-                    $colorRes .=$colorItem.', ';
-                }
-                $image->colors = $colorRes;
-            } else {
-                $image->colors = $color;
-            }
+        if (!isset($_FILES['photo'])) {
+             $image->photo = $_FILES['photo'];
         }
 
-        if (Input::has('style')) {
-            $room = $_POST['room'];
-            $roomRes = "";
-            if (is_array($room)) {
-                foreach ($room as $roomItem) {
-                    $roomRes .=$roomItem.', ';
-                }
-                $image->rooms = $roomRes;
-            } else {
-                $image->rooms = $room;
-            }
-        }
-
-        if (Input::has('style')) {
-            $style = $_POST['style'];
-            $styleRes = "";
-            if (is_array($style)) {
-                foreach ($style as $styleItem) {
-                    $styleRes .=$styleItem.', ';
-                }
-                $image->style = $styleRes;
-            } else {
-                $image->style = $style;
-            }
-        }
+        $this->addJoinData('color', 'img_colors', 'img_id',  'color_id');
+        $this->addJoinData('room', 'img_rooms', 'img_id',  'room_id');
+        $this->addJoinData('style', 'img_styles', 'img_id',  'style_id');
 
         $variantRes = " ";
         if (!empty($_FILES['files']['tmp_name'])) {

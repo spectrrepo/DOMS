@@ -106,7 +106,7 @@ Route::group(['middleware' => 'role:0,moderator,admin'], function () {
         Route::get('/comments', 'CommentController@index')->name('comments');
         Route::get('/verification', 'UserController@confirmationsPage')->name('verified');
         Route::get('/add_news', 'UserController@addNewsPage')->name('news');
-        Route::get('/add_news_item', 'UserController@addNewsItem']);
+        Route::get('/add_news_item', 'UserController@addNewsItem');
         Route::get('/messages', 'MessagesController@mailIndex')->name('messages');
         Route::get('/copyrights', 'CopyrightController@index')->name('copyright');
         Route::get('/edit_page_news/{id}','NewsController@editPageIndex');
@@ -137,21 +137,21 @@ Route::group(['middleware' => 'role:0,0,admin'], function () {
 
     Route::group(['prefix' => '/profile/admin'], function () {
         Route::get('/edit_page_styles/{id}','StylesController@editPageIndex');
-        Route::get('/tags_edit', 'UserController@editTagsPage'])->name('tags_edit');
-        Route::get('/styles_edit', 'UserController@editStylesPage'])->name('styles_edit');
-        Route::get('/rooms_edit', 'UserController@editRoomsPage'])->name('rooms_edit');
-        Route::get('/add_style_item', 'UserController@addStyleItem']);
+        Route::get('/tags_edit', 'UserController@editTagsPage')->name('tags_edit');
+        Route::get('/styles_edit', 'UserController@editStylesPage')->name('styles_edit');
+        Route::get('/rooms_edit', 'UserController@editRoomsPage')->name('rooms_edit');
+        Route::get('/add_style_item', 'UserController@addStyleItem');
         Route::get('/slides', 'ChangeSlideController@index')->name('slide');
     });
 
-    Route::group(['prefix' => 'edit'], function () {
+    Route::group(['prefix' => '/edit'], function () {
         Route::post('/slide', 'ChangeSlideController@change');
         Route::post('/tag/{id}','TagsController@edit');
         Route::post('/style/{id}','StylesController@edit');
         Route::post('/room/{id}','RoomsController@edit');
     });
 
-    Route::gtoup(['prefix' => 'add'], function () {
+    Route::group(['prefix' => '/add'], function () {
         Route::post('/slide', 'ChangeSlideController@add');
         Route::post('/tags','TagsController@add');
         Route::post('/rooms','RoomsController@add');
