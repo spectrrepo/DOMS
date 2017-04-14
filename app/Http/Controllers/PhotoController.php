@@ -432,8 +432,7 @@ class PhotoController extends Controller
         $sortArray = $this->sortSort($sort);
         $tagArray = $this->tagSort($tag);
 
-        $images = DB::select(
-                             "SELECT Images.id AS id ,
+        $images = DB::select("SELECT Images.id AS id ,
                                      Images.author_id AS author_id,
                                      Images.full_path AS photo,
                                      Images.views_count AS views,
@@ -517,8 +516,8 @@ class PhotoController extends Controller
                        ->join('Users', 'Comments.user_id', '=', 'Users.id')
                        ->join('Images', 'Images.id', '=', 'Comments.post_id')
                        ->where('Images.id', '=', $id)
-                       ->andWhere('Comments.status', '=', '"read"')
-                    ->get();
+                       ->where('Comments.status', '=', '"read"')
+                       ->get();
 
         $num_comment = count($comments);
         $colorLike = $this->activeColor('like', $id);
@@ -527,6 +526,7 @@ class PhotoController extends Controller
         $new_count = $image->views_count + 1;
         $imageCurrent->views_count = $new_count;
         $imageCurrent->save();
+
         return view('site.slider', ['news' => $news,
                                     'user' => $user,
                                     'colors' => $colors,
@@ -588,8 +588,8 @@ class PhotoController extends Controller
                 $watermarkHouseView = Image::make(public_path('/img/watermark-files/dom.png'));
 
                 $imgView = Image::make($variantItem)
-                                ->insert($watermarkView, 'top', 0, 0);
-                                ->insert($watermarkHouseView, 'bottom-right', 30, 30);
+                                ->insert($watermarkView, 'top', 0, 0)
+                                ->insert($watermarkHouseView, 'bottom-right', 30, 30)
                                 ->save(public_path('/img/fv.jpg'));
 
                 $view = new View();
