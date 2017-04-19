@@ -16,16 +16,16 @@ class CreateTableArticles extends Migration
 
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
-            $table->('title');
-            $table->('seo_title');
-            $table->('description');
-            $table->('description_full');
-            $table->('image_text');
-            $table->('image');
-            $table->('video');
-            $table->('user_add');
-            $table->('status');
-            $table->('date');
+            $table->string('title');
+            $table->text('description');
+            $table->longText('description_full');
+            $table->string('seo_title')->nullable();
+            $table->text('image_text');
+            $table->string('image');
+            $table->string('video')->nullable();
+            $table->integer('user_add');
+            $table->boolean('status')->default(false);
+            $table->timestamp('date');
         });
     }
 

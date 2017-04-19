@@ -14,13 +14,13 @@ class CreateTableStyles extends Migration
     public function up()
     {
         Schema::create('styles', function ( Blueprint $table) {
-            $table->('id');
-            $table->('title');
-            $table->('status');
-            $table->('image');
-            $table->('description');
-            $table->('full_description');
-            $table->('alt');
+            $table->increments('id');
+            $table->string('title');
+            $table->boolean('status')->default(false);
+            $table->string('image');
+            $table->text('description');
+            $table->longText('full_description');
+            $table->string('alt');
         });
     }
 

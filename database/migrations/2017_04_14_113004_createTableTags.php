@@ -14,10 +14,10 @@ class CreateTableTags extends Migration
     public function up()
     {
         Schema::create('tags', function ( Blueprint $table) {
-            $table->('id');
-            $table->('value');
-            $table->('value_en');
-            $table->('lang');
+            $table->increments('id');
+            $table->string('value');
+            $table->enum('lang', ['ru','en']);
+            $table->string('value_en');
         });
     }
 

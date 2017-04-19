@@ -14,8 +14,8 @@ class CreateTableImgInfo extends Migration
     public function up()
     {
         Schema::create('img_info', function ( Blueprint $table) {
-            $table->('img_id');
-            $table->('views');
+            $table->integer('img_id');
+            $table->integer('views');
         });
     }
 

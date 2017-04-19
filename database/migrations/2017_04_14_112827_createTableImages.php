@@ -14,16 +14,16 @@ class CreateTableImages extends Migration
     public function up()
     {
         Schema::create('images', function ( Blueprint $table) {
-            $table->('id');
-            $table->('title');
-            $table->('description');
-            $table->('photo');
-            $table->('min_photo');
-            $table->('quadro_photo');
-            $table->('author_id');
-            $table->('blocked');
-            $table->('update_to');
-            $table->('create_to');
+            $table->increments('id');
+            $table->string('title')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('photo');
+            $table->string('min_photo');
+            $table->string('quadro_photo');
+            $table->integer('author_id')->nullable();
+            $table->boolean('blocked')->default(false);
+            $table->timestamp('update_to');
+            $table->timestamp('create_to');
         });
     }
 

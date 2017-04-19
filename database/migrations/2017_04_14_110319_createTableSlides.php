@@ -15,10 +15,10 @@ class CreateTableSlides extends Migration
     {
         Schema::create('slides', function (Blueprint $table) {
             $table->increments('id');
-            $table->('text');
-            $table->('photo');
-            $table->('user_add');
-            $table->('date');
+            $table->text('text');
+            $table->string('photo');
+            $table->integer('user_add');
+            $table->timestamp('date');
         });
     }
 

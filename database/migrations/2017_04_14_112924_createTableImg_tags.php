@@ -14,8 +14,8 @@ class CreateTableImgTags extends Migration
     public function up()
     {
         Schema::create('img_tags', function ( Blueprint $table) {
-            $table->('img_id');
-            $table->('tag_id');
+            $table->integer('img_id');
+            $table->integer('tag_id');
         });
     }
 

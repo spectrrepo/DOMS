@@ -14,8 +14,8 @@ class CreateTableImgPlacements extends Migration
     public function up()
     {
         Schema::create('img_placements', function ( Blueprint $table) {
-            $table->('img_id');
-            $table->('placement_id');
+            $table->integer('img_id');
+            $table->integer('placement_id');
         });
     }
 

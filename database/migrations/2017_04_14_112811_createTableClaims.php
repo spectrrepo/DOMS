@@ -14,14 +14,14 @@ class CreateTableClaims extends Migration
     public function up()
     {
         Schema::create('claims', function ( Blueprint $table) {
-            $table->('id');
-            $table->('text');
-            $table->('file');
-            $table->('user_id');
-            $table->('author_id');
-            $table->('status');
-            $table->('image_id');
-            $table->('date');
+            $table->increments('id');
+            $table->text('text');
+            $table->string('file');
+            $table->integer('user_id');
+            $table->integer('author_id')->nullable();
+            $table->boolean('status')->default(false);
+            $table->integer('image_id');
+            $table->timestamp('date');
         });
     }
 

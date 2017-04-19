@@ -4,16 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Like extends Model
+class Color extends Model
 {
     /**
      * table DB using model
      *
      * @var string
      */
-     protected $dates = ['date'];
 
-     protected $table = 'Likes';
-
-     public $timestamps = false;
+     protected $table = 'img_colors';
 }

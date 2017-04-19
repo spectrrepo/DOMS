@@ -14,8 +14,8 @@ class CreateTableImgColors extends Migration
     public function up()
     {
         Schema::create('img_colors', function ( Blueprint $table) {
-            $table->('img_id');
-            $table->('color_id');
+            $table->integer('img_id');
+            $table->integer('color_id');
         });
     }
 

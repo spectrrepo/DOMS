@@ -4,13 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Color extends Model
+class Comment extends Model
 {
     /**
      * table DB using model
      *
      * @var string
      */
+    protected $dates = ['date'];
 
-     protected $table = 'Colors';
+    protected $table = 'comments';
+
+    public $timestamps = true;
 }

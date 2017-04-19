@@ -14,8 +14,8 @@ class CreateTableImgStyles extends Migration
     public function up()
     {
         Schema::create('img_styles', function ( Blueprint $table) {
-            $table->('img_id');
-            $table->('style_id');
+            $table->integer('img_id');
+            $table->integer('style_id');
         });
     }
 

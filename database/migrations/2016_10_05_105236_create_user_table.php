@@ -17,18 +17,18 @@ class CreateUserTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('sex')->nullable();
-            $table->string('password');
-            $table->string('skype')->nullable();
             $table->string('email');
-            $table->string('about');
-            $table->string('phone');
-            $table->string('type');
+            $table->string('password');
+            $table->enum('sex',['man','woman'])->default('man');
+            $table->string('skype')->nullable();
+            $table->longText('about')->nullable();
+            $table->string('phone')->nullable();
+            $table->enum('type',['shop', 'designer', 'user', 'master'])->default('user');
             $table->string('photo')->nullable();
             $table->string('vk_id')->nullable();
             $table->string('fb_id')->nullable();
-            $table->timestamp('create_at')->nullable();;
-            $table->timestamp('update_at')->nullable();;
+            $table->timestamp('create_at')->nullable();
+            $table->timestamp('update_at')->nullable();
             $table->rememberToken();
         });
     }

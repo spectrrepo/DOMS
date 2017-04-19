@@ -21,7 +21,7 @@ class News extends Model implements StaplerableInterface
 
     protected $dates = ['news_updated_at'];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function __construct(array $attributes = array()) {
         $this->hasAttachedFile('news', [

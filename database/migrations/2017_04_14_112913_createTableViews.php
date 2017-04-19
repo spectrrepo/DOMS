@@ -14,11 +14,11 @@ class CreateTableViews extends Migration
     public function up()
     {
         Schema::create('views', function ( Blueprint $table) {
-            $table->('id');
-            $table->('img_id');
-            $table->('photo');
-            $table->('min_photo');
-            $table->('date');
+            $table->increments('id');
+            $table->integer('img_id');
+            $table->string('photo');
+            $table->string('min_photo');
+            $table->timestamp('date');
         });
     }
 

@@ -14,9 +14,9 @@ class CreateTableImgFavorites extends Migration
     public function up()
     {
         Schema::create('img_favorite', function ( Blueprint $table) {
-            $table->('img_id');
-            $table->('user_id');
-            $table->('date');
+            $table->integer('img_id');
+            $table->integer('user_id');
+            $table->timestamp('date');
         });
     }
 

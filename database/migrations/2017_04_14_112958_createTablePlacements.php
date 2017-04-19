@@ -14,9 +14,9 @@ class CreateTablePlacements extends Migration
     public function up()
     {
         Schema::create('placements', function ( Blueprint $table) {
-            $table->('id');
-            $table->('title');
-            $table->('status');
+            $table->increments('id');
+            $table->string('title');
+            $table->boolean('status')->default(false);
         });
     }
 

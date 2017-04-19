@@ -14,12 +14,12 @@ class CreateTableUserSocialAccount extends Migration
     public function up()
     {
         Schema::create('user_social_account', function ( Blueprint $table) {
-            $table->('id');
-            $table->('user_id');
-            $table->('provider_user_id');
-            $table->('provider');
-            $table->('created_at');
-            $table->('updates_at');
+            $table->increments('id');
+            $table->integer('user_id');
+            $table->string('provider_user_id');
+            $table->string('provider');
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updates_at')->nullable();
         });
     }
 

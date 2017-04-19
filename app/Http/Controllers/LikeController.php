@@ -21,10 +21,7 @@ use App\Picture;
 class LikeController extends Controller
 {
     /**
-     * @param
-     *
-     * @return
-     *
+     * 
      */
     public function add(){
         setlocale(LC_TIME, 'ru_RU.utf8');
@@ -41,10 +38,7 @@ class LikeController extends Controller
     }
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @return [type]
      */
     public function delete(){
 
@@ -56,9 +50,7 @@ class LikeController extends Controller
     }
 
     /**
-     * @param
-     *
-     * @return
+     * @return [type]
      */
     public function index(){
 
