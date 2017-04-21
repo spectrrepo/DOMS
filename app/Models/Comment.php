@@ -4,16 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
-{
-    /**
-     * table DB using model
-     *
-     * @var string
-     */
-    protected $dates = ['date'];
+class Comment extends Model {
+	use SoftDeletes;
 
-    protected $table = 'comments';
+	protected $dates = ['date'];
 
-    public $timestamps = true;
+	protected $table = 'comments';
+
+	protected function getDateFormat() {
+
+	}
+
+	public $timestamps = true;
 }

@@ -4,13 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Color extends Model
-{
-    /**
-     * table DB using model
-     *
-     * @var string
-     */
+class Color extends Model {
 
-     protected $table = 'img_colors';
+	protected $table = 'img_colors';
 }

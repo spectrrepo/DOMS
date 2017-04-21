@@ -4,19 +4,20 @@ namespace App;
 
 use Codesleeve\Stapler\ORM\EloquentTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
-
 use Illuminate\Database\Eloquent\Model;
 
-class Style extends Model implements StaplerableInterface {
-
+class Claim extends Model implements StaplerableInterface {
 	use EloquentTrait;
+	use SoftDeletes;
 
-	protected $table = 'Styles';
+	protected $dates = ['photo_pretense_updated_at'];
+
+	protected $table = 'copyright';
 
 	public $timestamps = false;
 
 	public function __construct(array $attributes = array()) {
-		$this->hasAttachedFile('photo', [
+		$this->hasAttachedFile('photo_pretense', [
 				'styles' => [
 					'max'   => '500x500'
 				]
