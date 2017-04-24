@@ -17,8 +17,8 @@ class CreateTableSlides extends Migration {
 				$table->string('photo');
 				$table->integer('user_add');
 				$table->foreign('user_add')
-				->references('id')
-					->on('users');
+					  ->references('id')
+					  ->on('users');
 				$table->timestamp('date');
 			});
 	}

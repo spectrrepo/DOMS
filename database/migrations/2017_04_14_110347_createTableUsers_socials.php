@@ -15,8 +15,8 @@ class CreateTableUsersSocials extends Migration {
 				$table->integer('user_id');
 				$table->string('link');
 				$table->foreign('user_id')
-				->references('id')
-					->on('users');
+				      ->references('id')
+					  ->on('users');
 				$table->primary('user_id');
 				$table->softDeletes();
 			});

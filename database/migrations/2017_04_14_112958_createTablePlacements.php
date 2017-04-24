@@ -15,7 +15,7 @@ class CreateTablePlacements extends Migration {
 				$table->increments('id');
 				$table->string('title');
 				$table->boolean('status')
-				->default(false);
+					  ->default(false);
 			});
 	}
 

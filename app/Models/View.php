@@ -1,27 +1,31 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Codesleeve\Stapler\ORM\EloquentTrait;
-
-use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Illuminate\Database\Eloquent\Model;
 
-class View extends Model implements StaplerableInterface {
-	use EloquentTrait;
+class View extends Model {
+
 	use SoftDeletes;
-	protected $table = 'Views';
 
-	public $timestamps = false;
+	protected $table = 'views';
 
-	public function __construct(array $attributes = array()) {
-		$this->hasAttachedFile('photo', [
-				'styles' => [
-					'small' => '300x300',
-					'max'   => '600x600'
-				]
-			]);
+	protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
-		parent::__construct($attributes);
+	// protected $fillable = ['username', 'email', 'is_active'];
+
+	// protected $guarded = ['id'];
+    
+    protected function getDateFormat() {
+ 		
+ 		setlocale(LC_TIME, 'ru_RU.utf8');
+        return ('%d %b %Y');
+	
 	}
+	
+	public $timestamps = true;
+
+	public function posts() {
+		return $this->belongsTo('App\Model\User');
+	}	
 }

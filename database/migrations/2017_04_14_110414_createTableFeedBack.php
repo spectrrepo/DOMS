@@ -11,18 +11,18 @@ class CreateTableFeedBack extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		Schema::create('feedback', function (Blueprint $table) {
+		Schema::create('feedbacks', function (Blueprint $table) {
 				$table->increments('id');
 				$table->string('name');
 				$table->string('email');
 				$table->text('message');
 				$table->longText('answer')
-				->nullable();
+				      ->nullable();
 				$table->timestamp('date_ask');
 				$table->timestamp('date_answer')
-				->nullable();
+				      ->nullable();
 				$table->integer('user_answer')
-				->nullable();
+				      ->nullable();
 				$table->softDeletes();
 			});
 	}

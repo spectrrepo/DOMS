@@ -17,9 +17,9 @@ class CreateTableClaims extends Migration {
 				$table->string('file');
 				$table->integer('user_id');
 				$table->integer('author_id')
-				->nullable();
+				      ->nullable();
 				$table->boolean('status')
-				->default(false);
+				      ->default(false);
 				$table->integer('image_id');
 				$table->timestamp('date');
 				$table->softDeletes();

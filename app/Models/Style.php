@@ -1,28 +1,19 @@
 <?php
 
-namespace App;
-
-use Codesleeve\Stapler\ORM\EloquentTrait;
-use Codesleeve\Stapler\ORM\StaplerableInterface;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Style extends Model implements StaplerableInterface {
+class Style extends Model {
 
-	use EloquentTrait;
+	protected $table = 'styles';
 
-	protected $table = 'Styles';
+	// protected $fillable = ['username', 'email', 'is_active'];
 
-	public $timestamps = false;
+	// protected $guarded = ['id'];
 
-	public function __construct(array $attributes = array()) {
-		$this->hasAttachedFile('photo', [
-				'styles' => [
-					'max'   => '500x500'
-				]
-			]);
-
-		parent::__construct($attributes);
+	public function images() {
+		return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
 	}
 
 }

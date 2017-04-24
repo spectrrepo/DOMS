@@ -1,44 +1,66 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Codesleeve\Stapler\ORM\EloquentTrait;
-
-use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model implements StaplerableInterface {
-	use EloquentTrait;
+class Post extends Model {
 	use SoftDeletes;
 
-	protected $dates = ['photo_updated_at'];
+	protected $table = 'images';
 
-	protected $table = 'Images';
+	// protected $fillable = ['username', 'email', 'is_active'];
 
-	protected $fillable = ['photo',
-		'title',
-		'description',
-		'author_id',
-		'user_upload_id',
-		'colors',
-		'variants',
-		'style',
-		'rooms'];
+	// protected $guarded = ['id'];
+
+	protected $dates = ['updated_at', 'created_at', 'deleted_at'];
+
 	protected function getDateFormat() {
-
+ 		
+ 		setlocale(LC_TIME, 'ru_RU.utf8');
+        return ('%d %b %Y');
+	
 	}
 
-	public $timestamps = false;
+	public $timestamps = true;
 
-	public function __construct(array $attributes = array()) {
-		$this->hasAttachedFile('photo', [
-				'styles' => [
-					'max'   => '800x800',
-					'small' => '300x300'
-				]
-			]);
-
-		parent::__construct($attributes);
+	public function user() {
+		return $this->belongsToMany('App\Models');
 	}
 
+	public function comments() {
+		return $this->belongsToMany('App\Models');
+	}
+
+	public function claims() {
+		return $this->belongsToMany('App\Models');
+	}
+
+	public function favorite() {
+		return $this->belongsToMany('App\Models');
+	}
+
+	public function likes() {
+		return $this->belongsToMany('App\Models');
+	}
+
+	public function views() {
+		return $this->belongsTo('App\Model\User');
+	}
+
+	public function placements() {
+		return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
+	}
+
+	public function tags() {
+		return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
+	}
+
+	public function colors() {
+		return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
+	}
+
+	public function styles() {
+		return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
+	}
 }

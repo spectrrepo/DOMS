@@ -11,7 +11,7 @@ class CreateTableUserSocialAccount extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		Schema::create('user_social_account', function (Blueprint $table) {
+		Schema::create('users_social_account', function (Blueprint $table) {
 				$table->increments('id');
 				$table->integer('user_id');
 				$table->string('provider_user_id');
@@ -26,6 +26,6 @@ class CreateTableUserSocialAccount extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::drop('user_social_account');
+		Schema::drop('users_social_account');
 	}
 }

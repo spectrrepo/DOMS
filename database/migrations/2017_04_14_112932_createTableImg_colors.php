@@ -14,12 +14,14 @@ class CreateTableImgColors extends Migration {
 		Schema::create('img_colors', function (Blueprint $table) {
 				$table->integer('img_id');
 				$table->foreign('img_id')
-				->references('id')
-					->on('images');
+				      ->references('id')
+					  ->on('images');
+					  
 				$table->integer('color_id');
 				$table->foreign('color_id')
-				->references('id')
-					->on('colors');
+				      ->references('id')
+					  ->on('colors');
+
 				$table->primary(['img_id', 'color_id']);
 			});
 	}

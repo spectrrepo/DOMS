@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\News;
+use App\Article;
 use App\Room;
 use App\Style;
 use App\Tag;
@@ -16,7 +16,7 @@ class AdminController extends Controller
 {
     public function addNewsPage()
     {
-        $news = News::all();
+        $news = Article::all();
         return view('moderator.add_news', ['news' => $news]);
     }
 

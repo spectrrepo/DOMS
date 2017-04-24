@@ -14,19 +14,19 @@ class CreateTableImages extends Migration {
 		Schema::create('images', function (Blueprint $table) {
 				$table->increments('id');
 				$table->string('title')
-				->nullable();
+					  ->nullable();
 				$table->longText('description')
-				->nullable();
+				      ->nullable();
 				$table->string('photo');
 				$table->string('min_photo');
 				$table->string('quadro_photo');
 				$table->integer('author_id')
-				->nullable();
+				      ->nullable();
 				$table->foreign('author_id')
-				->references('id')
-					->on('users');
+				      ->references('id')
+					  ->on('users');
 				$table->boolean('blocked')
-				->default(false);
+				      ->default(false);
 				$table->timestamp();
 				$table->softDeletes();
 			});

@@ -1,38 +1,35 @@
 <?php
 
-namespace App;
-
-use Codesleeve\Stapler\ORM\EloquentTrait;
-use Codesleeve\Stapler\ORM\StaplerableInterface;
+namespace App\Models;
 
 use Hash;
-
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
 use Mail;
 use Role;
 
-class User extends Authenticatable implements StaplerableInterface {
+class User extends Authenticatable {
 
-	use EloquentTrait;
 	use SoftDeletes;
 
-	protected $table = 'Users';
+	protected $table = 'users';
 
-	protected $fillable = ['name', 'email', 'password', 'status', 'phone'];
+	protected $dates = ['updated_at', 'created_at', 'deleted_at'];
 
-	public $timestamps = false;
+	// protected $fillable = ['username', 'email', 'is_active'];
 
-	public function __construct(array $attributes = array()) {
-		$this->hasAttachedFile('avatar', [
-				'styles' => [
-					'small' => '60x60',
-					'max'   => '300x300'
-				]
-			]);
+	// protected $guarded = ['id'];
 
-		parent::__construct($attributes);
+	protected function getDateFormat() {
+ 		
+ 		setlocale(LC_TIME, 'ru_RU.utf8');
+        return ('%d %b %Y');
+	
 	}
+
+	protected $hidden = ['password', 'remember_token'];
+
+	public $timestamps = true;
+
 	/**
 	 * Функция для получение название роли к которой пользователь принадлежит.
 	 *
@@ -41,6 +38,7 @@ class User extends Authenticatable implements StaplerableInterface {
 	public function roles() {
 		return $this->belongsToMany('App\Role', 'users_roles', 'user_id', 'role_id');
 	}
+
 	/**
 	 * Проверка принадлежит ли пользователь к какой либо роли
 	 *
@@ -50,6 +48,7 @@ class User extends Authenticatable implements StaplerableInterface {
 		$roles = $this->roles->toArray();
 		return !empty($roles);
 	}
+
 	/**
 	 * Проверка имеет ли пользователь определенную роль
 	 *
@@ -58,11 +57,13 @@ class User extends Authenticatable implements StaplerableInterface {
 	public function hasRole($check) {
 		return in_array($check, array_dot($this->roles->toArray(), 'name'));
 	}
+
 	/**
 	 * Получение идентификатора роли
 	 *
 	 * @return int
 	 */
+	
 	private function getIdInArray($array, $term) {
 		foreach ($array as $key => $value) {
 			if ($value == $term) {
@@ -71,6 +72,7 @@ class User extends Authenticatable implements StaplerableInterface {
 		}
 		return false;
 	}
+
 	/**
 	 * Добавление роли пользователю
 	 *
@@ -111,5 +113,44 @@ class User extends Authenticatable implements StaplerableInterface {
 				'status'   => 'user',
 				'phone'    => 0
 			]);
+	}
+	/**
+	 * [articles description]
+	 * @return [type] [description]
+	 */
+	public function articles() {
+		return $this->hasMany('App\Model\Article');
+	}
+
+	public function slides() {
+		return $this->hasMany('App\Model\Slide');
+	}
+
+	public function userSocials() {
+		return $this->hasMany('App\Model\UserSocial');
+	}
+
+	public function claims() {
+		return $this->hasMany('App\Model\Claim');
+	}
+
+	public function favorites() {
+		return $this->hasMany('App\Model\Favorite');
+	}
+
+	public function likes() {
+		return $this->hasMany('App\Model\Like');
+	}
+
+	public function feedbacks() {
+		return $this->hasMany('App\Model\Feedback');
+	}
+
+	public function userSocialAccounts() {
+		return $this->hasMany('App\Model\UserSocialAccount');
+	}
+
+	public function images() {
+		return $this->hasMany('App\Model\Post');
 	}
 }

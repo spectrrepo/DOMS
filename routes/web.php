@@ -7,7 +7,8 @@
 */
 
 /*
-/ These routes , which guests have access
+|These routes , which guests have access
+|--------------------------------------------------------------------------
 */
 Route::get('/', function(){
     return redirect("/filtr={'room':[0],'style':[0],'color':0,'sort':'0','tag':'0'}");
@@ -17,7 +18,8 @@ Route::get("/photo/id={id}&filtr={'room':[{room?}],'styles':[{style?}],'colors':
 Route::get('/news', 'NewsController@Index');
 
 /*
-login, registration and more
+|login, registration and more
+|--------------------------------------------------------------------------
 */
 Route::group(['prefix' => '/socialite'], function () {
     Route::get('/{provider}', 'SocialController@callbackVK')->name('socialite.auth');
@@ -34,11 +36,13 @@ Route::post('/enter', 'UserController@login');
 Route::post('/reg', 'UserController@registration');
 Route::post('/recovery_pass', 'UserController@recoveryAccess' );
 /*
-only view all users
+|only view all users
+|--------------------------------------------------------------------------
 */
 Route::get('/profile/{id}', 'UserController@index');
 /*
-callback all people
+|callback all people
+|--------------------------------------------------------------------------
 */
 Route::post('/send_mail', 'MessagesController@sendMail')->name('sendMail');
 Route::group(['prefix' => 'load'], function () {
@@ -58,7 +62,8 @@ Route::group(['prefix' => 'load'], function () {
     Route::post('/all_likes', 'SliderController@loadAllLikes');
 });
 /*
-/ These routes , which users have access
+| These routes , which users have access
+|--------------------------------------------------------------------------
 */
 Route::group(['middleware' => 'role:user,moderator,admin'], function () {
     /*
@@ -97,7 +102,8 @@ Route::group(['middleware' => 'role:user,moderator,admin'], function () {
 });
 
 /*
- These routes , which moderators have access
+|These routes , which moderators have access
+|--------------------------------------------------------------------------
 */
 
 Route::group(['middleware' => 'role:0,moderator,admin'], function () {
@@ -131,7 +137,8 @@ Route::group(['middleware' => 'role:0,moderator,admin'], function () {
 });
 
 /*
-These routes , which admins have access
+|These routes , which admins have access
+|--------------------------------------------------------------------------
 */
 Route::group(['middleware' => 'role:0,0,admin'], function () {
 

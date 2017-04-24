@@ -1,31 +1,29 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Codesleeve\Stapler\ORM\EloquentTrait;
-
-use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Illuminate\Database\Eloquent\Model;
 
-class Slide extends Model implements StaplerableInterface {
-
-	use EloquentTrait;
-
-	protected $dates = ['date'];
+class Slide extends Model {
 
 	protected $table = 'slides';
 
-	public $timestamps = false;
+	protected $dates = ['date'];
 
-	public function __construct(array $attributes = array()) {
-		$this->hasAttachedFile('photo_slider', [
-				'styles' => [
-					'max'   => '800x800',
-					'small' => '300x300'
-				]
-			]);
+	// protected $fillable = ['username', 'email', 'is_active'];
 
-		parent::__construct($attributes);
+	// protected $guarded = ['id'];
+
+	protected function getDateFormat() {
+ 		
+ 		setlocale(LC_TIME, 'ru_RU.utf8');
+        return ('%d %b %Y');
+	
 	}
 
+	public $timestamps = true;
+
+	public function user() {
+		return $this->belongsTo('App\Model\User');
+	}
 }

@@ -15,8 +15,8 @@ class CreateTableViews extends Migration {
 				$table->increments('id');
 				$table->integer('img_id');
 				$table->foreign('img_id')
-				->references('id')
-					->on('images');
+				      ->references('id')
+					  ->on('images');
 				$table->string('photo');
 				$table->string('min_photo');
 				$table->timestamp('date');

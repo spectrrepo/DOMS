@@ -11,16 +11,16 @@ class CreateTableImgFavorites extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		Schema::create('img_favorite', function (Blueprint $table) {
+		Schema::create('img_favorites', function (Blueprint $table) {
 				$table->integer('img_id');
 				$table->integer('user_id');
 				$table->foreign('img_id')
-				->references('id')
-					->on('images');
+				      ->references('id')
+					  ->on('images');
 
 				$table->foreign('user_id')
-				->references('id')
-					->on('users');
+				      ->references('id')
+					  ->on('users');
 
 				$table->primary(['img_id', 'user_id']);
 				$table->timestamp('date');

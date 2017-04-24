@@ -18,18 +18,19 @@ class CreateTableArticles extends Migration {
 				$table->text('description');
 				$table->longText('description_full');
 				$table->string('seo_title')
-				->nullable();
+				      ->nullable();
 				$table->text('image_text');
 				$table->string('image');
 				$table->string('video')
-				->nullable();
+				      ->nullable();
 				$table->integer('user_add');
 				$table->foreign('user_add')
-				->references('id')
-					->on('users');
+				      ->references('id')
+					  ->on('users');
 				$table->boolean('status')
-				->default(false);
+				      ->default(false);
 				$table->timestamp('date');
+				$table->softDeletes();
 			});
 	}
 

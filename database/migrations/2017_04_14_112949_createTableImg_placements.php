@@ -14,12 +14,12 @@ class CreateTableImgPlacements extends Migration {
 		Schema::create('img_placements', function (Blueprint $table) {
 				$table->integer('img_id');
 				$table->foreign('img_id')
-				->references('id')
-					->on('images');
+				      ->references('id')
+					  ->on('images');
 				$table->integer('placement_id');
 				$table->foreign('placement_id')
-				->references('id')
-					->on('placements');
+				      ->references('id')
+					  ->on('placements');
 				$table->primary(['img_id', 'placement_id']);
 			});
 	}

@@ -14,12 +14,14 @@ class CreateTableImgTags extends Migration {
 		Schema::create('img_tags', function (Blueprint $table) {
 				$table->integer('img_id');
 				$table->foreign('img_id')
-				->references('id')
-					->on('images');
+				      ->references('id')
+					  ->on('images');
+					  
 				$table->integer('tag_id');
 				$table->foreign('tag_id')
-				->references('id')
-					->on('tags');
+				      ->references('id')
+					  ->on('tags');
+
 				$table->primary(['img_id', 'tag_id']);
 			});
 	}

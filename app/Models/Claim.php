@@ -1,29 +1,36 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Codesleeve\Stapler\ORM\EloquentTrait;
-use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Illuminate\Database\Eloquent\Model;
 
-class Claim extends Model implements StaplerableInterface {
-	use EloquentTrait;
+class Claim extends Model {
 	use SoftDeletes;
 
-	protected $dates = ['photo_pretense_updated_at'];
+	protected $table = 'claims';
 
-	protected $table = 'copyright';
+	// Разрешить массовое присваивание значений для этих полей
+	// protected $fillable = ['username', 'email', 'is_active'];
 
-	public $timestamps = false;
+	// Запретить mass assigned для этих полей
+	// protected $guarded = ['id'];
 
-	public function __construct(array $attributes = array()) {
-		$this->hasAttachedFile('photo_pretense', [
-				'styles' => [
-					'max'   => '500x500'
-				]
-			]);
+	protected $dates = ['date', 'deleted_at'];
 
-		parent::__construct($attributes);
+	protected function getDateFormat() {
+ 		
+ 		setlocale(LC_TIME, 'ru_RU.utf8');
+        return ('%d %b %Y');
+	
+	}
+	public $timestamps = true;
+
+	public function user() {
+		return $this->belongsTo('App\Model\User');
+	}
+
+	public function image() {
+		return $this->belongsTo('App\Model\Post');
 	}
 
 }

@@ -4,12 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Feedback extends Model {
-	use SoftDeletes;
+class ModerateHistory extends Model {
+	protected $table = 'moderate_history';
 
-	protected $table = 'feedbacks';
-    
-    protected $dates = ['date_ask', 'date_answer', 'deleted_at'];
+	protected $dates = ['date'];
 
 	protected function getDateFormat() {
  		
@@ -22,10 +20,8 @@ class Feedback extends Model {
 
 	// protected $guarded = ['id'];
 
-	protected $hidden = ['id', 'password'];
-
 	public $timestamps = true;
-
+	
 	public function user() {
 		return $this->belongsToMany('App\Models\User');
 	}

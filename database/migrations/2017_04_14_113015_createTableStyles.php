@@ -15,7 +15,7 @@ class CreateTableStyles extends Migration {
 				$table->increments('id');
 				$table->string('title');
 				$table->boolean('status')
-				->default(false);
+				      ->default(false);
 				$table->string('image');
 				$table->text('description');
 				$table->longText('full_description');

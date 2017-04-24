@@ -17,16 +17,15 @@ class CreateTableComments extends Migration {
 				$table->text('comment');
 				$table->integer('image_id');
 				$table->boolean('status')
-				->default(false);
+				      ->default(false);
 				$table->integer('blocked_user');
 				$table->timestamp('date');
 				$table->foreign('user_id')
-				->references('id')
-					->on('users');
+				      ->references('id')
+					  ->on('users');
 				$table->foreign('image_id')
-				->references('id')
-					->on('images');
-				$table->string('rus_date');
+				      ->references('id')
+					  ->on('images');
 				$table->softDeletes();
 			});
 	}

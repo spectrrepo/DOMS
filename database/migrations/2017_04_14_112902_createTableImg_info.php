@@ -14,8 +14,9 @@ class CreateTableImgInfo extends Migration {
 		Schema::create('img_info', function (Blueprint $table) {
 				$table->integer('img_id');
 				$table->foreign('img_id')
-				->references('id')
-					->on('roles');
+				      ->references('id')
+					  ->on('roles');
+					  
 				$table->primary('img_id');
 				$table->integer('views');
 			});

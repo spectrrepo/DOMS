@@ -15,11 +15,11 @@ class CreateTableImgLikes extends Migration {
 				$table->integer('img_id');
 				$table->integer('user_id');
 				$table->foreign('user_id')
-				->references('id')
-					->on('roles');
+				      ->references('id')
+					  ->on('roles');
 				$table->foreign('img_id')
-				->references('id')
-					->on('roles');
+				      ->references('id')
+					  ->on('roles');
 
 				$table->primary(['img_id', 'user_id']);
 				$table->timestamp('date');
