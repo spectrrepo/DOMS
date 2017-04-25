@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
-use App\Room;
+use App\Placement;
 
 class RoomsController extends Controller
 {
 
     public function delete ($roomID) {
 
-        $room = Room::find($roomID)
+        $room = Placement::find($roomID)
                     ->delete();
 
         return redirect()->back();
@@ -21,7 +21,7 @@ class RoomsController extends Controller
 
     public function add()
     {
-        $room = new Room();
+        $room = new Placement();
         $room->title = $_POST["title"];
         $room->save();
 
@@ -31,7 +31,7 @@ class RoomsController extends Controller
 
     public function edit($id)
     {
-        $room = Room::find($id);
+        $room = Placement::find($id);
         $room->title = $_POST["title-room"];
         $room->save();
 

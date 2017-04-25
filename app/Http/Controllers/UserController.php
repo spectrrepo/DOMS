@@ -26,15 +26,6 @@ use App\News;
 use App\Like;
 use App\Social;
 
-
-/**
- * The ResultMessage class holds a message that can be returned
- * as a result of a process. The message has a severity and
- * message.
- *
- * @author nagood
- *
- */
 // TODO: the two first method fixed:
 //         - index
 //         - ajaxDownloadUpdate

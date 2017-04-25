@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model {
 	use SoftDeletes;
 
-	protected $table = 'images';
+	protected $table = 'posts';
 
 	// protected $fillable = ['username', 'email', 'is_active'];
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTableModerateHistory extends Migration
+class CreateViewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class AddTableModerateHistory extends Migration
      */
     public function up()
     {
-        Schema::create('moderate_history', function ( Blueprint $table) {
+        Schema::create('views', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('object', ['comments', 'photo']);
-            $table->integer('object_id')
+            $table->integer('post_id')
                   ->unsigned();
-            $table->timestamps('date');
-            $table->integer('user_id')
-                  ->unsigned();
-            $table->foreign('user_id')
+            $table->foreign('post_id')
                   ->references('id')
-                  ->on('users');
+                  ->on('posts');
+            $table->string('photo');
+            $table->string('min_photo');
+            $table->timestamp('date');
+            $table->softDeletes();
         });
     }
 
@@ -34,6 +34,6 @@ class AddTableModerateHistory extends Migration
      */
     public function down()
     {
-        Schema::drop('moderate_history');
+        Schema::drop('views');
     }
 }

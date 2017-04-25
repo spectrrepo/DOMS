@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-
-use App\Slides;
 use App\DB;
 use App\Image;
 use App\Input;
+
+use App\Models\Slide;
 
 /**
  * The ResultMessage class holds a message that can be returned
@@ -48,7 +47,7 @@ class ChangeSlideController extends Controller
         $image->encode('jpg');
         $image->save(public_path('img/about-slider/slide-'.$slides->id.'.jpg'));
 
-        $slide = new Slides();
+        $slide = new Slide();
         $slide->text = $_POST['text'];
         $slide->photo = '/img/about-slider/slide-'.$slides->id.'.jpg';
         $slide->save();
@@ -65,7 +64,7 @@ class ChangeSlideController extends Controller
     public function delete()
     {
         $id = $_POST['id'];
-        $slide = Slides::find($id);
+        $slide = Slide::find($id);
         $slide->delete();
 
         return redirect()->back();
@@ -80,7 +79,7 @@ class ChangeSlideController extends Controller
     public function change()
     {
         $id = $_POST['id'];
-        $slide = Slides::find($id);
+        $slide = Slide::find($id);
         
         if (Input::has('text')) {
             $slide->text = $_POST['text'];

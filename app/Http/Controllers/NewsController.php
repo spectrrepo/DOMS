@@ -3,15 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Input;
+use Image;
 
 use App\Color;
 use App\Style;
-use App\Room;
-use App\News;
-use App\NewsVariant;
-
-use Input;
-use Image;
+use App\Placement;
+use App\Article;
 
 class NewsController extends Controller
 {
@@ -19,8 +17,8 @@ class NewsController extends Controller
     {
         $colors = Color::all();
         $styles = Style::all();
-        $rooms = Room::all();
-        $news = News::all();
+        $rooms = Placement::all();
+        $news = Article::all();
 
         return view('site.news', ['news'  => $news,
                                   'colors' => $colors,
@@ -31,7 +29,7 @@ class NewsController extends Controller
 
     public function addNews()
     {
-        $news = new News;
+        $news = new Article;
         $news->title = $_POST['title'];
         $news->description = $_POST['min_description'];
         $news->full_description = $_POST['full_description'];
@@ -69,7 +67,7 @@ class NewsController extends Controller
 
     public function delete($id)
     {
-        $news = News::find($id)
+        $news = Article::find($id)
                     ->delete();
 
         return redirect()->back();
@@ -77,7 +75,7 @@ class NewsController extends Controller
 
     public function edit ($id)
     {
-        $news = News::find($id);
+        $news = Article::find($id);
         $news->title = $_POST["title"];
         $news->description = $_POST["min_description"];
         $news->full_description = $_POST["full_description"];
@@ -112,7 +110,7 @@ class NewsController extends Controller
 
     public function editPageIndex($id)
     {
-        $news = News::find($id);
+        $news = Article::find($id);
 
         return view('moderator.update_news',['news' => $news]);
     }

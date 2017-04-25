@@ -11,26 +11,18 @@ use Input;
 use Image;
 use Auth;
 
-use App\Picture;
-use App\News;
-use App\Comment;
-use App\Tag;
-use App\View;
-use App\Like;
-use App\Liked;
-use App\User;
-use App\Color;
-use App\Style;
-use App\Room;
-/**
- * The ResultMessage class holds a message that can be returned
- * as a result of a process. The message has a severity and
- * message.
- *
- * @author nagood
- *
- */
-//:: TODO: indexItem znd more method fixe
+use App\Models\Post;
+use App\Models\Article;
+use App\Models\Comment;
+use App\Models\Tag;
+use App\Models\View;
+use App\Models\Like;
+use App\Models\Favorite;
+use App\Models\User;
+use App\Models\Color;
+use App\Models\Style;
+use App\Models\Placement;
+
 class PhotoController extends Controller
 {
 

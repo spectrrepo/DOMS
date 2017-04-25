@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Liked extends Model {
+class Favorite extends Model {
 
-	protected $table = 'img_favorites';
+	protected $table = 'favorites';
 	
 	protected $primaryKey = ['img_id', 'user_id'];	
 

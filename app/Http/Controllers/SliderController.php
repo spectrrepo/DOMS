@@ -3,19 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Picture;
 use Illuminate\Support\Facades\DB;
-
-use App\Comment;
 use Auth;
 
+use App\Post;
+use App\Comment;
 use App\Like;
-use App\Liked;
-
+use App\Favorite;
 use App\User;
 use App\View;
-
-// TODO: fix method dwnld photo slider 
 
 class SliderController extends Controller
 {

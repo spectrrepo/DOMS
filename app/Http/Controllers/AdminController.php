@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Article;
-use App\Room;
-use App\Style;
-use App\Tag;
-use App\Picture;
-use App\User;
-use App\Color;
-use App\View;
+
+use App\Models\Article;
+use App\Models\Placement;
+use App\Models\Style;
+use App\Models\Tag;
+use App\Models\Post;
+use App\Models\User;
+use App\Models\Color;
+use App\Models\View;
 
 class AdminController extends Controller
 {
@@ -22,7 +23,7 @@ class AdminController extends Controller
 
     public function editRoomsPage()
     {
-        $rooms = Room::paginate(10);
+        $rooms = Placement::paginate(10);
         return view('moderator.edit_rooms', ['rooms' => $rooms]);
     }
 
@@ -40,18 +41,18 @@ class AdminController extends Controller
 
     public function confirmationsPage()
     {
-        $images = Picture::where('verified', '=', false)->paginate(10);
+        $images = Post::where('verified', '=', false)->paginate(10);
         return view('moderator.wait_confirmation', ['images' => $images]);
     }
 
     public function confirmationItemPage($id)
     {
-        $imageId = Picture::find($id);
+        $imageId = Post::find($id);
         $needUser = User::find($imageId->author_id);
         if ((Auth::user()->status === 'moderator' ) || (Auth::user()->id === $needUser->id)) {
             $user = User::find( Auth::id() );
             $styles = Style::all();
-            $rooms = Room::all();
+            $rooms = Placement::all();
             $colors = Color::all();
             $tags = Tag::where('post_id', '=', $id)->get();
             $tagAll = '';
@@ -59,7 +60,7 @@ class AdminController extends Controller
                  $tagAll .= $tag->title.';';
             }
             $views = View::where('post_id', '=', $id)->get();
-            $image = Picture::find($id);
+            $image = Post::find($id);
 
             return view('moderator.wait_confirmation_item', ['user' => $user,
                                                              'styles' => $styles,
@@ -87,7 +88,7 @@ class AdminController extends Controller
 
     public function deleteVerificationImage($id)
     {
-        $image = Picture::find($id)->delete();
+        $image = Post::find($id)->delete();
         if ( Auth::user()->status == 'moderator') {
             return redirect('/profile/admin/verification');
         }else {
