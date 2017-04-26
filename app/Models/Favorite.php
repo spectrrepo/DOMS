@@ -8,7 +8,7 @@ class Favorite extends Model {
 
 	protected $table = 'favorites';
 	
-	protected $primaryKey = ['img_id', 'user_id'];	
+	protected $primaryKey = ['post_id', 'user_id'];	
 
 	protected $dates = ['date'];
 

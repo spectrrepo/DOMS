@@ -8,7 +8,7 @@ class Like extends Model {
 
 	protected $table = 'likes';
 
-	protected $primaryKey = ['img_id', 'user_id'];
+	protected $primaryKey = ['post_id', 'user_id'];
 
 	protected $dates = ['date'];
 

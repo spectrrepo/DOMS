@@ -25,7 +25,7 @@ class View extends Model {
 	
 	public $timestamps = true;
 
-	public function posts() {
-		return $this->belongsTo('App\Model\User');
+	public function post() {
+		return $this->belongsTo('App\Models\Post');
 	}	
 }

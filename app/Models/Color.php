@@ -15,6 +15,6 @@ class Color extends Model {
 	protected $hidden = ['id'];
 
 	public function images() {
-		return $this->belongsToMany('App\Post', 'img_colors', 'img_id', 'color_id');
+		return $this->belongsToMany('App\Models\Post', 'posts_colors', 'post_id', 'color_id');
 	}
 }

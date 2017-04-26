@@ -24,6 +24,6 @@ class Slide extends Model {
 	public $timestamps = true;
 
 	public function user() {
-		return $this->belongsTo('App\Model\User');
+		return $this->belongsTo('App\Models\User');
 	}
 }

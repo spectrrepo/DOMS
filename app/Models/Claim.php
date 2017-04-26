@@ -26,11 +26,11 @@ class Claim extends Model {
 	public $timestamps = true;
 
 	public function user() {
-		return $this->belongsTo('App\Model\User');
+		return $this->belongsTo('App\Models\User');
 	}
 
-	public function image() {
-		return $this->belongsTo('App\Model\Post');
+	public function post() {
+		return $this->belongsTo('App\Models\Post');
 	}
 
 }

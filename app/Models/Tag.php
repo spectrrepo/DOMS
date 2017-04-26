@@ -15,7 +15,7 @@ class Tag extends Model {
 	protected $hidden = ['lang', 'value_en'];
 
 	public function images() {
-		return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
+		return $this->belongsToMany('App\Models\Post', 'posts_tags', 'post_id', 'tag_id');
 	}
 
 }

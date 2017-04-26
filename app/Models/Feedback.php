@@ -22,8 +22,6 @@ class Feedback extends Model {
 
 	// protected $guarded = ['id'];
 
-	protected $hidden = ['id', 'password'];
-
 	public $timestamps = true;
 
 	public function user() {
