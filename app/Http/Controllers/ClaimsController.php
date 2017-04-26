@@ -6,47 +6,32 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Auth;
-use App\Picture;
+use App\Models\Post;
 use Image;
-use App\Pretense;
+use App\Models\Claim;
 
-/**
- * The ResultMessage class holds a message that can be returned
- * as a result of a process. The message has a severity and
- * message.
- *
- * @author nagood
- *
- */
-
-class CopyrightController extends Controller
+class ClaimsController extends Controller
 {
     /**
-     * @param
-     *
-     * @return
-     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(){
 
-      $copyrights = Pretense::paginate(10);
+        $copyrights = Claim::paginate(10);
 
-      return view('moderator.copyright_index', ['copyrights' => $copyrights]);
+        return view('moderator.copyright_index', ['copyrights' => $copyrights]);
 
     }
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @return string
      */
     public function add(){
 
-        $photo = Image::make($_FILES['file_pretense']['tmp_name']);
+        $photo = Post::make($_FILES['file_pretense']['tmp_name']);
         $photo->save( public_path('/img/f.jpg'));
 
-        $copyright = new Pretense();
+        $copyright = new Claim();
         $copyright->photo_pretense = public_path('/img/f.jpg');
         $copyright->post_id = $_POST['post_id'];
         $copyright->user_pretense_id = Auth::user()->id;
@@ -59,37 +44,30 @@ class CopyrightController extends Controller
     }
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function delete(){
 
         $id = $_POST['id'];
 
-        $copyright = Pretense::find($id);
-        $copyright->delete();
+        Claim::find($id)->delete();
 
         return redirect()->back();
 
     }
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function saveNewCopyright(){
 
         $id = $_POST['id'];
 
-        $copyright = Pretense::find($id);
+        $copyright = Claim::find($id);
         $copyright->status = 'read';
         $copyright->save();
 
-        $imageChange = Picture::find($copyright->post_id);
+        $imageChange = Post::find($copyright->post_id);
         $imageChange->author_id = $copyright->user_pretense_id;
         $imageChange->save();
 

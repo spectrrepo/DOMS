@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
-use App\UserSocialAccount;
-use App\User;
+use App\Models\UserSocialAccount;
+use App\Models\User;
 
 class SocialAccountService
 {

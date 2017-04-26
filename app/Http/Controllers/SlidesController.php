@@ -10,22 +10,10 @@ use App\Input;
 
 use App\Models\Slide;
 
-/**
- * The ResultMessage class holds a message that can be returned
- * as a result of a process. The message has a severity and
- * message.
- *
- * @author nagood
- *
- */
-
-class ChangeSlideController extends Controller
+class SlidesController extends Controller
 {
     /**
-     * @param
-     *
-     * @return
-     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -35,10 +23,7 @@ class ChangeSlideController extends Controller
     }
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function add()
     {
@@ -56,31 +41,24 @@ class ChangeSlideController extends Controller
     }
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function delete()
     {
         $id = $_POST['id'];
-        $slide = Slide::find($id);
-        $slide->delete();
+        Slide::find($id)->delete();
 
         return redirect()->back();
     }
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function change()
     {
         $id = $_POST['id'];
         $slide = Slide::find($id);
-        
+
         if (Input::has('text')) {
             $slide->text = $_POST['text'];
         }

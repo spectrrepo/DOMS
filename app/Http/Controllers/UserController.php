@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Carbon\Carbon;
-use App\Picture;
 use Input;
 use File;
 use Auth;
@@ -15,29 +14,25 @@ use DB;
 use Image;
 use Mail;
 
-use App\User;
-use App\Style;
-use App\Room;
-use App\View;
-use App\Tag;
-use App\Color;
-use App\Liked;
-use App\News;
-use App\Like;
-use App\Social;
+use App\Models\Post;
+use App\Models\User;
+use App\Models\Style;
+use App\Models\Placement;
+use App\Models\View;
+use App\Models\Tag;
+use App\Models\Color;
+use App\Models\Favorite;
+use App\Models\Article;
+use App\Models\Like;
+use App\Models\UserSocial;
 
-// TODO: the two first method fixed:
-//         - index
-//         - ajaxDownloadUpdate
 class UserController extends Controller
 {
 
     /**
-     * Login Form
-     *
-     * @return Response
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
-
     public function index($id)
      {  if(Auth::check()){
              $images = DB::select(
@@ -117,7 +112,7 @@ class UserController extends Controller
              array_pop($images);
 
              $user = User::find($id);
-             $links = Social::where('user', '=', $id)->get();
+             $links = UserSocial::where('user', '=', $id)->get();
              return View('profile.index', [ 'id' => $id,
                                             'user' => $user,
                                             'news' => $news,
@@ -128,6 +123,9 @@ class UserController extends Controller
 
      }
 
+    /**
+     * @return array
+     */
      public function ajaxDownloadUpdate () {
          $lastUpdate = $_POST['lastId'];
          $images = DB::select(
@@ -213,8 +211,8 @@ class UserController extends Controller
          if(Auth::check()){
              $id = Auth::id();
              $user = User::find($id);
-             $userImages = Picture::where('author_id', '=', $id)->get();
-             $links = Social::where('user', '=', $id)->get();
+             $userImages = Post::where('author_id', '=', $id)->get();
+             $links = UserSocial::where('user', '=', $id)->get();
 
              return View('profile.index_photo', [ 'id' => $id,
                                                   'user' => $user,
@@ -226,9 +224,7 @@ class UserController extends Controller
      }
 
     /**
-     * Login Form
-     *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function indexAdd()
      {
@@ -236,7 +232,7 @@ class UserController extends Controller
 
              $user = User::find(Auth::id());
              $styles = Style::all();
-             $rooms = Room::all();
+             $rooms = Placement::all();
              $colors = Color::all();
 
              return View('profile.add', ['user' => $user,
@@ -249,11 +245,9 @@ class UserController extends Controller
          }
      }
 
-     /**
-      * Login Form
-      *
-      * @return Response
-      */
+    /**
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
      public function login()
      {
 
@@ -268,11 +262,9 @@ class UserController extends Controller
          }
      }
 
-     /**
-      * Login Form
-      *
-      * @return Response
-      */
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
      public function registration()
      {
        $findUser = User::where('email', '=', $_POST['email'])->first();
@@ -309,22 +301,18 @@ class UserController extends Controller
        }
      }
 
-     /**
-      * Login Form
-      *
-      * @return Response
-      */
+    /**
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
      public function logout()
      {
          Auth::logout();
          return redirect('/');
      }
 
-     /**
-      * Login Form
-      *
-      * @return Response
-      */
+    /**
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
      public function recoveryAccess()
      {
          $user = User::where('e_mail', '=', $_POST['e_mail'])
@@ -349,20 +337,18 @@ class UserController extends Controller
 
      }
 
-      /**
-       * Login Form
-       *
-       * @return Response
-       */
-       public function editUser ()
-       {
-           if (Auth::check()){
-               $user = User::find(Auth::id());
-               $links = Social::where('user', '=', $user->id)->get();
-               return view('profile.edit', ['user' => $user,
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+      public function editUser ()
+      {
+          if (Auth::check()){
+              $user = User::find(Auth::id());
+              $links = UserSocial::where('user', '=', $user->id)->get();
+              return view('profile.edit', ['user' => $user,
                                             'links' => $links]);
-           }
-       }
+          }
+      }
 
        /**
         * Login Form

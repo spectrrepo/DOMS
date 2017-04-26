@@ -7,18 +7,23 @@ use App\Http\Requests;
 
 use App\Placement;
 
-class RoomsController extends Controller
+class PlacementsController extends Controller
 {
-
+    /**
+     * @param $roomID
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete ($roomID) {
 
-        $room = Placement::find($roomID)
-                    ->delete();
+        Placement::find($roomID)->delete();
 
         return redirect()->back();
 
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function add()
     {
         $room = new Placement();
@@ -29,6 +34,10 @@ class RoomsController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function edit($id)
     {
         $room = Placement::find($id);

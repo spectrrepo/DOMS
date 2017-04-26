@@ -1,20 +1,23 @@
 <?php
-// checked, but questions
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
 
-use App\Post;
-use App\Comment;
-use App\Like;
-use App\Favorite;
-use App\User;
-use App\View;
+use App\Models\Post;
+use App\Models\Comment;
+use App\Models\Like;
+use App\Models\Favorite;
+use App\Models\User;
+use App\Models\View;
 
 class SliderController extends Controller
 {
+    /**
+     * @return string
+     */
     public function dwnldPhotoSlider()
     {
         $room = $_POST['roomSort'];
@@ -72,7 +75,7 @@ class SliderController extends Controller
       if ($sort != "0"){
           if ($direction == 'left') {
 
-              $newPhoto = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true and id < '.$id)
+              $newPhoto = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true and id < '.$id)
               ->take(3)
               ->orderBy($sortSort, 'desc')
               ->get();
@@ -80,7 +83,7 @@ class SliderController extends Controller
                   $newPhoto = 'error_download';
               }
           }else {
-              $newPhoto = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true ')
+              $newPhoto = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true ')
               ->where('id', '>', $id)
               ->take(3)
               ->orderBy($sortSort, 'desc')
@@ -91,7 +94,7 @@ class SliderController extends Controller
           }
       }else {
           if ($direction == 'left') {
-              $newPhoto = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true and id < '.$id)
+              $newPhoto = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true and id < '.$id)
               ->take(3)
               ->get();
               $sortSort = false;
@@ -99,7 +102,7 @@ class SliderController extends Controller
                   $newPhoto = 'error_download';
               }
           }else {
-              $newPhoto = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
+              $newPhoto = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
               ->where('id', '>', $id+1)
               ->take(3)
               ->get();
@@ -112,6 +115,9 @@ class SliderController extends Controller
       return $newPhoto;
     }
 
+    /**
+     * @return mixed
+     */
     public function dwnldViewsForPhoto()
     {
       $id = $_POST['id'];
@@ -122,6 +128,9 @@ class SliderController extends Controller
       return $views;
     }
 
+    /**
+     * @return mixed
+     */
     public function dwnldComments()
     {
 
@@ -145,11 +154,14 @@ class SliderController extends Controller
 
     }
 
+    /**
+     * @return mixed
+     */
     public function dwnldInfoPhoto()
     {
 
       $id = $_POST['id'];
-      $photoInfo = Picture::select('id',
+      $photoInfo = Post::select('id',
                                    'views_count',
                                    'comments_count',
                                    'full_path',
@@ -163,6 +175,9 @@ class SliderController extends Controller
 
     }
 
+    /**
+     * @return array
+     */
     public function dwnldLikeWhom()
     {
 
@@ -180,11 +195,14 @@ class SliderController extends Controller
       return $likeWhom;
     }
 
+    /**
+     * @return mixed
+     */
     public function dwnldPhotoUser()
     {
 
       $id = $_POST['id'];
-      $pic = Picture::find($id);
+      $pic = Post::find($id);
       $user = User::select('id', 'quadro_ava', 'name')
                    ->where('id', '=', $pic->author_id)
                    ->get();
@@ -192,17 +210,23 @@ class SliderController extends Controller
       return $user;
     }
 
+    /**
+     * @return array
+     */
     public function dwnldTags()
     {
 
       $id = $_POST['id'];
-      $image = Picture::find($id);
+      $image = Post::find($id);
       $tagsString = $image->tags;
       $tags = explode(';',$tagsString);
 
       return $tags;
     }
 
+    /**
+     * @return string
+     */
     public function loadActiveLike()
     {
         $id = $_POST['id'];
@@ -221,11 +245,14 @@ class SliderController extends Controller
         return $response;
     }
 
+    /**
+     * @return string
+     */
     public function loadActiveLiked()
     {
         $id = $_POST['id'];
         if (Auth::check()) {
-            $findLiked = Liked::where('post_id', '=', $id)
+            $findLiked = Favorite::where('post_id', '=', $id)
                              ->where('user_id', '=', Auth::user()->id);
             if ( $findLiked->count() !== 0 ) {
                 $response = 'success';
@@ -239,6 +266,9 @@ class SliderController extends Controller
         return $response;
     }
 
+    /**
+     * @return array
+     */
     public function loadAllLikes ()
     {
         $id = $_POST['id'];

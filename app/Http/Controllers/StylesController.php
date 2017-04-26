@@ -5,32 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
-use App\Style;
+use App\Models\Style;
 
 class StylesController extends Controller
 {
 
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @param $styleID
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function delete ($styleID) {
 
-        $tag = Style::find($styleID)
-                     ->delete();
+        Style::find($styleID)->delete();
 
         return redirect()->back();
 
     }
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function add() {
 
@@ -45,10 +39,8 @@ class StylesController extends Controller
     }
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function editPageIndex($id) {
 

@@ -3,33 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-
-use App\MessageMail;
 use Mail;
 
-/**
- * The ResultMessage class holds a message that can be returned
- * as a result of a process. The message has a severity and
- * message.
- *
- * @author nagood
- *
- */
+use App\Models\Feedback;
 
-class MessagesController extends Controller
+class FeedbacksController extends Controller
 {
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function sendMail () {
 
-        $messages = new MessageMail();
+        $messages = new Feedback();
         $messages->name = $_POST['name'];
         $messages->e_mail = $_POST['e_mail'];
         $messages->text_message = $_POST['text'];
@@ -47,16 +34,23 @@ class MessagesController extends Controller
 
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function mailIndex () {
 
-        $messages = MessageMail::paginate(10);
+        $messages = Feedback::paginate(10);
 
         return view('moderator.message', ['messages' => $messages]);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function mailIndexItem ($id) {
 
-        $message = MessageMail::find($id);
+        $message = Feedback::find($id);
         $message->status = 'read';
         $message->save();
 
@@ -64,24 +58,19 @@ class MessagesController extends Controller
     }
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteMail ($id) {
 
-        $message = MessageMail::find($id);
+        $message = Feedback::find($id);
         $message->delete();
 
         return redirect()->back();
     }
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function askOnMail () {
 

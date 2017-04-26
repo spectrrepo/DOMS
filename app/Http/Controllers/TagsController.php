@@ -6,16 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Carbon\Carbon;
 
-use App\Tag;
+use App\Models\Tag;
 
 class TagsController extends Controller
 {
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function edit ($id){
 
@@ -27,24 +25,19 @@ class TagsController extends Controller
     }
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @param $tagID
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function delete ($tagID) {
 
-        $tag = Tag::find($tagID)->delete();
+        Tag::find($tagID)->delete();
 
         return redirect()->back();
 
     }
 
     /**
-     * @param
-     *
-     * @return
-     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function add() {
         
@@ -57,6 +50,9 @@ class TagsController extends Controller
 
     }
 
+    /**
+     * @return mixed
+     */
     public function indexTagsMask () {
 
         $currentText = $_POST['current'];

@@ -9,11 +9,11 @@ class Article extends Model {
 
 	protected $table = 'articles';
 
-	// protected $guarded = ['id'];
-
 	protected $hidden = ['user_add', 'status'];
 
-	// protected $fillable = ['news'];
+//    protected $guarded = ['id'];
+
+//	protected $fillable = ['news'];
 
 	protected $dates = ['date', 'deleted_at'];
 
