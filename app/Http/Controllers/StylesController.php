@@ -15,7 +15,8 @@ class StylesController extends Controller
      * @param $styleID
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete ($styleID) {
+    public function delete ($styleID)
+    {
 
         Style::find($styleID)->delete();
 
@@ -26,7 +27,8 @@ class StylesController extends Controller
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function add() {
+    public function add ()
+    {
 
         $style = new Style();
         $style->name = $_POST["title"];
@@ -42,14 +44,15 @@ class StylesController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function editPageIndex($id) {
+    public function editPageIndex ($id)
+    {
 
       $style = Style::find($id);
 
       return view('moderator.update_style',['style' => $style]);
     }
 
-    public function edit($id)
+    public function edit ($id)
     {
         $style = Style::find($id);
         $style->name = $_POST["title"];
@@ -63,5 +66,23 @@ class StylesController extends Controller
         $style->save();
 
         return redirect()->back();
+    }
+
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editStylesPage ()
+    {
+        $styles = Style::paginate(10);
+        return view('moderator.edit_styles', ['styles' => $styles]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function addStyleItem ()
+    {
+        return view('moderator.style');
     }
 }

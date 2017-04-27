@@ -61,4 +61,29 @@ class TagsController extends Controller
         return $needTags;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editTagsPage()
+    {
+        $tags = Tag::paginate(10);
+        return view('moderator.edit_tags', ['tags' => $tags]);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function dwnldTags()
+    {
+
+        $id = $_POST['id'];
+        $image = Post::find($id);
+        $tagsString = $image->tags;
+        $tags = explode(';',$tagsString);
+
+        return $tags;
+    }
+
+
 }

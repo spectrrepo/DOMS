@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Auth;
-use App\Picture;
 use Image;
-use App\Liked;
+
+use App\Models\Post;
+use App\Models\Favorite;
 
 class FavoritesController extends Controller
 {
@@ -17,7 +18,7 @@ class FavoritesController extends Controller
      */
     public function add()
     {
-        $liked = new Liked();
+        $liked = new Favorite();
         $liked->post_id = $_POST['post_id'];
         $liked->user_id = $_POST['user_id'];
         $liked->date = \Carbon\Carbon::parse();
@@ -32,9 +33,9 @@ class FavoritesController extends Controller
     public function delete()
     {
 
-        $liked = Liked::where('post_id', '=', $_POST['post_id'])
-                      ->where('user_id', '=', $_POST['user_id']);
-        $liked->delete();
+        Favorite::where('post_id', '=', $_POST['post_id'])
+                ->where('user_id', '=', $_POST['user_id'])
+                ->delete();
 
         return 'liked';
 
@@ -46,10 +47,33 @@ class FavoritesController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $images =  Picture::join('Likeds', 'Images.id', '=', 'Likeds.post_id')
-                               ->where('Likeds.user_id', '=', Auth::id())
-                               ->get();
+            $images =  Post::join('Likeds', 'Images.id', '=', 'Likeds.post_id')
+                           ->where('Likeds.user_id', '=', Auth::id())
+                           ->get();
             return view('profile.liked', ['images' => $images]);
         }
+    }
+
+
+
+    /**
+     * @return string
+     */
+    public function loadActiveLiked()
+    {
+        $id = $_POST['id'];
+        if (Auth::check()) {
+            $findLiked = Favorite::where('post_id', '=', $id)
+                ->where('user_id', '=', Auth::user()->id);
+            if ( $findLiked->count() !== 0 ) {
+                $response = 'success';
+            } else {
+                $response = 'error';
+            }
+        }else {
+            $response = 'error';
+        }
+
+        return $response;
     }
 }

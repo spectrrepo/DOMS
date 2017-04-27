@@ -6,44 +6,54 @@ use Illuminate\Http\Request;
 use Input;
 use Image;
 
-use App\Color;
-use App\Style;
-use App\Placement;
-use App\Article;
+use App\Models\Color;
+use App\Models\Style;
+use App\Models\Placement;
+use App\Models\Article;
 
 class ArticlesController extends Controller
 {
-    public function Index()
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
     {
         $colors = Color::all();
         $styles = Style::all();
         $rooms = Placement::all();
         $news = Article::all();
 
-        return view('site.news', ['news'  => $news,
-                                       'colors' => $colors,
-                                       'styles' => $styles,
-                                       'rooms' => $rooms,
-                                      ]);
+        return view('site.news',
+                    ['news'  => $news,
+                     'colors' => $colors,
+                     'styles' => $styles,
+                     'rooms' => $rooms,]);
     }
 
-    public function addNews()
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function add()
     {
         $news = new Article;
         $news->title = $_POST['title'];
-        $news->description = $_POST['min_description'];
-        $news->full_description = $_POST['full_description'];
-        $news->news = $_FILES['main_photo'];
-        $news->variants = 'f';
-        $news->save();
-        $news->file_path_full = $news->news->url('max');
-        $news->file_path_min = $news->news->url('small');
+        $news->description = $_POST['description'];
+        $news->description_full = $_POST['description_full'];
+        $news->image_text = $_FILES['image_text'];
+        $news->image = $_FILES['main_photo'];
+        $news->video = $_FILES['main_photo'];
+        $news->user_add = $_FILES['main_photo'];
+        $news->status = $_FILES['main_photo'];
         $news->save();
 
         return redirect()->back();
 
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete($id)
     {
         Article::find($id)->delete();
@@ -51,6 +61,10 @@ class ArticlesController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function edit ($id)
     {
         $news = Article::find($id);
@@ -67,11 +81,32 @@ class ArticlesController extends Controller
         return redirect()->back();
     }
 
-    public function editPageIndex($id)
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editPage ($id)
     {
         $news = Article::find($id);
 
         return view('moderator.update_news',['news' => $news]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function newsItem()
+    {
+        return view('moderator.news');
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function newsList()
+    {
+        $news = Article::all();
+
+        return view('moderator.add_news', ['news' => $news]);
+    }
 }

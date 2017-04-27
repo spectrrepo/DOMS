@@ -35,7 +35,7 @@ class ClaimsController extends Controller
         $copyright->photo_pretense = public_path('/img/f.jpg');
         $copyright->post_id = $_POST['post_id'];
         $copyright->user_pretense_id = Auth::user()->id;
-        $copyright->user_author_id = Picture::find($_POST['post_id'])->author_id;
+        $copyright->user_author_id = Post::find($_POST['post_id'])->author_id;
         $copyright->message = $_POST['text_pretense'];
 
         $copyright->save();

@@ -5,14 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-
-use App\Comment;
-use App\Picture;
-use App\User;
-
 use DB;
 
-use Carbon\Carbon;
+use App\Models\Comment;
 
 class CommentsController extends Controller
 {
@@ -67,6 +62,32 @@ class CommentsController extends Controller
         $comment->delete();
 
         return 'true';
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function dwnldComments()
+    {
+
+        $id = $_POST['id'];
+
+        $comments = DB::table('Comments')
+            ->select('Comments.id',
+                'Users.id AS user_id',
+                'Images.id AS image_id',
+                'Users.name AS user_name',
+                'Users.quadro_ava AS user_quadro_ava',
+                'Comments.text_comment AS text_comment',
+                'Comments.rus_date AS rus_date' )
+            ->join('Users', 'Comments.user_id', '=', 'Users.id')
+            ->join('Images', 'Images.id', '=', 'Comments.post_id')
+            ->where('Images.id', '=', $id)
+            ->andWhere('Comments.status', '=', '"read"')
+            ->get();
+
+        return $comments;
 
     }
 }

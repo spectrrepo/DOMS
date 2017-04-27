@@ -18,42 +18,6 @@ class ModerateHistoriesController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function addNewsPage()
-    {
-        $news = Article::all();
-        return view('moderator.add_news', ['news' => $news]);
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function editRoomsPage()
-    {
-        $rooms = Placement::paginate(10);
-        return view('moderator.edit_rooms', ['rooms' => $rooms]);
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function editStylesPage()
-    {
-        $styles = Style::paginate(10);
-        return view('moderator.edit_styles', ['styles' => $styles]);
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function editTagsPage()
-    {
-        $tags = Tag::paginate(10);
-        return view('moderator.edit_tags', ['tags' => $tags]);
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function confirmationsPage()
     {
         $images = Post::where('verified', '=', false)->paginate(10);
@@ -68,6 +32,7 @@ class ModerateHistoriesController extends Controller
     {
         $imageId = Post::find($id);
         $needUser = User::find($imageId->author_id);
+
         if ((Auth::user()->status === 'moderator' ) || (Auth::user()->id === $needUser->id)) {
             $user = User::find( Auth::id() );
             $styles = Style::all();
@@ -93,22 +58,6 @@ class ModerateHistoriesController extends Controller
         }else {
             return redirect('/profile/'.Auth::user()->id);
         }
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function addNewsItem()
-    {
-        return view('moderator.news');
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function addStyleItem()
-    {
-        return view('moderator.style');
     }
 
     /**

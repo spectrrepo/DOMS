@@ -27,4 +27,17 @@ class ViewsController extends Controller
         return 'true';
     }
 
+    /**
+     * @return mixed
+     */
+    public function dwnldViewsForPhoto()
+    {
+        $id = $_POST['id'];
+        $views = View::select('id', 'path_full', 'path_min')
+                     ->where('post_id', '=', $id)
+                     ->get();
+
+        return $views;
+    }
+
 }

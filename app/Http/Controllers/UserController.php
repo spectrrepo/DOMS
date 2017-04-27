@@ -382,4 +382,21 @@ class UserController extends Controller
            return redirect()->back();
        }
 
+
+    /**
+     * @return mixed
+     */
+    public function dwnldPhotoUser()
+    {
+
+        $id = $_POST['id'];
+        $pic = Post::find($id);
+        $user = User::select('id', 'quadro_ava', 'name')
+            ->where('id', '=', $pic->author_id)
+            ->get();
+
+        return $user;
+    }
+
+
 }

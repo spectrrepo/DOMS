@@ -13,9 +13,9 @@ class PlacementsController extends Controller
      * @param $roomID
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete ($roomID) {
+    public function delete ($id) {
 
-        Placement::find($roomID)->delete();
+        Placement::find($id)->delete();
 
         return redirect()->back();
 
@@ -46,5 +46,16 @@ class PlacementsController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editRoomsPage()
+    {
+        $rooms = Placement::paginate(10);
+
+        return view('moderator.edit_rooms', ['rooms' => $rooms]);
+    }
+
 
 }

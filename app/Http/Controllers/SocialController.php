@@ -75,9 +75,9 @@ class SocialController extends Controller
 
         $link = $_POST['link'];
         $user_id = $_POST['user_id'];
-        $deleteLink = Social::where('link', '=', $link)
-                            ->where('user', '=', $user_id)
-                            ->delete();
+        Social::where('link', '=', $link)
+               ->where('user', '=', $user_id)
+               ->delete();
 
         return 'true';
     }
@@ -87,9 +87,10 @@ class SocialController extends Controller
         $link = $_POST['link'];
         $user_id = $_POST['user_id'];
         $old_link = $_POST['old_link'];
-        $editLink = Social::where('link', '=', $old_link)
-                           ->where('user', '=', $user_id)
-                           ->update(array('link' => $link));
+
+        Social::where('link', '=', $old_link)
+               ->where('user', '=', $user_id)
+               ->update(array('link' => $link));
 
         return 'true';
     }
