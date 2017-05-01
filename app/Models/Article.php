@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model {
 	use SoftDeletes;
+	use \FileSaveTrait;
 
 	protected $table = 'articles';
 
 	protected $hidden = ['user_add', 'status'];
 
-//    protected $guarded = ['id'];
+//  protected $guarded = ['id'];
 
 //	protected $fillable = ['news'];
 
