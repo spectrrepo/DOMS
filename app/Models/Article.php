@@ -2,21 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModelForPhoto as BaseModelForPhoto;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Article extends Model {
+class Article extends BaseModelForPhoto {
 	use SoftDeletes;
-	use \FileSaveTrait;
 
 	protected $table = 'articles';
-
 	protected $hidden = ['user_add', 'status'];
-
 //  protected $guarded = ['id'];
-
 //	protected $fillable = ['news'];
-
 	protected $dates = ['date', 'deleted_at'];
+    public static $photo;
 
 	protected function getDateFormat() {
  		
@@ -25,9 +22,26 @@ class Article extends Model {
 	
 	}
 
-	public $timestamps = true;
+//	public $timestamps = true;
 
 	public function user() {
 		return $this->belongsTo('App\Models\User');
 	}
+
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function() {
+            static::photo();
+        });
+    }
+
+    public static function photo ()
+    {
+        $this->image = self::saveFile(__CLASS__, 'path_mini', 1);
+//      $this->path_middle = $this->saveFile(__CLASS__, 'path_middle', $this->getIncrementing());
+//      $this->path_large = $this->saveFile(__CLASS__, 'path_large', $this->getIncrementing());
+//      $this->path_square = $this->saveFile(__CLASS__, 'path_square', $this->getIncrementing());
+    }
+
 }

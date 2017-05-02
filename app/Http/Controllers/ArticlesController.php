@@ -18,16 +18,16 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $colors = Color::all();
-        $styles = Style::all();
-        $rooms = Placement::all();
+//        $colors = Color::all();
+//        $styles = Style::all();
+//        $rooms = Placement::all();
         $news = Article::all();
-
-        return view('site.news',
-                    ['news'  => $news,
-                     'colors' => $colors,
-                     'styles' => $styles,
-                     'rooms' => $rooms,]);
+//        print_r($news);
+        return view('moderator.news');
+//                    ['news'  => $news,
+//                     'colors' => $colors,
+//                     'styles' => $styles,
+//                     'rooms' => $rooms,]);
     }
 
     /**
@@ -37,13 +37,14 @@ class ArticlesController extends Controller
     {
         $news = new Article;
         $news->title = $_POST['title'];
-        $news->description = $_POST['description'];
-        $news->description_full = $_POST['description_full'];
-        $news->image_text = $_FILES['image_text'];
-        $news->image = $_FILES['main_photo'];
-        $news->video = $_FILES['main_photo'];
-        $news->user_add = $_FILES['main_photo'];
-        $news->status = $_FILES['main_photo'];
+        $news->description = $_POST['min_description'];
+        $news->description_full = $_POST['full_description'];
+        $news->image_text = '$_FILES[]';
+//        dd($_FILES['main_photo']);
+        $news::$photo = $_FILES['main_photo'];
+//        $news->video = '$_FILES['main_photo']';
+        $news->user_add = 1/*$_FILES['main_photo']*/;
+        $news->status = true;
         $news->save();
 
         return redirect()->back();

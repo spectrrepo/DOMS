@@ -10,6 +10,8 @@
 |These routes , which guests have access
 |--------------------------------------------------------------------------
 */
+Route::get('/test', 'ArticlesController@index');
+Route::post('/add', 'ArticlesController@add');
 Route::get('/', function(){
     return redirect("/filtr={'room':[0],'style':[0],'color':0,'sort':'0','tag':'0'}");
 });

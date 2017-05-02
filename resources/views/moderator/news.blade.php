@@ -1,6 +1,6 @@
-@extends('layouts.profile')
-@section('profile-content')
-{{ Form::open(array('url' => '/add_news', 'files' => 'true'))}}
+{{--extends('layouts.profile')--}}
+{{--section('profile-content')--}}
+{{ Form::open(array('url' => '/add', 'files' => 'true'))}}
   <input class="title-add-news" type="text" name="title" placeholder="заголовок новости">
   <div id="main-wrap-photo" class="wrap-main-dwnld-photo" title="Добавить изображение">
       <span class="add-photo-ico uk-icon-justify uk-icon-camera"></span>
@@ -21,4 +21,4 @@
     <span class="save-ico uk-icon-justify uk-icon-save"></span>
   </button>
 {{ Form::close()}}
-@endsection
+{{--endsection--}}
