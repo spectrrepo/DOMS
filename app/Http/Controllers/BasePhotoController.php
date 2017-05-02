@@ -1,21 +1,18 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Image;
 use Illuminate\Support\Facades\Storage;
 
-class BaseModelForPhoto extends Model
+class BasePhotoController extends Controller
 {
-    public $timestamps = false;
     /**
      * @return mixed
      */
-    protected static function file ()
+    protected function file ()
     {
-        static::$file = $_FILES['main_photo']['tmp_name'];
-//dd(static::$file);
         $newImage = Image::make(static::$file);
 
         return $newImage;
@@ -49,9 +46,9 @@ class BaseModelForPhoto extends Model
         $waterStar->fit($newSize);
 
         return [
-                'waterStar' => $waterStar,
-                'waterRainbow' => $waterRainbow,
-               ];
+            'waterStar' => $waterStar,
+            'waterRainbow' => $waterRainbow,
+        ];
     }
 
     /**
@@ -62,7 +59,7 @@ class BaseModelForPhoto extends Model
         $watermark = $this->changeSizeWatermark('','', $this->getfile(''));
 
         $image = $this->getFile('')->insert($watermark['waterStar'], 'top', 0, 0)
-                                         ->insert($watermark['waterRainbow'], 'bottom-right', 30, 30);
+            ->insert($watermark['waterRainbow'], 'bottom-right', 30, 30);
 
         return $image;
     }
@@ -73,16 +70,21 @@ class BaseModelForPhoto extends Model
      * @param $id
      * @return string
      */
-    protected static function saveFile ($modelName, $variant, $id)
+    protected function saveFile ($modelName, $variant, $id)
     {
         $path = $modelName.'/'.$id.'/'.$variant;
-//        dd($_FILES);
         $image = static::file()->fit(180)->encode('jpg');
-//        dd($image);
         Storage::put($path, $image);
 
         return $path;
     }
 
-    public static $file;
+    public function photo ()
+    {
+        $this->image = self::saveFile(__CLASS__, 'path_mini', 1);
+//      $this->path_middle = $this->saveFile(__CLASS__, 'path_middle', $this->getIncrementing());
+//      $this->path_large = $this->saveFile(__CLASS__, 'path_large', $this->getIncrementing());
+//      $this->path_square = $this->saveFile(__CLASS__, 'path_square', $this->getIncrementing());
+    }
+
 }
