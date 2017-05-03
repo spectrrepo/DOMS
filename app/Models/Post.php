@@ -8,21 +8,25 @@ class Post extends Model {
 	use SoftDeletes;
 
 	protected $table = 'posts';
-
-	// protected $fillable = ['username', 'email', 'is_active'];
-
-	// protected $guarded = ['id'];
-
 	protected $dates = ['updated_at', 'created_at', 'deleted_at'];
+    public $timestamps = true;
+    public $rules = [
+        'title' => 'required|max:255',
+        'description' => 'required',
+        'photo' => 'required|image',
+        'min_photo' => 'required|image',
+        'quadro_photo' => 'required|image',
+        'author_id' => 'required|integer',
+        'views' => 'integer',
+        'status' => 'required|boolean',
+    ];
 
-	protected function getDateFormat() {
+    protected function getDateFormat() {
  		
  		setlocale(LC_TIME, 'ru_RU.utf8');
         return ('%d %b %Y');
 	
 	}
-
-	public $timestamps = true;
 
 	public function user() {
 		return $this->belongsToMany('App\Models\User');

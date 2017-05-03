@@ -11,43 +11,32 @@ use App\Models\Style;
 use App\Models\Placement;
 use App\Models\Article;
 
-class ArticlesController extends Controller
+class ArticlesController extends BasePhotoController
 {
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index()
-    {
-//        $colors = Color::all();
-//        $styles = Style::all();
-//        $rooms = Placement::all();
-        $news = Article::all();
-//        print_r($news);
-        return view('moderator.news');
-//                    ['news'  => $news,
-//                     'colors' => $colors,
-//                     'styles' => $styles,
-//                     'rooms' => $rooms,]);
-    }
-
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
     public function add()
     {
-        $news = new Article;
-        $news->title = $_POST['title'];
-        $news->description = $_POST['min_description'];
-        $news->description_full = $_POST['full_description'];
-        $news->image_text = '$_FILES[]';
-//        dd($_FILES['main_photo']);
-        $news::$photo = $_FILES['main_photo'];
-//        $news->video = '$_FILES['main_photo']';
-        $news->user_add = 1/*$_FILES['main_photo']*/;
-        $news->status = true;
-        $news->save();
 
-        return redirect()->back();
+        $article = new Article;
+        $this->validate($request, $)
+        $article->title = Input::get('title');
+        $article->description = Input::get('min_description');
+        $article->description_full = Input::get('full_description');
+        $article->image_text = Input::get('image_text');
+        $article->image = $this->saveFile('ds','min',1, $_FILES['main_photo']['tmp_name']);
+        $article->video = Input::get('video');
+        $article->user_add = Auth::user()->id();
+        $article->status = Input::get('status');
+        $article->seo_title = Input::get('seo_title');
+
+        if ($_REQUEST) {
+            return redirect('list')->with('asd','sadsa');
+        } else {
+            $article->save();
+            return redirect('list')->with('asd','sadsa');
+        }
 
     }
 
@@ -57,7 +46,7 @@ class ArticlesController extends Controller
      */
     public function delete($id)
     {
-        Article::find($id)->delete();
+        Article::find($id)->softDelete();
 
         return redirect()->back();
     }
@@ -68,18 +57,39 @@ class ArticlesController extends Controller
      */
     public function edit ($id)
     {
-        $news = Article::find($id);
-        $news->title = $_POST["title"];
-        $news->description = $_POST["min_description"];
-        $news->full_description = $_POST["full_description"];
-
-        if ( !empty($_FILES['main_photo']['tmp_name'])) {
-            $news->news = $_FILES['main_photo'];
+        $article = Article::find($id);
+        $article->title = Input::get('title');
+        $article->description = Input::get('min_description');
+        $article->description_full = Input::get('full_description');
+        $article->image_text = Input::get('image_text');
+        $article->image = $this->saveFile('ds','min',1, $_FILES['main_photo']['tmp_name']);
+        if (Input::has('video')) {
+            $article->video = Input::get('video');
         }
+        $article->user_add = Auth::user()->id();
+        $article->status = Input::get('status');
+        if (Input::has('seo_title') ) {
+            $article->seo_title = Input::get('seo_title');
+        }
+        $article->update();
 
-        $news->update();
+        return redirect()->back()->with('message', 'dsds');
+    }
 
-        return redirect()->back();
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function sitePage()
+    {
+        $colors = Color::all();
+        $styles = Style::all();
+        $rooms = Placement::all();
+        $news = Article::all();
+        return view('site.news');
+//                    ['news'  => $news,
+//                     'colors' => $colors,
+//                     'styles' => $styles,
+//                     'rooms' => $rooms,]);
     }
 
     /**
@@ -88,26 +98,26 @@ class ArticlesController extends Controller
      */
     public function editPage ($id)
     {
-        $news = Article::find($id);
+        $articles = Article::find($id);
 
-        return view('moderator.update_news',['news' => $news]);
+        return view('moderator.articles.edit',['news' => $articles]);
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function newsItem()
+    public function addPage()
     {
-        return view('moderator.news');
+        return view('moderator.articles.add');
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function newsList()
+    public function listPage()
     {
-        $news = Article::all();
+        $articles = Article::paginate(15);
 
-        return view('moderator.add_news', ['news' => $news]);
+        return view('moderator.articles.list', ['articles' => $articles]);
     }
 }

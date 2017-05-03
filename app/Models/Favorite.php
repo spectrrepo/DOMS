@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Favorite extends Model {
 
 	protected $table = 'favorites';
-	
-	protected $primaryKey = ['post_id', 'user_id'];	
-
+	protected $primaryKey = ['post_id', 'user_id'];
 	protected $dates = ['date'];
+    public $timestamps = false;
+    public $rules = [
+        'user_id' => 'required|integer',
+        'post_id' => 'required|integer',
+    ];
 
 	protected function getDateFormat() {
  		
@@ -18,12 +21,6 @@ class Favorite extends Model {
         return ('%d %b %Y');
 	
 	}
-
-	// protected $fillable = ['username', 'email', 'is_active'];
-
-	// protected $guarded = ['id'];
-
-	public $timestamps = true;
 
 	public function post() {
 		return $this->belongsToMany('App\Models\Post');

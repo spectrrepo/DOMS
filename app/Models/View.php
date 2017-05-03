@@ -9,13 +9,14 @@ class View extends Model {
 	use SoftDeletes;
 
 	protected $table = 'views';
+	protected $dates = ['date', 'deleted_at'];
+    public $timestamps = false;
+    public $rules = [
+        'post_id' => 'required|integer',
+        'photo' => 'required|image',
+        'min_photo' => 'required|image',
+    ];
 
-	protected $dates = ['created_at', 'updated_at', 'deleted_at'];
-
-	// protected $fillable = ['username', 'email', 'is_active'];
-
-	// protected $guarded = ['id'];
-    
     protected function getDateFormat() {
  		
  		setlocale(LC_TIME, 'ru_RU.utf8');
@@ -23,8 +24,6 @@ class View extends Model {
 	
 	}
 	
-	public $timestamps = true;
-
 	public function post() {
 		return $this->belongsTo('App\Models\Post');
 	}	

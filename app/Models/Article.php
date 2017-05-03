@@ -10,9 +10,22 @@ class Article extends Model {
 
 	protected $table = 'articles';
 	protected $hidden = ['user_add', 'status'];
-//	protected $fillable = ['news'];
 	protected $dates = ['date', 'deleted_at'];
-    public static $photo;
+    public $timestamps = false;
+    public $rules = [
+       'title' => 'required|max:255',
+       'description' => 'required',
+       'description_full' => 'required',
+       'seo_title' => 'min:50|max:80',
+       'seo_keywords' => 'max:250',
+       'seo_description' => 'min:150|max:200',
+       'image_text' => 'required|',
+       'image' => 'required|image|',
+       'image_alt' => 'required|max:28',
+       'video' => 'file|size:800',
+       'user_add' => 'required|integer',
+       'status' => 'required|boolean',
+    ];
 
 	protected function getDateFormat() {
  		

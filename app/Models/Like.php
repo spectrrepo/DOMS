@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Like extends Model {
 
 	protected $table = 'likes';
-
 	protected $primaryKey = ['post_id', 'user_id'];
-
 	protected $dates = ['date'];
+    public $timestamps = false;
+    public $rules = [
+        'post_id' => 'required|integer',
+        'user_id' => 'required|integer',
+    ];
 
 	protected function getDateFormat() {
  		
@@ -19,12 +22,6 @@ class Like extends Model {
 	
 	}
 
-	// protected $fillable = ['username', 'email', 'is_active'];
-
-	// protected $guarded = ['id'];
-
-	public $timestamps = true;
-	
 	public function user() {
 		return $this->belongsToMany('App\Models\User');
 	}

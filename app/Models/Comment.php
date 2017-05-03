@@ -8,8 +8,14 @@ class Comment extends Model {
 	use SoftDeletes;
 
 	protected $table = 'comments';
-
 	protected $dates = ['date', 'deleted_at'];
+    public $timestamps = false;
+    public $rules = [
+        'comment' => 'required|max:255',
+        'user_id' => 'required|integer',
+        'post_id' => 'required|integer',
+        'status' => 'required|boolean',
+    ];
 
 	protected function getDateFormat() {
  		
@@ -17,12 +23,6 @@ class Comment extends Model {
         return ('%d %b %Y');
 	
 	}
-
-	// protected $fillable = ['username', 'email', 'is_active'];
-
-	// protected $guarded = ['id'];
-
-	public $timestamps = true;
 
 	public function user() {
 		return $this->belongsToMany('App\Models\User');

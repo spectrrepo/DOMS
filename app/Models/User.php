@@ -12,29 +12,25 @@ class User extends Authenticatable {
 	use SoftDeletes;
 
 	protected $table = 'users';
-
 	protected $dates = ['updated_at', 'created_at', 'deleted_at'];
-
-	// protected $fillable = ['username', 'email', 'is_active'];
-
-	// protected $guarded = ['id'];
-
-	protected function getDateFormat() {
- 		
- 		setlocale(LC_TIME, 'ru_RU.utf8');
-        return ('%d %b %Y');
-	
-	}
-
 	protected $hidden = ['password', 'remember_token'];
-
 	public $timestamps = true;
-
-	/**
-	 * Функция для получение название роли к которой пользователь принадлежит.
-	 *
-	 * @return boolean
-	 **/
+    public $rules = [
+        'name' => 'required',
+        'email' => 'required|email|unique',
+        'password' => 'required',
+        'sex' => 'required|in:man,woman',
+        'skype' => 'alpha',
+        'about' => 'text',
+        'type' => 'required|in:',
+        'phone' => 'integer',
+        'vk_id' => 'string',
+        'fb_id' => 'string',
+    ];
+// не уверен
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
 	public function roles() {
 		return $this->belongsToMany('App\Models\Role', 'users_roles', 'user_id', 'role_id');
 	}
@@ -114,10 +110,10 @@ class User extends Authenticatable {
 				'phone'    => 0
 			]);
 	}
-	/**
-	 * [articles description]
-	 * @return [type] [description]
-	 */
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
 	public function articles() {
 		return $this->hasMany('App\Model\Article');
 	}
@@ -153,4 +149,11 @@ class User extends Authenticatable {
 	public function images() {
 		return $this->hasMany('App\Model\Post');
 	}
+
+    protected function getDateFormat() {
+
+        setlocale(LC_TIME, 'ru_RU.utf8');
+        return ('%d %b %Y');
+
+    }
 }

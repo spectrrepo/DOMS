@@ -5,9 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class ModerateHistory extends Model {
-	protected $table = 'moderate_history';
 
+	protected $table = 'moderate_history';
 	protected $dates = ['date'];
+    public $timestamps = false;
+    public $rules = [
+        'object' => 'required|in:claims,posts,comments',
+        'object_id' => 'required|integer',
+        'user_id' => 'required|integer',
+    ];
 
 	protected function getDateFormat() {
  		
@@ -16,12 +22,6 @@ class ModerateHistory extends Model {
 	
 	}
 
-	// protected $fillable = ['username', 'email', 'is_active'];
-
-	// protected $guarded = ['id'];
-
-	public $timestamps = true;
-	
 	public function user() {
 		return $this->belongsToMany('App\Models\User');
 	}

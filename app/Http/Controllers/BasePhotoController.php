@@ -2,22 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Image;
 use Illuminate\Support\Facades\Storage;
 
 class BasePhotoController extends Controller
 {
-    /**
-     * @return mixed
-     */
-    protected function file ()
-    {
-        $newImage = Image::make(static::$file);
-
-        return $newImage;
-    }
-
+    const IMAGE_RAINBOW = '/img/watermark-files/rainbow.png';
+    const IMAGE_STAR = '/img/watermark-files/rainbow.png';
     /**
      * @param $image
      * @return mixed
@@ -30,20 +21,19 @@ class BasePhotoController extends Controller
     }
 
     /**
-     * @param $imageRainbow
-     * @param $imageStar
      * @param $image
      * @return array
      */
-    protected function changeSizeWatermark ( $imageRainbow, $imageStar, $image)
+    protected function changeSizeWatermark ($image)
     {
-        $waterRainbow = $this->getFile($imageRainbow);
-        $waterStar = $this->getFile($imageStar);
+        $waterRainbow = $this->getFile($this::IMAGE_RAINBOW);
+        $waterStar = $this->getFile($this::IMAGE_STAR);
 
-        $waterRainbow->fit($this->file()->width());
+        // ширина watermark звезды 4% от ширины изображения
+        $newSizeStar = round(($this->getFile($image)->width()) / 100 * 4 );
 
-        $newSize = round(($this->file()->width()) / 100 * 4 );
-        $waterStar->fit($newSize);
+        $waterRainbow->fit($this->getFile($image)->width());
+        $waterStar->fit($newSizeStar);
 
         return [
             'waterStar' => $waterStar,
@@ -52,14 +42,15 @@ class BasePhotoController extends Controller
     }
 
     /**
+     * @param $image
      * @return mixed
      */
-    protected function insertWatermark ()
+    protected function insertWatermark ($image)
     {
-        $watermark = $this->changeSizeWatermark('','', $this->getfile(''));
+        $watermark = $this->changeSizeWatermark($this->getfile($image));
 
-        $image = $this->getFile('')->insert($watermark['waterStar'], 'top', 0, 0)
-            ->insert($watermark['waterRainbow'], 'bottom-right', 30, 30);
+        $image = $this->getFile($image)->insert($watermark['waterStar'], 'top', 0, 0)
+                                       ->insert($watermark['waterRainbow'], 'bottom-right', 30, 30);
 
         return $image;
     }
@@ -68,23 +59,36 @@ class BasePhotoController extends Controller
      * @param $modelName
      * @param $variant
      * @param $id
+     * @param $file
      * @return string
      */
-    protected function saveFile ($modelName, $variant, $id)
+    protected function saveFile ($modelName, $variant, $id, $file)
     {
-        $path = $modelName.'/'.$id.'/'.$variant;
-        $image = static::file()->fit(180)->encode('jpg');
+        $path = '/'.$modelName.'/'.$id.'/'.$variant;
+        $image = $this->getFile($file)->fit(180)->encode('jpg');
         Storage::put($path, $image);
 
         return $path;
     }
 
-    public function photo ()
+    /**
+     * @param $modelName
+     * @param $variant
+     * @param $id
+     * @param $file
+     * @return string
+     */
+    protected function saveFileWithWatermark ($modelName, $variant, $id, $file)
     {
-        $this->image = self::saveFile(__CLASS__, 'path_mini', 1);
-//      $this->path_middle = $this->saveFile(__CLASS__, 'path_middle', $this->getIncrementing());
-//      $this->path_large = $this->saveFile(__CLASS__, 'path_large', $this->getIncrementing());
-//      $this->path_square = $this->saveFile(__CLASS__, 'path_square', $this->getIncrementing());
+        $path = '/'.$modelName.'/'.$id.'/'.$variant;
+
+        $image = $this->getFile($file);
+        $imageWithWatermark = $this->insertWatermark($image);
+        $imageWithWatermark->fit(180)->encode('jpg');
+        Storage::put($path, $imageWithWatermark);
+
+        return $path;
     }
+
 
 }

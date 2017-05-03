@@ -8,8 +8,15 @@ class Feedback extends Model {
 	use SoftDeletes;
 
 	protected $table = 'feedbacks';
-    
     protected $dates = ['date_ask', 'date_answer', 'deleted_at'];
+    public $timestamps = false;
+    public $rules = [
+        'name' => 'required|max:255',
+        'email' => 'required|email',
+        'message' => 'required|max:255',
+        'answer' => 'max:255',
+        'user_answer' => 'integer',
+    ];
 
 	protected function getDateFormat() {
  		
@@ -17,12 +24,6 @@ class Feedback extends Model {
         return ('%d %b %Y');
 	
 	}
-
-	// protected $fillable = ['username', 'email', 'is_active'];
-
-	// protected $guarded = ['id'];
-
-	public $timestamps = true;
 
 	public function user() {
 		return $this->belongsToMany('App\Models\User');
