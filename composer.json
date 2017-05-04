@@ -10,7 +10,6 @@
         "laravelbook/ardent": "dev-master",
         "doctrine/dbal": "v2.4.2",
         "laravelcollective/html": "~5.0",
-        "codesleeve/laravel-stapler": "1.0.*",
         "laravelrus/localized-carbon": "1.*",
         "nesbot/carbon": "~1.21",
         "socialiteproviders/vkontakte": "^2.0",

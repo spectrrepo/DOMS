@@ -4,6 +4,11 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use App\Models\Color;
+use App\Models\Style;
+use App\Models\Placement;
+use App\Models\Article;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -13,7 +18,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $colors = Color::all();
+        $styles = Style::all();
+        $placements = Placement::all();
+        $articles = Article::all();
+
+        view()->share(['colors' => $colors,
+                       'styles' => $styles,
+                       'placements' => $placements,
+                       'articles' => $articles,
+                      ]);
     }
 
     /**

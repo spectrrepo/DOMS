@@ -522,21 +522,21 @@ class PostsController extends Controller
         $imageCurrent->save();
 
         return view('site.slider', ['news' => $news,
-            'user' => $user,
-            'colors' => $colors,
-            'styles' => $styles,
-            'rooms' =>  $rooms,
-            'images' => $images,
-            'image' => $imageCurrent[0],
-            'comments' => $comments,
-            'tags' => $tags,
-            'views' => $views,
-            'num_image' => $num_image,
-            'num_like' => $num_like,
-            'num_comment' => $num_comment,
-            'colorLike' => $colorLike,
-            'colorLiked' => $colorLiked,
-            'likeWhom' => $likeWhom]);
+                                            'user' => $user,
+                                            'colors' => $colors,
+                                            'styles' => $styles,
+                                            'rooms' =>  $rooms,
+                                            'images' => $images,
+                                            'image' => $imageCurrent[0],
+                                            'comments' => $comments,
+                                            'tags' => $tags,
+                                            'views' => $views,
+                                            'num_image' => $num_image,
+                                            'num_like' => $num_like,
+                                            'num_comment' => $num_comment,
+                                            'colorLike' => $colorLike,
+                                            'colorLiked' => $colorLiked,
+                                            'likeWhom' => $likeWhom]);
     }
 
     /**

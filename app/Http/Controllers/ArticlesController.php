@@ -14,29 +14,30 @@ use App\Models\Article;
 class ArticlesController extends BasePhotoController
 {
     /**
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function add()
+    public function add(Request $request)
     {
 
         $article = new Article;
-        $this->validate($request, $)
-        $article->title = Input::get('title');
-        $article->description = Input::get('min_description');
-        $article->description_full = Input::get('full_description');
-        $article->image_text = Input::get('image_text');
-        $article->image = $this->saveFile('ds','min',1, $_FILES['main_photo']['tmp_name']);
-        $article->video = Input::get('video');
-        $article->user_add = Auth::user()->id();
-        $article->status = Input::get('status');
-        $article->seo_title = Input::get('seo_title');
+        $this->validate($request->all(), $article->rules);
 
-        if ($_REQUEST) {
-            return redirect('list')->with('asd','sadsa');
-        } else {
-            $article->save();
-            return redirect('list')->with('asd','sadsa');
-        }
+
+
+        $article->save([
+            'title' => Input::get('title'),
+            'description' => Input::get('min_description'),
+            'description_full' => Input::get('full_description'),
+            'image_text' => Input::get('image_text'),
+            'image' => $this->saveFile('ds','min',1, $_FILES['main_photo']['tmp_name']),
+            'video' => Input::get('video'),
+            'user_add' => Auth::user()->id(),
+            'status' => Input::get('status'),
+            'seo_title' => Input::get('seo_title'),
+        ]);
+
+        return redirect('list')->with('message','success');
 
     }
 
@@ -48,7 +49,7 @@ class ArticlesController extends BasePhotoController
     {
         Article::find($id)->softDelete();
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'success');
     }
 
     /**
@@ -58,20 +59,19 @@ class ArticlesController extends BasePhotoController
     public function edit ($id)
     {
         $article = Article::find($id);
-        $article->title = Input::get('title');
-        $article->description = Input::get('min_description');
-        $article->description_full = Input::get('full_description');
-        $article->image_text = Input::get('image_text');
-        $article->image = $this->saveFile('ds','min',1, $_FILES['main_photo']['tmp_name']);
-        if (Input::has('video')) {
-            $article->video = Input::get('video');
-        }
-        $article->user_add = Auth::user()->id();
-        $article->status = Input::get('status');
-        if (Input::has('seo_title') ) {
-            $article->seo_title = Input::get('seo_title');
-        }
-        $article->update();
+        $this->validate($request->all(), $article->rules);
+
+        $article->update([
+            'title' => Input::get('title'),
+            'description' => Input::get('min_description'),
+            'description_full' => Input::get('full_description'),
+            'image_text' => Input::get('image_text'),
+            'image' => $this->saveFile('ds','min',1, $_FILES['main_photo']['tmp_name']),
+            'video' => Input::get('video'),
+            'user_add' => Auth::user()->id(),
+            'status' => Input::get('status'),
+            'seo_title' => Input::get('seo_title'),
+        ]);
 
         return redirect()->back()->with('message', 'dsds');
     }
@@ -81,15 +81,10 @@ class ArticlesController extends BasePhotoController
      */
     public function sitePage()
     {
-        $colors = Color::all();
-        $styles = Style::all();
-        $rooms = Placement::all();
+
         $news = Article::all();
         return view('site.news');
-//                    ['news'  => $news,
-//                     'colors' => $colors,
-//                     'styles' => $styles,
-//                     'rooms' => $rooms,]);
+//                    ['news'  => $news]);
     }
 
     /**
