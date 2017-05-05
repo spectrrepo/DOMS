@@ -12,9 +12,8 @@ class Claim extends Model {
 	protected $dates = ['date', 'deleted_at'];
     public $timestamps = false;
     public $rules = [
-        'title' => 'required|max:255',
-        'file' => 'required|image|size:100',
-        'user_id' => 'required|integer',
+        'text' => 'required|max:255',
+        'file' => 'required|image|size:10240',
         'post_id' => 'required|integer',
         'status' => 'required|boolean',
     ];

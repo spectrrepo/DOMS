@@ -13,8 +13,8 @@ class View extends Model {
     public $timestamps = false;
     public $rules = [
         'post_id' => 'required|integer',
-        'photo' => 'required|image',
-        'min_photo' => 'required|image',
+        'img' => 'required|image|size:10240',
+        'alt' => 'required|max:28',
     ];
 
     protected function getDateFormat() {

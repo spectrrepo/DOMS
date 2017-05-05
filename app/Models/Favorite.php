@@ -11,7 +11,6 @@ class Favorite extends Model {
 	protected $dates = ['date'];
     public $timestamps = false;
     public $rules = [
-        'user_id' => 'required|integer',
         'post_id' => 'required|integer',
     ];
 

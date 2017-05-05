@@ -11,8 +11,9 @@ class Slide extends Model {
     public $timestamps = false;
     public $rules = [
         'text' => 'required|max:255',
-        'photo' => 'required|image',
+        'img' => 'required|image|size:10240',
         'user_add' => 'required|integer',
+        'alt' => 'required|max:28',
     ];
 
     protected function getDateFormat() {

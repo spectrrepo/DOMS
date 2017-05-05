@@ -42,6 +42,26 @@ class BasePhotoController extends Controller
     }
 
     /**
+     * @param $modelName
+     * @param $variant
+     * @return string
+     */
+    protected function createPath ($modelName, $variant)
+    {
+        $path = $modelName;
+        $fileName = md5(microtime() . rand(0, 9999));
+
+        $i = 0;
+        while ($i++ < 2) {
+            $path .= '/'.substr($fileName, 0,2);
+        }
+
+        $path .= '/'.$variant.'/'.$fileName.'jpg';
+
+        return $path;
+    }
+
+    /**
      * @param $image
      * @return mixed
      */
@@ -58,14 +78,25 @@ class BasePhotoController extends Controller
     /**
      * @param $modelName
      * @param $variant
-     * @param $id
      * @param $file
+     * @param $height
+     * @param bool $width
      * @return string
      */
-    protected function saveFile ($modelName, $variant, $id, $file)
+    protected function saveFile ($modelName, $variant, $file, $height, $width = false)
     {
-        $path = '/'.$modelName.'/'.$id.'/'.$variant;
-        $image = $this->getFile($file)->fit(180)->encode('jpg');
+        $path = $this->createPath($modelName, $variant);
+
+        if ($width === false) {
+            $image = $this->getFile($file)
+                          ->fit($height)
+                          ->encode('jpg');
+        } else {
+            $image = $this->getFile($file)
+                          ->fit($height, $width)
+                          ->encode('jpg');
+        }
+
         Storage::put($path, $image);
 
         return $path;
@@ -74,17 +105,25 @@ class BasePhotoController extends Controller
     /**
      * @param $modelName
      * @param $variant
-     * @param $id
      * @param $file
+     * @param $height
+     * @param bool $width
      * @return string
      */
-    protected function saveFileWithWatermark ($modelName, $variant, $id, $file)
+    protected function saveFileWithWatermark ($modelName, $variant, $file, $height, $width = false)
     {
-        $path = '/'.$modelName.'/'.$id.'/'.$variant;
-
+        $path = $this->createPath($modelName, $variant);
         $image = $this->getFile($file);
         $imageWithWatermark = $this->insertWatermark($image);
-        $imageWithWatermark->fit(180)->encode('jpg');
+
+        if ($width === false) {
+            $imageWithWatermark->fit($height)
+                               ->encode('jpg');
+        } else {
+            $imageWithWatermark->fit($height, $width)
+                               ->encode('jpg');
+        }
+
         Storage::put($path, $imageWithWatermark);
 
         return $path;

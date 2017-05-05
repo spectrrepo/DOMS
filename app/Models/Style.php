@@ -11,9 +11,9 @@ class Style extends Model {
     public $rules = [
         'title' => 'required|max:255',
         'status' => 'required|boolean',
-        'image' => 'image',
         'description' => 'required|max:255',
-        'full_description' => '',
+        'full_description' => 'string',
+        'img' => 'image|size:10240',
     ];
 
     public function posts() {

@@ -14,7 +14,8 @@
         "nesbot/carbon": "~1.21",
         "socialiteproviders/vkontakte": "^2.0",
         "laravel/socialite": "^2.0",
-        "intervention/image": "^2.3"
+        "intervention/image": "^2.3",
+        "caouecs/laravel-lang": "~3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

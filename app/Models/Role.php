@@ -10,9 +10,10 @@ class Role extends Model {
     public $timestamps = false;
     public $rules = [
         'name' => 'required|max:80',
-        'nickname' => 'required',
-        'img' => 'required|image',
-        'text' => 'required',
+        'nickname' => 'required|string',
+        'img' => 'required|image|size:10240',
+        'text' => 'required|string',
+        'alt' => 'required|max:28',
     ];
 
     public function users() {

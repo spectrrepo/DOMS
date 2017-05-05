@@ -12,7 +12,6 @@ class ModerateHistory extends Model {
     public $rules = [
         'object' => 'required|in:claims,posts,comments',
         'object_id' => 'required|integer',
-        'user_id' => 'required|integer',
     ];
 
 	protected function getDateFormat() {

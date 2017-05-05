@@ -13,7 +13,6 @@ class UserSocial extends Model {
 	protected $dates = ['deleted_at'];
 	public $timestamps = false;
     public $rules = [
-        'user_id' => 'required|integer',
         'link' => 'required|active_url',
     ];
 

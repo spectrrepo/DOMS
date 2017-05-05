@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Input;
 use Image;
@@ -13,6 +14,7 @@ use App\Models\Article;
 
 class ArticlesController extends BasePhotoController
 {
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
@@ -21,23 +23,22 @@ class ArticlesController extends BasePhotoController
     {
 
         $article = new Article;
-        $this->validate($request->all(), $article->rules);
+        $this->validate($request, $article->rules);
 
+        $article->title = Input::get('title');
+        $article->description = Input::get('title');
+        $article->description_full = Input::get('title');
+        $article->image_text = Input::get('title');
+        $article->user_add= 1;
+        $article->status = true;
+        $article->img_middle = $this->saveFile('article','middle', Input::file('main_photo'), 300, 400);
+        $article->img_large = $this->saveFile('article','large', Input::file('main_photo'), 300, 400);
+        $article->img_square = $this->saveFile('article', 'square', Input::file('main_photo'), 300);
+        $article->alt = Input::get('min_description');
+        $article->seo_description = Input::get('min_description');
+        $article->save();
 
-
-        $article->save([
-            'title' => Input::get('title'),
-            'description' => Input::get('min_description'),
-            'description_full' => Input::get('full_description'),
-            'image_text' => Input::get('image_text'),
-            'image' => $this->saveFile('ds','min',1, $_FILES['main_photo']['tmp_name']),
-            'video' => Input::get('video'),
-            'user_add' => Auth::user()->id(),
-            'status' => Input::get('status'),
-            'seo_title' => Input::get('seo_title'),
-        ]);
-
-        return redirect('list')->with('message','success');
+//        return redirect('list')->with('message','success');
 
     }
 
@@ -81,10 +82,9 @@ class ArticlesController extends BasePhotoController
      */
     public function sitePage()
     {
+        $articles = Article::all();
 
-        $news = Article::all();
-        return view('site.news');
-//                    ['news'  => $news]);
+        return view('site.news', ['articles'  => $articles]);
     }
 
     /**

@@ -96,8 +96,9 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'title' => [
+            'required'             => 'The :attribute field is required.',
+
         ],
     ],
 

@@ -20,12 +20,16 @@ class User extends Authenticatable {
         'email' => 'required|email|unique',
         'password' => 'required',
         'sex' => 'required|in:man,woman',
-        'skype' => 'alpha',
-        'about' => 'text',
-        'type' => 'required|in:',
+        'skype' => 'alpha_dash',
+        'about' => 'string',
         'phone' => 'integer',
         'vk_id' => 'string',
         'fb_id' => 'string',
+        'img' => 'image|size:10240',
+        'seo_title' => 'min:50|max:80',
+        'seo_keywords' => 'max:250',
+        'seo_description' => 'min:150|max:200',
+        'alt' => 'required|max:28',
     ];
 // не уверен
     /**

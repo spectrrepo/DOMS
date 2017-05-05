@@ -11,8 +11,7 @@ class Comment extends Model {
 	protected $dates = ['date', 'deleted_at'];
     public $timestamps = false;
     public $rules = [
-        'comment' => 'required|max:255',
-        'user_id' => 'required|integer',
+        'comment' => 'required|string',
         'post_id' => 'required|integer',
         'status' => 'required|boolean',
     ];

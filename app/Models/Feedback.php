@@ -15,7 +15,6 @@ class Feedback extends Model {
         'email' => 'required|email',
         'message' => 'required|max:255',
         'answer' => 'max:255',
-        'user_answer' => 'integer',
     ];
 
 	protected function getDateFormat() {

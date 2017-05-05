@@ -31,11 +31,11 @@
 
     @include('../helpers.footer')
 
-    @include('../popups.about')
-    @include('../popups.feedback')
-    @include('../popups.forgetpswd')
-    @include('../popups.login')
-    @include('../popups.registration.index')
+    {{--include('../popups.about')--}}
+    {{--include('../popups.feedback')--}}
+    {{--include('../popups.forgetpswd')--}}
+{{--    include('../popups.login')--}}
+{{--    include('../popups.registration.index')--}}
     
     <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/uikit.min.js') }}"></script>

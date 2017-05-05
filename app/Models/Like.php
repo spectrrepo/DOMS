@@ -12,7 +12,6 @@ class Like extends Model {
     public $timestamps = false;
     public $rules = [
         'post_id' => 'required|integer',
-        'user_id' => 'required|integer',
     ];
 
 	protected function getDateFormat() {

@@ -12,14 +12,15 @@ class Post extends Model {
     public $timestamps = true;
     public $rules = [
         'title' => 'required|max:255',
-        'description' => 'required',
-        'photo' => 'required|image',
-        'min_photo' => 'required|image',
-        'quadro_photo' => 'required|image',
-        'author_id' => 'required|integer',
+        'description' => 'required|string',
+        'img' => 'required|image|size:10240',
         'views' => 'integer',
         'status' => 'required|boolean',
-    ];
+        'seo_title' => 'min:50|max:80',
+        'seo_keywords' => 'max:250',
+        'seo_description' => 'min:150|max:200',
+        'alt' => 'required|max:28',
+        ];
 
     protected function getDateFormat() {
  		

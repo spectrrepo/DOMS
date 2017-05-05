@@ -1,5 +1,17 @@
-{{--extends('layouts.profile')--}}
-{{--section('profile-content')--}}
+@extends('layouts.profile')
+@section('profile-content')
+<h3>asdciuuuuupo[lkad</h3>
+@if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            fdsfdkslfkd;lsfkldsk;flkdlskf;l
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+<h3>fdsjfjdsflsdlfdlsk</h3>
 {{ Form::open(array('url' => '/add', 'files' => 'true'))}}
   <input class="title-add-news" type="text" name="title" placeholder="заголовок новости">
   <div id="main-wrap-photo" class="wrap-main-dwnld-photo" title="Добавить изображение">
@@ -21,4 +33,4 @@
     <span class="save-ico uk-icon-justify uk-icon-save"></span>
   </button>
 {{ Form::close()}}
-{{--endsection--}}
+@endsection
