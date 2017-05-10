@@ -11,7 +11,7 @@ use App\Models\View;
  * Class ViewsController
  * @package App\Http\Controllers
  */
-class ViewsController extends Controller
+class ViewsController extends BasePhotoController
 {
     /**
      * @return string
@@ -25,21 +25,31 @@ class ViewsController extends Controller
     }
 
     /**
+     * @param $id
      * @return mixed
      */
-    public function loadViews ()
+    public function loadViews ($id)
     {
-        $id = $_POST['id'];
-        $views = View::select('id', 'path_full', 'path_min')
-                     ->where('post_id', '=', $id)
+        $views = View::where('post_id', '=', $id)
                      ->get();
 
         return $views;
     }
 
-    public function add ()
+    /**
+     * @param $file
+     * @param $post_id
+     */
+    public static function add ($file, $post_id)
     {
-
+        $view = new View();
+        $view->post_id = $post_id;
+        $view->img_mini = self::saveFileWithWatermark('claims', 'default', $file,'600');
+        $view->img_middle = self::saveFileWithWatermark('claims', 'default', $file,'600');
+        $view->img_large = self::saveFileWithWatermark('claims', 'default', $file,'600');
+        $view->img_square = self::saveFileWithWatermark('claims', 'default', $file,'600');
+        $view->alt = 'изображение';
+        $view->save();
     }
 
 }

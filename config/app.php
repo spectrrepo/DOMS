@@ -182,6 +182,8 @@ i
         App\Providers\RouteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        JeroenNoten\LaravelCkEditor\ServiceProvider::class,
+
 
 
 

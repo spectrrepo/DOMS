@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Mail;
+use Auth;
+use Input;
+use Carbon\Carbon;
 
 use App\Models\Feedback;
 
@@ -11,24 +14,25 @@ class FeedbacksController extends Controller
 {
 
     /**
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function sendMail ()
+    public function add (Request $request)
     {
+        $feedback = new Feedback();
+        $this->validate($request, $feedback->rules);
 
-        $messages = new Feedback();
-        $messages->name = $_POST['name'];
-        $messages->e_mail = $_POST['e_mail'];
-        $messages->text_message = $_POST['text'];
+        $feedback->name = Input::get('name');
+        $feedback->email = Input::get('email');
+        $feedback->message = Input::get('message');
+        $feedback->save();
 
-        Mail::raw($_POST['text'], function($message)
+        Mail::raw(Input::get('message'), function($message)
         {
             $message->from('info@domspectr.ru', 'DOMS');
 
-            $message->to($_POST['e_mail'])->subject('Вопросы и предложения');
+            $message->to(Input::get('email'))->subject('Вопросы и предложения');
         });
-
-        $messages->save();
 
         return redirect()->back();
 
@@ -37,56 +41,54 @@ class FeedbacksController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function mailIndex ()
+    public function listPage ()
     {
+        $feedBacks = Feedback::paginate(10);
 
-        $messages = Feedback::paginate(10);
-
-        return view('moderator.message', ['messages' => $messages]);
+        return view('moderator.feedback.list', ['feedBacks' => $feedBacks]);
     }
 
     /**
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function mailIndexItem ($id)
+    public function itemPage ($id)
     {
-
         $message = Feedback::find($id);
         $message->status = 'read';
         $message->save();
 
-        return view('moderator.message_answer', ['message' => $message]);
+        return view('moderator.feedback.answer', ['message' => $message]);
     }
 
     /**
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function deleteMail ($id)
+    public function delete ($id)
     {
+        Feedback::find($id)->sodtDelete();
 
-        $message = Feedback::find($id);
-        $message->delete();
-
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Сообщение успешно удалено');
     }
 
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function askOnMail ()
+    public function answer ()
     {
+        $feedback = new Feedback();
+        $feedback->answer = Input::get('answer');
+        $feedback->date_answer = Carbon::now();
+        $feedback->user_answer = Auth::user()->id;
+        $feedback->update();
 
-        $text = $_POST['text'];
-
-        Mail::raw($text, function($message)
+        Mail::raw(Input::get('answer'), function($message)
         {
             $message->from('info@domspectr.ru', 'DOMS');
-
-            $message->to($_POST['mail_send'])->subject($_POST['thema']);
+            $message->to(Input::get('email'))->subject(Input::get('thema'));
         });
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Сообщение отправлено!');
     }
 }

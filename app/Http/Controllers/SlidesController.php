@@ -30,7 +30,11 @@ class SlidesController extends Controller
 
         $slide->text = Input::get('text');
         $slide->img = $this->saveFile('claims', 'default', Input::file('file'),'600');
-        $slide->alt = Input::get('alt');
+
+        if (Input::has('alt')) {
+            $slide->alt = Input::get("alt");
+        }
+
         $slide->user_add = Auth::user()->id;
         $slide->save();
 
@@ -59,7 +63,11 @@ class SlidesController extends Controller
 
         $slide->text = Input::get('text');
         $slide->img = $this->saveFile('claims', 'default', Input::file('file'),'600');
-        $slide->alt = Input::get('alt');
+
+        if (Input::has('alt')) {
+            $slide->alt = Input::get("alt");
+        }
+
         $slide->user_add = Auth::user()->id;
         $slide->update();
 

@@ -8,7 +8,7 @@ class Feedback extends Model {
 	use SoftDeletes;
 
 	protected $table = 'feedbacks';
-    protected $dates = ['date_ask', 'date_answer', 'deleted_at'];
+    protected $dates = ['date_ask', 'deleted_at'];
     public $timestamps = false;
     public $rules = [
         'name' => 'required|max:255',

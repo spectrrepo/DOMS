@@ -36,8 +36,11 @@ class PlacementsController extends Controller
         $placement->img_square = $this->saveFile('claims', 'default', Input::file('file'),'600');
         $placement->description = Input::get("description");
         $placement->full_description = Input::get("full_description");
-        $placement->alt = Input::get("alt");
-        
+
+        if (Input::has('alt')) {
+            $placement->alt = Input::get("alt");
+        }
+
         $placement->save();
 
         return redirect()->back()->with('message', 'Помещение успешно добавлена!');
@@ -61,7 +64,11 @@ class PlacementsController extends Controller
         $placement->img_square = $this->saveFile('claims', 'default', Input::file('file'),'600');
         $placement->description = Input::get("description");
         $placement->full_description = Input::get("full_description");
-        $placement->alt = Input::get("alt");
+
+        if (Input::has('alt')) {
+            $placement->alt = Input::get("alt");
+        }
+
         $placement->update();
 
         return redirect()->back()->with('message', 'Помещение успешно отредактировано!');

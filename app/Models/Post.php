@@ -16,10 +16,6 @@ class Post extends Model {
         'img' => 'required|image|size:10240',
         'views' => 'integer',
         'status' => 'required|boolean',
-        'seo_title' => 'min:50|max:80',
-        'seo_keywords' => 'max:250',
-        'seo_description' => 'min:150|max:200',
-        'alt' => 'required|max:28',
         ];
 
     protected function getDateFormat() {

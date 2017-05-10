@@ -21,12 +21,13 @@ class AppServiceProvider extends ServiceProvider
         $colors = Color::all();
         $styles = Style::all();
         $placements = Placement::all();
-        $articles = Article::all();
+        $article = Article::orderBy('id', 'desc')->first();
+
 
         view()->share(['colors' => $colors,
                        'styles' => $styles,
                        'placements' => $placements,
-                       'articles' => $articles,
+                       'articles' => $article,
                       ]);
     }
 

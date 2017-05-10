@@ -30,10 +30,23 @@ class ArticlesController extends BasePhotoController
         $article->img_middle = $this->saveFile('article','middle', Input::file('image'), 300, 400);
         $article->img_large = $this->saveFile('article','large', Input::file('image'), 300, 400);
         $article->img_square = $this->saveFile('article', 'square', Input::file('image'), 300);
-        $article->alt = Input::get('alt');
-        $article->seo_title = Input::get('seo_title');
-        $article->seo_description = Input::get('seo_description');
-        $article->seo_keywords = Input::get('seo_keywords');
+
+        if (Input::has('alt')) {
+            $article->alt = Input::get('alt');
+        }
+
+        if (Input::has('seo_title')) {
+            $article->seo_title = Input::get('seo_title');
+        }
+
+        if (Input::has('seo_description')) {
+            $article->seo_description = Input::get('seo_description');
+        }
+
+        if (Input::has('seo_keywords')) {
+            $article->seo_keywords = Input::get('seo_keywords');
+        }
+
         $article->save();
 
         return redirect('list')->with('message','Статья успешно добавлена');
@@ -70,10 +83,23 @@ class ArticlesController extends BasePhotoController
         $article->img_middle = $this->saveFile('article','middle', Input::file('image'), 300, 400);
         $article->img_large = $this->saveFile('article','large', Input::file('image'), 300, 400);
         $article->img_square = $this->saveFile('article', 'square', Input::file('image'), 300);
-        $article->alt = Input::get('alt');
-        $article->seo_title = Input::get('seo_title');
-        $article->seo_description = Input::get('seo_description');
-        $article->seo_keywords = Input::get('seo_keywords');
+
+        if (Input::has('alt')) {
+            $article->alt = Input::get('alt');
+        }
+
+        if (Input::has('seo_title')) {
+            $article->seo_title = Input::get('seo_title');
+        }
+
+        if (Input::has('seo_description')) {
+            $article->seo_description = Input::get('seo_description');
+        }
+
+        if (Input::has('seo_keywords')) {
+            $article->seo_keywords = Input::get('seo_keywords');
+        }
+
         $article->update();
 
         return redirect()->back()->with('message', 'Статья успешно отредактирована');

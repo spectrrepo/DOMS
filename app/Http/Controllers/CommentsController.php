@@ -67,11 +67,14 @@ class CommentsController extends Controller
     }
 
     /**
-     * @return mixed
+     * @param int $id
+     * @return string
      */
-    public function threeCommentsLoad ()
+    public static function threeCommentsLoad ($id = 0)
     {
-        $id = Input::get('id');
+        if ($id === 0) {
+            $id = Input::get('id');
+        }
 
         $comments = DB::table('comments')
             ->select('comments.id',
@@ -89,7 +92,6 @@ class CommentsController extends Controller
             ->get();
 
         return $comments;
-
     }
 
     /**
