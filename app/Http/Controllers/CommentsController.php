@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Input;
 use DB;
 
 use App\Models\Comment;
@@ -14,39 +13,44 @@ class CommentsController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(){
+    public function index ()
+    {
 
-        $comments = DB::table('Images')
-                      ->join('Comments', 'Comments.post_id', '=','Images.id')
-                      ->paginate(10);
+        $comments = DB::table('posts')
+                      ->join('comments', 'comments.post_id', '=','posts.id')
+                      ->join('users', 'users.id', '=', 'comments.user_id')
+                      ->paginate(15);
 
-        return view('moderator.comments', ['comments' => $comments]);
+        return view('moderator.comments.list', ['comments' => $comments]);
 
     }
 
     /**
-     * @return string
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function changeStatus(){
+    public function changeStatus ()
+    {
 
-        $id = $_POST['id'];
-        $comment = Comment::find($id);
-        $comment->status = 'read';
-        $comment->save();
+        $comment = Comment::find(Input::get('id'));
+        $comment->status = true;
+        $comment->update();
 
-        return 'true';
+        return redirect()->back()->with('message', 'Комментарий прошел модерацию');
 
     }
 
     /**
+     * @param Request $request
      * @return Comment
      */
-    public function add(){
-
+    public function add (Request $request)
+    {
         $comment = new Comment();
-        $comment->post_id = $_POST['post_id'];
-        $comment->user_id = $_POST['user_id'];
-        $comment->text_comment = $_POST['comment'];
+        $this->validate($request, $comment->rules);
+
+        $comment->post_id = Input::get('post_id');
+        $comment->user_id = Input::get('user_id');
+        $comment->comment = Input::get('comment');
         $comment->save();
 
         return $comment;
@@ -55,36 +59,59 @@ class CommentsController extends Controller
     /**
      * @return string
      */
-    public function delete(){
-
-        $id = $_POST['delete_comment_id'];
-        $comment = Comment::find($id);
-        $comment->delete();
+    public function delete ()
+    {
+        Comment::find(Input::get('id'))->delete();
 
         return 'true';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function threeCommentsLoad ()
+    {
+        $id = Input::get('id');
+
+        $comments = DB::table('comments')
+            ->select('comments.id',
+                'users.id AS user_id',
+                'post.id AS image_id',
+                'users.name AS user_name',
+                'users.quadro_ava AS user_quadro_ava',
+                'comments.text_comment AS text_comment',
+                'comments.rus_date AS rus_date' )
+            ->join('users', 'comments.user_id', '=', 'users.id')
+            ->join('posts', 'posts.id', '=', 'comments.post_id')
+            ->where('posts.id', '=', $id)
+            ->andWhere('comments.status', '=', 'true')
+            ->take(3)
+            ->get();
+
+        return $comments;
 
     }
 
     /**
      * @return mixed
      */
-    public function dwnldComments()
+    public function allCommentsLoad ()
     {
+        $id = Input::get('id');
 
-        $id = $_POST['id'];
-
-        $comments = DB::table('Comments')
-            ->select('Comments.id',
-                'Users.id AS user_id',
-                'Images.id AS image_id',
-                'Users.name AS user_name',
-                'Users.quadro_ava AS user_quadro_ava',
-                'Comments.text_comment AS text_comment',
-                'Comments.rus_date AS rus_date' )
-            ->join('Users', 'Comments.user_id', '=', 'Users.id')
-            ->join('Images', 'Images.id', '=', 'Comments.post_id')
-            ->where('Images.id', '=', $id)
-            ->andWhere('Comments.status', '=', '"read"')
+        $comments = DB::table('comments')
+            ->select('comments.id',
+                'users.id AS user_id',
+                'post.id AS image_id',
+                'users.name AS user_name',
+                'users.quadro_ava AS user_quadro_ava',
+                'comments.text_comment AS text_comment',
+                'comments.rus_date AS rus_date' )
+            ->join('users', 'comments.user_id', '=', 'users.id')
+            ->join('posts', 'posts.id', '=', 'comments.post_id')
+            ->where('posts.id', '=', $id)
+            ->andWhere('comments.status', '=', 'true')
+            ->skip(3)
             ->get();
 
         return $comments;

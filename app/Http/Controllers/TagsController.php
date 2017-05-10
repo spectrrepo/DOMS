@@ -74,7 +74,7 @@ class TagsController extends Controller
     /**
      * @return array
      */
-    public function dwnldTags()
+    public function loadTags()
     {
 
         $id = $_POST['id'];

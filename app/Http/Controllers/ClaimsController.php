@@ -3,42 +3,40 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use Auth;
-use App\Models\Post;
-use Image;
-use App\Models\Claim;
+use Input;
 
-class ClaimsController extends Controller
+use App\Models\Claim;
+use App\Models\Post;
+
+class ClaimsController extends BasePhotoController
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(){
+    public function index ()
+    {
+        $claims = Claim::paginate(15);
 
-        $copyrights = Claim::paginate(10);
-
-        return view('moderator.copyright_index', ['copyrights' => $copyrights]);
+        return view('moderator.copyright_index', ['claims' => $claims]);
 
     }
 
     /**
+     * @param Request $request
      * @return string
      */
-    public function add(){
+    public function add (Request $request)
+    {
+        $claim = new Claim();
+        $this->validate($request, $claim->rules);
 
-        $photo = Post::make($_FILES['file_pretense']['tmp_name']);
-        $photo->save( public_path('/img/f.jpg'));
-
-        $copyright = new Claim();
-        $copyright->photo_pretense = public_path('/img/f.jpg');
-        $copyright->post_id = $_POST['post_id'];
-        $copyright->user_pretense_id = Auth::user()->id;
-        $copyright->user_author_id = Post::find($_POST['post_id'])->author_id;
-        $copyright->message = $_POST['text_pretense'];
-
-        $copyright->save();
+        $claim->file = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $claim->post_id = Input::get('post_id');
+        $claim->user_id = Auth::user()->id;
+        $claim->status = Input::get('status');
+        $claim->text = Input::get('text');
+        $claim->save();
 
         return 'true';
     }
@@ -46,32 +44,28 @@ class ClaimsController extends Controller
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete(){
+    public function delete ()
+    {
 
-        $id = $_POST['id'];
+        Claim::find(Input::get('id'))->softDelete();
 
-        Claim::find($id)->delete();
-
-        return redirect()->back();
-
+        return redirect()->back()->with('message', 'Претензия успешно удалена');
     }
 
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function saveNewCopyright(){
+    public function changeAuthorship ()
+    {
+        $claim = Claim::find(Input::get('id'));
+        $claim->status = true;
+        $claim->update();
 
-        $id = $_POST['id'];
+        $image = Post::find($claim->post_id);
+        $image->author_id = $claim->user_id;
+        $image->update();
 
-        $copyright = Claim::find($id);
-        $copyright->status = 'read';
-        $copyright->save();
-
-        $imageChange = Post::find($copyright->post_id);
-        $imageChange->author_id = $copyright->user_pretense_id;
-        $imageChange->save();
-
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Авторство фотографии успешно изменено');
 
     }
 

@@ -3,59 +3,96 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
+use Input;
 
-use App\Placement;
+use App\Models\Placement;
 
 class PlacementsController extends Controller
 {
     /**
-     * @param $roomID
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function delete ($id) {
-
-        Placement::find($id)->delete();
-
-        return redirect()->back();
-
-    }
-
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function add()
-    {
-        $room = new Placement();
-        $room->title = $_POST["title"];
-        $room->save();
-
-        return redirect()->back();
-
-    }
-
-    /**
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function edit($id)
+    public function delete ($id)
     {
-        $room = Placement::find($id);
-        $room->title = $_POST["title-room"];
-        $room->save();
+        Placement::find($id)->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'помещение успешно удалено');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function add (Request $request)
+    {
+        $placement = new Placement();
+        $this->validate($request, $placement->rules);
+
+        $placement->title = Input::get("title");
+        $placement->status = Input::get("status");
+        $placement->img_middle = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $placement->img_large = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $placement->img_square = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $placement->description = Input::get("description");
+        $placement->full_description = Input::get("full_description");
+        $placement->alt = Input::get("alt");
+        
+        $placement->save();
+
+        return redirect()->back()->with('message', 'Помещение успешно добавлена!');
+
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function edit(Request $request, $id)
+    {
+        $placement = Placement::find($id);
+        $this->validate($request, $placement->validate);
+
+        $placement->title = Input::get("title");
+        $placement->status = Input::get("status");
+        $placement->img_middle = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $placement->img_large = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $placement->img_square = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $placement->description = Input::get("description");
+        $placement->full_description = Input::get("full_description");
+        $placement->alt = Input::get("alt");
+        $placement->update();
+
+        return redirect()->back()->with('message', 'Помещение успешно отредактировано!');
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function editRoomsPage()
+    public function listPage ()
     {
-        $rooms = Placement::paginate(10);
+        $placements = Placement::paginate(15);
 
-        return view('moderator.edit_rooms', ['rooms' => $rooms]);
+        return view('moderator.placements.list', ['placements' => $placements]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function addPage ()
+    {
+        return view('moderator.placements.add');
+    }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editPage ($id)
+    {
+        $placement = Placement::find($id);
+
+        return view('moderator.placements.edit', ['placement', $placement]);
+    }
 }

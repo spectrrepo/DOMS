@@ -3,21 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Input;
 
 use App\Models\Like;
+use App\Models\User;
 
 class LikesController extends Controller
 {
     /**
      * @return mixed
      */
-    public function add(){
+    public function add ()
+    {
 
         $like = new Like();
-        $like->post_id = $_POST['post_id'];
-        $like->user_id = $_POST['user_id'];
+        $like->post_id = Input::get('post_id');
+        $like->user_id = Auth()->user()->id;
         $like->save();
 
         $countLike = count( Like::find($_POST['post_id']) );
@@ -28,10 +29,11 @@ class LikesController extends Controller
     /**
      * @return string
      */
-    public function delete(){
+    public function delete ()
+    {
 
-        Like::where('post_id', '=', $_POST['post_id'])
-            ->where('user_id', '=', $_POST['user_id'])
+        Like::where('post_id', '=', Input::get('id'))
+            ->where('user_id', '=', Auth()->user()->id)
             ->delete();
 
         return 'true';
@@ -40,7 +42,8 @@ class LikesController extends Controller
     /**
      * @return int
      */
-    public function index(){
+    public function all ()
+    {
 
         $num_like = count(Like::all());
 
@@ -52,17 +55,17 @@ class LikesController extends Controller
     /**
      * @return array
      */
-    public function dwnldLikeWhom()
+    public function loadLikeWhom ()
     {
 
-        $id = $_POST['id'];
+        $id = Input::get('id');
         $likes = Like::where('post_id', '=', $id)->get();
 
         $likeWhom = array();
         foreach ($likes as $like) {
-            $user = User::select('id', 'name', 'quadro_ava')
-                ->where('id', '=', $like->user_id)
-                ->get();
+            $user = User::select('id', 'name', 'img_square')
+                        ->where('id', '=', $like->user_id)
+                        ->get();
             array_push( $likeWhom, $user);
         }
 
@@ -74,7 +77,7 @@ class LikesController extends Controller
     /**
      * @return string
      */
-    public function loadActiveLike()
+    public function loadActiveLike ()
     {
         $id = $_POST['id'];
         if (Auth::check()) {

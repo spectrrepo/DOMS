@@ -1,16 +1,15 @@
 <?php
-// checked
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
+use Auth;
+use Input;
 
 use App\Models\Style;
 
 class StylesController extends Controller
 {
-
-
     /**
      * @param $styleID
      * @return \Illuminate\Http\RedirectResponse
@@ -20,69 +19,81 @@ class StylesController extends Controller
 
         Style::find($styleID)->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Стиль успешно удален!');
 
     }
 
     /**
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function add ()
+    public function add (Request $request)
     {
-
         $style = new Style();
-        $style->name = $_POST["title"];
-        $style->description = $_POST["description"];
-        $style->alt_text = 'DOMS стили';
-        $style->photo = $_FILES["photo"];
+        $this->validate($request, $style->rules);
+
+        $style->title = Input::get('title');
+        $style->status = Input::get('status');
+        $style->description = Input::get('description');
+        $style->full_description = Input::get('full_description');
+        $style->alt = Input::get('title');
+        $style->img_middle = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $style->img_large = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $style->img_square = $this->saveFile('claims', 'default', Input::file('file'),'600');
         $style->save();
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'ноывый стиль успешно добавлен!');
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function edit (Request $request, $id)
+    {
+        $style = Style::find($id);
+        $this->validate($request, $style->rules);
+
+        $style->title = Input::get('title');
+        $style->status = Input::get('status');
+        $style->description = Input::get('description');
+        $style->full_description = Input::get('full_description');
+        $style->alt = Input::get('title');
+        $style->img_middle = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $style->img_large = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $style->img_square = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $style->update();
+
+        return redirect()->back()->with('message', 'стиль успешно изменен!');
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function listPage ()
+    {
+        $styles = Style::paginate(15);
+
+        return view('moderator.styles.list', ['styles' => $styles]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function addPage ()
+    {
+        return view('moderator.styles.add');
     }
 
     /**
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function editPageIndex ($id)
-    {
-
-      $style = Style::find($id);
-
-      return view('moderator.update_style',['style' => $style]);
-    }
-
-    public function edit ($id)
+    public function editPage ($id)
     {
         $style = Style::find($id);
-        $style->name = $_POST["title"];
-        $style->description = $_POST["description"];
-        $style->alt_text = 'DOMS стили';
 
-        if ( !isset($_FILES["photo"])) {
-            $style->photo = $_FILES["photo"];
-        }
-
-        $style->save();
-
-        return redirect()->back();
-    }
-
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function editStylesPage ()
-    {
-        $styles = Style::paginate(10);
-        return view('moderator.edit_styles', ['styles' => $styles]);
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function addStyleItem ()
-    {
-        return view('moderator.style');
+        return view('moderator.styles.edit',['style' => $style]);
     }
 }

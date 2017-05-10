@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\DB;
-use App\Image;
-use App\Input;
-
+use Input;
+use Auth;
 use App\Models\Slide;
 
 class SlidesController extends Controller
@@ -15,29 +12,29 @@ class SlidesController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index ()
     {
-        $slides = DB::table('slides')->paginate(10);
+        $slides = Slide::all()->paginate(15);
 
-        return view('moderator.slide_change', ['slides' => $slides]);
+        return view('moderator.slides.list', ['slides' => $slides]);
     }
 
     /**
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function add()
+    public function add (Request $request)
     {
-
-        $image = Image::make($_FILES['photo']['tmp_name']);
-        $image->encode('jpg');
-        $image->save(public_path('img/about-slider/slide-'.$slides->id.'.jpg'));
-
         $slide = new Slide();
-        $slide->text = $_POST['text'];
-        $slide->photo = '/img/about-slider/slide-'.$slides->id.'.jpg';
+        $this->validate($request, $slide->rules);
+
+        $slide->text = Input::get('text');
+        $slide->img = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $slide->alt = Input::get('alt');
+        $slide->user_add = Auth::user()->id;
         $slide->save();
 
-        return redirect()->back();
+        return redirect()->back('message', 'слайд упешно добавлен!');
     }
 
     /**
@@ -45,32 +42,46 @@ class SlidesController extends Controller
      */
     public function delete()
     {
-        $id = $_POST['id'];
-        Slide::find($id)->delete();
+        Slide::find(Input::get('id'))->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'слайд успешно удален!');
     }
 
     /**
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function change()
+    public function edit(Request $request)
     {
-        $id = $_POST['id'];
+        $id = Input::get('id');
+        $slide = Slide::find($id);
+        $this->validate($request, $slide->rules);
+
+        $slide->text = Input::get('text');
+        $slide->img = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $slide->alt = Input::get('alt');
+        $slide->user_add = Auth::user()->id;
+        $slide->update();
+
+        return redirect()->back()->with('message', 'сладй успешно отредактирован');
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editPage ($id)
+    {
         $slide = Slide::find($id);
 
-        if (Input::has('text')) {
-            $slide->text = $_POST['text'];
-        }
+        return view('moderator.slides.edit', ['slide'=> $slide]);
+    }
 
-        if (!empty($_FILES['photo']['tmp_name'])) {
-            $image = Image::make($_FILES['photo']['tmp_name']);
-            $image->encode('jpg');
-            $image->save(public_path($slide->photo));
-        }
-
-        $slide->save();
-
-        return redirect()->back();
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function addPage ()
+    {
+        return view('moderator.slides.add');
     }
 }

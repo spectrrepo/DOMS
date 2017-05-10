@@ -15,14 +15,14 @@ class Article extends Model {
     public $rules = [
        'title' => 'bail|required|max:255',
        'description' => 'required|string',
-//       'description_full' => 'required|string',
-//       'seo_title' => 'min:50|max:80',
-//       'seo_keywords' => 'max:250',
-//       'seo_description' => 'min:150|max:200',
-//       'image_text' => 'required|string',
+       'description_full' => 'required|string',
+       'seo_title' => 'min:50|max:80',
+       'seo_keywords' => 'max:250',
+       'seo_description' => 'min:150|max:200',
+       'image_text' => 'required|string',
        'image' => 'required|image|10240',
-//       'alt' => 'required|max:28',
-//       'status' => 'required|boolean',
+       'alt' => 'required|max:28',
+       'status' => 'required|boolean',
     ];
 
 	protected function getDateFormat() {

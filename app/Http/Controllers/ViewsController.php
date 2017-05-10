@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Input;
 
 use App\Models\View;
 
@@ -17,12 +16,10 @@ class ViewsController extends Controller
     /**
      * @return string
      */
-    public function delete()
+    public function delete ()
     {
-
-        $id = $_POST['id'];
-        $views = View::find($id);
-        $views->delete();
+        $id = Input::get('id');
+        View::find($id)->softDelete();
 
         return 'true';
     }
@@ -30,7 +27,7 @@ class ViewsController extends Controller
     /**
      * @return mixed
      */
-    public function dwnldViewsForPhoto()
+    public function loadViews ()
     {
         $id = $_POST['id'];
         $views = View::select('id', 'path_full', 'path_min')
@@ -38,6 +35,11 @@ class ViewsController extends Controller
                      ->get();
 
         return $views;
+    }
+
+    public function add ()
+    {
+
     }
 
 }

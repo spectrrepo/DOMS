@@ -2,25 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
+use Illuminate\Http\Request;
+
 use App\Http\Controllers\SocialAccountService;
 use Laravel\Socialite\Facades\Socialite;
-
-use App\Social;
-use App\User;
 use Hash;
+use Auth;
+use Input;
 
+use App\Models\UserSocial;
+use App\Models\User;
 class SocialController extends Controller
 {
-
-    public function login($provider)
+    /**
+     * @param $provider
+     * @return mixed
+     */
+    public function login ($provider)
     {
         return Socialite::with($provider)->redirect();
     }
-    public function loginVK( $provider ) {
+
+    /**
+     * @param $provider
+     * @return mixed
+     */
+    public function loginVK ( $provider )
+    {
         return \Socialize::driver( $provider )->redirect();
     }
-    public function callback(SocialAccountService $service, $provider)
+
+    /**
+     * @param \App\Http\Controllers\SocialAccountService $service
+     * @param $provider
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function callback (SocialAccountService $service, $provider)
     {
 
         $driver   = Socialite::driver($provider);
@@ -29,8 +46,13 @@ class SocialController extends Controller
         return redirect()->intended('/');
 
     }
+
+    /**
+     * @param $provider
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function callbackVK($provider) {
-        $newUser = new App\User();
+        $newUser = new User();
         $user = \Socialize::driver($provider)->user();
         $newUser->name = $user->name;
         $email = 'demo@mail.com';
@@ -55,42 +77,46 @@ class SocialController extends Controller
         return redirect('/');
     }
 
-    public function add (){
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function add (Request $request)
+    {
+        $userSocial = new UserSocial();
+        $this->validate($request, $userSocial->rules);
 
-        $link = $_POST['link'];
-        $user_id = $_POST['user_id'];
+        $userSocial->link = Input::get('link');
+        $userSocial->user = Auth::user()->id;
+        $userSocial->save();
 
-        $newLink = new Social();
-        $newLink->link = $link;
-        $newLink->user = $user_id;
-        $newLink->save();
-
-        $linkId = $newLink->id;
-
-        return $linkId;
-
+        return $userSocial->id;
     }
 
+    /**
+     * @return string
+     */
     public function delete () {
 
-        $link = $_POST['link'];
-        $user_id = $_POST['user_id'];
-        Social::where('link', '=', $link)
-               ->where('user', '=', $user_id)
-               ->delete();
+        $link = Input::get('link');
+        UserSocial::where('link', '=', $link)
+                  ->where('user', '=', Auth::user()->id)
+                  ->softDelete();
 
         return 'true';
     }
 
-    public function edit () {
+    /**
+     * @param Request $request
+     * @return string
+     */
+    public function edit (Request $request)
+    {
+        $userSocial = UserSocial::find(Input::get('id'));
+        $this->validate($request, $userSocial->rules);
 
-        $link = $_POST['link'];
-        $user_id = $_POST['user_id'];
-        $old_link = $_POST['old_link'];
-
-        Social::where('link', '=', $old_link)
-               ->where('user', '=', $user_id)
-               ->update(array('link' => $link));
+        $userSocial->link = Input::get('link');
+        $userSocial->update();
 
         return 'true';
     }

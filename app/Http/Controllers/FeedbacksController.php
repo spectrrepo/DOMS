@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use Mail;
 
 use App\Models\Feedback;
@@ -14,7 +13,8 @@ class FeedbacksController extends Controller
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function sendMail () {
+    public function sendMail ()
+    {
 
         $messages = new Feedback();
         $messages->name = $_POST['name'];
@@ -37,7 +37,8 @@ class FeedbacksController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function mailIndex () {
+    public function mailIndex ()
+    {
 
         $messages = Feedback::paginate(10);
 
@@ -48,7 +49,8 @@ class FeedbacksController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function mailIndexItem ($id) {
+    public function mailIndexItem ($id)
+    {
 
         $message = Feedback::find($id);
         $message->status = 'read';
@@ -61,7 +63,8 @@ class FeedbacksController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function deleteMail ($id) {
+    public function deleteMail ($id)
+    {
 
         $message = Feedback::find($id);
         $message->delete();
@@ -72,7 +75,8 @@ class FeedbacksController extends Controller
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function askOnMail () {
+    public function askOnMail ()
+    {
 
         $text = $_POST['text'];
 
