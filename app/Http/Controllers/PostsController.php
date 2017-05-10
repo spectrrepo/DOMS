@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Input;
@@ -20,92 +19,6 @@ use App\Http\Controllers\TagsController;
 
 class PostsController extends BasePhotoController
 {
-
-    /**
-     * @param $table
-     * @param $tableCell
-     * @param $itemSort
-     * @return array
-     */
-    private function sortCommon($table, $tableCell, $itemSort){
-        if ($itemSort != 0) {
-            $arrayItemSort = explode(',',$itemSort);
-            $sortExpression = ' AND ';
-            foreach ( $arrayItemSort as $item){
-                if (end($arrayItemSort) == current($arrayItemSort)) {
-                    $sortExpression .= $tableCell.'='.$item.' ';
-                }else {
-                    $sortExpression .= $tableCell.'='.$item.' AND ';
-                }
-            }
-            $sortCondition = ' JOIN   '.$table.'
-                                ON Images.id = '.$tableCell.' ';
-        } else {
-            $sortExpression = '';
-            $sortCondition = '';
-        }
-        $result = array('Expression' => $sortExpression,
-            'Condition' => $sortCondition);
-        return $result;
-    }
-
-    /**
-     * @param $sort
-     * @return array
-     */
-    private function sortSort ( $sort ) {
-        if ($sort != 0) {
-            switch ($sort) {
-                case 'popular':
-                    $sortSort = ' ORDER BY Images.views_count DESC ';
-                    break;
-
-                case 'recommended':
-                    $sortSort = ' ORDER BY Images.id DESC ';
-                    break;
-
-                case 'new':
-                    $sortSort = ' ORDER BY Images.id DESC ';
-                    break;
-
-                default:
-                    $sortSort = ' ';
-                    break;
-            }
-            $sortSorting = $sort;
-        } else {
-            $sortSort = ' ';
-            $sortSorting = 0;
-        }
-
-        $result = [
-            'Expression' => $sortSort,
-            'Condition' => $sortSorting
-        ];
-
-        return $result;
-    }
-
-    /**
-     * @param $tag
-     * @return array
-     */
-    private function tagSort ($tag) {
-
-        if ($tag != '0') {
-            $tagSort = ' AND Tags.title="'.$tag.'" ';
-            $tagCondition = ' JOIN   Tags ON Images.id = Tags.post_id ';
-        } else {
-            $tagSort = '';
-            $tagCondition = ' ';
-        }
-
-        $result = array('Expression' => $tagSort,
-            'Condition' => $tagCondition);
-
-        return $result;
-    }
-
     /**
      * @param $what
      * @param $id
@@ -155,13 +68,7 @@ class PostsController extends BasePhotoController
      */
     public function indexPage($room = 0, $style = 0, $color = 0, $sort = 0, $tag = 0)
     {
-        $roomsArray = $this->sortCommon('img_rooms', 'img_rooms.room_id', $room);
-        $colorsArray = $this->sortCommon('img_colors', 'img_colors.color_id', $color);
-        $stylesArray = $this->sortCommon('img_styles', 'img_styles.style_id', $style);
-        $sortArray = $this->sortSort($sort);
-        $tagArray = $this->tagSort($tag);
-
-        $images = DB::select(
+         $images = DB::select(
                        "SELECT Images.id AS id ,
                                Images.full_path AS photo
                         FROM   Images
@@ -200,56 +107,40 @@ class PostsController extends BasePhotoController
      */
     public function itemPage($id, $room = 0, $style = 0, $color = 0, $sort = 0, $tag = 0)
     {
-        $roomsArray = $this->sortCommon('img_rooms', 'img_rooms.room_id', $room);
-        $colorsArray = $this->sortCommon('img_colors', 'img_colors.color_id', $color);
-        $stylesArray = $this->sortCommon('img_styles', 'img_styles.style_id', $style);
-        $sortArray = $this->sortSort($sort);
-        $tagArray = $this->tagSort($tag);
-        (->when)
-        //я нашел
-//        ->when($role, function ($query) use ($role) {
-//                            return $query->where('role_id', $role);
-//               })
-        $images = DB::select("SELECT Images.id AS id ,
-                                     Images.author_id AS author_id,
-                                     Images.full_path AS photo,
-                                     Images.views_count AS views,
-                                     Images.title AS title,
-                                     Images.description AS description
-                              FROM   Images
-                              ".$colorsArray['Condition']."
-                              ".$roomsArray['Condition']."
-                              ".$stylesArray['Condition']."
-                              ".$tagArray['Condition']."
-                              ".$colorsArray['Expression']."
-                              ".$roomsArray['Expression']."
-                              ".$stylesArray['Expression']."
-                              ".$tagArray['Expression']."
-                              WHERE Images.verified=true
-                              AND Images.id>=".$id."
-                              GROUP BY Images.id
-                              ".$sortArray['Expression'].";");
+        $posts = Post::select('Images.id AS id' ,
+                     'Images.author_id AS author_id',
+                     'Images.full_path AS photo',
+                     'Images.views_count AS views',
+                     'Images.title AS title',
+                     'Images.description AS description')
+                    ->when($var, function ($query) use ($var){
+                        return $query->join();
+                    })
+                    ->when($var, function ($query) use ($var){
+                        return $query->join();
+                    })
+                    ->when($var, function ($query) use ($var){
+                        return $query->join();
+                    })
+                    ->when($var, function ($query) use ($var){
+                        return $query->where();
+                    })
+                    ->when($var, function ($query) use ($var){
+                        return $query->where();
+                    })
+                    ->when($var, function ($query) use ($var){
+                        return $query->where();
+                    })
+                    ->when($var, function ($query) use ($var){
+                        return $query->where();
+                    })
+                    ->where()
+                    ->groupBy()
+                    ->when();
+
+
         $num_image = count($images);
-        $imageCurrent = DB::select(
-            "SELECT Images.id AS id ,
-                                     Images.author_id AS author_id,
-                                     Images.full_path AS photo,
-                                     Images.views_count AS views,
-                                     Images.title AS title,
-                                     Images.description AS description
-                              FROM   Images
-                              ".$colorsArray['Condition']."
-                              ".$roomsArray['Condition']."
-                              ".$stylesArray['Condition']."
-                              ".$tagArray['Condition']."
-                              ".$colorsArray['Expression']."
-                              ".$roomsArray['Expression']."
-                              ".$stylesArray['Expression']."
-                              ".$tagArray['Expression']."
-                              WHERE Images.verified=true
-                              AND Images.id=".$id."
-                              GROUP BY Images.id
-                              ".$sortArray['Expression'].";");
+
         if (empty($imageCurrent)) {
             $imageCurrent = Post::whereRaw($roomsArray['Condition'].' and '
                 .$stylesArray['Condition'].' and '
