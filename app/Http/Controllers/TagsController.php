@@ -107,13 +107,14 @@ class TagsController extends Controller
     }
 
     /**
-     * @param $postId
+     * @param $id
      * @return mixed
      */
-    public function loadTagForPost ($postId)
+    public static function loadTagsForPost ($id)
     {
-        $tags = Tag::where('post_id', '=', $postId)->get();
-
+        $tags = Tag::join('posts_tags', 'posts_tags.tag_id','=','tags.id')
+                    ->where('posts_tags.post_id', '', $id)
+                    ->get();
         return $tags;
     }
 }

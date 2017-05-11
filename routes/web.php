@@ -12,13 +12,15 @@
 */
 //->where('name', '[A-Za-z]+');
 //->name('profile');
+//->group('prefix, midleware)
+//проверка каждого параметра
 //route('profile', ['id' => 1]);
 Route::get('/test', 'ArticlesController@addPage');
 Route::post('/add', 'ArticlesController@add');
 Route::get('/', function(){
     return redirect("/filtr={'room':[0],'style':[0],'color':0,'sort':'0','tag':'0'}");
 });
-Route::get("/filtr={'room':[{room?}],'style':[{style?}],'color':{color?},'sort':'{sort?}','tag':'{tag?}'}", "PhotoController@index");
+Route::get("/filtr={filtr?}", "PhotoController@index");
 Route::get("/photo/id={id}&filtr={'room':[{room?}],'styles':[{style?}],'colors':{color?},'sort':'{sort?}','tag':'{tag?}'}", "PhotoController@indexItem");
 Route::get('/news', 'NewsController@Index');
 

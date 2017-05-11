@@ -113,4 +113,20 @@ class LikesController extends Controller
 
         return $likeWhom;
     }
+
+    public static function loadLikeWhomThree ($id)
+    {
+
+        $likes = Like::where('post_id', '=', $id)->take(3)->get();
+
+        $likeWhom = array();
+        foreach ($likes as $like) {
+            $user = User::select('id', 'name', 'img_square')
+                ->where('id', '=', $like->user_id)
+                ->get();
+            array_push( $likeWhom, $user);
+        }
+
+        return $likeWhom;
+    }
 }

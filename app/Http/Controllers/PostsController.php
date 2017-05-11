@@ -3,19 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use Input;
-use Image;
 use Auth;
+use DB;
 
 use App\Models\Post;
-use App\Models\Tag;
 use App\Models\View;
 use App\Models\Like;
 use App\Models\User;
-use App\Http\Controllers\TagsController;
 
 class PostsController extends BasePhotoController
 {
@@ -59,134 +54,191 @@ class PostsController extends BasePhotoController
     }
 
     /**
-     * @param int $room
-     * @param int $style
-     * @param int $color
-     * @param int $sort
-     * @param int $tag
+     * @param array $array
+     * @return string
+     */
+    private function getPartRequestDB (array $array)
+    {
+        if ($array === null)
+        {
+            return null;
+        }
+        $request = ' ';
+        foreach ($array as $item) {
+            $request .= $item.' or ';
+        }
+        $request .=' 0 ';
+
+        return $request;
+    }
+
+    /**
+     * @param $json
+     * @return array
+     */
+    private function decodeURL ($json)
+    {
+        $filterArray = json_decode($json, true);
+        if ($filterArray === null) {
+            $placements = null;
+            $styles = null;
+            $color = null;
+            $sort = null;
+            $tag = null;
+        }
+
+        array_key_exists('placements', $filterArray) ? $placements = $filterArray['placements'] : $placements = null;
+        array_key_exists('styles', $filterArray) ? $styles = $filterArray['styles'] : $styles = null;
+        array_key_exists('color', $filterArray) ? $color = $filterArray['color'] : $color = null;
+        array_key_exists('sort', $filterArray) ? $sort = $filterArray['sort'] : $sort = null;
+        array_key_exists('tag', $filterArray) ? $tag = $filterArray['tag'] : $tag = null;
+
+        $placements = $this->getPartRequestDB($placements);
+        $styles = $this->getPartRequestDB($styles);
+
+        return [
+            'placements' => $placements,
+            'styles' => $styles,
+            'color' => $color,
+            'sort' => $sort,
+            'tag' => $tag,
+        ];
+    }
+
+    /**
+     * @param $json
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function indexPage($room = 0, $style = 0, $color = 0, $sort = 0, $tag = 0)
+    public function indexPage ($json = null)
     {
-         $images = DB::select(
-                       "SELECT Images.id AS id ,
-                               Images.full_path AS photo
-                        FROM   Images
-                              ".$colorsArray['Condition']."
-                              ".$roomsArray['Condition']."
-                              ".$stylesArray['Condition']."
-                              ".$tagArray['Condition']."
-                              ".$colorsArray['Expression']."
-                              ".$roomsArray['Expression']."
-                              ".$stylesArray['Expression']."
-                              ".$tagArray['Expression']."
-                        WHERE Images.verified=true
-                        GROUP BY Images.id
-                       ".$sortArray['Expression'].";");
+        $filterArray = $this->decodeURL($json);
+
+        $placements = $filterArray['placements'];
+        $styles = $filterArray['placements'];
+        $color = $filterArray['placements'];
+        $sort = $filterArray['placements'];
+        $tag = $filterArray['placements'];
+
+        $posts = Post::select('posts.id AS id' ,
+                              'posts.img_middle AS img')
+                     ->when($placements, function ($query) use ($placements){
+                         return $query->join('posts_placements', 'posts.id', '=', 'posts_placements.post_id');
+                     })
+                     ->when($styles, function ($query) use ($styles){
+                         return $query->join('posts_styles','posts.id', '=', 'posts_styles.post_id');
+                     })
+                     ->when($color, function ($query) use ($color){
+                         return $query->join('posts_colors','posts.id', '=', 'posts_colors.post_id');
+                     })
+                     ->when($tag, function ($query) use ($tag){
+                         return $query->join('posts_tags', 'posts.id', '=', 'posts_styles.post_id')
+                                      ->join('tags', 'tags.id', '=', 'posts_styles.tag_id');
+                     })
+                     ->when($placements, function ($query) use ($placements){
+                         return $query->where(DB::raw($placements));
+                     })
+                     ->when($styles, function ($query) use ($styles){
+                         return $query->where(DB::raw($styles));
+                     })
+                     ->when($color, function ($query) use ($color){
+                         return $query->where('posts_colors.color_id', '=', $color);
+                     })
+                     ->when($tag, function ($query) use ($tag){
+                         return $query->where('tags.value', '=', $tag);
+                     })
+                     ->where('posts.status', '=', 'true')
+                     ->groupBy('posts.id')
+                     ->when(
+                        //TODO:нужна сортировка : рекомендации, новое, популярное
+                     )
+                     ->take()
+                     ->get(32);
 
         return view('site.index', [
-                         'images' => $images,
-                         'tag' => $tag,
-                         'room' => $room,
-                         'style' => $style,
-                         'color' => $color,
-                         'sort' => $sort
+                         'posts' => $posts,
+                         'json' => $json
                  ]);
     }
 
 
-
     /**
      * @param $id
-     * @param int $room
-     * @param int $style
-     * @param int $color
-     * @param int $sort
-     * @param int $tag
+     * @param null $json
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function itemPage($id, $room = 0, $style = 0, $color = 0, $sort = 0, $tag = 0)
+    public function itemPage($id, $json = null)
     {
-        $posts = Post::select('Images.id AS id' ,
-                     'Images.author_id AS author_id',
-                     'Images.full_path AS photo',
-                     'Images.views_count AS views',
-                     'Images.title AS title',
-                     'Images.description AS description')
-                    ->when($var, function ($query) use ($var){
-                        return $query->join();
-                    })
-                    ->when($var, function ($query) use ($var){
-                        return $query->join();
-                    })
-                    ->when($var, function ($query) use ($var){
-                        return $query->join();
-                    })
-                    ->when($var, function ($query) use ($var){
-                        return $query->where();
-                    })
-                    ->when($var, function ($query) use ($var){
-                        return $query->where();
-                    })
-                    ->when($var, function ($query) use ($var){
-                        return $query->where();
-                    })
-                    ->when($var, function ($query) use ($var){
-                        return $query->where();
-                    })
-                    ->where()
-                    ->groupBy()
-                    ->when();
+        $filterArray = $this->decodeURL($json);
 
+        $placements = $filterArray['placements'];
+        $styles = $filterArray['placements'];
+        $color = $filterArray['placements'];
+        $sort = $filterArray['placements'];
+        $tag = $filterArray['placements'];
 
-        $num_image = count($images);
-
-        if (empty($imageCurrent)) {
-            $imageCurrent = Post::whereRaw($roomsArray['Condition'].' and '
-                .$stylesArray['Condition'].' and '
-                .$colorsArray['Condition'])
-                ->where('id', '>', $id)
-                ->first();
-
-            if (empty($image)) {
-                $imageCurrent = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort)
-                    ->where('id', '<', $id)
-                    ->first();
-            } else {
-                $imageCurrent = false;
-            }
-        }
-
-        $likes = Like::where('post_id', '=', $id)->get();
-        $num_like = $likes->count();
-        $likeWhom = loadLikeWhom();
-        $user = User::find($imageCurrent[0]->author_id);
-        $tags = Tag::where('post_id', '=', $id)->get();
+        $posts = Post::select('posts.id AS id' ,
+                    'posts.img_middle AS img')
+                    ->when($placements, function ($query) use ($placements){
+                        return $query->join('posts_placements', 'posts.id', '=', 'posts_placements.post_id');
+                    })
+                    ->when($styles, function ($query) use ($styles){
+                        return $query->join('posts_styles','posts.id', '=', 'posts_styles.post_id');
+                    })
+                    ->when($color, function ($query) use ($color){
+                        return $query->join('posts_colors','posts.id', '=', 'posts_colors.post_id');
+                    })
+                    ->when($tag, function ($query) use ($tag){
+                        return $query->join('posts_tags', 'posts.id', '=', 'posts_styles.post_id')
+                            ->join('tags', 'tags.id', '=', 'posts_styles.tag_id');
+                    })
+                    ->when($placements, function ($query) use ($placements){
+                        return $query->where(DB::raw($placements));
+                    })
+                    ->when($styles, function ($query) use ($styles){
+                        return $query->where(DB::raw($styles));
+                    })
+                    ->when($color, function ($query) use ($color){
+                        return $query->where('posts_colors.color_id', '=', $color);
+                    })
+                    ->when($tag, function ($query) use ($tag){
+                        return $query->where('tags.value', '=', $tag);
+                    })
+                    ->where('posts.status', '=', 'true')
+                    ->groupBy('posts.id')
+                    ->when(
+                    //TODO:нужна сортировка : рекомендации, новое, популярное
+                    )
+                    ->skip($id-1)
+                    ->take(6)
+                    ->get();
+        //TODO:количество постов
+        $numPosts = count($posts);
+        $currentPost = Post::find($id);
+        $likes = LikesController::loadLikeWhomThree($id);
+        $numLikes = Like::all()->count();
+        $postAuthor = User::find($currentPost->author_id);
+        $tags = TagsController::loadTagsForPost($id);
         $views = View::where('post_id', '=', $id)->get();
         $comments = CommentsController::threeCommentsLoad();
-        $num_comment = count($comments);
+        $numComments = count($comments);
         $colorLike = $this->activeColor('like', $id);
-        $colorLiked = $this->activeColor('liked', $id);
+        $colorFavorite = $this->activeColor('liked', $id);
+        $currentPost->views += 1;
+        $currentPost->save();
 
-        $imageCurrent->views_count += 1;
-        $imageCurrent->save();
-
-        return view('site.slider', ['news' => $news,
-                                            'user' => $user,
-                                            'colors' => $colors,
-                                            'styles' => $styles,
-                                            'rooms' =>  $rooms,
-                                            'images' => $images,
-                                            'image' => $imageCurrent[0],
-                                            'comments' => $comments,
-                                            'tags' => $tags,
-                                            'views' => $views,
-                                            'num_image' => $num_image,
-                                            'num_like' => $num_like,
-                                            'num_comment' => $num_comment,
-                                            'colorLike' => $colorLike,
-                                            'colorLiked' => $colorLiked,
-                                            'likeWhom' => $likeWhom]);
+        return view('site.slider', ['postAuthor' => $postAuthor,
+                                         'posts' => $posts,
+                                         'currentPost' => $currentPost,
+                                         'comments' => $comments,
+                                         'tags' => $tags,
+                                         'likes' => $likes,
+                                         'views' => $views,
+                                         'numPosts' => $numPosts,
+                                         'numLike' => $numLikes,
+                                         'numComment' => $numComments,
+                                         'colorLike' => $colorLike,
+                                         'colorFavorite' => $colorFavorite,
+                                         ]);
     }
 
     /**
@@ -209,10 +261,10 @@ class PostsController extends BasePhotoController
         $post->author_id = Auth::user()->id;
         $post->views = 0;
         $post->status = false;
-        $post->img_mini = $this->saveFileWithWatermark('claims', 'default', $file,'600');
-        $post->img_middle = $this->saveFileWithWatermark('claims', 'default', $file,'600');
-        $post->img_large = $this->saveFileWithWatermark('claims', 'default', $file,'600');
-        $post->img_square = $this->saveFileWithWatermark('claims', 'default', $file,'600');
+        $post->img_mini = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
+        $post->img_middle = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
+        $post->img_large = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
+        $post->img_square = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
         $post->seo_title = '';
         $post->seo_description = '';
         $post->seo_keywords = '';
@@ -275,10 +327,10 @@ class PostsController extends BasePhotoController
             $post->status = false;
         }
 
-        $post->img_mini = $this->saveFileWithWatermark('claims', 'default', $file,'600');
-        $post->img_middle = $this->saveFileWithWatermark('claims', 'default', $file,'600');
-        $post->img_large = $this->saveFileWithWatermark('claims', 'default', $file,'600');
-        $post->img_square = $this->saveFileWithWatermark('claims', 'default', $file,'600');
+        $post->img_mini = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
+        $post->img_middle = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
+        $post->img_large = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
+        $post->img_square = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
         $post->seo_title = '';
         $post->seo_description = '';
         $post->seo_keywords = '';
@@ -327,327 +379,5 @@ class PostsController extends BasePhotoController
         $images = DB::table('Images')->paginate(10);
 
         return view('moderator.all_photo_site', ['images' => $images]);
-    }
-
-//____====================================================================================================\\
-//++++====================================================================================================\\
-//++++====================================================================================================\\
-//++++===================================дальше идет ересь================================================\\
-//++++====================================================================================================\\
-//++++====================================================================================================\\
-//----====================================================================================================\\
-    /**
-     * @return mixed
-     */
-    public function loadInfoPhoto()
-    {
-
-        $id = $_POST['id'];
-        $photoInfo = Post::select('id',
-            'views_count',
-            'comments_count',
-            'full_path',
-            'likes_count',
-            'description',
-            'title')
-            ->where('id', '=', $id)
-            ->get();
-
-        return $photoInfo;
-
-    }
-
-    /**
-     * @return string
-     */
-    public function loadPhotoSlider()
-    {
-        $room = $_POST['roomSort'];
-        $style = $_POST['styleSort'];
-        $color = $_POST['colorSort'];
-        $sort = $_POST['sortSort'];
-        $tag = $_POST['tag'];
-        $direction = $_POST['direction'];
-        $id = $_POST['id'];
-        $id_pos = $_POST['currentPosition'];
-        if ($room != '0' ) {
-            $roomSort = ' rooms like "% '.$room.',%"';
-            $roomSorting = $room;
-        }else{
-            $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
-            $roomSorting = 0;
-        }
-        if ($style != '0' ) {
-            $styleSort = ' style like "% '.$style.',%"';
-            $styleSorting = $style;
-        }else{
-            $styleSort = "style regexp '[a-zA-Z0-9_]'";
-            $styleSorting = 0;
-        }
-        if ($color != '0' ) {
-            $colorSort = ' colors like "% '.$color.',%"';
-            $colorSorting = $color;
-        }else{
-            $colorSort = "colors regexp '[a-zA-Z0-9_]'";
-            $colorSorting = 0;
-        }
-        if ($sort != '0' ) {
-            if ($sort == 'popular') {
-                $sortSort = 'views_count';
-            }elseif ($sort == 'recommended') {
-                $sortSort = 'id';
-            }elseif ($sort == 'new') {
-                $sortSort = 'id';
-            }else {
-                $sortSort = '';
-            }
-            $sortSorting = $sort;
-
-        }else{
-            $sortSort = true;
-            $sortSorting = 0;
-
-        }
-
-        if ( $tag != '0') {
-            $tagSort = 'and tags like "%#'.$tag.';%" ';
-        } else {
-            $tagSort = '';
-        }
-        if ($sort != "0"){
-            if ($direction == 'left') {
-
-                $newPhoto = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true and id < '.$id)
-                    ->take(3)
-                    ->orderBy($sortSort, 'desc')
-                    ->get();
-                if (empty($newPhoto->toArray())) {
-                    $newPhoto = 'error_download';
-                }
-            }else {
-                $newPhoto = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true ')
-                    ->where('id', '>', $id)
-                    ->take(3)
-                    ->orderBy($sortSort, 'desc')
-                    ->get();
-                if (empty($newPhoto->toArray())) {
-                    $newPhoto = 'error_download';
-                }
-            }
-        }else {
-            if ($direction == 'left') {
-                $newPhoto = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true and id < '.$id)
-                    ->take(3)
-                    ->get();
-                $sortSort = false;
-                if (empty($newPhoto->toArray())) {
-                    $newPhoto = 'error_download';
-                }
-            }else {
-                $newPhoto = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
-                    ->where('id', '>', $id+1)
-                    ->take(3)
-                    ->get();
-                $sortSort = false;
-                if (empty($newPhoto->toArray())) {
-                    $newPhoto = 'error_download';
-                }
-            }
-        }
-        return $newPhoto;
-    }
-
-    /**
-     * @return string
-     */
-    public function loadSortPhotoSlider()
-    {
-        $sort = $_POST['sortSort'];
-        $room = $_POST['roomSort'];
-        $style = $_POST['styleSort'];
-        $color = $_POST['colorSort'];
-        $tag = $_POST['tag'];
-        $id = $_POST['id'];
-        if ($room != 0) {
-            $roomSort = ' rooms like "% '.$room.',%"';
-        } else {
-            $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
-        }
-        if ($style != 0) {
-            $styleSort = ' style like "% '.$style.',%"';
-        } else {
-            $styleSort = "style regexp '[a-zA-Z0-9_]'";
-        }
-        if ($color != 0) {
-            $colorSort = ' colors like "% '.$color.',%"';
-        } else {
-            $colorSort = "colors regexp '[a-zA-Z0-9_]'";
-        }
-        if ($sort != '0') {
-            if ($sort == 'popular') {
-                $sortSort = 'views_count';
-            } elseif ($sort == 'recommended') {
-                $sortSort = 'id';
-            } elseif ($sort == 'new') {
-                $sortSort = 'id';
-            } else {
-                $sortSort = '';
-            }
-        } else {
-            $sortSort = true;
-        }
-        if ($tag != '0') {
-            $tagSort = 'and tags like "%#'.$tag.';%" ';
-        } else {
-            $tagSort = '';
-        }
-        if ($sort != 0) {
-            $ajaxImage = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
-                ->take(3)
-                ->orderBy($sortSort, 'desc')
-                ->get();
-            if (empty($ajaxImage->toArray())) {
-                $ajaxImage = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
-                    ->where('id', '>', $id)
-                    ->get();
-                if (empty($ajaxImage->toArray())) {
-                    $ajaxImage = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
-                        ->where('id', '<', $id)
-                        ->get();
-                } else {
-                    $ajaxImage = 'error_download';
-                }
-            }
-        } else {
-            $ajaxImage = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
-                ->take(3)
-                ->get();
-            if (empty($ajaxImage->toArray())) {
-                $ajaxImage = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
-                    ->where('id', '>', $id)
-                    ->get();
-
-                if (empty($ajaxImage->toArray())) {
-                    $ajaxImage = Post::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
-                        ->where('id', '<', $id)
-                        ->get();
-                } else {
-                    $ajaxImage = 'error_download';
-                }
-            }
-        }
-        return $ajaxImage;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function indexAddPage()
-    {
-        $sort = $_POST['sortSorting'];
-        $room = $_POST['roomSorting'];
-        $style = $_POST['styleSorting'];
-        $color = $_POST['colorSorting'];
-        $tag = $_POST['tag'];
-
-        if ($room != 0) {
-            $roomSort = ' rooms like "% '.$room.',%"';
-        } else {
-            $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
-        }
-        if ($style != 0) {
-            $styleSort = ' style like "% '.$style.',%"';
-        } else {
-            $styleSort = "style regexp '[a-zA-Z0-9_]'";
-        }
-        if ($color != 0) {
-            $colorSort = ' colors like "% '.$color.',%"';
-        } else {
-            $colorSort = "colors regexp '[a-zA-Z0-9_]'";
-        }
-        if ($sort != 0) {
-            if ($sort == 'popular') {
-                $sortSort = 'views_count';
-            } elseif ($sort == 'recommended') {
-                $sortSort = 'id';
-            } elseif ($sort == 'new') {
-                $sortSort = 'id';
-            } else {
-                $sortSort = '';
-            }
-        } else {
-            $sortSort = true;
-        }
-
-        if ($tag != '0') {
-            $tagSort = 'and tags like "%#'.$tag.';%" ';
-        } else {
-            $tagSort = '';
-        }
-
-
-        return $ajaxImage;
-    }
-
-    /**
-     * @return string
-     */
-    public function loadSortPhoto()
-    {
-        $sort = $_POST['sortSort'];
-        $room = $_POST['roomSort'];
-        $style = $_POST['styleSort'];
-        $color = $_POST['colorSort'];
-        $tag = $_POST['tag'];
-        if ($room != 0) {
-            $roomSort = ' rooms like "% '.$room.',%"';
-        } else {
-            $roomSort = "rooms regexp '[a-zA-Z0-9_]'";
-        }
-        if ($style != 0) {
-            $styleSort = ' style like "% '.$style.',%"';
-        } else {
-            $styleSort = "style regexp '[a-zA-Z0-9_]'";
-        }
-        if ($color != 0) {
-            $colorSort = ' colors like "% '.$color.',%"';
-        } else {
-            $colorSort = "colors regexp '[a-zA-Z0-9_]'";
-        }
-        if ($sort != '0') {
-            if ($sort == 'popular') {
-                $sortSort = 'views_count';
-            } elseif ($sort == 'recommended') {
-                $sortSort = 'id';
-            } elseif ($sort == 'new') {
-                $sortSort = 'id';
-            } else {
-                $sortSort = '';
-            }
-        } else {
-            $sortSort = true;
-        }
-        if ($tag != '0') {
-            $tagSort = 'and tags like "%#'.$tag.';%" ';
-        } else {
-            $tagSort = '';
-        }
-        if ($sort != '0') {
-            $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
-                ->take(3)
-                ->orderBy($sortSort, 'desc')
-                ->get();
-            if (empty($ajaxImage->toArray())) {
-                $ajaxImage = 'error_download';
-            }
-        } else {
-            $ajaxImage = Picture::whereRaw($roomSort.' and '.$styleSort.' and '.$colorSort.$tagSort.' and verified=true')
-                ->take(3)
-                ->get();
-            if (empty($ajaxImage->toArray())) {
-                $ajaxImage = 'error_download';
-            }
-        }
-        return $ajaxImage;
     }
 }
