@@ -149,14 +149,24 @@ class UserController extends BasePhotoController
 
        if (empty($findUser)) {
          $user = new User();
-         $user->name = $_POST["name"];
-         $user->email = $_POST["email"];
-         $user->phone = $_POST["phone"];
-         $user->password = Hash::make($_POST["password"]);
+         $user->name = Input::get('name');
+         $user->email = Input::get('email');
+         $user->phone = Input::get('phone');
+         $user->password = Hash::make(Input::get('password'));
+         $user->sex = ;
+         $user->skype = ;
+         $user->about = ;
+         $user->phone = ;
+         $user->type = ;
+         $user->img_mini = ;
+         $user->img_middle = ;
+         $user->img_large = ;
+         $user->img_square = ;
+         $user->seo_title = ;
+         $user->seo_description = ;
+         $user->seo_keywords = ;
+         $user->alt = ;
 
-         if (!empty($_POST['status'])) {
-             $user->status = $_POST["status"];
-         }
          $user->save();
 
          DB::table('users_roles')->insert(
@@ -182,7 +192,7 @@ class UserController extends BasePhotoController
     /**
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-     public function logout()
+     public function logout ()
      {
          Auth::logout();
          return redirect('/');
@@ -191,10 +201,10 @@ class UserController extends BasePhotoController
     /**
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-     public function recoveryAccess()
+     public function recoveryAccess ()
      {
-         $user = User::where('e_mail', '=', $_POST['e_mail'])
-                      ->first();
+         $user = User::where('e_mail', '=', Input::get('email'))
+                     ->first();
 
          if (!empty($user)) {
              $new_password  = str_random(12);
@@ -202,7 +212,7 @@ class UserController extends BasePhotoController
 
              Mail::send('emails.recovery', array('new_password' => $new_password), function($message)
              {
-                $message->to($_POST['e_mail'], User::where('e_mail', '=', $_POST['e_mail'])
+                $message->to($_POST['e_mail'], User::where('e_mail', '=', Input::get('email'))
                                                     ->first()
                                                     ->name)
                         ->subject('Ваш новый пароль на сайте www.doms.design');
@@ -218,60 +228,62 @@ class UserController extends BasePhotoController
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-      public function editUser ()
+      public function editPage ()
       {
-          if (Auth::check()){
-              $user = User::find(Auth::id());
-              $links = UserSocial::where('user', '=', $user->id)->get();
-              return view('profile.edit', ['user' => $user,
-                                            'links' => $links]);
-          }
+          $user = User::find(Auth::id());
+          $links = UserSocial::where('user_id', '=', $user->id)->get();
+
+          return view('profile.edit', ['user' => $user,
+                                             'links' => $links]);
       }
 
-       /**
-        * Login Form
-        *
-        * @return Response
-        */
-       public function changeYourself()
-       {
-           $user = User::find(Auth::id());
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+     public function edit (Request $request)
+     {
+          $user = User::find(Auth::id());
+          $this->validate($request, $user->rules);
 
-           $user->name = $_POST["name"];
-           $user->sex = $_POST["sex"];
-           $user->phone = $_POST["phone"];
-           $user->skype = $_POST["skype"];
-           $user->about = $_POST["about"];
+          $user->name = Input::get('name');
+          $user->sex = Input::get('sex');
 
-           if(!empty($_FILES['avatar']['tmp_name'])){
-               $user->avatar = $_FILES["avatar"];
-               $user->path_min = $user->avatar->url('small');
-               $user->path_full = $user->avatar->url('max');
+          if (Input::has('skype')) {
+              $user->skype = Input::get('skype');
+          }
 
-               $quadroAva = Image::make($_FILES['avatar']['tmp_name']);
-               $quadroAva->encode('jpg');
-               $quadroAva->fit(180);
-               $quadroAva->save(public_path('/img/quadro-ava/'.Auth::id().'jpg'));
+          if (Input::has('about')) {
+              $user->about = Input::get('about');
+          }
 
-               $user->quadro_ava = '/img/quadro-ava/'.Auth::id().'jpg';
-           }
+          if (Input::has('phone')) {
+              $user->phone = Input::get('phone');
+          }
 
-           $user->save();
-           return redirect()->back();
-       }
+          if (Input::has('file')) {
+              $user->img_mini = $this->saveFile('user','mini', Input::get('file'),40,40);
+              $user->img_middle = $this->saveFile('user','mini', Input::get('file'),40,40);
+              $user->img_large = $this->saveFile('user','mini', Input::get('file'),40,40);
+              $user->img_square = $this->saveFile('user','mini', Input::get('file'),40,40);
+          }
+
+          $user->save();
+
+          return redirect()->back()->with('message', 'профиль успешно сохранен!');
+     }
 
 
     /**
      * @return mixed
      */
-    public function dwnldPhotoUser()
+    public function loadPhotoUser ()
     {
-
-        $id = $_POST['id'];
+        $id = Input::get('id');
         $pic = Post::find($id);
         $user = User::select('id', 'quadro_ava', 'name')
-            ->where('id', '=', $pic->author_id)
-            ->get();
+                    ->where('id', '=', $pic->author_id)
+                    ->get();
 
         return $user;
     }
