@@ -11,6 +11,7 @@ use App\Models\Post;
 use App\Models\View;
 use App\Models\Like;
 use App\Models\User;
+use App\Models\UserSocial;
 
 class PostsController extends BasePhotoController
 {
@@ -380,4 +381,109 @@ class PostsController extends BasePhotoController
 
         return view('moderator.all_photo_site', ['images' => $images]);
     }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function userPosts ($id)
+    {
+        $user = User::find($id);
+        $userImages = Post::where('author_id', '=', $id)->get();
+        $links = UserSocial::where('user', '=', $id)->get();
+
+        return View('profile.index_photo', [
+                                                  'user' => $user,
+                                                  'links' => $links,
+                                                  'userImages' => $userImages
+                                                ]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function addPage()
+    {
+            return View('profile.add');
+    }
+
+    /**
+     * @param $currentID
+     * @param $action
+     * @param $json
+     * @return string
+     */
+    public function loadSliderPost ($currentID, $action, $json)
+    {
+        switch ($action) {
+            case 'next':
+                $post = $this->loadMorePosts($currentID, 23, $json);
+                $this->loadInfoPost($currentID);
+                break;
+            case 'prev':
+                $post = $this->loadMorePosts($currentID, 23, $json);
+                $this->loadInfoPost($currentID);
+                break;
+            case 'sort':
+                $post = $this->loadSortPosts($json, 23);
+                $this->loadInfoPost($currentID);
+                break;
+            default:
+                $post = 'error';
+        }
+        return response()->json($post);
+    }
+
+    /**
+     * @param $json
+     * @param $action
+     * @return string
+     */
+    public function loadGallery ($json, $action, $id)
+    {
+        switch ($action) {
+            case 'next':
+                $posts = $this->loadMorePosts($id, 23, $json);
+                break;
+            case 'sort':
+                $posts = $this->loadSortPosts($id, 23);
+                break;
+            default:
+                $posts = 'error';
+        }
+        return $posts;
+    }
+
+    /**
+     * @param $prevId
+     * @param $num
+     * @param $json
+     * @return mixed
+     */
+    private function loadMorePosts ($prevId, $num, $json)
+    {
+        $filterArray = $this->decodeURL($json);
+        return $posts;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    private function loadInfoPost ($id)
+    {
+        return $info;
+    }
+
+    /**
+     * @param $json
+     * @param $num
+     * @return mixed
+     */
+    private function loadSortPosts ($json, $num)
+    {
+        $filterArray = $this->decodeURL($json);
+        return $posts;
+    }
+
 }

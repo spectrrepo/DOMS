@@ -61,76 +61,18 @@ class UserController extends BasePhotoController
     /**
      * @return array
      */
-     public function ajaxDownloadUpdate ()
+     public function ajaxLoadNews ()
      {
-         $lastUpdate = ['lastId'];
-         $news_tpl = array();
-         $newss = array();
-         $last_el = (object)['date_rus_event' => 'may'];
-         array_push($images, $last_el);
-
-         for ($i = 0; $i < count($images)-1; $i++ ){
-             if ($images[$i]->date_rus_event != $images[$i+1]->date_rus_event) {
-                 for ( $j = 0; $j < count($images); $j++){
-                     if (($images[$i]->date_rus_event == $images[$j]->date_rus_event)) {
-                         array_push($news_tpl, $images[$j]);
-                     }
-                 }
-                 array_push($newss, $news_tpl);
-                 $news_tpl = array();
-             }
-         }
-         $images = array_slice($newss, $lastUpdate, $lastUpdate+4);
-         return $images;
-     }
-
-     public function yourPhotoUpload ()
-     {
-         if(Auth::check()){
-             $id = Auth::id();
-             $user = User::find($id);
-             $userImages = Post::where('author_id', '=', $id)->get();
-             $links = UserSocial::where('user', '=', $id)->get();
-
-             return View('profile.index_photo', [ 'id' => $id,
-                                                  'user' => $user,
-                                                  'links' => $links,
-                                                  'userImages' => $userImages]);
-         }else {
-             return redirect('/login');
-         }
-     }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
-     */
-    public function indexAdd()
-     {
-         if(Auth::check()){
-
-             $user = User::find(Auth::id());
-             $styles = Style::all();
-             $rooms = Placement::all();
-             $colors = Color::all();
-
-             return View('profile.add', ['user' => $user,
-                                         'styles' => $styles,
-                                         'rooms' => $rooms,
-                                         'colors' => $colors ]);
-         }
-         else{
-             return redirect('/login');
-         }
+         return response()->json();
      }
 
     /**
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-     public function login()
+     public function login ()
      {
-
-         $email = $_POST['email'];
-         $password = $_POST['password'];
+         $email = Input::get('email');
+         $password = Input::get('password');
 
          if (Auth::attempt(['email' => $email, 'password' => $password],true))
          {
@@ -141,51 +83,53 @@ class UserController extends BasePhotoController
      }
 
     /**
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-     public function registration()
+     public function registration (Request $request)
      {
-       $findUser = User::where('email', '=', $_POST['email'])->first();
+       $findUser = User::where('email', '=', Input::get('email'))->first();
 
-       if (empty($findUser)) {
+       if (!empty($findUser)) {
          $user = new User();
+         $this->validate($request, $user->rules);
+
          $user->name = Input::get('name');
          $user->email = Input::get('email');
          $user->phone = Input::get('phone');
          $user->password = Hash::make(Input::get('password'));
-         $user->sex = ;
-         $user->skype = ;
-         $user->about = ;
-         $user->phone = ;
-         $user->type = ;
-         $user->img_mini = ;
-         $user->img_middle = ;
-         $user->img_large = ;
-         $user->img_square = ;
-         $user->seo_title = ;
-         $user->seo_description = ;
-         $user->seo_keywords = ;
-         $user->alt = ;
+         $user->type = Input::get('phone');
+         $user->sex = 'man';
+         $user->img_mini = '/img/user.png';
+         $user->img_middle = '/img/user.png';
+         $user->img_large = '/img/user.png';
+         $user->img_square = '/img/user.png';
+
+         $user->seo_title = '';
+         $user->seo_description = '';
+         $user->seo_keywords = '';
+         $user->alt = '';
 
          $user->save();
 
-         DB::table('users_roles')->insert(
-            array('user_id' => $user->id,
-                  'role_id' => 3)
-         );
-         Auth::attempt(['email' => $email, 'password' => $password]);
-         Mail::send('emails.welcome', array('name' => $_POST['name'],
-                                            'e_mail' => $_POST['email'],
-                                            'password' => $_POST['password']),
+         DB::table('users_roles')
+           ->insert(
+               ['user_id' => $user->id,
+                'role_id' => 3,
+               ]);
+         Auth::attempt(['email' => $user->email, 'password' => Input::get('password')]);
+         Mail::send('emails.welcome', ['name' => $user->name,
+                                            'e_mail' => $user->email,
+                                            'password' => Input::get('password')],
          function($message)
          {
-             $message->to($_POST["email"], $_POST['name'])
+             $message->to(Input::get('email'), Input::get('name'))
              ->subject('Вы зарегистрировались на сайте www.doms.design');
          });
 
          return redirect()->back();
        } else {
-         return redirect('/')->with('bad_reg', 'true');
+         return redirect('/')->with('message', 'пользователь с таким email адресом уже зарегистрирован на сайте');
        }
      }
 
@@ -212,7 +156,7 @@ class UserController extends BasePhotoController
 
              Mail::send('emails.recovery', array('new_password' => $new_password), function($message)
              {
-                $message->to($_POST['e_mail'], User::where('e_mail', '=', Input::get('email'))
+                $message->to(Input::get('email'), User::where('e_mail', '=', Input::get('email'))
                                                     ->first()
                                                     ->name)
                         ->subject('Ваш новый пароль на сайте www.doms.design');
