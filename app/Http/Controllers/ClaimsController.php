@@ -42,12 +42,13 @@ class ClaimsController extends BasePhotoController
     }
 
     /**
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete ()
+    public function delete ($id)
     {
 
-        Claim::find(Input::get('id'))->softDelete();
+        Claim::find($id)->softDelete();
 
         return redirect()->back()->with('message', 'Претензия успешно удалена');
     }

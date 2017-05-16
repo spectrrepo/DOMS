@@ -69,20 +69,6 @@ class TagsController extends Controller
         return view('moderator.tags.list', ['tags' => $tags]);
     }
 
-
-    /**
-     * @return array
-     */
-    public function loadTags()
-    {
-        $id = $_POST['id'];
-        $image = Post::find($id);
-        $tagsString = $image->tags;
-        $tags = explode(';',$tagsString);
-
-        return $tags;
-    }
-
     /**
      * @param $tag
      * @param $postId

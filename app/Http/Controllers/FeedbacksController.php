@@ -73,11 +73,12 @@ class FeedbacksController extends Controller
     }
 
     /**
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function answer ()
+    public function answer ($id)
     {
-        $feedback = new Feedback();
+        $feedback = Feedback::find($id);
         $feedback->answer = Input::get('answer');
         $feedback->date_answer = Carbon::now();
         $feedback->user_answer = Auth::user()->id;

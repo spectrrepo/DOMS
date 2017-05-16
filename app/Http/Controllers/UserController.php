@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Carbon\Carbon;
 use Input;
 use Auth;
 use Hash;
@@ -13,9 +12,6 @@ use Mail;
 
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Style;
-use App\Models\Placement;
-use App\Models\Color;
 use App\Models\UserSocial;
 
 class UserController extends BasePhotoController
@@ -25,37 +21,16 @@ class UserController extends BasePhotoController
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
-    public function index ($id)
-    {
-        if(Auth::check()){
-             $news_tpl = array();
-             $news = array();
-             $last_el = (object)['date_rus_event' => 'may'];
-             array_push($images, $last_el);
-
-             for ($i = 0; $i < count($images)-1; $i++ ){
-                 if ($images[$i]->date_rus_event != $images[$i+1]->date_rus_event) {
-                     for ( $j = 0; $j < count($images); $j++){
-                         if (($images[$i]->date_rus_event == $images[$j]->date_rus_event)) {
-                             array_push($news_tpl, $images[$j]);
-                         }
-                     }
-                     array_push($news, $news_tpl);
-                     $news_tpl = array();
-                 }
-             }
-             array_pop($images);
-
-             $user = User::find($id);
-             $links = UserSocial::where('user', '=', $id)->get();
-             return View('profile.index', [ 'id' => $id,
-                                            'user' => $user,
-                                            'news' => $news,
-                                            'links' => $links]);
-        }else {
-            return redirect('/login');
-        }
-
+     public function index ($id)
+     {
+         $user = User::find($id);
+         $socials = UserSocial::where('user_id', '=', $id )
+                               ->get;
+         $news = Post::all();
+         return view('some.view', [
+                     'user' => $user,
+                     'socials' => $socials,
+         ]);
      }
 
     /**
@@ -219,11 +194,11 @@ class UserController extends BasePhotoController
 
 
     /**
+     * @param $id
      * @return mixed
      */
-    public function loadPhotoUser ()
+    public static function loadPhotoUser ( $id )
     {
-        $id = Input::get('id');
         $pic = Post::find($id);
         $user = User::select('id', 'quadro_ava', 'name')
                     ->where('id', '=', $pic->author_id)

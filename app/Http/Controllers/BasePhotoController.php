@@ -51,9 +51,9 @@ class BasePhotoController extends Controller
         $path = $modelName;
         $fileName = md5(microtime() . rand(0, 9999));
 
-        $path .= '/'.substr($fileName, 0,2);
+        $path .= '/'.$variant.'/'.substr($fileName, 0,2);
         $path .= '/'.substr($fileName, 2,2);
-        $path .= '/'.$variant.'/'.$fileName.'jpg';
+        $path .= '/'.$fileName.'jpg';
 
         return $path;
     }

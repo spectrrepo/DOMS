@@ -26,11 +26,12 @@ class ColorsController extends Controller
 
     /**
      * @param Request $request
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function edit (Request $request)
+    public function edit (Request $request, $id)
     {
-        $color = Color::find(Input::get('id'));
+        $color = Color::find($id);
         $this->validate($request, $color->rules);
 
         $color->title = Input::get('title');

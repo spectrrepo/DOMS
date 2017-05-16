@@ -14,26 +14,14 @@ use App\Models\View;
 class ViewsController extends BasePhotoController
 {
     /**
+     * @param $id
      * @return string
      */
-    public function delete ()
+    public function delete ($id)
     {
-        $id = Input::get('id');
         View::find($id)->softDelete();
 
         return 'true';
-    }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public function loadViews ($id)
-    {
-        $views = View::where('post_id', '=', $id)
-                     ->get();
-
-        return $views;
     }
 
     /**
@@ -51,5 +39,18 @@ class ViewsController extends BasePhotoController
         $view->alt = 'изображение';
         $view->save();
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public static function loadForPost ($id)
+    {
+        $views = View::where('post_id', '=', $id)
+                     ->get();
+
+        return $views;
+    }
+
 
 }

@@ -42,11 +42,12 @@ class SlidesController extends Controller
     }
 
     /**
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete()
+    public function delete($id)
     {
-        Slide::find(Input::get('id'))->delete();
+        Slide::find($id)->softDelete();
 
         return redirect()->back()->with('message', 'слайд успешно удален!');
     }

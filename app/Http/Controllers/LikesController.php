@@ -40,22 +40,9 @@ class LikesController extends Controller
     }
 
     /**
-     * @return int
-     */
-    public function all ()
-    {
-
-        $num_like = count(Like::all());
-
-        return $num_like;
-
-    }
-
-
-    /**
      * @return array
      */
-    public function loadLikeWhom ()
+    public function loadAllLikes ()
     {
 
         $id = Input::get('id');
@@ -72,48 +59,10 @@ class LikesController extends Controller
         return $likeWhom;
     }
 
-
-
     /**
-     * @return string
-     */
-    public function loadActiveLike ()
-    {
-        $id = $_POST['id'];
-        if (Auth::check()) {
-            $findLike = Like::where('post_id', '=', $id)
-                ->andWhere('user_id', '=', Auth::user()->id);
-            if ( $findLike->count() !== 0 ) {
-                $response = 'success';
-            } else {
-                $response = 'error';
-            }
-        }else {
-            $response = 'error';
-        }
-
-        return $response;
-    }
-
-
-
-    /**
+     * @param $id
      * @return array
      */
-    public function loadAllLikes ()
-    {
-        $id = $_POST['id'];
-        $allLikes = Like::where('post_id', '=', $id)->get();
-
-        $likeWhom = array();
-        foreach ($allLikes as $like) {
-            $user = User::find($like->user_id);
-            array_push( $likeWhom, $user);
-        }
-
-        return $likeWhom;
-    }
-
     public static function loadLikeWhomThree ($id)
     {
 
@@ -128,5 +77,17 @@ class LikesController extends Controller
         }
 
         return $likeWhom;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public static function numLikes ($id)
+    {
+        $num = Like::where('post_id', '=', $id)
+                   ->count();
+
+        return $num;
     }
 }

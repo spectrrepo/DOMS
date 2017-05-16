@@ -66,7 +66,8 @@ class ModerateHistoriesController extends Controller
      */
     public function deleteVerificationImage($id)
     {
-        $image = Post::find($id)->delete();
+        Post::find($id)->delete();
+
         if ( Auth::user()->status == 'moderator') {
             return redirect('/profile/admin/verification');
         }else {

@@ -46,27 +46,4 @@ class FavoritesController extends Controller
                        ->get();
         return view('profile.favorite.list', ['images' => $posts]);
     }
-
-
-
-    /**
-     * @return string
-     */
-    public function loadActiveLiked ()
-    {
-        $id = Input::get('id');
-        if (Auth::check()) {
-            $findLiked = Favorite::where('post_id', '=', $id)
-                                 ->where('user_id', '=', Auth()->user()->id);
-            if ( $findLiked->count() !== 0 ) {
-                $response = 'success';
-            } else {
-                $response = 'error';
-            }
-        }else {
-            $response = 'error';
-        }
-
-        return $response;
-    }
 }

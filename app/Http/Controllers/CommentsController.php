@@ -26,12 +26,13 @@ class CommentsController extends Controller
     }
 
     /**
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function changeStatus ()
+    public function changeStatus ($id)
     {
 
-        $comment = Comment::find(Input::get('id'));
+        $comment = Comment::find($id);
         $comment->status = true;
         $comment->update();
 
@@ -57,11 +58,12 @@ class CommentsController extends Controller
     }
 
     /**
+     * @param $id
      * @return string
      */
-    public function delete ()
+    public function delete ($id)
     {
-        Comment::find(Input::get('id'))->delete();
+        Comment::find($id)->softDelete();
 
         return 'true';
     }
@@ -94,6 +96,16 @@ class CommentsController extends Controller
         return $comments;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public static function numComments ($id)
+    {
+        $num = Comment::where('post_id', '=', $id)->count();
+
+        return $num;
+    }
     /**
      * @return mixed
      */

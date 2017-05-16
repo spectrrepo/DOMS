@@ -20,9 +20,9 @@ class PostsController extends BasePhotoController
      * @param $id
      * @return bool
      */
-    private function activeColor ($what, $id)
+    private function activeColor ($what = false, $id)
     {
-        $what === 'liked' ? $someClass = 'Favorite' : $someClass = 'Like';
+        $what === true ? $someClass = 'Favorite' : $someClass = 'Like';
 
         $activeThisUser = $someClass::where('user_id', '=', Auth::id())
                                     ->where('post_id', '=', $id)
@@ -108,9 +108,9 @@ class PostsController extends BasePhotoController
 
     /**
      * @param $json
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return mixed
      */
-    public function indexPage ($json = null)
+    private function queryForPosts ($json)
     {
         $filterArray = $this->decodeURL($json);
 
@@ -122,43 +122,60 @@ class PostsController extends BasePhotoController
 
         $posts = Post::select('posts.id AS id' ,
                               'posts.img_middle AS img')
-                     ->when($placements, function ($query) use ($placements){
-                         return $query->join('posts_placements', 'posts.id', '=', 'posts_placements.post_id');
-                     })
-                     ->when($styles, function ($query) use ($styles){
-                         return $query->join('posts_styles','posts.id', '=', 'posts_styles.post_id');
-                     })
-                     ->when($color, function ($query) use ($color){
-                         return $query->join('posts_colors','posts.id', '=', 'posts_colors.post_id');
-                     })
-                     ->when($tag, function ($query) use ($tag){
-                         return $query->join('posts_tags', 'posts.id', '=', 'posts_styles.post_id')
-                                      ->join('tags', 'tags.id', '=', 'posts_styles.tag_id');
-                     })
-                     ->when($placements, function ($query) use ($placements){
-                         return $query->where(DB::raw($placements));
-                     })
-                     ->when($styles, function ($query) use ($styles){
-                         return $query->where(DB::raw($styles));
-                     })
-                     ->when($color, function ($query) use ($color){
-                         return $query->where('posts_colors.color_id', '=', $color);
-                     })
-                     ->when($tag, function ($query) use ($tag){
-                         return $query->where('tags.value', '=', $tag);
-                     })
-                     ->where('posts.status', '=', 'true')
-                     ->groupBy('posts.id')
-                     ->when(
-                        //TODO:нужна сортировка : рекомендации, новое, популярное
-                     )
-                     ->take()
-                     ->get(32);
+                      ->when($placements, function ($query) use ($placements){
+                          return $query->join('posts_placements', 'posts.id', '=', 'posts_placements.post_id');
+                      })
+                      ->when($styles, function ($query) use ($styles){
+                          return $query->join('posts_styles','posts.id', '=', 'posts_styles.post_id');
+                      })
+                      ->when($color, function ($query) use ($color){
+                          return $query->join('posts_colors','posts.id', '=', 'posts_colors.post_id');
+                      })
+                      ->when($tag, function ($query) use ($tag){
+                          return $query->join('posts_tags', 'posts.id', '=', 'posts_styles.post_id')
+                                       ->join('tags', 'tags.id', '=', 'posts_styles.tag_id');
+                      })
+                      ->when($placements, function ($query) use ($placements){
+                          return $query->where(DB::raw($placements));
+                      })
+                      ->when($styles, function ($query) use ($styles){
+                          return $query->where(DB::raw($styles));
+                      })
+                      ->when($color, function ($query) use ($color){
+                          return $query->where('posts_colors.color_id', '=', $color);
+                      })
+                      ->when($tag, function ($query) use ($tag){
+                          return $query->where('tags.value', '=', $tag);
+                      })
+                      ->where('posts.status', '=', 'true')
+                      ->groupBy('posts.id')
+                      ->when($sort === "recommended", function ($query) use ($sort) {
+                          return $query->orderBy('posts.updated_at', 'desc')
+                                       ->orderBy('posts.views', 'desc');
+                      })
+                      ->when($sort === "popular", function ($query) use ($sort) {
+                          return $query->orderBy('posts.views', 'desc');
+                      })
+                      ->when($sort === "new", function ($query) use ($sort) {
+                          return $query->orderBy('posts.updated_at', 'desc');
+                      });
+        return $posts;
+    }
+    /**
+     * @param $json
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function indexPage ($json = null)
+    {
+
+        $posts = $this->queryForPosts($json)
+                      ->take(32)
+                      ->get();
 
         return view('site.index', [
                          'posts' => $posts,
                          'json' => $json
-                 ]);
+        ]);
     }
 
 
@@ -169,51 +186,12 @@ class PostsController extends BasePhotoController
      */
     public function itemPage($id, $json = null)
     {
-        $filterArray = $this->decodeURL($json);
+        $posts = $this->queryForPosts($json)
+                      ->skip($id-1)
+                      ->take(6)
+                      ->get();
 
-        $placements = $filterArray['placements'];
-        $styles = $filterArray['placements'];
-        $color = $filterArray['placements'];
-        $sort = $filterArray['placements'];
-        $tag = $filterArray['placements'];
-
-        $posts = Post::select('posts.id AS id' ,
-                    'posts.img_middle AS img')
-                    ->when($placements, function ($query) use ($placements){
-                        return $query->join('posts_placements', 'posts.id', '=', 'posts_placements.post_id');
-                    })
-                    ->when($styles, function ($query) use ($styles){
-                        return $query->join('posts_styles','posts.id', '=', 'posts_styles.post_id');
-                    })
-                    ->when($color, function ($query) use ($color){
-                        return $query->join('posts_colors','posts.id', '=', 'posts_colors.post_id');
-                    })
-                    ->when($tag, function ($query) use ($tag){
-                        return $query->join('posts_tags', 'posts.id', '=', 'posts_styles.post_id')
-                            ->join('tags', 'tags.id', '=', 'posts_styles.tag_id');
-                    })
-                    ->when($placements, function ($query) use ($placements){
-                        return $query->where(DB::raw($placements));
-                    })
-                    ->when($styles, function ($query) use ($styles){
-                        return $query->where(DB::raw($styles));
-                    })
-                    ->when($color, function ($query) use ($color){
-                        return $query->where('posts_colors.color_id', '=', $color);
-                    })
-                    ->when($tag, function ($query) use ($tag){
-                        return $query->where('tags.value', '=', $tag);
-                    })
-                    ->where('posts.status', '=', 'true')
-                    ->groupBy('posts.id')
-                    ->when(
-                    //TODO:нужна сортировка : рекомендации, новое, популярное
-                    )
-                    ->skip($id-1)
-                    ->take(6)
-                    ->get();
-        //TODO:количество постов
-        $numPosts = count($posts);
+        $numPosts = $this->queryForPosts($json)->count();
         $currentPost = Post::find($id);
         $likes = LikesController::loadLikeWhomThree($id);
         $numLikes = Like::all()->count();
@@ -404,40 +382,47 @@ class PostsController extends BasePhotoController
      */
     public function addPage()
     {
-            return View('profile.add');
+        return View('profile.add');
     }
 
     /**
      * @param $currentID
      * @param $action
      * @param $json
-     * @return string
+     * @return \Illuminate\Http\JsonResponse
      */
     public function loadSliderPost ($currentID, $action, $json)
     {
         switch ($action) {
             case 'next':
-                $post = $this->loadMorePosts($currentID, 23, $json);
-                $this->loadInfoPost($currentID);
+                $array = [
+                    "postInfo" =>  $this->loadInfoPost($currentID),
+                    "posts" => $this->loadMorePosts($currentID, 23, $json),
+                ];
                 break;
             case 'prev':
-                $post = $this->loadMorePosts($currentID, 23, $json);
-                $this->loadInfoPost($currentID);
+                $array = [
+                    "postInfo" =>  $this->loadInfoPost($currentID),
+                    "posts" => $this->loadMorePosts($currentID, 23, $json),
+                ];
                 break;
             case 'sort':
-                $post = $this->loadSortPosts($json, 23);
-                $this->loadInfoPost($currentID);
+                $array = [
+                    "postInfo" =>  $this->loadInfoPost($currentID),
+                    "posts" => $this->loadSortPosts($json, 23),
+                ];
                 break;
             default:
-                $post = 'error';
+                $array = ['error' => 'переменная $action не входит в массив значений ["next", "prev", "sort"]'];
         }
-        return response()->json($post);
+        return response()->json($array);
     }
 
     /**
      * @param $json
      * @param $action
-     * @return string
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function loadGallery ($json, $action, $id)
     {
@@ -451,7 +436,7 @@ class PostsController extends BasePhotoController
             default:
                 $posts = 'error';
         }
-        return $posts;
+        return response()->json($posts->toArray());
     }
 
     /**
@@ -462,17 +447,47 @@ class PostsController extends BasePhotoController
      */
     private function loadMorePosts ($prevId, $num, $json)
     {
-        $filterArray = $this->decodeURL($json);
+        $posts = $this->queryForPosts($json)
+                      ->skip($prevId)
+                      ->take($num)
+                      ->get();
+
         return $posts;
     }
 
     /**
      * @param $id
-     * @return mixed
+     * @return array
      */
     private function loadInfoPost ($id)
     {
-        return $info;
+        $comments = CommentsController::threeCommentsLoad($id);
+        $tags = TagsController::loadTagsForPost($id);
+        $userInfo = UserController::loadPhotoUser($id);
+        $likes = LikesController::loadLikeWhomThree($id);
+        $angles = ViewsController::loadForPost($id);
+        $numComments = CommentsController::numComments($id);
+        $numLikes = LikesController::numLikes($id);
+        $userLike = $this->activeColor(false, $id);
+        $userFavorite = $this->activeColor(true, $id);
+        $post = Post::find($id);
+
+        return [
+            "id" => $post->id,
+            "bigPost" => $post->img_large,
+            "title" => $post->title,
+            "description" => $post->description,
+            "userInfo" => $userInfo,
+            "numViews" => $post->views,
+            "numComments" => $numComments,
+            "numLikes" => $numLikes,
+            "userLike" => $userLike,
+            "userFavorite" => $userFavorite,
+            "likes" => $likes,
+            "comments" => $comments,
+            "tags" => $tags,
+            "angles" => $angles,
+        ];
     }
 
     /**
@@ -482,8 +497,12 @@ class PostsController extends BasePhotoController
      */
     private function loadSortPosts ($json, $num)
     {
-        $filterArray = $this->decodeURL($json);
+        $posts = $this->queryForPosts($json)
+                      ->take($num)
+                      ->get();
+
         return $posts;
+
     }
 
 }

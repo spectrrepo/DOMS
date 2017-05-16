@@ -16,11 +16,9 @@ class StylesController extends Controller
      */
     public function delete ($styleID)
     {
-
         Style::find($styleID)->delete();
 
         return redirect()->back()->with('message', 'Стиль успешно удален!');
-
     }
 
     /**
