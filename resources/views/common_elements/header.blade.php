@@ -14,18 +14,18 @@
   </div>
     <div class="logining">
       @if ( Auth::check())
-      <a href="{{ URL::to('profile/'.Auth::id()) }}" class="logining-item logining-item-top">
-          {{ Auth::user()->name }}
-      </a>
-      <a href="{{ URL::route('logout') }}" class="logining-item">Выход</a>
-      <a href="{{ URL::to('profile/'.Auth::id()) }}">
-          <div class="login-portret"
-               style="background:url({{ empty(Auth::user()->quadro_ava) ? '/img/user.png' : Auth::user()->quadro_ava }}) center no-repeat; background-size:cover;">
-          </div>
-      </a>
+          <a href="{{ URL::to('profile/'.Auth::id()) }}" class="logining-item logining-item-top">
+              {{ Auth::user()->name }}
+          </a>
+          <a href="{{ URL::route('logout') }}" class="logining-item">Выход</a>
+          <a href="{{ URL::to('profile/'.Auth::id()) }}">
+              <div class="login-portret">
+                  <img src="{{ Auth::user()->ava }}" alt="">
+              </div>
+          </a>
       @else
-       <a class="login logining-item">Вход</a>
-       <a id="registration" class="logining-item">Регистрация</a>
+           <a class="login logining-item">Вход</a>
+           <a id="registration" class="logining-item">Регистрация</a>
       @endif
     </div>
 </header>

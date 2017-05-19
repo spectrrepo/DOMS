@@ -1,16 +1,13 @@
-<?php
- $statuses = Illuminate\Support\Facades\DB::table('status_description')->get();
-?>
-@foreach ($statuses as $status)
+@foreach ($roles as $role)
   <div class="b-item-status">
-    <input class="radio-opacity" type="radio" name="status" value="{{ $status->nickname }}">
+    <input class="radio-opacity" type="radio" name="status" value="{{ $role->nickname }}">
     <div class="b-img">
-      <img src="{{ $status->img }}" alt="иконка пользователя DOMS" />
+      <img src="{{ $role->img }}" alt="{{ $role->alt }}" />
       <span class="check-status-reg uk-icon-justify uk-icon-check"></span>
     </div>
-    <span class="name-status">{{ $status->name }}</span>
+    <span class="name-status">{{ $role->name }}</span>
     <p class="description-status">
-      {{ $status->text }}
+      {{ $role->text }}
     </p>
   </div>
 @endforeach

@@ -6,14 +6,9 @@
        <div class="popup-text-news">
           {{ $news->full_description }}
        </div>
-       <?php $newsViews = \App\NewsVariant::where('new_id', '=', $news->id)->get();
-           foreach ($newsViews as $item){
-              echo "<img src='$item->file_path_full'/>";
-           }
-       ?>
     </div>
     <div class="date-and-all-news">
-          <?php setlocale(LC_TIME, 'ru_RU.utf8');  echo \Carbon\Carbon::parse($news->news_updated_at)->formatLocalized('%d %b %Y') ?>
-          <a href="/news">Просмотреть все новости</a>
+        {{ $news->news_updated_at }}
+        <a href="/news">Просмотреть все новости</a>
     </div>
 </div>

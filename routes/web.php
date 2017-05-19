@@ -164,59 +164,68 @@ Route::group(['middleware' => 'role:0,0,admin'], function () {
 ///
 
 ///========================================
+Route::group(['middleware' => 'role:user,moderator,admin'], function () {
+
+});
+Route::group(['middleware' => 'role:0,moderator,admin'], function () {
+
+});
+Route::group(['middleware' => 'role:0,0,admin'], function () {
+
+});
 
 Route::group(['prefix' => '/article'], function () {
-    Route::post('add','ArticlesController@add')->name('asd');
-    Route::post('delete/{id}/','ArticlesController@delete')->name('asd')->where('name', '[A-Za-z]+');
-    Route::post('edit/{id}/','ArticlesController@edit')->name('asd')->where('name', '[A-Za-z]+');
-    Route::get('sitePage','ArticlesController@sitePage')->name('asd');
-    Route::get('editPage/{id}','ArticlesController@editPage')->name('asd')->where('name', '[A-Za-z]+');
-    Route::get('addPage','ArticlesController@addPage')->name('asd');
-    Route::get('listPage','ArticlesController@listPage')->name('asd');
+    Route::post('add','ArticlesController@add')->name('addArticle');
+    Route::post('delete/{id}/','ArticlesController@delete')->name('deleteArticle')->where('name', '/^\d+$/ ');
+    Route::post('edit/{id}/','ArticlesController@edit')->name('editArticle')->where('name', '/^\d+$/ ');
+    Route::get('sitePage','ArticlesController@sitePage')->name('indexArticlePage');
+    Route::get('editPage/{id}','ArticlesController@editPage')->name('editArticlePage')->where('name', '[A-Za-z]+');
+    Route::get('addPage','ArticlesController@addPage')->name('addArticlePage');
+    Route::get('listPage','ArticlesController@listPage')->name('listArticlePage');
 });
 
 Route::group(['prefix' => 'claims'], function () {
-    Route::get('index', 'ClaimsController@index')->name('asd');
-    Route::post('add', 'ClaimsController@add')->name('asd');
-    Route::post('delete/{id}', 'ClaimsController@delete')->name('asd')->where('name', '[A-Za-z]+');
-    Route::post('changeAuthorship', 'ClaimsController@changeAuthorship')->name('asd');
+    Route::get('index', 'ClaimsController@index')->name('listClaimsPage');
+    Route::post('add', 'ClaimsController@add')->name('addClaims');
+    Route::post('delete/{id}', 'ClaimsController@delete')->name('deleteClaims')->where('name', '[A-Za-z]+');
+    Route::post('changeAuthorship', 'ClaimsController@changeAuthorship')->name('changeClaims');
 });
 
 Route::group(['prefix' => 'colors'], function () {
-    Route::post('add', 'ColorsController@add')->name('asd');
-    Route::post('edit/{id}', 'ColorsController@edit')->name('asd')->where('name', '[A-Za-z]+');
-    Route::post('delete/{id}', 'ColorsController@delete')->name('asd')->where('name', '[A-Za-z]+');
-    Route::get('listPage', 'ColorsController@listPage')->name('asd');
-    Route::get('editPage/{id}', 'ColorsController@editPage')->name('asd')->where('name', '[A-Za-z]+');
-    Route::get('addPage', 'ColorsController@addPage')->name('asd');
+    Route::post('add', 'ColorsController@add')->name('addColor');
+    Route::post('edit/{id}', 'ColorsController@edit')->name('editColor')->where('name', '[A-Za-z]+');
+    Route::post('delete/{id}', 'ColorsController@delete')->name('deleteColor')->where('name', '[A-Za-z]+');
+    Route::get('listPage', 'ColorsController@listPage')->name('listColorPage');
+    Route::get('editPage/{id}', 'ColorsController@editPage')->name('editColorPage')->where('name', '[A-Za-z]+');
+    Route::get('addPage', 'ColorsController@addPage')->name('addColorPage');
 });
 
 Route::group(['prefix' => 'comments'], function () {
-    Route::post('allCommentsLoad', 'CommentsController@allCommentsLoad')->name('asd');
-    Route::post('delete/{id}', 'CommentsController@delete')->name('asd')->where('name', '[A-Za-z]+');
-    Route::post('add', 'CommentsController@add')->name('asd');
-    Route::get('changeStatus/{id}', 'CommentsController@changeStatus')->name('asd')->where('name', '[A-Za-z]+');
-    Route::get('index', 'CommentsController@index')->name('asd');
+    Route::post('allCommentsLoad', 'CommentsController@allCommentsLoad')->name('allCommentsLoad');
+    Route::post('delete/{id}', 'CommentsController@delete')->name('deleteComment')->where('name', '[A-Za-z]+');
+    Route::post('add', 'CommentsController@add')->name('addComment');
+    Route::get('changeStatus/{id}', 'CommentsController@changeStatus')->name('changeStatusComment')->where('name', '[A-Za-z]+');
+    Route::get('index', 'CommentsController@index')->name('listCommentsPage');
 });
 
 Route::group(['prefix' => 'favorites'], function () {
-    Route::post('add', 'FavoritesController@add')->name('asd');
-    Route::post('delete', 'FavoritesController@delete')->name('asd');
-    Route::get('index', 'FavoritesController@index')->name('asd');
+    Route::post('add', 'FavoritesController@add')->name('addFavorite');
+    Route::post('delete', 'FavoritesController@delete')->name('deleteFavorite');
+    Route::get('index', 'FavoritesController@index')->name('favoritePage');
 });
 
 Route::group(['prefix' => 'feedbacks'], function () {
-    Route::post('add', 'FeedbacksController@add')->name('asd');
-    Route::get('listPage', 'FeedbacksController@listPage')->name('asd');
-    Route::get('itemPage/{id}', 'FeedbacksController@itemPage')->name('asd')->where('name', '[A-Za-z]+');
-    Route::get('delete/{id}', 'FeedbacksController@delete')->name('asd')->where('name', '[A-Za-z]+');
-    Route::post('answer/{id}', 'FeedbacksController@answer')->name('asd')->where('name', '[A-Za-z]+');
+    Route::post('add', 'FeedbacksController@add')->name('addFeedback');
+    Route::get('listPage', 'FeedbacksController@listPage')->name('listFeedbackPage');
+    Route::get('itemPage/{id}', 'FeedbacksController@itemPage')->name('itemFeedbackPage')->where('name', '[A-Za-z]+');
+    Route::get('delete/{id}', 'FeedbacksController@delete')->name('deleteFeedback')->where('name', '[A-Za-z]+');
+    Route::post('answer/{id}', 'FeedbacksController@answer')->name('answerFeedback')->where('name', '[A-Za-z]+');
 });
 
 Route::group(['prefix' => 'likes'], function () {
-    Route::post('loadAllLikes', 'LikesController@loadAllLikes')->name('asd');
-    Route::post('delete', 'LikesController@delete')->name('asd');
-    Route::post('add', 'LikesController@add')->name('asd');
+    Route::post('loadAllLikes', 'LikesController@loadAllLikes')->name('loadAllLikes');
+    Route::post('delete', 'LikesController@delete')->name('deleteLike');
+    Route::post('add', 'LikesController@add')->name('addLike');
 });
 
 Route::group(['prefix' => 'moderate_history'], function () {
@@ -226,33 +235,33 @@ Route::group(['prefix' => 'moderate_history'], function () {
 });
 
 Route::group(['prefix' => 'placements'], function () {
-    Route::post('add', 'PlacementsController@add')->name('asd');
-    Route::get('delete/{id}', 'PlacementsController@delete')->name('asd')->where('name', '[A-Za-z]+');
-    Route::post('edit/{id}', 'PlacementsController@edit')->name('asd')->where('name', '[A-Za-z]+');
-    Route::get('listPage', 'PlacementsController@listPage')->name('asd');
-    Route::get('addPage', 'PlacementsController@addPage')->name('asd');
-    Route::get('editPage/{id}', 'PlacementsController@editPage')->name('asd')->where('name', '[A-Za-z]+');
+    Route::post('add', 'PlacementsController@add')->name('addPlace');
+    Route::get('delete/{id}', 'PlacementsController@delete')->name('deletePlace')->where('name', '[A-Za-z]+');
+    Route::post('edit/{id}', 'PlacementsController@edit')->name('editPlace')->where('name', '[A-Za-z]+');
+    Route::get('listPage', 'PlacementsController@listPage')->name('listPlacePage');
+    Route::get('addPage', 'PlacementsController@addPage')->name('addPlacePage');
+    Route::get('editPage/{id}', 'PlacementsController@editPage')->name('editPLacePage')->where('name', '[A-Za-z]+');
 });
 
 Route::group(['prefix' => 'posts'], function () {
-    Route::get('indexPage/{json}', 'PostsController@indexPage')->name('asd')->where('name', '[A-Za-z]+');
-    Route::get('itemPage/{id}/{json}', 'PostsController@itemPage')->name('asd')->where('name', '[A-Za-z]+');
-    Route::post('add', 'PostsController@add')->name('asd');
-    Route::post('edit/{id}', 'PostsController@edit')->name('asd')->where('name', '[A-Za-z]+');
-    Route::get('allPostSite', 'PostsController@allPostSite')->name('asd');
-    Route::get('userPost', 'PostsController@userPost')->name('asd');
-    Route::get('addPage', 'PostsController@addPage')->name('asd');
-    Route::post('loadSliderPost/{currentId}/{action}/{json}', 'PostsController@loadSliderPost')->name('asd')->where('name', '[A-Za-z]+');
-    Route::post('loadGallery/{json}/{action}/{id}', 'PostsController@loadGallery')->name('asd')->where('name', '[A-Za-z]+');
+    Route::get('indexPage/{json}', 'PostsController@indexPage')->name('postsGalleryPage')->where('name', '[A-Za-z]+');
+    Route::get('itemPage/{id}/{json}', 'PostsController@itemPage')->name('postPage')->where('name', '[A-Za-z]+');
+    Route::post('add', 'PostsController@add')->name('addPost');
+    Route::post('edit/{id}', 'PostsController@edit')->name('editPost')->where('name', '[A-Za-z]+');
+    Route::get('allPostSite', 'PostsController@allPostSite')->name('allPostSitePage');
+    Route::get('userPost', 'PostsController@userPost')->name('userPostPage');
+    Route::get('addPage', 'PostsController@addPage')->name('addPostPage');
+    Route::post('loadSliderPost/{currentId}/{action}/{json}', 'PostsController@loadSliderPost')->name('loadItemPost')->where('name', '[A-Za-z]+');
+    Route::post('loadGallery/{json}/{action}/{id}', 'PostsController@loadGallery')->name('loadGallery')->where('name', '[A-Za-z]+');
 });
 
 Route::group(['prefix' => 'slides'], function () {
-    Route::get('index', 'SlidesController@index')->name('asd');
-    Route::post('add', 'SlidesController@add')->name('asd');
-    Route::post('delete/{id}', 'SlidesController@delete')->name('asd')->where('name', '[A-Za-z]+');
-    Route::post('edit', 'SlidesController@edit')->name('asd');
-    Route::get('editPage/{id}', 'SlidesController@editPage')->name('asd')->where('name', '[A-Za-z]+');
-    Route::get('addPage', 'SlidesController@addPage')->name('asd');
+    Route::get('index', 'SlidesController@index')->name('listSlidesPage');
+    Route::post('add', 'SlidesController@add')->name('addSlide');
+    Route::post('delete/{id}', 'SlidesController@delete')->name('deleteSlide')->where('name', '[A-Za-z]+');
+    Route::post('edit', 'SlidesController@edit')->name('editSlide');
+    Route::get('editPage/{id}', 'SlidesController@editPage')->name('editSlidePage')->where('name', '[A-Za-z]+');
+    Route::get('addPage', 'SlidesController@addPage')->name('addSlidePage');
 });
 
 Route::group(['prefix' => 'social'], function () {
@@ -261,25 +270,25 @@ Route::group(['prefix' => 'social'], function () {
     Route::post('callback', 'SocialController@callback')->name('asd');
     Route::post('callbackVK', 'SocialController@callbackVK')->name('asd');
 
-    Route::post('add', 'SocialController@add')->name('asd');
-    Route::post('delete', 'SocialController@delete')->name('asd');
-    Route::post('edit', 'SocialController@edit')->name('asd');
+    Route::post('add', 'SocialController@add')->name('addSocial');
+    Route::post('delete', 'SocialController@delete')->name('deleteSocial');
+    Route::post('edit', 'SocialController@edit')->name('editSocial');
 });
 Route::group(['prefix' => 'styles'], function () {
-    Route::get('delete/{id}', 'StylesController@delete')->name('asd')->where('name', '[A-Za-z]+');
-    Route::post('add', 'StylesController@add')->name('asd');
-    Route::post('edit/{id}', 'StylesController@edit')->name('asd')->where('name', '[A-Za-z]+');
-    Route::get('listPage', 'StylesController@listPage')->name('asd');
-    Route::get('addPage', 'StylesController@addPage')->name('asd');
-    Route::get('editPage{id}', 'StylesController@editPage')->name('asd')->where('name', '[A-Za-z]+');
+    Route::get('delete/{id}', 'StylesController@delete')->name('deleteStyle')->where('name', '[A-Za-z]+');
+    Route::post('add', 'StylesController@add')->name('addStyle');
+    Route::post('edit/{id}', 'StylesController@edit')->name('editStyle')->where('name', '[A-Za-z]+');
+    Route::get('listPage', 'StylesController@listPage')->name('listStylePage');
+    Route::get('addPage', 'StylesController@addPage')->name('addStylePage');
+    Route::get('editPage{id}', 'StylesController@editPage')->name('editStylePage')->where('name', '[A-Za-z]+');
 });
 
 Route::group(['prefix' => 'tags'], function () {
-    Route::post('edit/{id}', 'TagsController@edit')->name('asd')->where('name', '[A-Za-z]+');
-    Route::get('delete/{id}', 'TagsController@delete')->name('asd')->where('name', '[A-Za-z]+');
-    Route::post('add', 'TagsController@add')->name('asd');
-    Route::post('indexTagsLoad', 'TagsController@indexTagsLoad')->name('asd');
-    Route::get('editTagsPage', 'TagsController@editTagsPage')->name('asd');
+    Route::post('edit/{id}', 'TagsController@edit')->name('editTag')->where('name', '[A-Za-z]+');
+    Route::get('delete/{id}', 'TagsController@delete')->name('deleteTag')->where('name', '[A-Za-z]+');
+    Route::post('add', 'TagsController@add')->name('addTag');
+    Route::post('indexTagsLoad', 'TagsController@indexTagsLoad')->name('indexTagsLoad');
+    Route::get('editTagsPage', 'TagsController@editTagsPage')->name('edit');
 });
 
 Route::group(['prefix' => 'user'], function () {

@@ -7,11 +7,7 @@
     <span class="close white-close uk-icon-justify uk-icon-remove"></span>
     <ul>
       @foreach ( $rooms as $room )
-        <li class="item-moodal-sidebar" data-url="{{ $room->id }}" >
-          <span class="item-modal-text"> {{ $room->title }} </span>
-          <span class="choose-ico uk-icon-justify uk-icon-check"></span>
-          <div class="clear"></div>
-        </li>
+        @include('site.elements.left_sidebar.elements.menu_items.item_menu', ['name' => $room->title ])
       @endforeach
     </ul>
   </div>

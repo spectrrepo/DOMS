@@ -1,17 +1,13 @@
 <li id="styles{{ preg_match('[/photo/]', URL::current()) ? '-slider' : ''}}" class="menu-item">
     <span class="click-ready">
-    Стили
+        Стили
     <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
     </span>
     <div class="sidebar-modal styles-modal" data-max="3">
         <span class="close white-close uk-icon-justify uk-icon-remove"></span>
         <ul class="styles-space">
             @foreach ( $styles as $style )
-            <li class="item-moodal-sidebar item-styles" data-url="{{ $style->id }}">
-                <span class="item-modal-text">{{ $style->name }}</span>
-                <span class="choose-ico uk-icon-justify uk-icon-check"></span>
-                <div class="clear"></div>
-            </li>
+                @include('site.elements.left_sidebar.elements.menu_items.item_menu', ['name' => $style->title ])
             @endforeach
         </ul>
         <div class="b-preview-style">

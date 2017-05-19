@@ -78,4 +78,4 @@
           </div>
           </div>
          @include('../popups.popup_for_slider')
-    @endsection
+@endsection
