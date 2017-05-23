@@ -60,7 +60,6 @@ class ColorsController extends Controller
         $colors = Color::all();
 
         return view('moderator.colors.list', ['colors' => $colors]);
-
     }
 
     /**

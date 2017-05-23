@@ -11,12 +11,14 @@ export class Photo{
   constructor() {
     this.render();
   }
-  /**
-   * @method htmlSlide - view
-   * @param - integer - id
-   * @param - string - img_src
-   * @return - string
-   */
+
+    /**
+     *
+     * @param id
+     * @param img_src
+     * @param page
+     * @constructor
+     */
   HTML(id, img_src, page){
     let result;
     switch(page) {
@@ -43,22 +45,22 @@ export class Photo{
     }
 
   }
-  /**
-   * @method render
-   * @param
-   */
+
+    /**
+     *
+     * @param array
+     * @param where
+     */
   render (array, where){
     array.forEach(function (item, i, array) {
       HTML(item.id, item.img_src ).appendTo(where);
     });
   }
 
-  /**
-   * @method getJSON - получение данных от сервера
-   * @param URL - адрес, на который посылается запрос
-   * @param DATA - массив значений посылаемых на сервер
-   * @return data - JSON-строка ответ сервера
-   */
+    /**
+     *
+     * @returns {*}
+     */
   getJSON () {
     let data;
     $.ajax({

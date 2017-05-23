@@ -20,7 +20,7 @@ export class Filtr {
    * @return resultURL - строка
    */
   changeURL(param, value){
-    var URL = JSON.parse(
+    let URL = JSON.parse(
                 window.location.pathname
                                .replace('/filtr=', '')
                                .replace('%7B','{')
@@ -28,19 +28,18 @@ export class Filtr {
                                .replace(/%22/g,'"')
               );
      let diffURL;
-     var params = JSON.parse(decodeURIComponent(location.search.substr(1)))
+     let params = JSON.parse(decodeURIComponent(location.search.substr(1)))
      params[param] = value;
      JSON.stringify(params);
      window.history.pushState(null, null, params);
   }
 
-  /**
-   * @method filtrComponation
-   * @param string - string
-   * @param el - literal
-   * @return string - строка
-   */
-  filtrComponation (string ) {
+    /**
+     *
+     * @param string
+     * @returns {*}
+     */
+  filterComponation (string ) {
     if (string.length < 3) {
       string.push(); //- добавляет в конец массива
     } else {
@@ -49,11 +48,12 @@ export class Filtr {
     }
     return string;
   }
-  /**
-   * @method filtrAdd - добавленеие фильтра
-   * @param array - элементы
-   */
-  filtrAdd (array) {
+
+    /**
+     *
+     * @param array
+     */
+  filterAdd (array) {
     if (components < 3) {
       (el).appendTo();
     }else{
@@ -85,14 +85,19 @@ export class Filtr {
     $(subItem(el, color)).appendTo(where);
   }
 
+    /**
+     *
+     * @param elem
+     */
   addActiveMenuItem(elem) {
     if ($(elem).next().is('.block-view')){
       $(elem).next().removeClass('block-view');
       $(elem).removeClass('active-menu-item');
     }
     else {
-      $('span.click-ready').removeClass('active-menu-item');
-      $('span.click-ready').next().removeClass('block-view');
+      $('span.click-ready').removeClass('active-menu-item')
+                           .next()
+                           .removeClass('block-view');
       $(elem).next().addClass('block-view');
       $(elem).addClass('active-menu-item');
     }
