@@ -90,4 +90,16 @@ class LikesController extends Controller
 
         return $num;
     }
+
+    /**
+     * @param $id
+     * @param $date
+     * @return mixed
+     */
+    public static function newsLikesLoad ($id, $date) {
+        return Like::join('users', 'users.id', '=', 'favorites.user_id')
+                   ->where('favorites.post_id', '=', $id)
+                   ->where('favorites.date', '=', $date)
+                   ->get();
+    }
 }

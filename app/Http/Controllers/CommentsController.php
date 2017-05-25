@@ -131,4 +131,18 @@ class CommentsController extends Controller
         return $comments;
 
     }
+
+
+    /**
+     * @param $id
+     * @param $date
+     * @return mixed
+     */
+    public static function newsThreeCommentLoad ($id, $date) {
+        return Comment::join('users', 'users.id', '=', 'comments.user_id')
+                      ->where('comments.post_id', '=', $id)
+                      ->where('comments.date', '=', $date)
+                      ->take(3)
+                      ->get();
+    }
 }

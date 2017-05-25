@@ -46,4 +46,16 @@ class FavoritesController extends Controller
                        ->get();
         return view('profile.favorite.list', ['images' => $posts]);
     }
+
+    /**
+     * @param $id
+     * @param $date
+     * @return mixed
+     */
+    public static function newsFavoritesLoad ($id, $date) {
+        return Favorite::join('users', 'users.id', '=', 'favorites.user_id')
+                        ->where('favorites.post_id', '=', $id)
+                        ->where('favorites.date', '=', $date)
+                        ->get();
+    }
 }
