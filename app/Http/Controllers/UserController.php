@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Favorite;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use Input;
@@ -40,10 +41,10 @@ class UserController extends BasePhotoController
      */
      public function ajaxLoadNews ()
      {
-//         TODO:придумать как сделать джоины
-//         TODO:придумать как сделать дату
 
-         $images = Post::
+
+
+         $images = Post::join('comments')->join('likes')->join('favorites')->groupBy('date', 'post.id');
          $ds = [
              "image" =>"",
              "postId" =>"",
@@ -53,9 +54,9 @@ class UserController extends BasePhotoController
              "numLikes" =>"",
              "numFavorites" =>"",
              "dateEvent" =>"",
-             "comments" => [], //TODO: функция для загрузки комментов
-             "likes" => [], //TODO: функция для загрузки лайков
-             "favorites" => [] //TODO: функция для загрузки избранного
+             "comments" => [],
+             "likes" => [],
+             "favorites" => []
          ];
          return response()->json();
      }

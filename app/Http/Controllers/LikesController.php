@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Input;
 
@@ -96,10 +97,25 @@ class LikesController extends Controller
      * @param $date
      * @return mixed
      */
-    public static function newsLikesLoad ($id, $date) {
+    public static function newsLikesLoad ($id, $date)
+    {
+        $minutes = Carbon::parse($date)->minute;
+        $hours = Carbon::parse($date)->hour;
+        $seconds = Carbon::parse($date)->second;
+
+        $dateBegin = Carbon::parse($date)
+                           ->addSeconds(-$seconds)
+                           ->addMinutes(-$minutes)
+                           ->addHours(-$hours);
+
+        $dateEnd = Carbon::parse($dateBegin)
+                          ->addSeconds(59)
+                          ->addMinutes(59)
+                          ->addHours(23);
+
         return Like::join('users', 'users.id', '=', 'favorites.user_id')
-                   ->where('favorites.post_id', '=', $id)
-                   ->where('favorites.date', '=', $date)
-                   ->get();
+                    ->whereBetween('favorites.date', [$dateBegin, $dateEnd])
+                    ->where('favorites.post_id', '=', $id)
+                    ->get();
     }
 }
