@@ -35,6 +35,7 @@ class CommentsController extends Controller
         $comment = Comment::find($id);
         $comment->status = true;
         $comment->update();
+        ModerateHistoriesController::add('comments', $id);
 
         return redirect()->back()->with('message', 'Комментарий прошел модерацию');
 

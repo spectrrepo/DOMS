@@ -1,14 +1,19 @@
-@extends('layouts.main')
+@extends('layout')
 
 @section('common-content')
 <div class="site-wrapper">
 <div class="conteiner">
   @if (!(preg_match('[/news]', URL::current())))
-    @include('../helpers.main_sidebar.sidebar_main')
+    @include('site.elements.left_sidebar.index')
   @endif
   <div class="clear"></div>
 </div>
   @section('site-content')
+    @if(isset($message))
+      @foreach ($messages->all() as $message)
+        <div class="uk-alert uk-alert-danger">{{ $message }}</div>
+      @endforeach
+    @endif
   @show
   <div class="clear"></div>
 </div>

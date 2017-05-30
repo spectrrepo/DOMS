@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Role;
+use App\Models\Slide;
 use Illuminate\Support\ServiceProvider;
 
 use App\Models\Color;
@@ -22,12 +24,16 @@ class AppServiceProvider extends ServiceProvider
         $styles = Style::all();
         $placements = Placement::all();
         $article = Article::orderBy('id', 'desc')->first();
+        $slides = Slide::all();
+        $roles = Role::all();
 
 
         view()->share(['colors' => $colors,
                        'styles' => $styles,
                        'placements' => $placements,
-                       'articles' => $article,
+                       'article' => $article,
+                       'slides' => $slides,
+                       'roles' => $roles,
                       ]);
     }
 

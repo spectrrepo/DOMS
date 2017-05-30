@@ -24,18 +24,18 @@
 
   </head>
   <body>
-    @include('../helpers.header')
+    @include('common_elements.header')
 
     @section('common-content')
     @show
 
-    @include('../helpers.footer')
+    @include('common_elements.footer')
 
-    {{--include('../popups.about')--}}
-    {{--include('../popups.feedback')--}}
-    {{--include('../popups.forgetpswd')--}}
-    {{--include('../popups.login')--}}
-    {{--include('../popups.registration.index')--}}
+    @include('common_elements.popups.about')
+    @include('common_elements.popups.feedback')
+    @include('common_elements.popups.forgetpswd')
+    @include('common_elements.popups.login')
+    @include('common_elements.popups.registration.index')
     
     <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/uikit.min.js') }}"></script>

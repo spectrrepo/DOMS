@@ -1,14 +1,13 @@
-<div class="modal-news article{{ $news->id }}">
+<div class="modal-news article{{ $article->id }}">
     <span class="close white-close uk-icon-justify uk-icon-remove popup-close-news"></span>
     <div class="scroll-place-modal-news">
-       <img src="{{  $news->news->url() }} " />
-       <span class="item-news-title-modal">{{  $news->title }} </span>
+       <img src="{{  $article->img_large }} " />
+       <span class="item-news-title-modal">{{  $article->title }} </span>
        <div class="popup-text-news">
-          {{ $news->full_description }}
+          {{ $article->full_description }}
        </div>
     </div>
     <div class="date-and-all-news">
-        {{ $news->news_updated_at }}
         <a href="/news">Просмотреть все новости</a>
     </div>
 </div>

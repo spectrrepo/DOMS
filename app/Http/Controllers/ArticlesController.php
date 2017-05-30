@@ -112,7 +112,7 @@ class ArticlesController extends BasePhotoController
     {
         $articles = Article::all();
 
-        return view('site.articles', ['articles'  => $articles]);
+        return view('site.news.index', ['articles'  => $articles]);
     }
 
     /**

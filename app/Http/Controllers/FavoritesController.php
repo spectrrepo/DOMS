@@ -75,4 +75,14 @@ class FavoritesController extends Controller
                         ->where('favorites.date', '=', $date)
                         ->get();
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public static function numFavorites ($id)
+    {
+        return Favorite::where('post_id', '=', $id)
+                       ->count();
+    }
 }

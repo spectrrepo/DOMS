@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
-use App\Models\Favorite;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use Input;
@@ -19,6 +16,82 @@ use App\Models\UserSocial;
 
 class UserController extends BasePhotoController
 {
+    /**
+     * @param $firstEl
+     * @param $lastEl
+     * @return array
+     */
+    private function getPartPosts ( $firstEl, $lastEl)
+    {
+        $firstEl -= 1;
+        $posts =  DB::select("SELECT * FROM (
+                                  (
+                                    SELECT favorites.post_id AS postId,
+                                           favorites.date AS dateEvent
+                                    FROM favorites 
+                                    JOIN users ON favorites.user_id = users.id
+                                  )
+                                  UNION
+                                  (
+                                    SELECT likes.post_id AS postId,
+                                           likes.date AS dateEvent
+                                    FROM likes 
+                                    JOIN users ON likes.user_id = users.id
+                                  )
+                                  UNION
+                                  (
+                                    SELECT comments.post_id AS postId,
+                                           comments.date AS dateEvent
+                                    FROM comments 
+                                    JOIN users ON comments.user_id = users.id
+                                    WHERE comments.status=true
+                                  )) AS events  
+                                JOIN(
+                                      SELECT posts.id AS postId,
+                                             posts.img_middle AS image,
+                                             users.id AS idAuthor,
+                                             users.name AS nameAuthor,
+                                             users.sex AS sexAuthor,
+                                             users.img_square AS avaAuthor,
+                                             posts.views AS num_views
+                                      FROM users JOIN posts ON users.id=posts.author_id
+                                    ) AS posts
+                                ON events.postId=posts.postId
+                                GROUP BY DATE_FORMAT (dateEvent,'%d-%m-%Y')
+                                ORDER BY dateEvent ASC
+                                LIMIT ?,?;", [$firstEl, $lastEl]);
+        return $posts;
+    }
+
+    /**
+     * @param $rawPosts
+     * @return mixed
+     */
+    private function formPosts ($rawPosts)
+    {
+        $posts = [];
+
+        foreach ( $rawPosts as $item){
+            $newPost = [
+                "id" => $item->postId,
+                "image" => $item->image,
+                "idAuthor" => $item->idAuthor,
+                "nameAuthor" => $item->idAuthor,
+                "avaAuthor" => $item->idAuthor,
+                "sexAuthor" => $item->idAuthor,
+                "numViews" => $item->idAuthor,
+                "numLikes" => LikesController::numLikes($item->postId),
+                "numFavorites" => FavoritesController::numFavorites($item->postId),
+                "dateEvent" => $item->dateEvent,
+                "comments" => CommentsController::newsThreeCommentLoad($item->postId, $item->dateEvent),
+                "likes" => LikesController::newsLikesLoad($item->postId, $item->dateEvent),
+                "favorites" => FavoritesController::newsFavoritesLoad($item->postId, $item->dateEvent),
+            ];
+
+            array_push($posts, $newPost);
+        }
+        return $posts;
+    }
 
     /**
      * @param $id
@@ -29,10 +102,14 @@ class UserController extends BasePhotoController
          $user = User::find($id);
          $socials = UserSocial::where('user_id', '=', $id )
                                ->get;
-         $news = Post::all();
+
+         $rawPosts = $this->getPartPosts(1, 10);
+         $posts = $this->formPosts($rawPosts);
+
          return view('some.view', [
                      'user' => $user,
                      'socials' => $socials,
+                     'posts' => $posts
          ]);
      }
 
@@ -41,24 +118,12 @@ class UserController extends BasePhotoController
      */
      public function ajaxLoadNews ()
      {
+         $id = Input::get('id');
+         $rawPosts = $this->getPartPosts($id, 10);
 
+         $posts = $this->formPosts($rawPosts);
 
-
-         $images = Post::join('comments')->join('likes')->join('favorites')->groupBy('date', 'post.id');
-         $ds = [
-             "image" =>"",
-             "postId" =>"",
-             "nameAuthor" =>"",
-             "avaAuthor" =>"",
-             "numViews" =>"",
-             "numLikes" =>"",
-             "numFavorites" =>"",
-             "dateEvent" =>"",
-             "comments" => [],
-             "likes" => [],
-             "favorites" => []
-         ];
-         return response()->json();
+         return $posts;
      }
 
     /**
@@ -83,9 +148,6 @@ class UserController extends BasePhotoController
      */
      public function registration (Request $request)
      {
-       $findUser = User::where('email', '=', Input::get('email'))->first();
-
-       if (!empty($findUser)) {
          $user = new User();
          $this->validate($request, $user->rules);
 
@@ -93,7 +155,6 @@ class UserController extends BasePhotoController
          $user->email = Input::get('email');
          $user->phone = Input::get('phone');
          $user->password = Hash::make(Input::get('password'));
-         $user->type = Input::get('phone');
          $user->sex = 'man';
          $user->img_mini = '/img/user.png';
          $user->img_middle = '/img/user.png';
@@ -110,7 +171,7 @@ class UserController extends BasePhotoController
          DB::table('users_roles')
            ->insert(
                ['user_id' => $user->id,
-                'role_id' => 3,
+                'role_id' => 1,
                ]);
          Auth::attempt(['email' => $user->email, 'password' => Input::get('password')]);
          Mail::send('emails.welcome', ['name' => $user->name,
@@ -123,9 +184,6 @@ class UserController extends BasePhotoController
          });
 
          return redirect()->back();
-       } else {
-         return redirect('/')->with('message', 'пользователь с таким email адресом уже зарегистрирован на сайте');
-       }
      }
 
     /**
@@ -172,7 +230,7 @@ class UserController extends BasePhotoController
           $user = User::find(Auth::id());
           $links = UserSocial::where('user_id', '=', $user->id)->get();
 
-          return view('profile.edit', ['user' => $user,
+          return view('profile.user.edit.index', ['user' => $user,
                                              'links' => $links]);
       }
 

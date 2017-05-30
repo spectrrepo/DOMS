@@ -12,7 +12,7 @@
       </span>
       <div class="clear"></div>
     </div>
-    {{ Form::open(array('id'=>'registr', 'url' => '/reg')) }}
+    {{ Form::open(array('id'=>'registr', 'url' => route('registration'))) }}
     <div class="b-form-inputs">
       <span class="title-text bottom-line">Или зарегистрироваться через адрес электронной почты</span>
       @if (Session::get('bad_reg') == 'true')
@@ -20,12 +20,12 @@
           Пользователь с таким e-mail уже зарегистрирован на сайте!
         </p>
       @endif
-      @include('popups.registration.input_form')
+      @include('common_elements.popups.registration.input_form')
     </div>
     <div class="b-choose-status">
       <span class="title-reg">Статус пользователя</span>
       <div class="clear"></div>
-      @include('popups.registration.status')
+      @include('common_elements.popups.registration.status')
       <div class="clear"></div>
     </div>
     <input class="registr-submit" type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ">

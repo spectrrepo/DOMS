@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Hash;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Mail;
 use Role;
@@ -17,9 +18,9 @@ class User extends Authenticatable {
 	public $timestamps = true;
     public $rules = [
         'name' => 'required',
-        'email' => 'required|email|unique',
+        'email' => 'required|email',
         'password' => 'required',
-        'sex' => 'required|in:man,woman',
+        'sex' => 'in:man,woman',
         'skype' => 'alpha_dash',
         'about' => 'string',
         'phone' => 'integer',
@@ -29,9 +30,9 @@ class User extends Authenticatable {
         'seo_title' => 'min:50|max:80',
         'seo_keywords' => 'max:250',
         'seo_description' => 'min:150|max:200',
-        'alt' => 'required|max:28',
+        'alt' => 'max:28',
     ];
-// не уверен
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

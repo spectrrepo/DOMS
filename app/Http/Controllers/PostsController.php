@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ModerateHistory;
 use Illuminate\Http\Request;
 use Input;
 use Auth;
@@ -58,7 +59,7 @@ class PostsController extends BasePhotoController
      * @param array $array
      * @return string
      */
-    private function getPartRequestDB (array $array)
+    private function getPartRequestDB ($array)
     {
         if ($array === null)
         {
@@ -80,7 +81,8 @@ class PostsController extends BasePhotoController
     private function decodeURL ($json)
     {
         $filterArray = json_decode($json, true);
-        if ($filterArray === null) {
+
+        if ($filterArray == null) {
             $placements = null;
             $styles = null;
             $color = null;
@@ -132,8 +134,8 @@ class PostsController extends BasePhotoController
                           return $query->join('posts_colors','posts.id', '=', 'posts_colors.post_id');
                       })
                       ->when($tag, function ($query) use ($tag){
-                          return $query->join('posts_tags', 'posts.id', '=', 'posts_styles.post_id')
-                                       ->join('tags', 'tags.id', '=', 'posts_styles.tag_id');
+                          return $query->join('posts_tags', 'posts.id', '=', 'posts_tags.post_id')
+                                       ->join('tags', 'tags.id', '=', 'posts_tags.tag_id');
                       })
                       ->when($placements, function ($query) use ($placements){
                           return $query->where(DB::raw($placements));
@@ -172,7 +174,7 @@ class PostsController extends BasePhotoController
                       ->take(32)
                       ->get();
 
-        return view('site.index', [
+        return view('site.gallery.index', [
                          'posts' => $posts,
                          'json' => $json
         ]);
@@ -343,7 +345,9 @@ class PostsController extends BasePhotoController
             }
         }
 
+
         if (Auth::user()->status == 'moderator' || Auth::user()->status == 'administrator') {
+            ModerateHistoriesController::add('posts', $id);
             return redirect()->back();
         } else {
             return redirect('/profile/'.Auth::id())->with('check', 'true');
@@ -375,6 +379,17 @@ class PostsController extends BasePhotoController
                                                   'links' => $links,
                                                   'userImages' => $userImages
                                                 ]);
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editPage ($id)
+    {
+        $post = Post::find($id);
+
+        return view('', ['post' => $post]);
     }
 
     /**
@@ -505,4 +520,45 @@ class PostsController extends BasePhotoController
 
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function confirmationsPage()
+    {
+        $posts = Post::where('verified', '=', false)
+                     ->paginate(10);
+
+        return view('moderator.wait_confirmation', ['posts' => $posts]);
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
+    public function addPostSite($id)
+    {
+        $image = Post::find($id);
+        $image->status = true;
+        $image->save();
+        ModerateHistoriesController::add('posts', $id);
+
+        return redirect()->back()-with('success', 'er');
+
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function deleteVerificationPost($id)
+    {
+        Post::find($id)->delete();
+        ModerateHistoriesController::add('posts', $id);
+
+        if ( Auth::user()->status == 'moderator') {
+            return redirect('/profile/admin/verification');
+        }else {
+            return redirect('/profile/'.Auth::user()->id)->with('check', 'delete');
+        }
+    }
 }

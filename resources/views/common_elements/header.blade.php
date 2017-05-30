@@ -3,7 +3,7 @@
   <div class="control">
      <a href="/" class="main-item">Интерьеры</a>
      @if ( Auth::check())
-     <a href="{{ URL::route('add') }}" class="plus-photo">
+     <a href="{{ URL::route('addPostPage') }}" class="plus-photo">
          <span class="uk-icon-justify uk-icon-plus"></span >
      </a>
      @else
@@ -14,11 +14,11 @@
   </div>
     <div class="logining">
       @if ( Auth::check())
-          <a href="{{ URL::to('profile/'.Auth::id()) }}" class="logining-item logining-item-top">
+          <a href="{{ URL::route('editUserPage') }}" class="logining-item logining-item-top">
               {{ Auth::user()->name }}
           </a>
           <a href="{{ URL::route('logout') }}" class="logining-item">Выход</a>
-          <a href="{{ URL::to('profile/'.Auth::id()) }}">
+          <a href="{{ URL::route('userPage',['id' => Auth::id()]) }}">
               <div class="login-portret">
                   <img src="{{ Auth::user()->ava }}" alt="">
               </div>

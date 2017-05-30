@@ -55,7 +55,7 @@ return [
             'password' => 'Skeleton4ik4ik',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'strict' => true,
+            'strict' => false,
             'engine' => null,
         ]
     ],

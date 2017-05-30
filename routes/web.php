@@ -5,9 +5,20 @@
 | Web Routes
 |--------------------------------------------------------------------------
 */
+Route::get('/', function(){
+   return redirect(url('/rule={"color":0,"placements":[0],"style":[0],"tag":"0"}'));
+});
+Route::get('/rule={json}', 'PostsController@indexPage')->name('postsGalleryPage');
+Route::get('/{id}/rule={json}', 'PostsController@itemPage')->name('postPage')
+     ->where('id', '/^\d+$/');
 
-Route::group(['prefix' => '/article'], function () {
-    Route::get('sitePage','ArticlesController@sitePage')->name('indexArticlePage');
+Route::post('login', 'UserController@login')
+    ->name('login');
+Route::post('registration', 'UserController@registration')
+    ->name('registration');
+
+Route::group(['prefix' => '/articles'], function () {
+    Route::get('/','ArticlesController@sitePage')->name('indexArticlePage');
 
     Route::group(['middleware' => 'role:0, moderator, admin'], function () {
         Route::post('add','ArticlesController@add')->name('addArticle');
@@ -111,9 +122,6 @@ Route::group(['prefix' => 'placements', 'middleware' => 'role:0, 0, admin'], fun
 });
 
 Route::group(['prefix' => 'posts'], function () {
-    Route::get('indexPage/{json}', 'PostsController@indexPage')->name('postsGalleryPage');
-    Route::get('itemPage/{id}/{json}', 'PostsController@itemPage')->name('postPage')
-         ->where('id', '/^\d+$/');
     Route::post('loadSliderPost/{currentId}/{action}/{json}', 'PostsController@loadSliderPost')
          ->name('loadItemPost')
          ->where('currentId', '/^\d+$/')
@@ -124,13 +132,16 @@ Route::group(['prefix' => 'posts'], function () {
          ->where('currentId', '/^\d+$/')
          ->where('action', '[A-Za-z]+')
          ->where('json', '[A-Za-z]+');
-//    TODO: переименовать роуты и разобраться с тем как сделать раздуление на роль модера и юзера при редактировании поста
+
     Route::group(['middleware' => 'role:0, moderator, admin'], function () {
-        Route::get('confirmationPage', 'ModerateHistoriesController@confirmationPage')->name('asd');
-        Route::get('itemConfirm/{id}', 'ModerateHistoriesController@itemConfirm')->name('asd')
-             ->where('name', '[A-Za-z]+');
-        Route::get('deleteConfirm/{id}', 'ModerateHistoriesController@deleteConfirm')->name('asd')
-             ->where('name', '[A-Za-z]+');
+        Route::get('confirmationList', 'PostController@confirmationsPage')
+             ->name('confirmList');
+        Route::get('addPostSite/{id}', 'PostController@addPostSite')
+             ->name('addPostSite')
+             ->where('id', '/^\d+$/');
+        Route::get('deletePost/{id}', 'PostHistoriesController@deleteVerificationPost')
+             ->name('deleteVerPost')
+             ->where('id', '/^\d+$/');
     });
 
     Route::group(['middleware' => 'role:user, moderator, admin'], function () {
@@ -139,6 +150,8 @@ Route::group(['prefix' => 'posts'], function () {
         Route::post('edit/{id}', 'PostsController@edit')->name('editPost')
              ->where('id', '/^\d+$/');
         Route::get('userPost', 'PostsController@userPost')->name('userPostPage');
+        Route::get('editPage/{id}','PostsController@editPage')->name('editPostPage')
+             ->where('id', '/^\d+$/');
     });
     
     Route::get('allPostSite', 'PostsController@allPostSite')->name('allPostSitePage')
@@ -206,17 +219,13 @@ Route::group(['prefix' => 'tags'], function () {
 });
 
 Route::group(['prefix' => 'user'], function () {
-    Route::get('index/{id}', 'UserController@index')
+    Route::get('{id}', 'UserController@index')
          ->name('userPage')
          ->where('id', '/^\d+$/');
-    Route::post('login', 'UserController@login')
-         ->name('login');
-    Route::post('registration', 'UserController@registration')
-         ->name('registration');
     Route::post('recoveryAccess', 'UserController@recoveryAccess')
          ->name('recoveryAccess');
 
-    Route::group(['middleware' => 'role:user, moderator, admin'], function () {
+//    Route::group(['middleware' => 'role:user,moderator,admin'], function () {
         Route::post('ajaxLoadNews', 'UserController@ajaxLoadNews')
              ->name('loadNews');
         Route::get('logout', 'UserController@logout')
@@ -225,7 +234,7 @@ Route::group(['prefix' => 'user'], function () {
              ->name('editUserPage');
         Route::get('edit', 'UserController@edit')
              ->name('editUser');
-    });
+//    });
 });
 
 Route::get('delete/{id}', 'ViewsController@delete')

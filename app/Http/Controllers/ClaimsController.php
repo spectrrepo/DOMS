@@ -47,7 +47,6 @@ class ClaimsController extends BasePhotoController
      */
     public function delete ($id)
     {
-
         Claim::find($id)->softDelete();
 
         return redirect()->back()->with('message', 'Претензия успешно удалена');
@@ -65,6 +64,7 @@ class ClaimsController extends BasePhotoController
         $image = Post::find($claim->post_id);
         $image->author_id = $claim->user_id;
         $image->update();
+        ModerateHistoriesController::add('claims', $id);
 
         return redirect()->back()->with('message', 'Авторство фотографии успешно изменено');
 

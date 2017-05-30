@@ -6,8 +6,8 @@
   <div class="sidebar-modal rooms" data-max="3">
     <span class="close white-close uk-icon-justify uk-icon-remove"></span>
     <ul>
-      @foreach ( $rooms as $room )
-        @include('site.elements.left_sidebar.elements.menu_items.item_menu', ['name' => $room->title ])
+      @foreach ( $placements as $placement )
+        @include('site.elements.left_sidebar.elements.menu_items.item_menu', ['name' => $placement->title ])
       @endforeach
     </ul>
   </div>
