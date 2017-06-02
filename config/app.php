@@ -182,6 +182,7 @@ i
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         JeroenNoten\LaravelCkEditor\ServiceProvider::class,
+        Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
 
 
 
@@ -241,8 +242,7 @@ i
         'Input'  => Illuminate\Support\Facades\Input::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Socialize' => Laravel\Socialite\Facades\Socialite::class,
-
-
+        'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
 
     ],
 

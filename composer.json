@@ -17,14 +17,17 @@
         "intervention/image": "^2.3",
         "caouecs/laravel-lang": "~3.0",
         "barryvdh/laravel-ide-helper": "^2.3",
-        "jeroennoten/laravel-ckeditor": "^3.8"
+        "jeroennoten/laravel-ckeditor": "^3.8",
+        "sentry/sentry-laravel": "^0.7.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
-        "symfony/dom-crawler": "3.1.*"
+        "symfony/dom-crawler": "3.1.*",
+        "deployer/deployer": "^5.0",
+        "laracasts/generators": "^1.1"
     },
     "autoload": {
         "classmap": [
