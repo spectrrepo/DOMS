@@ -1,12 +1,10 @@
-@extends('layouts.profile')
+@extends('profile.layout')
 @section('profile-content')
   {{-- TODO: расчленить этот файл --}}
 <div class="big-col">
         <div class="help-text">Для удобства поиска твоего изображения на сайте заполни ка можно больше параметров</div>
         <div class="b-dwnld-img">
           {{ Form::open(array('id' => 'addPhotoSite', 'url' => '/add_photo', 'files' => 'true')) }}
-            <input type="hidden" name="user_upload_id" value="{{$user->id}}">
-            <input type="hidden" name="author_id" value="{{$user->id}}">
             <input class="input-title-dwnld"type="text" name="title" placeholder="Заголовок">
             <div id="main-wrap-photo" class="wrap-main-dwnld-photo" title="Добавить изображение">
                 <span class="add-photo-ico uk-icon-justify uk-icon-camera"></span>
@@ -66,11 +64,11 @@
         Помещения
       </div>
       <div class="tags-list">
-        @foreach ( $rooms as $room )
+        @foreach ( $placements as $placement )
         <div class="wrap-tags-list-item">
-          <input class="opacity-radio" type="checkbox" name="room[]" value="{{ $room->id }}">
+          <input class="opacity-radio" type="checkbox" name="room[]" value="{{ $placement->id }}">
           <div class="tags-list-item">
-            {{ $room->title }}
+            {{ $placement->title }}
           </div>
         </div>
         @endforeach

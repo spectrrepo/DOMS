@@ -397,7 +397,7 @@ class PostsController extends BasePhotoController
      */
     public function addPage()
     {
-        return View('profile.add');
+        return View('profile.user.add');
     }
 
     /**

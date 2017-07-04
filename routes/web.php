@@ -144,7 +144,7 @@ Route::group(['prefix' => 'posts'], function () {
              ->where('id', '/^\d+$/');
     });
 
-    Route::group(['middleware' => 'role:user, moderator, admin'], function () {
+    //Route::group(['middleware' => 'role:user, moderator, admin'], function () {
         Route::post('add', 'PostsController@add')->name('addPost');
         Route::get('addPage', 'PostsController@addPage')->name('addPostPage');
         Route::post('edit/{id}', 'PostsController@edit')->name('editPost')
@@ -152,7 +152,7 @@ Route::group(['prefix' => 'posts'], function () {
         Route::get('userPost', 'PostsController@userPost')->name('userPostPage');
         Route::get('editPage/{id}','PostsController@editPage')->name('editPostPage')
              ->where('id', '/^\d+$/');
-    });
+    //});
     
     Route::get('allPostSite', 'PostsController@allPostSite')->name('allPostSitePage')
          ->middleware('role:0, moderator, admin');
