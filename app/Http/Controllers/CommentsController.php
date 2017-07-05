@@ -21,7 +21,7 @@ class CommentsController extends Controller
                       ->join('users', 'users.id', '=', 'comments.user_id')
                       ->paginate(15);
 
-        return view('moderator.comments.list', ['comments' => $comments]);
+        return view('profile.moderator.comments.list', ['comments' => $comments]);
 
     }
 
@@ -82,15 +82,15 @@ class CommentsController extends Controller
         $comments = DB::table('comments')
             ->select('comments.id',
                 'users.id AS user_id',
-                'post.id AS image_id',
+                'posts.id AS image_id',
                 'users.name AS user_name',
-                'users.quadro_ava AS user_quadro_ava',
-                'comments.text_comment AS text_comment',
-                'comments.rus_date AS rus_date' )
+                'users.img_square AS user_quadro_ava',
+                'comments.comment AS text_comment',
+                'comments.date AS date' )
             ->join('users', 'comments.user_id', '=', 'users.id')
             ->join('posts', 'posts.id', '=', 'comments.post_id')
             ->where('posts.id', '=', $id)
-            ->andWhere('comments.status', '=', 'true')
+            ->where('comments.status', '=', 'true')
             ->take(3)
             ->get();
 

@@ -141,6 +141,6 @@ class ArticlesController extends BasePhotoController
     {
         $articles = Article::paginate(15);
 
-        return view('moderator.articles.list', ['articles' => $articles]);
+        return view('profile.moderator.articles.list', ['articles' => $articles]);
     }
 }

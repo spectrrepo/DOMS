@@ -9,8 +9,7 @@ Route::get('/', function(){
    return redirect(url('/rule={"color":0,"placements":[0],"style":[0],"tag":"0"}'));
 });
 Route::get('/rule={json}', 'PostsController@indexPage')->name('postsGalleryPage');
-Route::get('/{id}/rule={json}', 'PostsController@itemPage')->name('postPage')
-     ->where('id', '/^\d+$/');
+Route::get('/gallery/{id}/rule={json}', 'PostsController@itemPage')->name('postPage');
 
 Route::post('login', 'UserController@login')
     ->name('login');
@@ -20,7 +19,7 @@ Route::post('registration', 'UserController@registration')
 Route::group(['prefix' => '/articles'], function () {
     Route::get('/','ArticlesController@sitePage')->name('indexArticlePage');
 
-    Route::group(['middleware' => 'role:0, moderator, admin'], function () {
+    Route::group(['middleware' => 'role:0,moderator,admin'], function () {
         Route::post('add','ArticlesController@add')->name('addArticle');
         Route::post('delete/{id}/','ArticlesController@delete')->name('deleteArticle')
              ->where('id', '/^\d+$/');
@@ -37,7 +36,7 @@ Route::group(['prefix' => 'claims'], function () {
     Route::post('add', 'ClaimsController@add')->name('addClaims')
          ->middleware('role:user, moderator, admin');
 
-    Route::group(['middleware' => 'role:0, moderator, admin'], function (){
+    Route::group(['middleware' => 'role:0,moderator,admin'], function (){
         Route::get('index', 'ClaimsController@index')->name('listClaimsPage');
         Route::post('delete/{id}', 'ClaimsController@delete')->name('deleteClaims')
              ->where('id', '/^\d+$/');
@@ -45,7 +44,7 @@ Route::group(['prefix' => 'claims'], function () {
     });
 });
 
-Route::group(['prefix' => 'colors', 'middleware' => 'role:0, 0, admin'], function () {
+Route::group(['prefix' => 'colors', 'middleware' => 'role:0,0,admin'], function () {
     Route::post('add', 'ColorsController@add')->name('addColor');
     Route::post('edit/{id}', 'ColorsController@edit')->name('editColor')
          ->where('id', '/^\d+$/');
@@ -60,13 +59,13 @@ Route::group(['prefix' => 'colors', 'middleware' => 'role:0, 0, admin'], functio
 Route::group(['prefix' => 'comments'], function () {
     Route::post('allCommentsLoad', 'CommentsController@allCommentsLoad')->name('allCommentsLoad');
 
-    Route::group(['middleware' => 'role:user, moderator, admin'], function () {
+    Route::group(['middleware' => 'role:user,moderator,admin'], function () {
         Route::post('delete/{id}', 'CommentsController@delete')->name('deleteComment')
              ->where('id', '/^\d+$/');
         Route::post('add', 'CommentsController@add')->name('addComment');
     });
 
-    Route::group(['middleware' => 'role:0, moderator, admin'], function () {
+    Route::group(['middleware' => 'role:0,moderator,admin'], function () {
         Route::get('changeStatus/{id}', 'CommentsController@changeStatus')
              ->name('changeStatusComment')
              ->where('id', '/^\d+$/');
@@ -74,7 +73,7 @@ Route::group(['prefix' => 'comments'], function () {
     });
 });
 
-Route::group(['prefix' => 'favorites', 'middleware' => 'role:user, moderator, admin'], function () {
+Route::group(['prefix' => 'favorites', 'middleware' => 'role:user,moderator,admin'], function () {
     Route::post('add', 'FavoritesController@add')->name('addFavorite');
     Route::post('delete', 'FavoritesController@delete')->name('deleteFavorite');
     Route::get('index', 'FavoritesController@index')->name('favoritePage');
@@ -83,7 +82,7 @@ Route::group(['prefix' => 'favorites', 'middleware' => 'role:user, moderator, ad
 Route::group(['prefix' => 'feedbacks'], function () {
     Route::post('add', 'FeedbacksController@add')->name('addFeedback');
 
-    Route::group(['middleware' => 'role:0, moderator, admin'], function () {
+    Route::group(['middleware' => 'role:0,moderator,admin'], function () {
         Route::get('listPage', 'FeedbacksController@listPage')->name('listFeedbackPage');
         Route::get('itemPage/{id}', 'FeedbacksController@itemPage')->name('itemFeedbackPage')
              ->where('id', '/^\d+$/');
@@ -97,13 +96,13 @@ Route::group(['prefix' => 'feedbacks'], function () {
 Route::group(['prefix' => 'likes'], function () {
     Route::post('loadAllLikes', 'LikesController@loadAllLikes')->name('loadAllLikes');
 
-    Route::group(['middleware' => 'role:user, moderator, admin'], function () {
+    Route::group(['middleware' => 'role:user,moderator,admin'], function () {
         Route::post('delete', 'LikesController@delete')->name('deleteLike');
         Route::post('add', 'LikesController@add')->name('addLike');
     });
 });
 
-Route::group(['prefix' => 'placements', 'middleware' => 'role:0, 0, admin'], function () {
+Route::group(['prefix' => 'placements', 'middleware' => 'role:0,0,admin'], function () {
     Route::post('add', 'PlacementsController@add')
          ->name('addPlace');
     Route::get('delete/{id}', 'PlacementsController@delete')
@@ -133,18 +132,18 @@ Route::group(['prefix' => 'posts'], function () {
          ->where('action', '[A-Za-z]+')
          ->where('json', '[A-Za-z]+');
 
-    Route::group(['middleware' => 'role:0, moderator, admin'], function () {
-        Route::get('confirmationList', 'PostController@confirmationsPage')
+    Route::group(['middleware' => 'role:0,moderator,admin'], function () {
+        Route::get('confirmationList', 'PostsController@confirmationsPage')
              ->name('confirmList');
-        Route::get('addPostSite/{id}', 'PostController@addPostSite')
+        Route::get('addPostSite/{id}', 'PostsController@addPostSite')
              ->name('addPostSite')
              ->where('id', '/^\d+$/');
-        Route::get('deletePost/{id}', 'PostHistoriesController@deleteVerificationPost')
+        Route::get('deletePost/{id}', 'PostsHistoriesController@deleteVerificationPost')
              ->name('deleteVerPost')
              ->where('id', '/^\d+$/');
     });
 
-    //Route::group(['middleware' => 'role:user, moderator, admin'], function () {
+    Route::group(['middleware' => 'role:user,moderator,admin'], function () {
         Route::post('add', 'PostsController@add')->name('addPost');
         Route::get('addPage', 'PostsController@addPage')->name('addPostPage');
         Route::post('edit/{id}', 'PostsController@edit')->name('editPost')
@@ -152,13 +151,13 @@ Route::group(['prefix' => 'posts'], function () {
         Route::get('userPost', 'PostsController@userPost')->name('userPostPage');
         Route::get('editPage/{id}','PostsController@editPage')->name('editPostPage')
              ->where('id', '/^\d+$/');
-    //});
+    });
     
     Route::get('allPostSite', 'PostsController@allPostSite')->name('allPostSitePage')
          ->middleware('role:0, moderator, admin');
 });
 
-Route::group(['prefix' => 'slides', 'middleware' => 'role:0, 0, admin'], function () {
+Route::group(['prefix' => 'slides', 'middleware' => 'role:0,0,admin'], function () {
     Route::get('index', 'SlidesController@index')->name('listSlidesPage');
     Route::get('editPage/{id}', 'SlidesController@editPage')->name('editSlidePage')
          ->where('id', '/^\d+$/');
@@ -181,7 +180,7 @@ Route::group(['prefix' => 'social'], function () {
         Route::post('edit', 'SocialController@edit')->name('editSocial');
     });
 });
-Route::group(['prefix' => 'styles', 'middleware' => 'role:0, 0, admin'], function () {
+Route::group(['prefix' => 'styles', 'middleware' => 'role:0,0,admin'], function () {
     Route::get('delete/{id}', 'StylesController@delete')
          ->name('deleteStyle')
          ->where('id', '/^\d+$/');
@@ -200,7 +199,7 @@ Route::group(['prefix' => 'styles', 'middleware' => 'role:0, 0, admin'], functio
 });
 
 Route::group(['prefix' => 'tags'], function () {
-    Route::group(['middleware' => 'role:0, moderator, admin'], function () {
+    Route::group(['middleware' => 'role:0,moderator,admin'], function () {
         Route::post('edit/{id}', 'TagsController@edit')
              ->name('editTag')
              ->where('id', '/^\d+$/');
@@ -215,7 +214,7 @@ Route::group(['prefix' => 'tags'], function () {
 
     Route::post('add', 'TagsController@add')
          ->name('addTag')
-         ->middleware('role:user, moderator, admin');
+         ->middleware('role:user,moderator,admin');
 });
 
 Route::group(['prefix' => 'user'], function () {
@@ -225,19 +224,19 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('recoveryAccess', 'UserController@recoveryAccess')
          ->name('recoveryAccess');
 
-//    Route::group(['middleware' => 'role:user,moderator,admin'], function () {
+    Route::group(['middleware' => 'role:user,moderator,admin'], function () {
         Route::post('ajaxLoadNews', 'UserController@ajaxLoadNews')
              ->name('loadNews');
         Route::get('logout', 'UserController@logout')
              ->name('logout');
         Route::get('editPage', 'UserController@editPage')
              ->name('editUserPage');
-        Route::get('edit', 'UserController@edit')
+        Route::post('edit', 'UserController@edit')
              ->name('editUser');
-//    });
+    });
 });
 
 Route::get('delete/{id}', 'ViewsController@delete')
      ->name('deleteViews')
      ->where('id', '/^\d+$/')
-     ->middleware('role:user, moderator, admin');
+     ->middleware('role:user,moderator,admin');

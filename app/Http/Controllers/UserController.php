@@ -171,7 +171,7 @@ class UserController extends BasePhotoController
          DB::table('users_roles')
            ->insert(
                ['user_id' => $user->id,
-                'role_id' => 1,
+                'role_id' => 1 ,
                ]);
          Auth::attempt(['email' => $user->email, 'password' => Input::get('password')]);
          Mail::send('emails.welcome', ['name' => $user->name,
@@ -228,6 +228,7 @@ class UserController extends BasePhotoController
       public function editPage ()
       {
           $user = User::find(Auth::id());
+
           $links = UserSocial::where('user_id', '=', $user->id)->get();
 
           return view('profile.user.edit.index', ['user' => $user,
@@ -258,11 +259,10 @@ class UserController extends BasePhotoController
               $user->phone = Input::get('phone');
           }
 
-          if (Input::has('file')) {
-              $user->img_mini = $this->saveFile('user','mini', Input::get('file'),40,40);
-              $user->img_middle = $this->saveFile('user','mini', Input::get('file'),40,40);
-              $user->img_large = $this->saveFile('user','mini', Input::get('file'),40,40);
-              $user->img_square = $this->saveFile('user','mini', Input::get('file'),40,40);
+          if (Input::file('img')) {
+              $user->img_mini = $this->saveFile('user','mini', Input::file('img'),20,20);
+              $user->img_middle = $this->saveFile('user','mini', Input::file('img'),32,32);
+              $user->img_large = $this->saveFile('user','mini', Input::file('img'),180,180);
           }
 
           $user->save();

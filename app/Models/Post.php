@@ -14,9 +14,8 @@ class Post extends Model {
     public $rules = [
         'title' => 'required|max:255',
         'description' => 'required|string',
-        'img' => 'required|image|size:10240',
+        'img' => 'required|image|max:82240',
         'views' => 'integer',
-        'status' => 'required|boolean',
         ];
 
     protected function getDateFormat() {

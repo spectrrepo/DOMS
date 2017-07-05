@@ -16,14 +16,8 @@
         <input id="file" class="dwnld-file-input" type="file" name="main_photo">
     </div>
     <textarea class="min-description-news" name="min_description" placeholder="текст превью"></textarea>
-    <textarea class="full-description-news" name="full_description" placeholder="полный текст"></textarea>
-    <div id="wrap-d">
-        <div class="wrap-dwnld-photo">
-            <span class="add-photo-ico racurs-margin-ico uk-icon-justify uk-icon-camera"></span>
-            <span class="add-photo-text racurs-margin-text">Добавить ракурсы</span>
-            <input id="files" class="input-dwnld-view-photo" type="file" name="variants[]" multiple>
-        </div>
-    </div>
+    <textarea id="bodyField" name="full_description"></textarea>
+    @ckeditor('bodyField')
     <button class="btn-dwnld" type="submit" name="button">
         <span class="save-text">Сохранить изменения</span>
         <span class="save-ico uk-icon-justify uk-icon-save"></span>

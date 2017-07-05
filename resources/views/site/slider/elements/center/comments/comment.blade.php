@@ -1,10 +1,10 @@
-@if (($count >= 3)&&($comment_last_id != ''))
+@if ((3 >= 3)&&(2 != ''))
   <div class="btn-all-comments">
-    Показать все {{ $count+1 }} комментари{{ $count+1==4 ? 'я':'ев' }}
+    Показать все {{ 1 }} комментари{{ 4 ? 'я':'ев' }}
   </div>
 @endif
 @foreach ( $comments as $comment )
-  <div class="b-comment-wrap" {{ ($k<=$count-3)&&($count>=3) ? 'style=display:none' : '' }}>
+  <div class="b-comment-wrap" {{ ($k<=$count-3)&&(2>=3) ? 'style=display:none' : '' }}>
       <?php $k++; ?>
     @if (Auth::check())
       {!! Auth::user()->id === $comment->user_id ? HTML::decode('<span class="remove-comment uk-icon-justify uk-icon-remove"><span class="delete_comment_id" data-id="'.$comment->id.'"></span></span>') : ''!!}

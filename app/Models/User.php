@@ -6,8 +6,9 @@ use Hash;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Mail;
-use Role;
-
+use App\Models\Role;
+use Auth;
+use DB;
 class User extends Authenticatable {
 
 	use SoftDeletes;
@@ -18,15 +19,13 @@ class User extends Authenticatable {
 	public $timestamps = true;
     public $rules = [
         'name' => 'required',
-        'email' => 'required|email',
-        'password' => 'required',
         'sex' => 'in:man,woman',
         'skype' => 'alpha_dash',
         'about' => 'string',
         'phone' => 'integer',
         'vk_id' => 'string',
         'fb_id' => 'string',
-        'img' => 'image|size:10240',
+        'img' => 'image|max:82240',
         'seo_title' => 'min:50|max:80',
         'seo_keywords' => 'max:250',
         'seo_description' => 'min:150|max:200',
@@ -40,59 +39,30 @@ class User extends Authenticatable {
 		return $this->belongsToMany('App\Models\Role', 'users_roles', 'user_id', 'role_id');
 	}
 
-	/**
-	 * Проверка принадлежит ли пользователь к какой либо роли
-	 *
-	 * @return boolean
-	 */
-	public function isEmployee() {
-		$roles = $this->roles->toArray();
-		return !empty($roles);
-	}
+    /**
+     * @param $check
+     * @return bool|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+	public function hasRole($check)
+    {
+        $role_id = DB::table('users_roles')
+                     ->where('user_id', '=', Auth::id())
+                     ->first();
 
-	/**
-	 * Проверка имеет ли пользователь определенную роль
-	 *
-	 * @return boolean
-	 */
-	public function hasRole($check) {
-		return in_array($check, array_dot($this->roles->toArray(), 'name'));
-	}
+        if (!isset($role_id)) {
+            return redirect('/');
+        }
 
-	/**
-	 * Получение идентификатора роли
-	 *
-	 * @return int
-	 */
-	
-	private function getIdInArray($array, $term) {
-		foreach ($array as $key => $value) {
-			if ($value == $term) {
-				return $key+1;
-			}
-		}
-		return false;
-	}
+        $userRole = DB::table('roles')
+                       ->where('id', '=', $role_id->role_id)
+                       ->first()->name;
+        if ($check === "0") {
+            return false;
+        }
 
-	/**
-	 * Добавление роли пользователю
-	 *
-	 * @return boolean
-	 */
-	public function makeEmployee($title) {
-		$assigned_roles = array();
-		$roles          = array_fetch(Role::all()->toArray(), 'name');
-		switch ($title) {
-			case 'admin':
-				$assigned_roles[] = $this->getIdInArray($roles, 'admin');
-			case 'moderator':
-				$assigned_roles[] = $this->getIdInArray($roles, 'moderator');
-			case 'user':
-				$assigned_roles[] = $this->getIdInArray($roles, 'user');
-			default:
-				$assigned_roles[] = false;
-		}
-		$this->roles()->attach($assigned_roles);
+        $needRole = Role::where('name', '=', $check)->first()->name;
+
+        return $userRole === $needRole;
 	}
 
 	public static function createBySocialProvider($providerUser) {

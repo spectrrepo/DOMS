@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Favorite;
 use App\Models\ModerateHistory;
 use Illuminate\Http\Request;
 use Input;
@@ -13,6 +14,7 @@ use App\Models\View;
 use App\Models\Like;
 use App\Models\User;
 use App\Models\UserSocial;
+use PhpParser\Builder\Class_;
 
 class PostsController extends BasePhotoController
 {
@@ -23,12 +25,17 @@ class PostsController extends BasePhotoController
      */
     private function activeColor ($what = false, $id)
     {
-        $what === true ? $someClass = 'Favorite' : $someClass = 'Like';
-
-        $activeThisUser = $someClass::where('user_id', '=', Auth::id())
-                                    ->where('post_id', '=', $id)
-                                    ->get()
-                                    ->toArray();
+        if ($what === true) {
+            $activeThisUser = Favorite::where('user_id', '=', Auth::id())
+                                        ->where('post_id', '=', $id)
+                                        ->get()
+                                        ->toArray();
+        } else {
+            $activeThisUser = Like::where('user_id', '=', Auth::id())
+                                        ->where('post_id', '=', $id)
+                                        ->get()
+                                        ->toArray();
+        }
 
         !empty($activeThisUser) ? $colorActive = true : $colorActive = false;
 
@@ -67,7 +74,13 @@ class PostsController extends BasePhotoController
         }
         $request = ' ';
         foreach ($array as $item) {
-            $request .= $item.' or ';
+            if ($item != 0) {
+                $request .= $item.' or ';
+            }
+        }
+        if ($request = ' ')
+        {
+            return null;
         }
         $request .=' 0 ';
 
@@ -99,6 +112,16 @@ class PostsController extends BasePhotoController
         $placements = $this->getPartRequestDB($placements);
         $styles = $this->getPartRequestDB($styles);
 
+        if ($color === 0)
+        {
+            $color = null;
+        }
+
+        if ($tag === '0')
+        {
+            $tag = null;
+        }
+
         return [
             'placements' => $placements,
             'styles' => $styles,
@@ -115,41 +138,39 @@ class PostsController extends BasePhotoController
     private function queryForPosts ($json)
     {
         $filterArray = $this->decodeURL($json);
-
         $placements = $filterArray['placements'];
-        $styles = $filterArray['placements'];
-        $color = $filterArray['placements'];
-        $sort = $filterArray['placements'];
-        $tag = $filterArray['placements'];
-
+        $styles = $filterArray['styles'];
+        $color = $filterArray['color'];
+        $sort = $filterArray['sort'];
+        $tag = $filterArray['tag'];
         $posts = Post::select('posts.id AS id' ,
                               'posts.img_middle AS img')
-                      ->when($placements, function ($query) use ($placements){
+                      ->when($placements != null, function ($query) use ($placements){
                           return $query->join('posts_placements', 'posts.id', '=', 'posts_placements.post_id');
                       })
-                      ->when($styles, function ($query) use ($styles){
+                      ->when($styles != null, function ($query) use ($styles){
                           return $query->join('posts_styles','posts.id', '=', 'posts_styles.post_id');
                       })
-                      ->when($color, function ($query) use ($color){
+                      ->when($color != null, function ($query) use ($color){
                           return $query->join('posts_colors','posts.id', '=', 'posts_colors.post_id');
                       })
-                      ->when($tag, function ($query) use ($tag){
+                      ->when($tag != null, function ($query) use ($tag){
                           return $query->join('posts_tags', 'posts.id', '=', 'posts_tags.post_id')
                                        ->join('tags', 'tags.id', '=', 'posts_tags.tag_id');
                       })
-                      ->when($placements, function ($query) use ($placements){
+                      ->when($placements != null, function ($query) use ($placements){
                           return $query->where(DB::raw($placements));
                       })
-                      ->when($styles, function ($query) use ($styles){
+                      ->when($styles != null, function ($query) use ($styles){
                           return $query->where(DB::raw($styles));
                       })
-                      ->when($color, function ($query) use ($color){
+                      ->when($color != null, function ($query) use ($color){
                           return $query->where('posts_colors.color_id', '=', $color);
                       })
-                      ->when($tag, function ($query) use ($tag){
+                      ->when($tag != null, function ($query) use ($tag){
                           return $query->where('tags.value', '=', $tag);
                       })
-                      ->where('posts.status', '=', 'true')
+                      ->where('posts.status', '=', '1')
                       ->groupBy('posts.id')
                       ->when($sort === "recommended", function ($query) use ($sort) {
                           return $query->orderBy('posts.updated_at', 'desc')
@@ -175,8 +196,8 @@ class PostsController extends BasePhotoController
                       ->get();
 
         return view('site.gallery.index', [
-                         'posts' => $posts,
-                         'json' => $json
+                          'posts' => $posts,
+                          'json' => $json
         ]);
     }
 
@@ -189,10 +210,9 @@ class PostsController extends BasePhotoController
     public function itemPage($id, $json = null)
     {
         $posts = $this->queryForPosts($json)
-                      ->skip($id-1)
-                      ->take(6)
+//                      ->skip($id-1)
+//                      ->take(6)
                       ->get();
-
         $numPosts = $this->queryForPosts($json)->count();
         $currentPost = Post::find($id);
         $likes = LikesController::loadLikeWhomThree($id);
@@ -207,18 +227,18 @@ class PostsController extends BasePhotoController
         $currentPost->views += 1;
         $currentPost->save();
 
-        return view('site.slider', ['postAuthor' => $postAuthor,
-                                         'posts' => $posts,
-                                         'currentPost' => $currentPost,
-                                         'comments' => $comments,
-                                         'tags' => $tags,
-                                         'likes' => $likes,
-                                         'views' => $views,
-                                         'numPosts' => $numPosts,
-                                         'numLike' => $numLikes,
-                                         'numComment' => $numComments,
-                                         'colorLike' => $colorLike,
-                                         'colorFavorite' => $colorFavorite,
+        return view('site.slider.index', ['postAuthor' => $postAuthor,
+                                          'posts' => $posts,
+                                          'currentPost' => $currentPost,
+                                          'comments' => $comments,
+                                          'tags' => $tags,
+                                          'likes' => $likes,
+                                          'views' => $views,
+                                          'numPosts' => $numPosts,
+                                          'numLike' => $numLikes,
+                                          'numComments' => $numComments,
+                                          'colorLike' => $colorLike,
+                                          'colorFavorite' => $colorFavorite,
                                          ]);
     }
 
@@ -241,11 +261,11 @@ class PostsController extends BasePhotoController
 
         $post->author_id = Auth::user()->id;
         $post->views = 0;
-        $post->status = false;
-        $post->img_mini = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
-        $post->img_middle = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
-        $post->img_large = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
-        $post->img_square = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
+        $post->status = true;
+        $post->img_mini = $this->saveFileWithWatermark('posts', 'mini', Input::file('img'),'600');
+        $post->img_middle = $this->saveFileWithWatermark('posts', 'middle', Input::file('img'),'1024');
+        $post->img_large = $this->saveFileWithWatermark('posts', 'large', Input::file('img'),'1024');
+        $post->img_square = $this->saveFileWithWatermark('posts', 'square', Input::file('img'),'400', true);
         $post->seo_title = '';
         $post->seo_description = '';
         $post->seo_keywords = '';
@@ -397,7 +417,7 @@ class PostsController extends BasePhotoController
      */
     public function addPage()
     {
-        return View('profile.user.add');
+        return View('profile.user.add_post.index');
     }
 
     /**
@@ -525,10 +545,10 @@ class PostsController extends BasePhotoController
      */
     public function confirmationsPage()
     {
-        $posts = Post::where('verified', '=', false)
+        $posts = Post::where('status', '=', false)
                      ->paginate(10);
 
-        return view('moderator.wait_confirmation', ['posts' => $posts]);
+        return view('profile.moderator.posts.confirm', ['posts' => $posts]);
     }
 
     /**

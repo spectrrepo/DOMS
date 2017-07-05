@@ -2,34 +2,21 @@
 @section('profile-content')
     <div class="uk-grid">
         <h2>Новости</h2>
-        <div class="uk-width-8-10">
-
-        </div>
-        <div class="uk-width-1-10">
-            <button data-uk-modal="{target:'#my-id'}" class="uk-float-right uk-button uk-button-success" type="button">
-                <i class="uk-icon-pencil"></i>
-                Добавить
-            </button>
-        </div>
-        <div id="my-id" class="uk-modal">
-            <div class="uk-modal-dialog">
-                <a class="uk-modal-close uk-close"></a>
-                ...
-            </div>
-        </div>
     </div>
     <div class="uk-panel-box">
         <table class="uk-table uk-table-striped">
             <thead>
-                <td>B</td>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
+                <td>#</td>
+                <td>Фото</td>
+                <td>Имя пользователя</td>
+                <td>Когда добавил</td>
+                <td>Действия</td>
             </thead>
             <tr>
                 <td>2</td>
-                <td>2</td>
+                <td>
+                    <img class="uk-thumbnail" src="" alt="">
+                </td>
                 <td>2</td>
                 <td>2</td>
                 <td>2</td>

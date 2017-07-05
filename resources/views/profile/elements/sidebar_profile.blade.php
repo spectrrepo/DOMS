@@ -5,24 +5,19 @@
     <li class="menu-item-profile {{ preg_match('[/add/photo]', URL::current()) ? 'menu-item-profile-active' : '' }}"><a href="{{ URL::route('addPostPage') }}">Добавить изображение</a></li>
     <li class="menu-item-profile {{ preg_match('[/edit/user]', URL::current()) ? 'menu-item-profile-active' : '' }}"><a href="{{ URL::route('editUserPage') }}">Редактировать профиль</a></li>
     <li class="menu-item-profile {{ preg_match('[/liked/photo]', URL::current()) ? 'menu-item-profile-active' : '' }}"><a href="{{ URL::route('favoritePage') }}">Избранное</a></li>
-     @if ((Auth::user()->status === 'moderator') || (Auth::user()->status === 'admin'))
-      <?php
-        $comments = Illuminate\Support\Facades\DB::table('Comments')->where('status', '=', 'not_read')->count();
-        $pretenses = Illuminate\Support\Facades\DB::table('copyright')->where('status', '=', 'not_read')->count();
-        $messagesMail = Illuminate\Support\Facades\DB::table('Message_mail')->where('status', '=', 'not_read')->count();
-      ?>
+     @if ((Auth::user()->hasRole('moderator')) || (Auth::user()->hasRole('admin')))
 
-      <li class="menu-item-profile"><a href="{{ URL::route('verified') }}"> Изображения на проверку</a></li>
-      <li class="menu-item-profile"><a href="{{ URL::route('news') }}"> Новости</a></li>
-      <li class="menu-item-profile"><a href="{{ URL::route('comments') }}">Комментарии <span class="indicators">+{{ $comments }}</span></a></li>
-      <li class="menu-item-profile"><a href="{{ URL::route('messages') }}">Сообщения <span class="indicators">+{{ $messagesMail }}</span></a></li>
-      <li class="menu-item-profile"><a href="{{ URL::route('pretense') }}">Претензии <span class="indicators">+{{ $pretenses }}</span></a></li>
-      <li class="menu-item-profile"><a href="{{ URL::to('/profile/admin/photo/all') }}">Все фото</a></li>
+      <li class="menu-item-profile"><a href="{{ URL::route('confirmList') }}"> Изображения на проверку</a></li>
+      <li class="menu-item-profile"><a href="{{ URL::route('listArticlePage') }}"> Новости</a></li>
+      <li class="menu-item-profile"><a href="{{ URL::route('listCommentsPage') }}">Комментарии <span class="indicators">+1</span></a></li>
+      <li class="menu-item-profile"><a href="{{ URL::route('listFeedbackPage') }}">Сообщения <span class="indicators">+1</span></a></li>
+      <li class="menu-item-profile"><a href="{{ URL::route('listClaimsPage') }}">Претензии <span class="indicators">+1</span></a></li>
+      <li class="menu-item-profile"><a href="{{ URL::route('allPostSitePage') }}">Все фото</a></li>
 
-      @if (Auth::user()->status === 'admin')
+      @if (Auth::user()->hasRole('admin'))
 
-        <li class="menu-item-profile"><a href="{{ URL::route('rooms_edit') }}">Элементы сортировки</a></li>
-        <li class="menu-item-profile"><a href="{{ URL::route('slide') }}">Изменение слайдов</a></li>
+        <li class="menu-item-profile"><a href="{{ URL::route('listPlacePage') }}">Элементы сортировки</a></li>
+        <li class="menu-item-profile"><a href="{{ URL::route('listSlidesPage') }}">Изменение слайдов</a></li>
         {{-- <li class="menu-item-profile"><a href="{{ URL::route('slide') }}">Пользователи</a></li>
         <li class="menu-item-profile"><a href="{{ URL::route('slide') }}">Настройки сайта</a></li> --}}
 
