@@ -45,7 +45,7 @@ class FeedbacksController extends Controller
     {
         $feedBacks = Feedback::paginate(10);
 
-        return view('moderator.feedback.list', ['feedBacks' => $feedBacks]);
+        return view('profile.moderator.feedback.list', ['feedBacks' => $feedBacks]);
     }
 
     /**

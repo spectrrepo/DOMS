@@ -1,47 +1,35 @@
 @extends('profile.layout')
 @section('profile-content')
-    <div class="uk-grid">
-        <h2>Новости</h2>
-    </div>
-    <div class="uk-panel-box">
+    <h3 class="liked-title margin-bottom-10">Интерьеры на проверку</h3>
         <table class="uk-table uk-table-striped">
             <thead>
-                <td>#</td>
-                <td>Фото</td>
-                <td>Имя пользователя</td>
-                <td>Когда добавил</td>
-                <td>Действия</td>
+                <td><b>#</b></td>
+                <td><b>Изображение</b></td>
+                <td><b>Имя пользователя</b></td>
+                <td><b>Когда добавлен</b></td>
+                <td><b>Действия</b></td>
             </thead>
-            <tr>
-                <td>2</td>
-                <td>
-                    <img class="uk-thumbnail" src="" alt="">
-                </td>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>w</td>
-                <td>2</td>
-                <td>2</td>
-                <td>
-                    <button class="uk-button uk-button-success" type="button">
-                        <i class="uk-icon-pencil"></i>
-                        Редактировать
-                    </button>
-                    <button class="uk-button uk-button-danger" type="button">
-                        <i class="uk-icon-trash"></i>
-                        Удалить
-                    </button>
-                </td>
-            </tr>
+            @foreach ( $posts as $post)
+                <tr>
+                    <td>{{ $post->id }}</td>
+                    <td>
+                        <img class="uk-thumbnail uk-thumbnail-mini" src="{{ Storage::url($post->img_mini) }}">
+                    </td>
+                    <td>{{ $post->user->name }}</td>
+                    <td>тайм</td>
+                    <td>
+                        <a class="uk-button uk-border-circle uk-button-success" title="проверено" >
+                            <i class="uk-icon-check"></i>
+                        </a>
+                        <a class="uk-button uk-border-circle uk-button-primary" title="редактировать">
+                            <i class="uk-icon-pencil"></i>
+                        </a>
+                        <a class="uk-button uk-border-circle uk-button-danger" title="удалить">
+                            <i class="uk-icon-trash-o"></i>
+                        </a>
+                    </td>
+                </tr>
+            @endforeach
         </table>
-    </div>
-    <ul class="uk-pagination">
-        <li><a href="">1</a></li>
-        <li class="uk-active"><span>2</span></li>
-        <li><a href="">3</a></li>
-    </ul>
+    {{ $posts->render() }}
 @endsection

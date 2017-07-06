@@ -14,9 +14,9 @@ class SlidesController extends Controller
      */
     public function index ()
     {
-        $slides = Slide::all()->paginate(15);
+        $slides = Slide::paginate(15);
 
-        return view('moderator.slides.list', ['slides' => $slides]);
+        return view('profile.admin.slides.list', ['slides' => $slides]);
     }
 
     /**

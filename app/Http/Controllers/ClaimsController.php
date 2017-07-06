@@ -18,7 +18,7 @@ class ClaimsController extends BasePhotoController
     {
         $claims = Claim::paginate(15);
 
-        return view('moderator.copyright_index', ['claims' => $claims]);
+        return view('profile.moderator.claims.list', ['claims' => $claims]);
 
     }
 

@@ -81,7 +81,7 @@ class PlacementsController extends Controller
     {
         $placements = Placement::paginate(15);
 
-        return view('moderator.placements.list', ['placements' => $placements]);
+        return view('profile.admin.filtr.placements.list', ['placements' => $placements]);
     }
 
     /**

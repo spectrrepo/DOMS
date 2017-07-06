@@ -261,7 +261,7 @@ class PostsController extends BasePhotoController
 
         $post->author_id = Auth::user()->id;
         $post->views = 0;
-        $post->status = true;
+        $post->status = false;
         $post->img_mini = $this->saveFileWithWatermark('posts', 'mini', Input::file('img'),'600');
         $post->img_middle = $this->saveFileWithWatermark('posts', 'middle', Input::file('img'),'1024');
         $post->img_large = $this->saveFileWithWatermark('posts', 'large', Input::file('img'),'1024');
@@ -379,9 +379,9 @@ class PostsController extends BasePhotoController
      */
     public function allPostSite()
     {
-        $images = DB::table('Images')->paginate(10);
+        $posts = Post::paginate(10);
 
-        return view('moderator.all_photo_site', ['images' => $images]);
+        return view('profile.moderator.posts.list', ['posts' => $posts]);
     }
 
     /**
@@ -546,8 +546,7 @@ class PostsController extends BasePhotoController
     public function confirmationsPage()
     {
         $posts = Post::where('status', '=', false)
-                     ->paginate(10);
-
+                      ->paginate(10);
         return view('profile.moderator.posts.confirm', ['posts' => $posts]);
     }
 

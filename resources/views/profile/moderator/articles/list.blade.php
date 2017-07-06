@@ -1,60 +1,42 @@
 @extends('profile.layout')
 @section('profile-content')
-    <div class="uk-grid">
-        <h2>Новости</h2>
-        <div class="uk-width-8-10">
-
-        </div>
-        <div class="uk-width-1-10">
-            <button data-uk-modal="{target:'#my-id'}" class="uk-float-right uk-button uk-button-success" type="button">
-                <i class="uk-icon-pencil"></i>
-                Добавить
-            </button>
-        </div>
-        <div id="my-id" class="uk-modal">
-            <div class="uk-modal-dialog">
-                <a class="uk-modal-close uk-close"></a>
-                ...
-            </div>
-        </div>
-    </div>
-    <div class="uk-panel-box">
-        <table class="uk-table uk-table-striped">
-            <thead>
-                <td>B</td>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-            </thead>
+    <h3 class="liked-title margin-bottom-10">Новости
+        <a class="uk-float-right uk-button uk-button-success">
+            <i class="uk-icon-pencil"></i>
+            Добавить
+        </a>
+    </h3>
+    <table class="uk-table uk-table-striped">
+        <thead>
+            <td><b>#</b></td>
+            <td><b>Заголовок</b></td>
+            <td><b>Изображение</b></td>
+            <td><b>Имя пользователя</b></td>
+            <td><b>Когда добавлен</b></td>
+            <td><b>Действия</b></td>
+        </thead>
+        @foreach ( $articles as $article)
             <tr>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>w</td>
-                <td>2</td>
-                <td>2</td>
+                <td>{{ $article->id }}</td>
+                <td>{{ $article->title }}</td>
                 <td>
-                    <button class="uk-button uk-button-success" type="button">
+                    <img class="uk-thumbnail uk-thumbnail-mini" src="{{ Storage::url($article->img_mini) }}">
+                </td>
+                <td>{{ $article->user->name }}</td>
+                <td>тайм</td>
+                <td>
+                    <a class="uk-button uk-border-circle uk-button-success" title="проверено" >
+                        <i class="uk-icon-check"></i>
+                    </a>
+                    <a class="uk-button uk-border-circle uk-button-primary" title="редактировать">
                         <i class="uk-icon-pencil"></i>
-                        Редактировать
-                    </button>
-                    <button class="uk-button uk-button-danger" type="button">
-                        <i class="uk-icon-trash"></i>
-                        Удалить
-                    </button>
+                    </a>
+                    <a class="uk-button uk-border-circle uk-button-danger" title="удалить">
+                        <i class="uk-icon-trash-o"></i>
+                    </a>
                 </td>
             </tr>
-        </table>
-    </div>
-    <ul class="uk-pagination">
-        <li><a href="">1</a></li>
-        <li class="uk-active"><span>2</span></li>
-        <li><a href="">3</a></li>
-    </ul>
+        @endforeach
+    </table>
+    {{ $articles->render() }}
 @endsection

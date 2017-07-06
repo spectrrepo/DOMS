@@ -121,8 +121,8 @@ class User extends Authenticatable {
 		return $this->hasMany('App\Model\UserSocialAccount');
 	}
 
-	public function images() {
-		return $this->hasMany('App\Model\Post');
+	public function posts() {
+		return $this->hasMany('App\Models\Post', 'id', 'author_id');
 	}
 
     protected function getDateFormat() {
