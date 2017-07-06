@@ -15,8 +15,9 @@ class Tag extends Model {
         'value_en' => 'required:alpha',
     ];
 
-    public function images() {
-		return $this->belongsToMany('App\Models\Post', 'posts_tags', 'post_id', 'tag_id');
+    public function images ()
+    {
+		return $this->belongsToMany('App\Models\Post', 'posts_tags', 'tag_id', 'post_id');
 	}
 
 }

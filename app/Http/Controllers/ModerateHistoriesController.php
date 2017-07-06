@@ -24,8 +24,8 @@ class ModerateHistoriesController extends Controller
     {
         $history = new ModerateHistory();
 
-        $history->odject = $object;
-        $history->odject_id = $id;
+        $history->object = $object;
+        $history->object_id = $id;
         $history->user_id = Auth::user()->id;
         $history->save();
     }
@@ -37,7 +37,7 @@ class ModerateHistoriesController extends Controller
     {
         $history = ModerateHistory::all();
 
-        return view('', [
+        return view('profile.admin.historyList', [
             'history' => $history
         ]);
     }

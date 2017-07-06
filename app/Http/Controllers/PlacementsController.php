@@ -81,7 +81,7 @@ class PlacementsController extends Controller
     {
         $placements = Placement::paginate(15);
 
-        return view('profile.admin.filtr.placements.list', ['placements' => $placements]);
+        return view('profile.admin.filter.placements.list', ['placements' => $placements]);
     }
 
     /**
@@ -89,7 +89,7 @@ class PlacementsController extends Controller
      */
     public function addPage ()
     {
-        return view('moderator.placements.add');
+        return view('profile.admin.filter.placements.add');
     }
 
     /**
@@ -100,6 +100,6 @@ class PlacementsController extends Controller
     {
         $placement = Placement::find($id);
 
-        return view('moderator.placements.edit', ['placement', $placement]);
+        return view('profile.admin.filter.placements.edit', ['placement', $placement]);
     }
 }

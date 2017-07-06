@@ -16,7 +16,7 @@ class ClaimsController extends BasePhotoController
      */
     public function index ()
     {
-        $claims = Claim::paginate(15);
+        $claims = Claim::where('status', '=', 0)->paginate(15);
 
         return view('profile.moderator.claims.list', ['claims' => $claims]);
 
@@ -47,18 +47,19 @@ class ClaimsController extends BasePhotoController
      */
     public function delete ($id)
     {
-        Claim::find($id)->softDelete();
+        Claim::find($id)->delete();
 
         return redirect()->back()->with('message', 'Претензия успешно удалена');
     }
 
     /**
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function changeAuthorship ()
+    public function changeAuthorship ($id)
     {
-        $claim = Claim::find(Input::get('id'));
-        $claim->status = true;
+        $claim = Claim::find($id);
+        $claim->status = 1;
         $claim->update();
 
         $image = Post::find($claim->post_id);
@@ -66,7 +67,7 @@ class ClaimsController extends BasePhotoController
         $image->update();
         ModerateHistoriesController::add('claims', $id);
 
-        return redirect()->back()->with('message', 'Авторство фотографии успешно изменено');
+        return redirect()->back()->with('message', 'Авторство интерьера успешно изменено');
 
     }
 

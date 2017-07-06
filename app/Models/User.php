@@ -35,7 +35,8 @@ class User extends Authenticatable {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-	public function roles() {
+	public function roles ()
+    {
 		return $this->belongsToMany('App\Models\Role', 'users_roles', 'user_id', 'role_id');
 	}
 
@@ -43,7 +44,7 @@ class User extends Authenticatable {
      * @param $check
      * @return bool|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-	public function hasRole($check)
+	public function hasRole ($check)
     {
         $role_id = DB::table('users_roles')
                      ->where('user_id', '=', Auth::id())
@@ -65,8 +66,8 @@ class User extends Authenticatable {
         return $userRole === $needRole;
 	}
 
-	public static function createBySocialProvider($providerUser) {
-
+	public static function createBySocialProvider ($providerUser)
+    {
 		$password = str_random(12);
 		$email    = $providerUser->getEmail();
 		$name     = $providerUser->getName();
@@ -89,46 +90,48 @@ class User extends Authenticatable {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-	public function articles() {
-		return $this->hasMany('App\Model\Article');
+	public function articles ()
+    {
+		return $this->hasMany('App\Models\Article', 'id', 'user_add');
 	}
 
-	public function slides() {
-		return $this->hasMany('App\Model\Slide');
+	public function slides ()
+    {
+		return $this->hasMany('App\Models\Slide', 'id', 'user_add');
 	}
 
-	public function userSocials() {
-		return $this->hasMany('App\Model\UserSocial');
+	public function userSocials ()
+    {
+		return $this->hasMany('App\Models\UserSocial', 'id', 'user_id');
 	}
 
-	public function claims() {
-		return $this->hasMany('App\Model\Claim');
+	public function claims ()
+    {
+		return $this->hasMany('App\Models\Claim', 'id', 'user_id');
 	}
 
-	public function favorites() {
-		return $this->hasMany('App\Model\Favorite');
+	public function favorites ()
+    {
+		return $this->hasMany('App\Models\Favorite', 'user_id', 'id');
 	}
 
-	public function likes() {
-		return $this->hasMany('App\Model\Like');
+	public function likes ()
+    {
+		return $this->hasMany('App\Models\Like', 'user_id', 'id');
 	}
 
-	public function feedbacks() {
-		return $this->hasMany('App\Model\Feedback');
+	public function feedbacks ()
+    {
+		return $this->hasMany('App\Models\Feedback', 'user_answer', 'id');
 	}
 
-	public function userSocialAccounts() {
-		return $this->hasMany('App\Model\UserSocialAccount');
+	public function userSocialAccounts ()
+    {
+		return $this->hasMany('App\Models\UserSocialAccount');
 	}
 
-	public function posts() {
+	public function posts ()
+    {
 		return $this->hasMany('App\Models\Post', 'id', 'author_id');
 	}
-
-    protected function getDateFormat() {
-
-        setlocale(LC_TIME, 'ru_RU.utf8');
-        return ('%d %b %Y');
-
-    }
 }

@@ -18,19 +18,19 @@ class Claim extends Model {
         'status' => 'required|boolean',
     ];
 
-	protected function getDateFormat() {
- 		
- 		setlocale(LC_TIME, 'ru_RU.utf8');
-        return ('%d %b %Y');
-	
+    public function getDates ()
+    {
+        return ['date'];
+    }
+
+    public function user ()
+    {
+		return $this->belongsTo('App\Models\User', 'user_id', 'id');
 	}
 
-	public function user() {
-		return $this->belongsTo('App\Models\User');
-	}
-
-	public function post() {
-		return $this->belongsTo('App\Models\Post');
+	public function post ()
+    {
+		return $this->belongsTo('App\Models\Post', 'post_id', 'id');
 	}
 
 }

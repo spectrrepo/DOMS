@@ -59,7 +59,7 @@ class ColorsController extends Controller
     {
         $colors = Color::all();
 
-        return view('moderator.colors.list', ['colors' => $colors]);
+        return view('profile.admin.filter.colors.list', ['colors' => $colors]);
     }
 
     /**
@@ -70,7 +70,7 @@ class ColorsController extends Controller
     {
         $color = Color::find($id);
 
-        return view('moderator.colors.edit', ['color' => $color]);
+        return view('profile.admin.filter.colors.edit', ['color' => $color]);
 
     }
 
@@ -79,6 +79,6 @@ class ColorsController extends Controller
      */
     public function addPage ()
     {
-        return view('moderator.colors.add');
+        return view('profile.admin.filter.colors.add');
     }
 }

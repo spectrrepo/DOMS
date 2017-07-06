@@ -1,24 +1,25 @@
 @extends('profile.layout')
 @section('profile-content')
-    <h3 class="liked-title margin-bottom-10">Все интерьеры</h3>
+    <h3 class="liked-title margin-bottom-10">Цвета
+        <a class="uk-float-right uk-button uk-button-success">
+            <i class="uk-icon-pencil"></i>
+            Добавить
+        </a>
+    </h3>
+    @include('profile.admin.filter.subnav')
     <table class="uk-table uk-table-striped">
         <thead>
         <td><b>#</b></td>
-        <td><b>Изображение</b></td>
-        <td><b>Имя пользователя</b></td>
-        <td><b>Когда добавлен</b></td>
+        <td><b>Цвет</b></td>
         <td><b>Действия</b></td>
         </thead>
-        @foreach ( $posts as $post)
+        @foreach ( $colors as $color)
             <tr>
-                <td>{{ $post->id }}</td>
+                <td>{{ $color->id }}</td>
                 <td>
-                    <img class="uk-thumbnail uk-thumbnail-mini" src="{{ Storage::url($post->img_mini) }}">
-                </td>
-                <td>{{ $post->user->name }}</td>
-                <td>
-                    @php setlocale(LC_TIME, 'ru_RU.utf8') @endphp
-                    {{ $post->created_at->formatLocalized('%A %d %B %Y') }}
+                    <div class="uk-badge" style="background: {{ $color->hash }};">
+                        {{ $color->title }}
+                    </div>
                 </td>
                 <td>
                     <a class="uk-button uk-border-circle uk-button-primary" title="редактировать">
@@ -31,5 +32,4 @@
             </tr>
         @endforeach
     </table>
-    {{ $posts->render() }}
 @endsection

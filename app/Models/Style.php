@@ -16,7 +16,8 @@ class Style extends Model {
         'img' => 'image|size:10240',
     ];
 
-    public function posts() {
+    public function posts ()
+    {
 		return $this->belongsToMany('App\Models\Post', 'posts_styles', 'style_id', 'post_id');
 	}
 

@@ -1,60 +1,46 @@
 @extends('profile.layout')
 @section('profile-content')
-    <div class="uk-grid">
-        <h2>Новости</h2>
-        <div class="uk-width-8-10">
-
-        </div>
-        <div class="uk-width-1-10">
-            <button data-uk-modal="{target:'#my-id'}" class="uk-float-right uk-button uk-button-success" type="button">
-                <i class="uk-icon-pencil"></i>
-                Добавить
-            </button>
-        </div>
-        <div id="my-id" class="uk-modal">
-            <div class="uk-modal-dialog">
-                <a class="uk-modal-close uk-close"></a>
-                ...
-            </div>
-        </div>
-    </div>
-    <div class="uk-panel-box">
-        <table class="uk-table uk-table-striped">
-            <thead>
-            <td>B</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            </thead>
+    <h3 class="liked-title margin-bottom-10">Претензии</h3>
+    @include('profile.elements.success_alert')
+    <table class="uk-table uk-table-striped">
+        <thead>
+        <td><b>#</b></td>
+        <td><b>Текст</b></td>
+        <td><b>Файл</b></td>
+        <td><b>Пользователь</b></td>
+        <td><b>Пост</b></td>
+        <td><b>Автор</b></td>
+        <td><b>Дата</b></td>
+        <td><b>Действия</b></td>
+        </thead>
+        @foreach ( $claims as $claim)
             <tr>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>w</td>
-                <td>2</td>
-                <td>2</td>
+                <td>{{ $claim->id }}</td>
+                <td>{{ $claim->text }}</td>
+                <td><img class="uk-thumbnail uk-thumbnail-mini" src="{{ Storage::url($claim->file) }}" alt=""></td>
                 <td>
-                    <button class="uk-button uk-button-success" type="button">
-                        <i class="uk-icon-pencil"></i>
-                        Редактировать
-                    </button>
-                    <button class="uk-button uk-button-danger" type="button">
-                        <i class="uk-icon-trash"></i>
-                        Удалить
-                    </button>
+                    {{ $claim->user->name }}
+                </td>
+                <td>
+                    <img class="uk-thumbnail uk-thumbnail-mini" src="{{ Storage::url($claim->post->img_mini) }}" alt="">
+                </td>
+                <td>
+                    {{ $claim->post->user->name }}
+                </td>
+                <td>
+                    @php setlocale(LC_TIME, 'ru_RU.utf8') @endphp
+                    {{ $claim->date->formatLocalized('%A %d %B %Y') }}
+                </td>
+                <td>
+                    <a class="uk-button uk-border-circle uk-button-success" href="{{ route('changeClaims', ['id' => $claim->id] )}}" title="проверено" >
+                        <i class="uk-icon-check"></i>
+                    </a>
+                    <a class="uk-button uk-border-circle uk-button-danger" href="{{ route('deleteClaims', ['id' => $claim->id] ) }}" title="удалить">
+                        <i class="uk-icon-trash-o"></i>
+                    </a>
                 </td>
             </tr>
-        </table>
-    </div>
-    <ul class="uk-pagination">
-        <li><a href="">1</a></li>
-        <li class="uk-active"><span>2</span></li>
-        <li><a href="">3</a></li>
-    </ul>
+        @endforeach
+    </table>
+    {{ $claims->render() }}
 @endsection

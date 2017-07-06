@@ -16,7 +16,10 @@
                         <img class="uk-thumbnail uk-thumbnail-mini" src="{{ Storage::url($post->img_mini) }}">
                     </td>
                     <td>{{ $post->user->name }}</td>
-                    <td>тайм</td>
+                    <td>
+                        @php setlocale(LC_TIME, 'ru_RU.utf8') @endphp
+                        {{ $post->created_at->formatLocalized('%A %d %B %Y') }}
+                    </td>
                     <td>
                         <a class="uk-button uk-border-circle uk-button-success" title="проверено" >
                             <i class="uk-icon-check"></i>

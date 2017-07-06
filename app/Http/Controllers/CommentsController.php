@@ -16,10 +16,7 @@ class CommentsController extends Controller
     public function index ()
     {
 
-        $comments = DB::table('posts')
-                      ->join('comments', 'comments.post_id', '=','posts.id')
-                      ->join('users', 'users.id', '=', 'comments.user_id')
-                      ->paginate(15);
+        $comments = Comment::where('status', '=', 0)->paginate(15);
 
         return view('profile.moderator.comments.list', ['comments' => $comments]);
 
@@ -33,7 +30,7 @@ class CommentsController extends Controller
     {
 
         $comment = Comment::find($id);
-        $comment->status = true;
+        $comment->status = 1;
         $comment->update();
         ModerateHistoriesController::add('comments', $id);
 
@@ -64,9 +61,9 @@ class CommentsController extends Controller
      */
     public function delete ($id)
     {
-        Comment::find($id)->softDelete();
+        Comment::find($id)->delete();
 
-        return 'true';
+        return redirect()->back()->with('message', 'Комментарий удален');
     }
 
     /**

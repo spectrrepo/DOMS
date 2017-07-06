@@ -14,14 +14,13 @@ class ModerateHistory extends Model {
         'object_id' => 'required|integer',
     ];
 
-	protected function getDateFormat() {
- 		
- 		setlocale(LC_TIME, 'ru_RU.utf8');
-        return ('%d %b %Y');
-	
+	public function getDates ()
+    {
+        return ['date'];
 	}
 
-	public function user() {
-		return $this->belongsToMany('App\Models\User');
+	public function user ()
+    {
+		return $this->belongsTo('App\Models\User', 'user_id', 'id');
 	}
 }

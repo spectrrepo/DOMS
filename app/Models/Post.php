@@ -18,50 +18,53 @@ class Post extends Model {
         'views' => 'integer',
         ];
 
-    protected function getDateFormat() {
- 		
- 		setlocale(LC_TIME, 'ru_RU.utf8');
-        return ('%d %b %Y');
-	
-	}
-
-	public function user() {
+	public function user ()
+    {
 		return $this->belongsTo('App\Models\User', 'author_id', 'id');
 	}
 
-	public function comments() {
-		return $this->belongsToMany('App\Models\Comment');
+	public function comments ()
+    {
+		return $this->belongsTo('App\Models\Comment', 'post_id', 'id');
 	}
 
-	public function claims() {
-		return $this->belongsToMany('App\Models\Claim');
+	public function claims ()
+    {
+		return $this->belongsTo('App\Models\Claim', 'id', 'post_id');
 	}
 
-	public function favorite() {
-		return $this->belongsToMany('App\Models\Favorite');
+	public function favorite ()
+    {
+		return $this->hasMany('App\Models\Favorite', 'post_id', 'id');
 	}
 
-	public function likes() {
-		return $this->belongsToMany('App\Models\Like');
+	public function likes ()
+    {
+		return $this->hasMany('App\Models\Like', 'post_id', 'id');
 	}
 
-	public function views() {
-		return $this->belongsTo('App\Models\View');
+	public function views ()
+    {
+		return $this->hasMany('App\Models\View', 'post_id', 'id');
 	}
 
-	public function placements() {
+	public function placements ()
+    {
 		return $this->belongsToMany('App\Models\Placement', 'posts_placements', 'post_id', 'placement_id');
 	}
 
-	public function tags() {
-		return $this->belongsToMany('App\Models\Tag', 'posts_tags', 'tag_id', 'post_id');
+	public function tags ()
+    {
+		return $this->belongsToMany('App\Models\Tag', 'posts_tags', 'post_id', 'post_id');
 	}
 
-	public function colors() {
+	public function colors ()
+    {
 		return $this->belongsToMany('App\Models\Color', 'posts_colors', 'post_id', 'color_id');
 	}
 
-	public function styles() {
+	public function styles ()
+    {
 		return $this->belongsToMany('App\Models\Style', 'posts_styles', 'post_id', 'style_id');
 	}
 }

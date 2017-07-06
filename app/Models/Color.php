@@ -14,7 +14,8 @@ class Color extends Model {
         'hash' => 'required',
     ];
 
-	public function images() {
+	public function posts ()
+    {
 		return $this->belongsToMany('App\Models\Post', 'posts_colors', 'post_id', 'color_id');
 	}
 }

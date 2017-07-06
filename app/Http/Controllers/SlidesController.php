@@ -83,7 +83,7 @@ class SlidesController extends Controller
     {
         $slide = Slide::find($id);
 
-        return view('moderator.slides.edit', ['slide'=> $slide]);
+        return view('profile.admin.slides.edit', ['slide'=> $slide]);
     }
 
     /**
@@ -91,6 +91,6 @@ class SlidesController extends Controller
      */
     public function addPage ()
     {
-        return view('moderator.slides.add');
+        return view('profile.admin.slides.add');
     }
 }

@@ -32,7 +32,7 @@ class TagsController extends Controller
     {
         Tag::find($tagID)->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'тег успешно удален');
     }
 
     /**
@@ -63,10 +63,29 @@ class TagsController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function editTagsPage()
+    public function editPage($id)
+    {
+        $tag = Tag::find($id);
+
+        return view('profile.admin.filter.tags.edit', ['tag' => $tag]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function listPage ()
     {
         $tags = Tag::paginate(15);
-        return view('moderator.tags.list', ['tags' => $tags]);
+
+        return view('profile.admin.filter.tags.list', ['tags' => $tags]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function addPage ()
+    {
+        return view('profile.admin.filter.tags.list');
     }
 
     /**

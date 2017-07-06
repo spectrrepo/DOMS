@@ -1,32 +1,22 @@
 @extends('profile.layout')
 @section('profile-content')
-    <h3 class="liked-title margin-bottom-10">Слайды
+    <h3 class="liked-title margin-bottom-10">Стили
         <a class="uk-float-right uk-button uk-button-success">
             <i class="uk-icon-pencil"></i>
             Добавить
         </a>
     </h3>
+    @include('profile.admin.filter.subnav')
     <table class="uk-table uk-table-striped">
         <thead>
         <td><b>#</b></td>
-        <td><b>Текст</b></td>
-        <td><b>Изображение</b></td>
-        <td><b>Имя пользователя</b></td>
-        <td><b>Когда добавлен</b></td>
+        <td><b>Название</b></td>
         <td><b>Действия</b></td>
         </thead>
-        @foreach ( $slides as $slide)
+        @foreach ( $styles as $style)
             <tr>
-                <td>{{ $slide->id }}</td>
-                <td>{{ $slide->text }}</td>
-                <td>
-                    <img class="uk-thumbnail uk-thumbnail-mini" src="{{ Storage::url($slide->img) }}">
-                </td>
-                <td>{{ $slide->user->name }}</td>
-                <td>
-                    @php setlocale(LC_TIME, 'ru_RU.utf8') @endphp
-                    {{ $slide->date->formatLocalized('%A %d %B %Y') }}
-                </td>
+                <td>{{ $style->id }}</td>
+                <td>{{ $style->title }}</td>
                 <td>
                     <a class="uk-button uk-border-circle uk-button-primary" title="редактировать">
                         <i class="uk-icon-pencil"></i>
@@ -38,5 +28,4 @@
             </tr>
         @endforeach
     </table>
-    {{ $slides->render() }}
 @endsection

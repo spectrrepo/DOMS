@@ -55,10 +55,8 @@ class FeedbacksController extends Controller
     public function itemPage ($id)
     {
         $message = Feedback::find($id);
-        $message->status = 'read';
-        $message->save();
 
-        return view('moderator.feedback.answer', ['message' => $message]);
+        return view('profile.moderator.feedback.answer', ['message' => $message]);
     }
 
     /**
@@ -67,7 +65,7 @@ class FeedbacksController extends Controller
      */
     public function delete ($id)
     {
-        Feedback::find($id)->sodtDelete();
+        Feedback::find($id)->delete();
 
         return redirect()->back()->with('message', 'Сообщение успешно удалено');
     }

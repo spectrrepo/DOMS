@@ -24,12 +24,17 @@ class ArticlesController extends BasePhotoController
         $article->title = Input::get('title');
         $article->description = Input::get('description');
         $article->description_full = Input::get('description_full');
-        $article->image_text = Input::get('image_text');
+        $article->image_text = $article->title.'-DOMS-портал идей для дизайна';
         $article->user_add= Auth::user()->id;
-        $article->status = Input::get('status');
-        $article->img_middle = $this->saveFile('article','middle', Input::file('image'), 300, 400);
-        $article->img_large = $this->saveFile('article','large', Input::file('image'), 300, 400);
-        $article->img_square = $this->saveFile('article', 'square', Input::file('image'), 300);
+
+        if (Input::get('status') === 'yes') {
+            $article->status = 1;
+        } else {
+            $article->status = 0;
+        }
+        $article->img_middle = $this->saveFile('article','middle', Input::file('img'), 300, 400);
+        $article->img_large = $this->saveFile('article','large', Input::file('img'), 300, 400);
+        $article->img_square = $this->saveFile('article', 'square', Input::file('img'), 300);
 
         if (Input::has('alt')) {
             $article->alt = Input::get('alt');
@@ -49,7 +54,7 @@ class ArticlesController extends BasePhotoController
 
         $article->save();
 
-        return redirect('list')->with('message','Статья успешно добавлена');
+        return redirect()->route('listArticlePage')->with('message','Статья успешно добавлена');
 
     }
 
@@ -59,9 +64,9 @@ class ArticlesController extends BasePhotoController
      */
     public function delete ($id)
     {
-        Article::find($id)->softDelete();
+        Article::find($id)->delete();
 
-        return redirect()-back()->with('message','Статья успешно удалена');
+        return redirect()->back()->with('message','Статья успешно удалена');
     }
 
     /**
@@ -123,7 +128,7 @@ class ArticlesController extends BasePhotoController
     {
         $articles = Article::find($id);
 
-        return view('moderator.articles.edit',['articles' => $articles]);
+        return view('profile.moderator.articles.edit',['articles' => $articles]);
     }
 
     /**
@@ -131,7 +136,7 @@ class ArticlesController extends BasePhotoController
      */
     public function addPage ()
     {
-        return view('moderator.articles.add');
+        return view('profile.moderator.articles.add');
     }
 
     /**

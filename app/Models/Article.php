@@ -18,21 +18,17 @@ class Article extends Model {
        'seo_title' => 'min:50|max:80',
        'seo_keywords' => 'max:250',
        'seo_description' => 'min:150|max:200',
-       'image_text' => 'required|string',
-       'image' => 'required|image|10240',
-       'alt' => 'required|max:28',
-       'status' => 'required|boolean',
+       'img' => 'required|image|max:10240',
     ];
 
-	protected function getDateFormat() {
- 		
- 		setlocale(LC_TIME, 'ru_RU.utf8');
-        return ('%d %b %Y');
-	
-	}
+    public function getDates ()
+    {
+        return ['date'];
+    }
 
-	public function user() {
-		return $this->belongsTo('App\Models\User');
+	public function user ()
+    {
+		return $this->belongsTo('App\Models\User', 'user_add', 'id');
 	}
 
 }

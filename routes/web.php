@@ -21,12 +21,9 @@ Route::group(['prefix' => '/articles'], function () {
 
     Route::group(['middleware' => 'role:0,moderator,admin'], function () {
         Route::post('add','ArticlesController@add')->name('addArticle');
-        Route::post('delete/{id}/','ArticlesController@delete')->name('deleteArticle')
-             ->where('id', '/^\d+$/');
-        Route::post('edit/{id}/','ArticlesController@edit')->name('editArticle')
-             ->where('id', '/^\d+$/');
-        Route::get('editPage/{id}','ArticlesController@editPage')->name('editArticlePage')
-             ->where('id', '/^\d+$/');
+        Route::get('delete/{id}/','ArticlesController@delete')->name('deleteArticle');
+        Route::post('edit/{id}/','ArticlesController@edit')->name('editArticle');
+        Route::get('editPage/{id}','ArticlesController@editPage')->name('editArticlePage');
         Route::get('addPage','ArticlesController@addPage')->name('addArticlePage');
         Route::get('listPage','ArticlesController@listPage')->name('listArticlePage');
     });
@@ -38,9 +35,8 @@ Route::group(['prefix' => 'claims'], function () {
 
     Route::group(['middleware' => 'role:0,moderator,admin'], function (){
         Route::get('index', 'ClaimsController@index')->name('listClaimsPage');
-        Route::post('delete/{id}', 'ClaimsController@delete')->name('deleteClaims')
-             ->where('id', '/^\d+$/');
-        Route::post('changeAuthorship', 'ClaimsController@changeAuthorship')->name('changeClaims');
+        Route::get('delete/{id}', 'ClaimsController@delete')->name('deleteClaims');
+        Route::get('changeAuthorship/{id}', 'ClaimsController@changeAuthorship')->name('changeClaims');
     });
 });
 
@@ -60,15 +56,13 @@ Route::group(['prefix' => 'comments'], function () {
     Route::post('allCommentsLoad', 'CommentsController@allCommentsLoad')->name('allCommentsLoad');
 
     Route::group(['middleware' => 'role:user,moderator,admin'], function () {
-        Route::post('delete/{id}', 'CommentsController@delete')->name('deleteComment')
-             ->where('id', '/^\d+$/');
+        Route::get('delete/{id}', 'CommentsController@delete')->name('deleteComment');
         Route::post('add', 'CommentsController@add')->name('addComment');
     });
 
     Route::group(['middleware' => 'role:0,moderator,admin'], function () {
         Route::get('changeStatus/{id}', 'CommentsController@changeStatus')
-             ->name('changeStatusComment')
-             ->where('id', '/^\d+$/');
+             ->name('changeStatusComment');
         Route::get('index', 'CommentsController@index')->name('listCommentsPage');
     });
 });
@@ -86,10 +80,8 @@ Route::group(['prefix' => 'feedbacks'], function () {
         Route::get('listPage', 'FeedbacksController@listPage')->name('listFeedbackPage');
         Route::get('itemPage/{id}', 'FeedbacksController@itemPage')->name('itemFeedbackPage')
              ->where('id', '/^\d+$/');
-        Route::get('delete/{id}', 'FeedbacksController@delete')->name('deleteFeedback')
-             ->where('id', '/^\d+$/');
-        Route::post('answer/{id}', 'FeedbacksController@answer')->name('answerFeedback')
-             ->where('id', '/^\d+$/');
+        Route::get('delete/{id}', 'FeedbacksController@delete')->name('deleteFeedback');
+        Route::post('answer/{id}', 'FeedbacksController@answer')->name('answerFeedback');
     });
 });
 
@@ -154,7 +146,7 @@ Route::group(['prefix' => 'posts'], function () {
     });
     
     Route::get('allPostSite', 'PostsController@allPostSite')->name('allPostSitePage')
-         ->middleware('role:0, moderator, admin');
+         ->middleware('role:0,moderator,admin');
 });
 
 Route::group(['prefix' => 'slides', 'middleware' => 'role:0,0,admin'], function () {
@@ -174,7 +166,7 @@ Route::group(['prefix' => 'social'], function () {
     Route::post('callback', 'SocialController@callback')->name('callbackFB');
     Route::post('callbackVK', 'SocialController@callbackVK')->name('callbackVK');
     
-    Route::group(['middleware' => 'role:user, moderator, admin'], function () {
+    Route::group(['middleware' => 'role:user,moderator,admin'], function () {
         Route::post('add', 'SocialController@add')->name('addSocial');
         Route::post('delete', 'SocialController@delete')->name('deleteSocial');
         Route::post('edit', 'SocialController@edit')->name('editSocial');
@@ -201,23 +193,27 @@ Route::group(['prefix' => 'styles', 'middleware' => 'role:0,0,admin'], function 
 Route::group(['prefix' => 'tags'], function () {
     Route::group(['middleware' => 'role:0,moderator,admin'], function () {
         Route::post('edit/{id}', 'TagsController@edit')
-             ->name('editTag')
-             ->where('id', '/^\d+$/');
+             ->name('editTag');
         Route::get('delete/{id}', 'TagsController@delete')
              ->name('deleteTag')
              ->where('id', '/^\d+$/');
-        Route::post('indexTagsLoad', 'TagsController@indexTagsLoad')
-             ->name('indexTagsLoad');
-        Route::get('editTagsPage', 'TagsController@editTagsPage')
-             ->name('edit');
+        Route::get('editTagsPage', 'TagsController@editPage')
+             ->name('editTagPage');
+        Route::get('listTagsPage', 'TagsController@listPage')
+            ->name('listTagPage');
+        Route::get('addTagsPage', 'TagsController@addPage')
+            ->name('addTagPage');
     });
 
     Route::post('add', 'TagsController@add')
          ->name('addTag')
          ->middleware('role:user,moderator,admin');
+
+    Route::post('indexTagsLoad', 'TagsController@indexTagsLoad')
+        ->name('indexTagsLoad');
 });
 
-Route::group(['prefix' => 'user'], function () {
+Route::group(['prefix' => '/user'], function () {
     Route::get('{id}', 'UserController@index')
          ->name('userPage')
          ->where('id', '/^\d+$/');

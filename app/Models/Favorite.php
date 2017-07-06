@@ -14,18 +14,18 @@ class Favorite extends Model {
         'post_id' => 'required|integer',
     ];
 
-	protected function getDateFormat() {
- 		
- 		setlocale(LC_TIME, 'ru_RU.utf8');
-        return ('%d %b %Y');
-	
+	public function getDates ()
+    {
+        return ['date'];
 	}
 
-	public function post() {
-		return $this->belongsToMany('App\Models\Post');
+	public function post ()
+    {
+		return $this->belongsTo('App\Models\Post', 'id', 'post_id');
 	}
 
-	public function user() {
-		return $this->belongsToMany('App\Models\User');
+	public function user ()
+    {
+		return $this->belongsTo('App\Models\User', 'id', 'user_id');
 	}
 }

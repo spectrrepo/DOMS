@@ -10,14 +10,8 @@ class UserSocialAccount extends Model {
 	protected $dates = ['created_at', 'updated_at'];
     public $timestamps = true;
 
-    protected function getDateFormat() {
- 		
- 		setlocale(LC_TIME, 'ru_RU.utf8');
-        return ('%d %b %Y');
-	
-	}
-
-	public function user() {
+	public function user ()
+    {
 		return $this->belongsTo(User::class );
 	}	
 }

@@ -18,14 +18,13 @@ class Feedback extends Model {
         'answer' => 'max:255',
     ];
 
-	protected function getDateFormat() {
- 		
- 		setlocale(LC_TIME, 'ru_RU.utf8');
-        return ('%d %b %Y');
-	
-	}
+    public function getDates ()
+    {
+        return ['date_ask', 'date_answer'];
+    }
 
-	public function user() {
-		return $this->belongsToMany('App\Models\User');
+	public function user ()
+    {
+		return $this->belongsTo('App\Models\User', 'user_answer', 'id');
 	}
 }

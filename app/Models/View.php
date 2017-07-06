@@ -18,14 +18,13 @@ class View extends Model {
         'alt' => 'required|max:28',
     ];
 
-    protected function getDateFormat() {
- 		
- 		setlocale(LC_TIME, 'ru_RU.utf8');
-        return ('%d %b %Y');
-	
+    public function getDates ()
+    {
+        return ['date'];
 	}
 	
-	public function post() {
-		return $this->belongsTo('App\Models\Post');
+	public function post ()
+    {
+		return $this->belongsTo('App\Models\Post', 'post_id', 'id');
 	}	
 }

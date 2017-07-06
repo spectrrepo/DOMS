@@ -22,7 +22,7 @@ export class Filtr {
   changeURL(param, value){
     let URL = JSON.parse(
                 window.location.pathname
-                               .replace('/filtr=', '')
+                               .replace('/filter=', '')
                                .replace('%7B','{')
                                .replace('%7D', '}')
                                .replace(/%22/g,'"')

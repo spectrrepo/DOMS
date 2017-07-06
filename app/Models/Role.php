@@ -16,7 +16,8 @@ class Role extends Model {
         'alt' => 'required|max:28',
     ];
 
-    public function users() {
+    public function users ()
+    {
 		return $this->belongsToMany('App\Models\User', 'users_roles', 'user_id', 'role_id');
 	}
 }

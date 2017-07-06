@@ -1,26 +1,57 @@
-@extends('layouts.profile')
+@extends('profile.layout')
 @section('profile-content')
-    @if (count($errors) > 0)
-        <div class="uk-alert-danger" style="display: block" data-uk-alert>
-            <a href="" class="uk-alert-close uk-close"></a>
-                @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                @endforeach
-        </div>
-    @endif
-    {{ Form::open(array('url' => '/add', 'files' => 'true'))}}
-    <input class="title-add-news" type="text" name="title" placeholder="заголовок новости">
-    <div id="main-wrap-photo" class="wrap-main-dwnld-photo" title="Добавить изображение">
-        <span class="add-photo-ico uk-icon-justify uk-icon-camera"></span>
-        <span class="add-photo-text">Добавить изображение</span>
-        <input id="file" class="dwnld-file-input" type="file" name="main_photo">
-    </div>
-    <textarea class="min-description-news" name="min_description" placeholder="текст превью"></textarea>
-    <textarea id="bodyField" name="full_description"></textarea>
-    @ckeditor('bodyField')
-    <button class="btn-dwnld" type="submit" name="button">
-        <span class="save-text">Сохранить изменения</span>
-        <span class="save-ico uk-icon-justify uk-icon-save"></span>
-    </button>
-    {{ Form::close()}}
+    <h3 class="liked-title margin-bottom-10">Добавить новость</h3>
+    @include('profile.elements.validate')
+    {{ Form::open(['class' => 'uk-form', 'method' => 'post', 'route' => 'addArticle', 'files' => true]) }}
+        <fieldset data-uk-margin>
+            <div class="uk-grid">
+                <div class="uk-width-1-2">
+                    <div class="uk-form-row">
+                        <label class="uk-form-label" for="">Заголовок</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-width-1-1" type="text" name="title">
+                        </div>
+                    </div>
+                    <div class="uk-form-row">
+                        <label class="uk-form-label" for="">Текст превью</label>
+                        <div class="uk-form-controls">
+                            <textarea class="uk-width-1-1" name="description" id="" cols="30" rows="10"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-2">
+                    <div class="uk-form-row">
+                        <label class="uk-form-label" for="">Изображение</label>
+                        <div class="uk-form-controls">
+                            <div id="main-wrap-photo" class="wrap-main-dwnld-photo" title="Добавить изображение">
+                                <span class="add-photo-ico uk-icon-justify uk-icon-camera"></span>
+                                <span class="add-photo-text">Добавить изображение</span>
+                                <input id="file" class="dwnld-file-input" type="file" name="img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-form-row">
+                <label class="uk-form-label" for="">Полный текст</label>
+                <div class="uk-form-controls">
+                    <textarea id="ful_description" name="description_full"></textarea>
+                    @ckeditor('ful_description')
+                </div>
+            </div>
+
+            <div class="uk-form-row">
+                <div class="uk-form-controls">
+                    <input type="checkbox" id="form-s-c" name="status" value="yes">
+                    <label for="form-s-c">Опубликовать?</label>
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <button class="uk-button uk-button-success">
+                    Сохранить
+                </button>
+            </div>
+        </fieldset>
+    {{ Form::close() }}
 @endsection

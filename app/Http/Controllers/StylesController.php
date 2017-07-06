@@ -73,7 +73,7 @@ class StylesController extends Controller
     {
         $styles = Style::paginate(15);
 
-        return view('moderator.styles.list', ['styles' => $styles]);
+        return view('profile.admin.filter.styles.list', ['styles' => $styles]);
     }
 
     /**
@@ -81,7 +81,7 @@ class StylesController extends Controller
      */
     public function addPage ()
     {
-        return view('moderator.styles.add');
+        return view('profile.admin.filter.styles.add');
     }
 
     /**
@@ -92,6 +92,6 @@ class StylesController extends Controller
     {
         $style = Style::find($id);
 
-        return view('moderator.styles.edit',['style' => $style]);
+        return view('profile.admin.filter.styles.edit',['style' => $style]);
     }
 }

@@ -16,14 +16,13 @@ class Slide extends Model {
         'alt' => 'required|max:28',
     ];
 
-    protected function getDateFormat() {
- 		
- 		setlocale(LC_TIME, 'ru_RU.utf8');
-        return ('%d %b %Y');
-	
-	}
+    public function getDates ()
+    {
+        return ['date'];
+    }
 
-	public function user() {
-		return $this->belongsTo('App\Models\User');
+    public function user ()
+    {
+		return $this->belongsTo('App\Models\User', 'user_add', 'id');
 	}
 }
