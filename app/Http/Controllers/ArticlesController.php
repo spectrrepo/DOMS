@@ -77,7 +77,6 @@ class ArticlesController extends BasePhotoController
     public function edit ($id, Request $request)
     {
         $article = Article::find($id);
-        $this->validate($request, $article->rules);
 
         $article->title = Input::get('title');
         $article->description = Input::get('description');
@@ -85,9 +84,12 @@ class ArticlesController extends BasePhotoController
         $article->image_text = Input::get('image_text');
         $article->user_add= Auth::user()->id;
         $article->status = Input::get('status');
-        $article->img_middle = $this->saveFile('article','middle', Input::file('image'), 300, 400);
-        $article->img_large = $this->saveFile('article','large', Input::file('image'), 300, 400);
-        $article->img_square = $this->saveFile('article', 'square', Input::file('image'), 300);
+
+        if (Input::file('img')) {
+            $article->img_middle = $this->saveFile('article','middle', Input::file('img'), 300, 400);
+            $article->img_large = $this->saveFile('article','large', Input::file('img'), 300, 400);
+            $article->img_square = $this->saveFile('article', 'square', Input::file('img'), 300);
+        }
 
         if (Input::has('alt')) {
             $article->alt = Input::get('alt');
@@ -107,7 +109,7 @@ class ArticlesController extends BasePhotoController
 
         $article->update();
 
-        return redirect()->back()->with('message', 'Статья успешно отредактирована');
+        return redirect()->route('listArticlePage')->with('message', 'Статья успешно отредактирована');
     }
 
     /**

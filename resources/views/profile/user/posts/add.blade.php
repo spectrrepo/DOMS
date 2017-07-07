@@ -1,19 +1,10 @@
 @extends('profile.layout')
 @section('profile-content')
-    {{-- TODO: расчленить этот файл --}}
+    {{ Form::open(array('id' => 'addPhotoSite', 'route' => 'addPost', 'files' => 'true')) }}
     <div class="big-col">
         <div class="help-text">Для удобства поиска твоего изображения на сайте заполни ка можно больше параметров</div>
         <div class="b-dwnld-img">
-            {{ Form::open(array('id' => 'addPhotoSite', 'route' => 'addPost', 'files' => 'true')) }}
-            @if (count($errors) > 0)
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            @include('profile.elements.validate')
             <input class="input-title-dwnld"type="text" name="title" placeholder="Заголовок">
             <div id="main-wrap-photo" class="wrap-main-dwnld-photo" title="Добавить изображение">
                 <span class="add-photo-ico uk-icon-justify uk-icon-camera"></span>
@@ -26,7 +17,7 @@
                 @foreach ( $colors as $color)
                     <div class="wrap-color-input">
                         <input class="color-photo-choose" type="checkbox" name="color[]" value="{{ $color->id }}" />
-                        <div class="b-color-input" id="color_{{ $color->title }}" style="background:{{ $color->RGB}}"></div>
+                        <div class="b-color-input" style="background:{{ $color->hash }}"></div>
                     </div>
                 @endforeach
                 <div class="clear"></div>
@@ -53,36 +44,7 @@
             </button>
         </div>
     </div>
-    <div class="small-col">
-        <div class="title-tag-list">
-            Стили
-        </div>
-        <div class="tags-list">
-            @foreach ( $styles as $style )
-                <div class="wrap-tags-list-item">
-                    <input class="opacity-radio" type="checkbox" name="style[]" value="{{ $style->id }}">
-                    <div class="tags-list-item">
-                        {{ $style->name }}
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-    <div class="small-col">
-        <div class="title-tag-list">
-            Помещения
-        </div>
-        <div class="tags-list">
-            @foreach ( $placements as $placement )
-                <div class="wrap-tags-list-item">
-                    <input class="opacity-radio" type="checkbox" name="room[]" value="{{ $placement->id }}">
-                    <div class="tags-list-item">
-                        {{ $placement->title }}
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
+    @include('profile.user.posts.el_forms.add.styles')
+    @include('profile.user.posts.el_forms.add.placements')
     {{ Form::close() }}
-    </div>
 @endsection

@@ -35,9 +35,9 @@ class StylesController extends BasePhotoController
         $style->description = Input::get('description');
         $style->full_description = Input::get('full_description');
         $style->alt = Input::get('title');
-        $style->img_middle = $this->saveFile('claims', 'default', Input::file('img'),'600');
-        $style->img_large = $this->saveFile('claims', 'default', Input::file('img'),'600');
-        $style->img_square = $this->saveFile('claims', 'default', Input::file('img'),'600');
+        $style->img_middle = $this->saveFile('styles', 'default', Input::file('img'),'600');
+        $style->img_large = $this->saveFile('styles', 'default', Input::file('img'),'600');
+        $style->img_square = $this->saveFile('styles', 'default', Input::file('img'),'600');
         $style->save();
 
         return redirect()->route('listStylePage')->with('message', 'ноывый стиль успешно добавлен!');

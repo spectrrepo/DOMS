@@ -44,7 +44,7 @@ class FavoritesController extends Controller
         $posts =  Post::join('favorites', 'posts.id', '=', 'favorites.post_id')
                        ->where('favorites.user_id', '=', Auth::id())
                        ->get();
-        return view('profile.user.favorite.index', ['images' => $posts]);
+        return view('profile.user.posts.favorite', ['images' => $posts]);
     }
 
     /**

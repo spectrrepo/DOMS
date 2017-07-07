@@ -25,7 +25,7 @@ class Post extends Model {
 
 	public function comments ()
     {
-		return $this->belongsTo('App\Models\Comment', 'post_id', 'id');
+		return $this->hasMany('App\Models\Comment', 'post_id', 'id');
 	}
 
 	public function claims ()
@@ -33,7 +33,7 @@ class Post extends Model {
 		return $this->belongsTo('App\Models\Claim', 'id', 'post_id');
 	}
 
-	public function favorite ()
+	public function favorites ()
     {
 		return $this->hasMany('App\Models\Favorite', 'post_id', 'id');
 	}
@@ -43,7 +43,7 @@ class Post extends Model {
 		return $this->hasMany('App\Models\Like', 'post_id', 'id');
 	}
 
-	public function views ()
+	public function view ()
     {
 		return $this->hasMany('App\Models\View', 'post_id', 'id');
 	}

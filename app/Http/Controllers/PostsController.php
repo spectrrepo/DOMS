@@ -310,7 +310,6 @@ class PostsController extends BasePhotoController
     public function edit(Request $request, $id)
     {
         $post = Post::find($id);
-        $this->validate($request, $post->rules);
 
         if (Input::has('title')) {
             $post->title = Input::get('title');
@@ -328,10 +327,13 @@ class PostsController extends BasePhotoController
             $post->status = false;
         }
 
-        $post->img_mini = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
-        $post->img_middle = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
-        $post->img_large = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
-        $post->img_square = $this->saveFileWithWatermark('claims', 'default', Input::file('file'),'600');
+        if (Input::file('img'))
+        {
+            $post->img_mini = $this->saveFileWithWatermark('posts', 'mini', Input::file('img'),'600');
+            $post->img_middle = $this->saveFileWithWatermark('posts', 'middle', Input::file('img'),'1024');
+            $post->img_large = $this->saveFileWithWatermark('posts', 'large', Input::file('img'),'1024');
+            $post->img_square = $this->saveFileWithWatermark('posts', 'square', Input::file('img'),'400', true);
+        }
         $post->seo_title = '';
         $post->seo_description = '';
         $post->seo_keywords = '';
@@ -370,7 +372,7 @@ class PostsController extends BasePhotoController
             ModerateHistoriesController::add('posts', $id);
             return redirect()->back();
         } else {
-            return redirect('/profile/'.Auth::id())->with('check', 'true');
+            return redirect('/profile/'.Auth::id())->with('message', 'Интерьер удалён');
         }
     }
 
@@ -391,13 +393,11 @@ class PostsController extends BasePhotoController
     public function userPosts ($id)
     {
         $user = User::find($id);
-        $userImages = Post::where('author_id', '=', $id)->get();
-        $links = UserSocial::where('user', '=', $id)->get();
+        $posts = Post::where('author_id', '=', $id)->get();
 
-        return View('profile.index_photo', [
+        return View('profile.user.posts.list.index', [
                                                   'user' => $user,
-                                                  'links' => $links,
-                                                  'userImages' => $userImages
+                                                  'posts' => $posts
                                                 ]);
     }
 
@@ -408,8 +408,12 @@ class PostsController extends BasePhotoController
     public function editPage ($id)
     {
         $post = Post::find($id);
-
-        return view('', ['post' => $post]);
+        if ((Auth::user()->id === $post->author_id) ||
+            (Auth::user()->roles->nickname === 'admin') ||
+            (Auth::user()->roles->nickname === 'moderator'))
+        {
+            return view('profile.user.posts.edit', ['post' => $post]);
+        }
     }
 
     /**
@@ -417,7 +421,7 @@ class PostsController extends BasePhotoController
      */
     public function addPage()
     {
-        return View('profile.user.add_post.index');
+        return View('profile.user.posts.add');
     }
 
     /**
@@ -561,8 +565,7 @@ class PostsController extends BasePhotoController
         $image->save();
         ModerateHistoriesController::add('posts', $id);
 
-        return redirect()->back()-with('success', 'er');
-
+        return redirect()->route('confirmList')->with('message', 'Интерьер прошел модерацию!');
     }
 
     /**
@@ -571,13 +574,19 @@ class PostsController extends BasePhotoController
      */
     public function deleteVerificationPost($id)
     {
-        Post::find($id)->delete();
-        ModerateHistoriesController::add('posts', $id);
+        if ( (Auth::user()->roles[0]->nickname === 'admin') || (Auth::user()->roles[0]->nickname === 'moderator')) {
 
-        if ( Auth::user()->status == 'moderator') {
-            return redirect('/profile/admin/verification');
+            Post::find($id)->delete();
+            ModerateHistoriesController::add('posts', $id);
+
+            return redirect()->route('confirmList')->with('message', 'Интерьер удален');
         }else {
-            return redirect('/profile/'.Auth::user()->id)->with('check', 'delete');
+            if (Auth::user()->id === Post::find($id)->author_id)
+            {
+                Post::find($id)->delete();
+                return redirect('/profile/'.Auth::user()->id)->with('message', 'Интерьер удалён');
+            }
         }
+        return response()->json(['error' => 'You can not access!']);
     }
 }

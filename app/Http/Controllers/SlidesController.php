@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Input;
 use Auth;
 use App\Models\Slide;
+use Image;
+use Illuminate\Support\Facades\Storage;
 
 class SlidesController extends Controller
 {
@@ -29,16 +31,21 @@ class SlidesController extends Controller
         $this->validate($request, $slide->rules);
 
         $slide->text = Input::get('text');
-        $slide->img = $this->saveFile('claims', 'default', Input::file('file'),'600');
 
-        if (Input::has('alt')) {
-            $slide->alt = Input::get("alt");
-        }
+        $img = Image::make('img')->encode('jpg', 70);
+        $fileName = md5(microtime() . rand(0, 9999));
+        $path = 'public/slides/default/'.$fileName.'.png';
+
+        Storage::put($path, $img);
+
+        $slide->img = $path;
+
+        $slide->alt = Input::get("text");
 
         $slide->user_add = Auth::user()->id;
         $slide->save();
 
-        return redirect()->back('message', 'слайд упешно добавлен!');
+        return redirect()->route('listSlidesPage')->with('message', 'слайд упешно добавлен!');
     }
 
     /**
@@ -47,32 +54,41 @@ class SlidesController extends Controller
      */
     public function delete($id)
     {
-        Slide::find($id)->softDelete();
+        Slide::find($id)->delete();
 
         return redirect()->back()->with('message', 'слайд успешно удален!');
     }
 
     /**
      * @param Request $request
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function edit(Request $request)
+    public function edit(Request $request, $id)
     {
-        $id = Input::get('id');
         $slide = Slide::find($id);
-        $this->validate($request, $slide->rules);
-
-        $slide->text = Input::get('text');
-        $slide->img = $this->saveFile('claims', 'default', Input::file('file'),'600');
-
-        if (Input::has('alt')) {
-            $slide->alt = Input::get("alt");
+        if (!Input::has('text'))
+        {
+            return redirect()->back()->with('error', 'Заполните поле text');
         }
+        $slide->text = Input::get('text');
+        if (Input::file('img'))
+        {
+            $img = Image::make('img')->encode('jpg', 70);
+            $fileName = md5(microtime() . rand(0, 9999));
+            $path = 'public/slides/default/'.$fileName.'.png';
+
+            Storage::put($path, $img);
+
+            $slide->img = $path;
+        }
+
+        $slide->alt = Input::get("text");
 
         $slide->user_add = Auth::user()->id;
         $slide->update();
 
-        return redirect()->back()->with('message', 'сладй успешно отредактирован');
+        return redirect()->route('listSlidesPage')->with('message', 'сладй успешно отредактирован');
     }
 
     /**

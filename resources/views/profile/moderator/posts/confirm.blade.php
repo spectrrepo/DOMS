@@ -1,5 +1,6 @@
 @extends('profile.layout')
 @section('profile-content')
+    @include('profile.elements.success_alert')
     <h3 class="liked-title margin-bottom-10">Интерьеры на проверку</h3>
         <table class="uk-table uk-table-striped">
             <thead>
@@ -21,13 +22,10 @@
                         {{ $post->created_at->formatLocalized('%A %d %B %Y') }}
                     </td>
                     <td>
-                        <a class="uk-button uk-border-circle uk-button-success" title="проверено" >
-                            <i class="uk-icon-check"></i>
+                        <a class="uk-button uk-border-circle uk-button-success" href="{{ route('editPostPage', ['id' => $post->id]) }}" title="проверить" >
+                            <i class="uk-icon-eye"></i>
                         </a>
-                        <a class="uk-button uk-border-circle uk-button-primary" title="редактировать">
-                            <i class="uk-icon-pencil"></i>
-                        </a>
-                        <a class="uk-button uk-border-circle uk-button-danger" title="удалить">
+                        <a class="uk-button uk-border-circle uk-button-danger" href="{{ route('deleteVerPost', ['id' => $post->id]) }}" title="удалить">
                             <i class="uk-icon-trash-o"></i>
                         </a>
                     </td>

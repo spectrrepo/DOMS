@@ -5,7 +5,7 @@
    <div class="news">
        <div class="b-news">
           <div class="b-photo-news item-news-title" rel="article{{$article->id}}">
-             <img src="{{ $article->img_middle}}" alt="{{ $article->alt }}" />
+             <img src="{{ Storage::url($article->img_middle)}}" alt="{{ $article->alt }}" />
           </div>
           <div class="b-text-news">
              <div class="b-title-news item-news-title" rel="article{{ $article->id }}">{{ $article->title }}</div>

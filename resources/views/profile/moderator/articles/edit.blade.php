@@ -2,7 +2,7 @@
 @section('profile-content')
     <h3 class="liked-title margin-bottom-10">Добавить новость</h3>
     @include('profile.elements.validate')
-    {{ Form::open(['class' => 'uk-form', 'method' => 'post', 'route' => 'editArticle', 'files' => true]) }}
+    {{ Form::open(['class' => 'uk-form', 'method' => 'post', 'route' => ['editArticle', $article->id], 'files' => true]) }}
     <fieldset data-uk-margin>
         <div class="uk-grid">
             <div class="uk-width-1-2">
@@ -24,9 +24,10 @@
                     <label class="uk-form-label" for="">Изображение</label>
                     <div class="uk-form-controls">
                         <div id="main-wrap-photo" class="wrap-main-dwnld-photo" title="Добавить изображение">
-                            <span class="add-photo-ico uk-icon-justify uk-icon-camera"></span>
-                            <span class="add-photo-text">Добавить изображение</span>
                             <input id="file" class="dwnld-file-input" type="file" name="img">
+                            <span>
+                                <img src="{{Storage::url($article->img_large)}}" alt="">
+                            </span>
                         </div>
                     </div>
                 </div>

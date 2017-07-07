@@ -86,11 +86,11 @@ class BasePhotoController extends Controller
         if ($width === false) {
             $image = $this->getFile($file)
                           ->fit($height)
-                          ->encode('jpg');
+                          ->encode('jpg', 70);
         } else {
             $image = $this->getFile($file)
                           ->fit($height, $width)
-                          ->encode('jpg');
+                          ->encode('jpg', 70);
         }
 
         Storage::put($path, $image);
@@ -114,10 +114,10 @@ class BasePhotoController extends Controller
 
         if ($square === false) {
             $imageWithWatermark->widen($width)
-                               ->encode('jpg');
+                               ->encode('jpg', 70);
         } else {
             $imageWithWatermark->fit($width)
-                               ->encode('jpg');
+                               ->encode('jpg', 70);
         }
 
         Storage::put($path, $imageWithWatermark);

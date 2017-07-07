@@ -38,8 +38,8 @@
                     <li class="menu-item-profile {{ route('listSlidesPage') === URL::current() ? 'menu-item-profile-active' : '' }}">
                         <a href="{{ URL::route('listSlidesPage') }}">Изменение слайдов</a>
                     </li>
-                    <li class="menu-item-profile {{ route('listPlacePage') === URL::current() ? 'menu-item-profile-active' : '' }}">
-                        <a href="{{ URL::route('listSlidesPage') }}">Роли</a>
+                    <li class="menu-item-profile {{ route('listRolesPage') === URL::current() ? 'menu-item-profile-active' : '' }}">
+                        <a href="{{ URL::route('listRolesPage') }}">Роли</a>
                     </li>
                 @endif
             @endif

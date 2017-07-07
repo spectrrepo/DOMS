@@ -123,21 +123,17 @@ Route::group(['prefix' => 'posts'], function () {
         Route::get('confirmationList', 'PostsController@confirmationsPage')
              ->name('confirmList');
         Route::get('addPostSite/{id}', 'PostsController@addPostSite')
-             ->name('addPostSite')
-             ->where('id', '/^\d+$/');
-        Route::get('deletePost/{id}', 'PostsHistoriesController@deleteVerificationPost')
-             ->name('deleteVerPost')
-             ->where('id', '/^\d+$/');
+             ->name('addPostSite');
     });
 
     Route::group(['middleware' => 'role:user,moderator,admin'], function () {
         Route::post('add', 'PostsController@add')->name('addPost');
         Route::get('addPage', 'PostsController@addPage')->name('addPostPage');
-        Route::post('edit/{id}', 'PostsController@edit')->name('editPost')
-             ->where('id', '/^\d+$/');
-        Route::get('userPost', 'PostsController@userPost')->name('userPostPage');
-        Route::get('editPage/{id}','PostsController@editPage')->name('editPostPage')
-             ->where('id', '/^\d+$/');
+        Route::post('edit/{id}', 'PostsController@edit')->name('editPost');
+        Route::get('userPosts/{id}', 'PostsController@userPosts')->name('userPostsPage');
+        Route::get('editPage/{id}','PostsController@editPage')->name('editPostPage');
+        Route::get('deletePost/{id}', 'PostsController@deleteVerificationPost')
+            ->name('deleteVerPost');
     });
     
     Route::get('allPostSite', 'PostsController@allPostSite')->name('allPostSitePage')
@@ -146,13 +142,11 @@ Route::group(['prefix' => 'posts'], function () {
 
 Route::group(['prefix' => 'slides', 'middleware' => 'role:0,0,admin'], function () {
     Route::get('index', 'SlidesController@index')->name('listSlidesPage');
-    Route::get('editPage/{id}', 'SlidesController@editPage')->name('editSlidePage')
-         ->where('id', '/^\d+$/');
+    Route::get('editPage/{id}', 'SlidesController@editPage')->name('editSlidePage');
     Route::get('addPage', 'SlidesController@addPage')->name('addSlidePage');
     Route::post('add', 'SlidesController@add')->name('addSlide');
-    Route::post('delete/{id}', 'SlidesController@delete')->name('deleteSlide')
-         ->where('id', '/^\d+$/');
-    Route::post('edit', 'SlidesController@edit')->name('editSlide');
+    Route::get('delete/{id}', 'SlidesController@delete')->name('deleteSlide');
+    Route::post('edit/{id}', 'SlidesController@edit')->name('editSlide');
 });
 
 Route::group(['prefix' => 'social'], function () {
@@ -220,6 +214,13 @@ Route::group(['prefix' => '/user'], function () {
         Route::post('edit', 'UserController@edit')
              ->name('editUser');
     });
+});
+
+
+Route::group(['prefix' => '/roles', 'middleware' => 'role:0,0,admin'], function () {
+    Route::get('/list', 'RolesController@listPage')->name('listRolesPage');
+    Route::get('/edit/{id}', 'RolesController@editPage')->name('editRolesPage');
+    Route::post('/edit/{id}', 'RolesController@edit')->name('editRole');
 });
 
 Route::get('delete/{id}', 'ViewsController@delete')
