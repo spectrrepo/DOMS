@@ -8,7 +8,7 @@ use Input;
 
 use App\Models\Style;
 
-class StylesController extends Controller
+class StylesController extends BasePhotoController
 {
     /**
      * @param $styleID
@@ -31,16 +31,16 @@ class StylesController extends Controller
         $this->validate($request, $style->rules);
 
         $style->title = Input::get('title');
-        $style->status = Input::get('status');
+        $style->status = true;
         $style->description = Input::get('description');
         $style->full_description = Input::get('full_description');
         $style->alt = Input::get('title');
-        $style->img_middle = $this->saveFile('claims', 'default', Input::file('file'),'600');
-        $style->img_large = $this->saveFile('claims', 'default', Input::file('file'),'600');
-        $style->img_square = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $style->img_middle = $this->saveFile('claims', 'default', Input::file('img'),'600');
+        $style->img_large = $this->saveFile('claims', 'default', Input::file('img'),'600');
+        $style->img_square = $this->saveFile('claims', 'default', Input::file('img'),'600');
         $style->save();
 
-        return redirect()->back()->with('message', 'ноывый стиль успешно добавлен!');
+        return redirect()->route('listStylePage')->with('message', 'ноывый стиль успешно добавлен!');
     }
 
     /**
@@ -58,12 +58,14 @@ class StylesController extends Controller
         $style->description = Input::get('description');
         $style->full_description = Input::get('full_description');
         $style->alt = Input::get('title');
-        $style->img_middle = $this->saveFile('claims', 'default', Input::file('file'),'600');
-        $style->img_large = $this->saveFile('claims', 'default', Input::file('file'),'600');
-        $style->img_square = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        if (Input::has('img')) {
+            $style->img_middle = $this->saveFile('claims', 'default', Input::file('img'),'600');
+            $style->img_large = $this->saveFile('claims', 'default', Input::file('img'),'600');
+            $style->img_square = $this->saveFile('claims', 'default', Input::file('img'),'600');
+        }
         $style->update();
 
-        return redirect()->back()->with('message', 'стиль успешно изменен!');
+        return redirect()->route('listStylePage')->with('message', 'стиль успешно изменен!');
     }
 
     /**

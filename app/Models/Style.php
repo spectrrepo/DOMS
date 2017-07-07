@@ -10,10 +10,9 @@ class Style extends Model {
     public $timestamps = false;
     public $rules = [
         'title' => 'required|max:255',
-        'status' => 'required|boolean',
         'description' => 'required|max:255',
         'full_description' => 'string',
-        'img' => 'image|size:10240',
+        'img' => 'image|max:10240',
     ];
 
     public function posts ()

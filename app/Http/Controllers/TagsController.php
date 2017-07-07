@@ -18,10 +18,10 @@ class TagsController extends Controller
     public function edit ($id)
     {
       $tag = Tag::find($id);
-      $tag->title =Input::get('tag');
+      $tag->value =Input::get('tag');
       $tag->update();
 
-      return redirect()->back()->with('message', 'тег успешно изменен');
+      return redirect()->route('listTagPage')->with('message', 'тег успешно изменен');
     }
 
     /**
@@ -42,11 +42,11 @@ class TagsController extends Controller
     {
       $tags = new Tag();
       $tags->value = Input::get('title');
-      $tags->lang = ru;
+      $tags->lang = 'ru';
       $tags->value_en = 0;
       $tags->save();
 
-      return redirect()->back()->with('message', 'Новый тег успешно добавлен');
+      return redirect()->route('listTagPage')->with('message', 'Новый тег успешно добавлен');
     }
 
     /**
@@ -85,7 +85,7 @@ class TagsController extends Controller
      */
     public function addPage ()
     {
-        return view('profile.admin.filter.tags.list');
+        return view('profile.admin.filter.tags.add');
     }
 
     /**

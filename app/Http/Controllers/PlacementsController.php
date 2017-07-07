@@ -7,7 +7,7 @@ use Input;
 
 use App\Models\Placement;
 
-class PlacementsController extends Controller
+class PlacementsController extends BasePhotoController
 {
     /**
      * @param $id
@@ -30,10 +30,10 @@ class PlacementsController extends Controller
         $this->validate($request, $placement->rules);
 
         $placement->title = Input::get("title");
-        $placement->status = Input::get("status");
-        $placement->img_middle = $this->saveFile('claims', 'default', Input::file('file'),'600');
-        $placement->img_large = $this->saveFile('claims', 'default', Input::file('file'),'600');
-        $placement->img_square = $this->saveFile('claims', 'default', Input::file('file'),'600');
+        $placement->status = 1;
+        $placement->img_middle = $this->saveFile('claims', 'default', Input::file('img'),'600');
+        $placement->img_large = $this->saveFile('claims', 'default', Input::file('img'),'600');
+        $placement->img_square = $this->saveFile('claims', 'default', Input::file('img'),'600');
         $placement->description = Input::get("description");
         $placement->full_description = Input::get("full_description");
 
@@ -43,7 +43,7 @@ class PlacementsController extends Controller
 
         $placement->save();
 
-        return redirect()->back()->with('message', 'Помещение успешно добавлена!');
+        return redirect()->route('listPlacePage')->with('message', 'Помещение успешно добавлена!');
 
     }
 
@@ -55,13 +55,17 @@ class PlacementsController extends Controller
     public function edit(Request $request, $id)
     {
         $placement = Placement::find($id);
-        $this->validate($request, $placement->validate);
+        $this->validate($request, $placement->rules);
 
         $placement->title = Input::get("title");
         $placement->status = Input::get("status");
-        $placement->img_middle = $this->saveFile('claims', 'default', Input::file('file'),'600');
-        $placement->img_large = $this->saveFile('claims', 'default', Input::file('file'),'600');
-        $placement->img_square = $this->saveFile('claims', 'default', Input::file('file'),'600');
+
+        if (Input::has('img')) {
+            $placement->img_middle = $this->saveFile('claims', 'default', Input::file('img'),'600');
+            $placement->img_large = $this->saveFile('claims', 'default', Input::file('img'),'600');
+            $placement->img_square = $this->saveFile('claims', 'default', Input::file('img'),'600');
+        }
+
         $placement->description = Input::get("description");
         $placement->full_description = Input::get("full_description");
 
@@ -71,7 +75,7 @@ class PlacementsController extends Controller
 
         $placement->update();
 
-        return redirect()->back()->with('message', 'Помещение успешно отредактировано!');
+        return redirect()->route('listPlacePage')->with('message', 'Помещение успешно отредактировано!');
     }
 
     /**
@@ -100,6 +104,6 @@ class PlacementsController extends Controller
     {
         $placement = Placement::find($id);
 
-        return view('profile.admin.filter.placements.edit', ['placement', $placement]);
+        return view('profile.admin.filter.placements.edit', ['placement' => $placement]);
     }
 }

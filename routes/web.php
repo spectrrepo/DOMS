@@ -40,15 +40,13 @@ Route::group(['prefix' => 'claims'], function () {
     });
 });
 
-Route::group(['prefix' => 'colors', 'middleware' => 'role:0,0,admin'], function () {
+Route::group(['prefix' => 'colors', 'middleware' => 'role:user,moderator,admin'], function () {
     Route::post('add', 'ColorsController@add')->name('addColor');
     Route::post('edit/{id}', 'ColorsController@edit')->name('editColor')
          ->where('id', '/^\d+$/');
-    Route::post('delete/{id}', 'ColorsController@delete')->name('deleteColor')
-         ->where('id', '/^\d+$/');
+    Route::get('delete/{id}', 'ColorsController@delete')->name('deleteColor');
     Route::get('listPage', 'ColorsController@listPage')->name('listColorPage');
-    Route::get('editPage/{id}', 'ColorsController@editPage')->name('editColorPage')
-         ->where('id', '/^\d+$/');
+    Route::get('editPage/{id}', 'ColorsController@editPage')->name('editColorPage');
     Route::get('addPage', 'ColorsController@addPage')->name('addColorPage');
 });
 
@@ -98,18 +96,15 @@ Route::group(['prefix' => 'placements', 'middleware' => 'role:0,0,admin'], funct
     Route::post('add', 'PlacementsController@add')
          ->name('addPlace');
     Route::get('delete/{id}', 'PlacementsController@delete')
-         ->name('deletePlace')
-         ->where('id', '/^\d+$/');
+         ->name('deletePlace');
     Route::post('edit/{id}', 'PlacementsController@edit')
-         ->name('editPlace')
-         ->where('id', '/^\d+$/');
+         ->name('editPlace');
     Route::get('listPage', 'PlacementsController@listPage')
          ->name('listPlacePage');
     Route::get('addPage', 'PlacementsController@addPage')
          ->name('addPlacePage');
     Route::get('editPage/{id}', 'PlacementsController@editPage')
-         ->name('editPLacePage')
-         ->where('id', '/^\d+$/');
+         ->name('editPLacePage');
 });
 
 Route::group(['prefix' => 'posts'], function () {
@@ -174,20 +169,16 @@ Route::group(['prefix' => 'social'], function () {
 });
 Route::group(['prefix' => 'styles', 'middleware' => 'role:0,0,admin'], function () {
     Route::get('delete/{id}', 'StylesController@delete')
-         ->name('deleteStyle')
-         ->where('id', '/^\d+$/');
+         ->name('deleteStyle');
     Route::post('add', 'StylesController@add')
          ->name('addStyle');
     Route::post('edit/{id}', 'StylesController@edit')
-         ->name('editStyle')
-         ->where('id', '/^\d+$/');
-    Route::get('listPage', 'StylesController@listPage')
-         ->name('listStylePage');
+         ->name('editStyle');
+    Route::get('listPage', 'StylesController@listPage')->name('listStylePage');
     Route::get('addPage', 'StylesController@addPage')
          ->name('addStylePage');
-    Route::get('editPage{id}', 'StylesController@editPage')
-         ->name('editStylePage')
-         ->where('id', '/^\d+$/');
+    Route::get('editPage/{id}', 'StylesController@editPage')
+         ->name('editStylePage');
 });
 
 Route::group(['prefix' => 'tags'], function () {
@@ -195,9 +186,8 @@ Route::group(['prefix' => 'tags'], function () {
         Route::post('edit/{id}', 'TagsController@edit')
              ->name('editTag');
         Route::get('delete/{id}', 'TagsController@delete')
-             ->name('deleteTag')
-             ->where('id', '/^\d+$/');
-        Route::get('editTagsPage', 'TagsController@editPage')
+             ->name('deleteTag');
+        Route::get('editTagsPage/{id}', 'TagsController@editPage')
              ->name('editTagPage');
         Route::get('listTagsPage', 'TagsController@listPage')
             ->name('listTagPage');

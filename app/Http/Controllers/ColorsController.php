@@ -21,7 +21,7 @@ class ColorsController extends Controller
         $color->hash = Input::get('hash');
         $color->save();
 
-        return redirect()->back()->with('message', 'Новый цвет успешно добавлен');
+        return redirect()->route('listColorPage')->with('message', 'Новый цвет успешно добавлен');
     }
 
     /**
@@ -38,7 +38,7 @@ class ColorsController extends Controller
         $color->hash = Input::get('hash');
         $color->update();
 
-        return redirect()-back()->with('message', 'Цвет успешно изменен');
+        return redirect()->route('listColorPage')->with('message', 'Цвет успешно изменен');
     }
 
     /**

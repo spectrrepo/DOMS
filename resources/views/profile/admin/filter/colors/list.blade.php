@@ -1,7 +1,8 @@
 @extends('profile.layout')
 @section('profile-content')
+    @include('profile.elements.success_alert')
     <h3 class="liked-title margin-bottom-10">Цвета
-        <a class="uk-float-right uk-button uk-button-success">
+        <a class="uk-float-right uk-button uk-button-success" href="{{ route('addColorPage') }}">
             <i class="uk-icon-pencil"></i>
             Добавить
         </a>
@@ -22,10 +23,10 @@
                     </div>
                 </td>
                 <td>
-                    <a class="uk-button uk-border-circle uk-button-primary" title="редактировать">
+                    <a class="uk-button uk-border-circle uk-button-primary" href="{{ route('editColorPage', ['id' => $color->id]) }}" title="редактировать">
                         <i class="uk-icon-pencil"></i>
                     </a>
-                    <a class="uk-button uk-border-circle uk-button-danger" title="удалить">
+                    <a class="uk-button uk-border-circle uk-button-danger" href="{{ route('deleteColor', ['id' => $color->id]) }}" title="удалить">
                         <i class="uk-icon-trash-o"></i>
                     </a>
                 </td>

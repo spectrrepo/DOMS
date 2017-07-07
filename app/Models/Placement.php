@@ -10,10 +10,9 @@ class Placement extends Model {
     public $timestamps = false;
     public $rules = [
         'title' => 'required|max:150',
-        'status' => 'required|boolean',
-        'img' => 'size:10240',
+        'img' => 'image|max:10240',
         'description' => 'string',
-        'ful_description' => 'string',
+        'ful_description' => 'string'
     ];
 
 	public function posts ()

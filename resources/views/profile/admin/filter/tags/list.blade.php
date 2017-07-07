@@ -1,7 +1,8 @@
 @extends('profile.layout')
 @section('profile-content')
+    @include('profile.elements.success_alert')
     <h3 class="liked-title margin-bottom-10">Теги
-        <a class="uk-float-right uk-button uk-button-success">
+        <a class="uk-float-right uk-button uk-button-success" href="{{ route('addTagPage') }}">
             <i class="uk-icon-pencil"></i>
             Добавить
         </a>
@@ -18,10 +19,10 @@
                 <td>{{ $tag->id }}</td>
                 <td>{{ $tag->value }}</td>
                 <td>
-                    <a class="uk-button uk-border-circle uk-button-primary" title="редактировать">
+                    <a class="uk-button uk-border-circle uk-button-primary" href="{{ route('editTagPage', ['id' => $tag->id]) }}" title="редактировать">
                         <i class="uk-icon-pencil"></i>
                     </a>
-                    <a class="uk-button uk-border-circle uk-button-danger" title="удалить">
+                    <a class="uk-button uk-border-circle uk-button-danger" href="{{ route('deleteTag', ['id' => $tag->id]) }}" title="удалить">
                         <i class="uk-icon-trash-o"></i>
                     </a>
                 </td>
