@@ -55,7 +55,7 @@ class Post extends Model {
 
 	public function tags ()
     {
-		return $this->belongsToMany('App\Models\Tag', 'posts_tags', 'post_id', 'post_id');
+		return $this->belongsToMany('App\Models\Tag', 'posts_tags', 'post_id', 'tag_id');
 	}
 
 	public function colors ()

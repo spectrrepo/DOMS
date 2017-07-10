@@ -183,6 +183,7 @@ i
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         JeroenNoten\LaravelCkEditor\ServiceProvider::class,
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
+        Laravelrus\LocalizedCarbon\LocalizedCarbonServiceProvider::class,
 
 
 
@@ -243,6 +244,8 @@ i
         'Image' => Intervention\Image\Facades\Image::class,
         'Socialize' => Laravel\Socialite\Facades\Socialite::class,
         'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
+        'LocalizedCarbon'   => Laravelrus\LocalizedCarbon\LocalizedCarbon::class,
+        'DiffFormatter'     => Laravelrus\LocalizedCarbon\DiffFactoryFacade::class,
 
     ],
 

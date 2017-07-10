@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Article extends Model {
 	use SoftDeletes;
-	protected $table = 'articles';
+    protected $table = 'articles';
 	protected $hidden = ['user_add', 'status'];
 	protected $dates = ['date', 'deleted_at'];
+    protected $dateFormat = 'Y-m-d H:i:s';
     public $timestamps = false;
     public $rules = [
        'title' => 'bail|required|max:255',

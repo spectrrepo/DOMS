@@ -55,7 +55,7 @@ class PostsController extends BasePhotoController
             foreach ($properties as $colorItem) {
                 DB::table($prop_table)
                   ->insert([
-                      'img_id' => $lastId,
+                      'post_id' => $lastId,
                       $id_prop => $colorItem
                       ]);
             }
@@ -143,7 +143,7 @@ class PostsController extends BasePhotoController
         $color = $filterArray['color'];
         $sort = $filterArray['sort'];
         $tag = $filterArray['tag'];
-        $posts = Post::select('posts.id AS id' ,
+        $posts = Post::select('*', 'posts.id AS id' ,
                               'posts.img_middle AS img')
                       ->when($placements != null, function ($query) use ($placements){
                           return $query->join('posts_placements', 'posts.id', '=', 'posts_placements.post_id');
@@ -194,6 +194,7 @@ class PostsController extends BasePhotoController
         $posts = $this->queryForPosts($json)
                       ->take(32)
                       ->get();
+
         return view('site.gallery.index', [
                           'posts' => $posts,
                           'json' => $json
@@ -213,29 +214,21 @@ class PostsController extends BasePhotoController
 //                      ->take(6)
                       ->get();
         $numPosts = $this->queryForPosts($json)->count();
-        $currentPost = Post::find($id);
         $likes = LikesController::loadLikeWhomThree($id);
         $numLikes = Like::all()->count();
-        $postAuthor = User::find($currentPost->author_id);
         $tags = TagsController::loadTagsForPost($id);
         $views = View::where('post_id', '=', $id)->get();
-        $comments = CommentsController::threeCommentsLoad();
-        $numComments = count($comments);
         $colorLike = $this->activeColor('like', $id);
         $colorFavorite = $this->activeColor('liked', $id);
-        $currentPost->views += 1;
-        $currentPost->save();
+        $posts->first()->views += 1;
+        $posts->first()->save();
 
-        return view('site.slider.index', ['postAuthor' => $postAuthor,
-                                          'posts' => $posts,
-                                          'currentPost' => $currentPost,
-                                          'comments' => $comments,
+        return view('site.slider.index', ['posts' => $posts,
                                           'tags' => $tags,
                                           'likes' => $likes,
                                           'views' => $views,
                                           'numPosts' => $numPosts,
                                           'numLike' => $numLikes,
-                                          'numComments' => $numComments,
                                           'colorLike' => $colorLike,
                                           'colorFavorite' => $colorFavorite,
                                          ]);
@@ -272,7 +265,7 @@ class PostsController extends BasePhotoController
         $post->save();
 
         if (Input::has('color')) {
-            $this->addJoinData('color', 'img_colors',  'color_id', $post->id);
+            $this->addJoinData('color', 'posts_colors',  'color_id', $post->id);
         }
 
         if (Input::has('placement')) {

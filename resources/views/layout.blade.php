@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+      <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <meta name="_token" content="{{ csrf_token() }}">
     <meta name="authID" content="{{ Auth::check() ? Auth::user()->id : '' }}">
     <title>

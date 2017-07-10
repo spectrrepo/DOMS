@@ -16,5 +16,6 @@
         Следущая страница
       </div>
     @endif
+    @include('site.elements.left_sidebar.elements.popup')
 </div>
 @endsection

@@ -9,25 +9,25 @@ import { URL_DELETE_VIEWS } from './constant';
  * @function photoID - возвращает id текущей фотографии
  * @return integer
  */
-export var photoID = photoID => $('.active-slide').data('id');
+export let photoID = photoID => $('.active-slide').data('id');
 
 /**
  * @function csrftoken - возвращает текущий токен приложения
  * @return string
  */
-export var csrftoken = csrftoken => $('meta[name=_token]').attr('content');
+export let csrftoken = csrftoken => $('meta[name=_token]').attr('content');
 
 /**
  * @function user_id - возвращает id пользователя
  * @return string
  */
-export var user_id = user_id => $('input[name=user_id]').val();
+export let user_id = user_id => $('input[name=user_id]').val();
 
 /**
  * @function authID - хз чем отличается от id
  * @return {[type]} [description]
  */
-export var authID = authID => $('meta[name=authID]').attr('content');
+export let authID = authID => $('meta[name=authID]').attr('content');
 
 /**
  * @function dwnldIndexPhoto - подгрузка новых фотографий на главной странице
@@ -72,7 +72,26 @@ export function dwnldIndexPhoto(sortSorting,
  */
 export function loadAllComments(btn) {
   $(btn).on('click', function() {
-    $('.b-comment-wrap').fadeIn();
+    $.ajax({
+        type:'POST',
+          data: {
+          'lastId': lastIdJS,
+              '_token': csrftoken,
+              'sortSorting': sortSorting,
+              'styleSorting': styleSorting,
+              'roomSorting': roomSorting,
+              'colorSorting': colorSorting,
+              'tag': tagSorting
+        },
+        url:DWNLD_MAIN_PHOTO,
+
+          success: function (data) {
+          for(var i=0; i<data.length; i++) {
+              $(obj(roomSorting, styleSorting, colorSorting, tagSorting, data[i].min_path))
+                  .appendTo('.uk-grid-width-small-1-2');
+          }
+        }
+    });
     $(btn).fadeOut();
   });
 }

@@ -83,7 +83,7 @@ class UserController extends BasePhotoController
                 "numLikes" => LikesController::numLikes($item->postId),
                 "numFavorites" => FavoritesController::numFavorites($item->postId),
                 "dateEvent" => $item->dateEvent,
-                "comments" => CommentsController::newsThreeCommentLoad($item->postId, $item->dateEvent),
+                "comments" => CommentsController::newsCommentLoad($item->postId, $item->dateEvent),
                 "likes" => LikesController::newsLikesLoad($item->postId, $item->dateEvent),
                 "favorites" => FavoritesController::newsFavoritesLoad($item->postId, $item->dateEvent),
             ];
@@ -104,11 +104,12 @@ class UserController extends BasePhotoController
 
          $rawPosts = $this->getPartPosts(1, 10);
          $posts = $this->formPosts($rawPosts);
+//         dd(count($posts[0]['likes']));
 
          return view('profile.user.feed.index', [
-                     'user' => $user,
-                     'socials' => $socials,
-                     'posts' => $posts
+                           'user' => $user,
+                           'socials' => $socials,
+                           'posts' => $posts
          ]);
      }
 

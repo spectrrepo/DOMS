@@ -1,5 +1,4 @@
 <div class="b-comments">
-
     <div class="b-all-comment">
         <div>
             @include('site.slider.elements.center.comments.header')

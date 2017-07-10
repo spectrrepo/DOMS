@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Input;
 use DB;
@@ -134,9 +135,10 @@ class CommentsController extends Controller
     /**
      * @param $id
      * @param $date
+     * @param bool $bool
      * @return mixed
      */
-    public static function newsThreeCommentLoad ($id, $date)
+    public static function newsCommentLoad ($id, $date, $bool = false)
     {
         $minutes = Carbon::parse($date)->minute;
         $hours = Carbon::parse($date)->hour;
@@ -152,10 +154,18 @@ class CommentsController extends Controller
             ->addMinutes(59)
             ->addHours(23);
 
-        return Comment::join('users', 'users.id', '=', 'comments.user_id')
-                      ->where('comments.post_id', '=', $id)
-                      ->whereBetween('favorites.date', [$dateBegin, $dateEnd])
-                      ->take(3)
-                      ->get();
+        if ($bool === false) {
+            return Comment::join('users', 'users.id', '=', 'comments.user_id')
+                ->where('comments.post_id', '=', $id)
+                ->whereBetween('comments.date', [$dateBegin, $dateEnd])
+                ->take(3)
+                ->get();
+        } else {
+            return Comment::join('users', 'users.id', '=', 'comments.user_id')
+                ->where('comments.post_id', '=', $id)
+                ->whereBetween('comments.date', [$dateBegin, $dateEnd])
+                ->get();
+        }
+
     }
 }

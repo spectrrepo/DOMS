@@ -1,1 +1,1 @@
-<div class="tag-item">{{ $tag->title }}</div>
+<div class="tag-item">{{ $tag->value }}</div>

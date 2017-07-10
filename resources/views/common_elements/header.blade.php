@@ -14,13 +14,13 @@
   </div>
     <div class="logining">
       @if ( Auth::check())
-          <a href="{{ URL::route('editUserPage') }}" class="logining-item logining-item-top">
+          <a href="{{ URL::route('userPage',['id' => Auth::id()]) }}" class="logining-item logining-item-top">
               {{ Auth::user()->name }}
           </a>
           <a href="{{ URL::route('logout') }}" class="logining-item">Выход</a>
           <a href="{{ URL::route('userPage',['id' => Auth::id()]) }}">
               <div class="login-portret">
-                  <img src="{{ Auth::user()->ava }}" alt="">
+                  <img src="{{ Storage::url(Auth::user()->img_mini) }}" alt="">
               </div>
           </a>
       @else

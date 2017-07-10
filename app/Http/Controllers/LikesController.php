@@ -113,9 +113,9 @@ class LikesController extends Controller
                           ->addMinutes(59)
                           ->addHours(23);
 
-        return Like::join('users', 'users.id', '=', 'favorites.user_id')
-                    ->whereBetween('favorites.date', [$dateBegin, $dateEnd])
-                    ->where('favorites.post_id', '=', $id)
+        return Like::join('users', 'users.id', '=', 'likes.user_id')
+                    ->whereBetween('likes.date', [$dateBegin, $dateEnd])
+                    ->where('likes.post_id', '=', $id)
                     ->get();
     }
 }

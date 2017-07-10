@@ -38,7 +38,7 @@
                 <div class="clear"></div>
                 <hr>
             </div>
-            <button class="btn-dwnld" type="button" name="button" onclick="this.parentNode.submit();">
+            <button class="btn-dwnld" type="submit" name="button" onclick="this.parentNode.submit();">
                 <span class="save-text">Сохранить изменения</span>
                 <span class="save-ico uk-icon-justify uk-icon-save"></span>
             </button>

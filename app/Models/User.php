@@ -134,4 +134,9 @@ class User extends Authenticatable {
     {
 		return $this->hasMany('App\Models\Post', 'id', 'author_id');
 	}
+
+	public function comments ()
+    {
+
+    }
 }
