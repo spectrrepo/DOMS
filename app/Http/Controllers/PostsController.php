@@ -194,7 +194,6 @@ class PostsController extends BasePhotoController
         $posts = $this->queryForPosts($json)
                       ->take(32)
                       ->get();
-
         return view('site.gallery.index', [
                           'posts' => $posts,
                           'json' => $json

@@ -1,7 +1,7 @@
 <nav class="sidebar" style="margin-top:-16px;">
     <ul>
-        <li class="menu-item-profile {{ route('listPlacePage') === URL::current() ? 'menu-item-profile-active' : '' }}">
-            <a href="{{ URL::to('profile/'.Auth::id()) }}">Моя страница</a>
+        <li class="menu-item-profile {{ URL::route('userPage', ['id' => Auth::user()->id]) === URL::current() ? 'menu-item-profile-active' : '' }}">
+            <a href="{{ URL::route('userPage', ['id' => Auth::user()->id]) }}">Моя страница</a>
         </li>
         <li class="menu-item-profile {{ route('addPostPage') === URL::current() ? 'menu-item-profile-active' : '' }}">
             <a href="{{ URL::route('addPostPage') }}">Добавить изображение</a>

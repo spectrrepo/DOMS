@@ -1,16 +1,16 @@
-<div class="b-item-stat {{ $type }}">
-    @if (Auth::check())
-      <input type="hidden" name="post_id" value="{{ $posts[0]->id }}">
-      <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+{{--<div class="b-item-stat {{ $type }}">--}}
+    {{--@if (Auth::check())--}}
+      {{--<input type="hidden" name="post_id" value="{{ $posts[0]->id }}">--}}
+      {{--<input type="hidden" name="user_id" value="{{ Auth::id() }}">--}}
       {{--<input type="hidden" name="url-{{ $type }}" value="{{ $colorLiked ? '/delete_'.$type : '/'.$type }}">--}}
-    @endif
+    {{--@endif--}}
     {{--<button class="{{ $colorLiked ? 'active-favorite': ''}} ico-slider uk-icon-justify uk-icon-{{ $icon }}"></button>--}}
-    @if ($type == 'like')
+    {{--@if ($type == 'like')--}}
         {{--<span {{ Auth::check() ?  'id=num_liked' : ''}} >{{ $num_like }}</span>--}}
-    @endif
-    <span class="tooltip-stat margin-{{ $margin }}-tooltip">
-        <span class="text-tooltip-stat">
-          {{ $text }}
+    {{--@endif--}}
+    {{--<span class="tooltip-stat margin-{{ $margin }}-tooltip">--}}
+        {{--<span class="text-tooltip-stat">--}}
+          {{--{{ $text }}--}}
           {{--@if ($type == 'like')--}}
               {{--<span id="like-whom-pole">--}}
                   {{--@php $i = 0; @endphp--}}
@@ -24,7 +24,7 @@
                   {{--@endforeach--}}
               {{--</span>--}}
           {{--@endif--}}
-        </span>
-        <span class="triangle-tooltip-stat"></span>
-    </span>
-</div>
+        {{--</span>--}}
+        {{--<span class="triangle-tooltip-stat"></span>--}}
+    {{--</span>--}}
+{{--</div>--}}

@@ -100,13 +100,12 @@ class UserController extends BasePhotoController
      public function index ($id)
      {
          $user = User::find($id);
-         $socials = UserSocial::where('user_id', '=', $id )
-                               ->get;
+         $socials = UserSocial::where('user_id', '=', $id )->get();
 
          $rawPosts = $this->getPartPosts(1, 10);
          $posts = $this->formPosts($rawPosts);
 
-         return view('some.view', [
+         return view('profile.user.feed.index', [
                      'user' => $user,
                      'socials' => $socials,
                      'posts' => $posts
@@ -232,7 +231,7 @@ class UserController extends BasePhotoController
           $links = UserSocial::where('user_id', '=', $user->id)->get();
 
           return view('profile.user.edit.index', ['user' => $user,
-                                             'links' => $links]);
+                                                        'links' => $links]);
       }
 
     /**
