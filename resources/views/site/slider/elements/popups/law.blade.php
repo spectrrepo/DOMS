@@ -6,7 +6,7 @@
   {{ Form::open(array('id' => 'formPretense', 'files' => 'true')) }}
   <div class="body-modal-law">
     <textarea class="text-pretense" name="text_pretense"></textarea>
-    <input type="hidden" name="post_id" value="{{ $image->id }}">
+    <input type="hidden" name="post_id" value="{{ $posts->first()->id }}">
   </div>
   <hr>
   <div class="footer-modal-law">

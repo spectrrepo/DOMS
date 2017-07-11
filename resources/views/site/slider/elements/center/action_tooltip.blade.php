@@ -8,11 +8,11 @@
     @if ($type == 'like')
         <span {{ Auth::check() ?  'id=num_liked' : ''}} >{{ $posts->first()->likes->count() }}</span>
     @endif
-    <span class="tooltip-stat margin-{{ $margin }}-tooltip">
-        <span class="text-tooltip-stat">
+    <div class="tooltip-stat margin-{{ $margin }}-tooltip">
+        <div class="text-tooltip-stat">
           {{ $text }}
           @if ($type == 'like')
-              <span id="like-whom-pole">
+              <div id="like-whom-pole">
                   @php $i = 0; @endphp
                   @foreach ($posts->first()->likes as $like)
                       @php if ($i >3) { break;} @endphp
@@ -22,9 +22,9 @@
                       <img src="{{ $like->user->img_mini }}"></a>
                       @php $i++; @endphp
                   @endforeach
-              </span>
+              </div>
           @endif
-        </span>
+        </div>
         <span class="triangle-tooltip-stat"></span>
-    </span>
+    </div>
 </div>

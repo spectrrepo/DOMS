@@ -1,6 +1,5 @@
 <div class="big-col uk-clearfix">
     <div class="uk-grid">
-        {{ dd(Auth::user()->id) }}
         @if ((Auth::user()->roles[0]->nickname === 'admin') || (Auth::user()->roles[0]->nickname === 'moderator'))
             <div class="uk-width-1-2 uk-margin-small-top">
                 <a class="uk-width-1-1 uk-button uk-button-success uk-border-rounded" href="{{ route('addPostSite', [ 'id' => $post->id])}}" >

@@ -5,7 +5,7 @@
     <div class="tags-list">
         @foreach ( $placements as $placement )
             <div class="wrap-tags-list-item">
-                <input class="opacity-radio" type="checkbox" name="room[]" value="{{ $placement->id }}">
+                <input class="opacity-radio" type="checkbox" name="placement[]" value="{{ $placement->id }}">
                 <div class="tags-list-item">
                     {{ $placement->title }}
                 </div>

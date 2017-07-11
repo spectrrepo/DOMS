@@ -28,14 +28,14 @@ class ViewsController extends BasePhotoController
      * @param $file
      * @param $post_id
      */
-    public static function add ($file, $post_id)
+    public function add ($file, $post_id)
     {
         $view = new View();
         $view->post_id = $post_id;
-        $view->img_mini = self::saveFileWithWatermark('claims', 'default', $file,'600');
-        $view->img_middle = self::saveFileWithWatermark('claims', 'default', $file,'600');
-        $view->img_large = self::saveFileWithWatermark('claims', 'default', $file,'600');
-        $view->img_square = self::saveFileWithWatermark('claims', 'default', $file,'600');
+        $view->img_mini = $this->saveFileWithWatermark('claims', 'default', $file,'600');
+        $view->img_middle = $this->saveFileWithWatermark('claims', 'default', $file,'600');
+        $view->img_large = $this->saveFileWithWatermark('claims', 'default', $file,'600');
+        $view->img_square = $this->saveFileWithWatermark('claims', 'default', $file,'600');
         $view->alt = 'изображение';
         $view->save();
     }

@@ -95,12 +95,11 @@ class TagsController extends Controller
     public static function addTagForPost ($tag, $postId)
     {
         $isTag = Tag::where('value', '=', $tag)->get();
-
-        if (!$isTag->isEmpty())
+        if ($isTag->isEmpty())
         {
             $tag = new Tag();
             $tag->value = Input::get('title');
-            $tag->lang = ru;
+            $tag->lang = 'ru';
             $tag->value_en = 0;
             $tag->save();
 

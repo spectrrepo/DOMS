@@ -9,13 +9,12 @@ class Post extends Model {
 	use SoftDeletes;
 
 	protected $table = 'posts';
-	protected $dates = ['updated_at', 'created_at', 'deleted_at'];
+//	protected $dates = ['updated_at', 'created_at', 'deleted_at'];
     public $timestamps = true;
     public $rules = [
         'title' => 'required|max:255',
         'description' => 'required|string',
         'img' => 'required|image|max:82240',
-        'views' => 'integer',
         ];
 
 	public function user ()

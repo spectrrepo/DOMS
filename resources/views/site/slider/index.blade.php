@@ -9,10 +9,10 @@
              <div class="one-picture-place">
                  @include('site.elements.left_sidebar.elements.popup')
                  <div class="b-photo-slider">
-                 {{--@include('spopups.modal_racourse')--}}
-                 {{--@include('popups.modal_description')--}}
-                 {{--@include('popups.law')--}}
-                 {{--@include('popups.likes')--}}
+                 @include('site.slider.elements.popups.racourse')
+                 @include('site.slider.elements.popups.description')
+                 @include('site.slider.elements.popups.law')
+                 @include('site.slider.elements.popups.likes')
                      <div class="wrap-slider">
                          @foreach ($posts as $image_el)
                              @if ($image_el->id === $posts[0]->id)
@@ -37,23 +37,23 @@
                                  <span class="uk-icon-justify uk-icon-chevron-right"></span>
                              </a>
                          </div>
-                         {{--@include('site.slider_components.popup_error')--}}
+                         @include('site.slider.elements.popups.error')
                      </div>
                  </div>
                  <div class="b-informstion">
-                     <span class="b-pretens">
+                     <div class="b-pretens">
                          <a href="{{ route( 'userPage', ['id' => $posts->first()->user->id ])}}">
-                             <span class="author-portret">
+                             <div class="author-portret">
                                  <img src=" {{ $posts->first()->user->img_mini}}" alt="" />
-                             </span>
+                             </div>
                              <span class="author-name">{{ $posts->first()->user->name}}</span>
                          </a>
                          {{--@include('site.slider_components.b_pretense')--}}
-                     </span>
-                     <span class="num-page">
+                     </div>
+                     <div class="num-page">
                          <span id="current-position">{{ $posts->count() }}</span>/<span id="all-photo">{{ $posts->count()}}</span>
-                     </span>
-                     <span class="status-photo">
+                     </div>
+                     <div class="status-photo">
                          @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'back-to-main','link' => 'href=""','icon' => 'th-large','id' => ' ','data' => false,'margin' => 'margin-callback-tooltip','text' => 'Плитка','triangle'=>'triangle-callback'])
                          @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'full-scrn','link' => ' ','icon' => 'arrows-alt','id' => ' ','data' => false,'margin' => 'margin-full-scr-tooltip','text' => 'На весь экран','triangle'=>'triangle-full-scr'])
                          @include('site.slider.elements.center.action_tooltip', ['type' => 'liked', 'icon' => 'star', 'margin' => 'liked', 'text' => 'избранное', 'active' => 'favorite'])
@@ -61,7 +61,7 @@
                          @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'comment','link' => ' ','icon' => 'comments','id' => 'num_comment','data' => $posts->first()->comments->count(),'margin' => 'margin-num-comment-tooltip','text' => 'Количество коментариев','triangle'=>' '])
                          @include('site.slider.elements.center.action_tooltip', ['type' => 'like', 'icon' => 'heart', 'margin' => 'like', 'text' => 'понравилось', 'active' => 'like'])
                          @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'view','link' => ' ','icon' => 'eye','id' => 'num_views','data' => $posts->first()->views,'margin' => 'other-margin-tooltip1','text' => 'Количество просмотров','triangle'=>' '])
-                     </span>
+                     </div>
                  </div>
              </div>
              @include('site.slider.elements.center.comments.index')
@@ -72,5 +72,5 @@
              @include('site.slider.elements.right-sidebar.description')
          </div>
      </div>
-     {{--@include('../popups.popup_for_slider')--}}
+     @include('site.slider.elements.popups.slider')
     @endsection

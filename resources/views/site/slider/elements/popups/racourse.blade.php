@@ -5,11 +5,11 @@
             @foreach ($views as $view)
                 @if ($views[0] == $view)
                   <li class="item-views-zoom active-slide-zoom-views">
-                    <img class="img-views-zoom" src="{{ $view->path_full }}">
+                    <img class="img-views-zoom" src="{{ Storage::url($view->img_large) }}">
                   </li>
                 @else
                   <li class="item-views-zoom right-slide-zoom-views">
-                    <img class="img-views-zoom" src="{{ $view->path_full }}">
+                    <img class="img-views-zoom" src="{{ Storage::url($view->img_large) }}">
                   </li>
                 @endif
             @endforeach
