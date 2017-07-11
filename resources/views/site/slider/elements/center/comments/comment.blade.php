@@ -1,6 +1,22 @@
-<div class="btn-all-comments">
-    Показать все {{ 1 }} комментари{{ 4 ? 'я':'ев' }}
-</div>
+@if (count($posts->first()->comments) > 3)
+    <div class="btn-all-comments-news">Показать все {{ count($posts->first()->comments) }}
+        @if (count($posts->first()->comments) % 10 === 1 && count($posts->first()->comments) !== 11)
+            комментарий
+        @endif
+        @if (((count($posts->first()->comments) % 10) > 1 ||
+             (count($posts->first()->comments) % 10) < 5) &&
+             (count($posts->first()->comments) % 10 !== 12) &&
+             (count($posts->first()->comments) % 10 !== 13) &&
+             (count($posts->first()->comments) % 10 !== 14))
+            комментария
+        @endif
+        @if ((count($posts->first()->comments) % 10) === 0 ||
+             (count($posts->first()->comments) % 10) >= 5 ||
+             (count($posts->first()->comments) % 10) <= 9)
+            комментариев
+        @endif
+    </div>
+@endif
 @foreach ( $posts->first()->comments as $comment )
     <div class="b-comment-wrap uk-clearfix">
         @if (Auth::check())

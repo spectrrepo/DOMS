@@ -14,7 +14,6 @@ use App\Models\View;
 use App\Models\Like;
 use App\Models\User;
 use App\Models\UserSocial;
-use PhpParser\Builder\Class_;
 
 class PostsController extends BasePhotoController
 {

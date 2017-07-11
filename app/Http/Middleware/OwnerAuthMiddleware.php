@@ -15,6 +15,9 @@ class OwnerAuthMiddleware
      */
     public function handle($request, Closure $next, $role1, $role2, $role3)
     {
+        if ($request->user() === null) {
+            return redirect('/');
+        }
         $u1 = $request->user()->hasRole($role1);
         $u2 = $request->user()->hasRole($role2);
         $u3 = $request->user()->hasRole($role3);
