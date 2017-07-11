@@ -240,9 +240,9 @@ class PostsController extends BasePhotoController
      */
     public function add(Request $request)
     {
+        dd(Input::file('views'));
         $post = new Post();
         $this->validate($request, $post->rules);
-
         if (Input::has('title')) {
             $post->title = Input::get('title');
         }
@@ -276,9 +276,10 @@ class PostsController extends BasePhotoController
             $this->addJoinData('style', 'img_styles',  'style_id', $post->id);
         }
 
-        if (Input::has('data-tags'))
+        if (Input::has('tags'))
         {
-            $tags = Input::get('data-tags');
+            $tags = Input::get('tags');
+
             foreach ($tags as $tag) {
                 TagsController::addTagForPost ($tag, $post->id);
             }

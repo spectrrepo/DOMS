@@ -164,7 +164,7 @@ export function readComment () {
   });
 }
 
-
+//TODO:refactor
 export function handleFileOneSelect(evt) {
     $('#main-wrap-photo span img').parent('span').remove();
     var files = evt.target.files; // FileList object
@@ -201,49 +201,46 @@ export function handleFileOneSelect(evt) {
     $('#main-wrap-photo').children('.add-photo-text').css({'display': 'none'});
 }
 
-
+//TODO:refactor
 export function handleFileSelect(evt) {
-    var files = evt.target.files; // FileList object
+    let files = evt.target.files;
 
-    // Loop through the FileList and render image files as thumbnails.
-    for (var i = 0, f; f = files[i]; i++) {
-
-        // Only process image files.
+    for (let i = 0, f; f = files[i]; i++) {
         if (!f.type.match('image.*')) {
             continue;
         }
-        var reader = new FileReader();
 
-        // Closure to capture the file information.
+        var reader = new FileReader();
         reader.onload = (function(theFile) {
             return function(e) {
-                // Render thumbnail.
-                var span = document.createElement('span');
-                span.id = id;
-                span.className = 'deleteSome';
-                span.innerHTML = [
-                    '<img class="thumb" src="',
-                    e.target.result,
-                    '" title="',
-                    escape(theFile.name),
-                    '"/>' + '<span class="b-hover-add-view">' + '<span class="uk-icon-justify uk-icon-remove vertical-align">' + '</span>'
-                ].join('');
-                document.getElementById('wrap-d').insertBefore(span, null);
-                var lastInp = $('#files').clone().appendTo('#wrap-d');
-                lastInp.removeClass('input-dwnld-view-photo').addClass('new').css({'display': 'none'}).attr('name', 'files[]').attr('id', id);
+                let id = Math.random() * (100000 - 1) + 1;
+                $('#files').attr('id', id).attr('style', 'display:none;');
+                let client = `<li data-id="${id}" class="racurs-list-item uk-margin-bottom uk-margin-top uk-padding-remove">
+                                <div class="uk-overlay uk-width-1-1">
+                                    <img src="${e.target.result}">
+                                    <div class="uk-overlay-area">
+                                        <div class="uk-overlay-area-content">
+                                            <span class="fz-big">×</span>
+                                        </div>
+                                    </div>
+                                </div>
+                              </li>`;
+                $('.uk-list').append(client);
 
-                id += 1;
-                $('.deleteSome').on('click', function() {
+                $('.racurs-list-item').on('click', function() {
+                    document.getElementById($(this).data('id')).remove();
                     $(this).remove();
-                    $('[id = ' + $(this).attr("id") + '][class = new]').remove();
                 });
+
+                $('<input id="files" class="input-dwnld-view-photo" type="file" name="views[]">').appendTo('.wrap-dwnld-photo');
+
+                $('#files').on('change', handleFileSelect);
             };
         })(f);
-        // Read in the image file as a data URL.
+
         reader.readAsDataURL(f);
     }
 }
-
 
 /**
  * @function confirmModal

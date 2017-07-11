@@ -47,7 +47,14 @@ import { mainSliderPhoto } from './lib/main_slider';
 // работа с тегами
 (function() {
 
-  $('.as').on('click', addTag);
+  $('.btn-add-tag').on('click', addTag);
+    $('.input-tag-name').keydown(function(e){
+            if(e.keyCode==13)
+        {
+            addTag();
+            return false;
+        }
+    });
   $('.as').on('click', hiddenTagMask);
   $('.as').on('click', renderPhoto);
   $('.as').on('click', esc);

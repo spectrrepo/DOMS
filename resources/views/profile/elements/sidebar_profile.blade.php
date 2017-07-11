@@ -1,17 +1,18 @@
-<nav class="sidebar" style="margin-top:-16px;">
-    <ul>
-        <li class="menu-item-profile {{ URL::route('userPage', ['id' => Auth::user()->id]) === URL::current() ? 'menu-item-profile-active' : '' }}">
-            <a href="{{ URL::route('userPage', ['id' => Auth::user()->id]) }}">Моя страница</a>
-        </li>
-        <li class="menu-item-profile {{ route('addPostPage') === URL::current() ? 'menu-item-profile-active' : '' }}">
-            <a href="{{ URL::route('addPostPage') }}">Добавить изображение</a>
-        </li>
-        <li class="menu-item-profile {{ route('editUserPage') === URL::current() ? 'menu-item-profile-active' : '' }}">
-            <a href="{{ URL::route('editUserPage') }}">Редактировать профиль</a>
-        </li>
-        <li class="menu-item-profile {{ route('favoritePage') === URL::current() ? 'menu-item-profile-active' : '' }}">
-            <a href="{{ URL::route('favoritePage') }}">Избранное</a>
-        </li>
+@if (Auth::check())
+    <nav class="sidebar" style="margin-top:-16px;">
+        <ul>
+            <li class="menu-item-profile {{ URL::route('userPage', ['id' => Auth::user()->id]) === URL::current() ? 'menu-item-profile-active' : '' }}">
+                <a href="{{ URL::route('userPage', ['id' => Auth::user()->id]) }}">Моя страница</a>
+            </li>
+            <li class="menu-item-profile {{ route('addPostPage') === URL::current() ? 'menu-item-profile-active' : '' }}">
+                <a href="{{ URL::route('addPostPage') }}">Добавить изображение</a>
+            </li>
+            <li class="menu-item-profile {{ route('editUserPage') === URL::current() ? 'menu-item-profile-active' : '' }}">
+                <a href="{{ URL::route('editUserPage') }}">Редактировать профиль</a>
+            </li>
+            <li class="menu-item-profile {{ route('favoritePage') === URL::current() ? 'menu-item-profile-active' : '' }}">
+                <a href="{{ URL::route('favoritePage') }}">Избранное</a>
+            </li>
             @if ((Auth::user()->hasRole('moderator')) || (Auth::user()->hasRole('admin')))
                 <li class="menu-item-profile {{ route('confirmList') === URL::current() ? 'menu-item-profile-active' : '' }}">
                     <a href="{{ URL::route('confirmList') }}"> Изображения на проверку</a>
@@ -43,5 +44,6 @@
                     </li>
                 @endif
             @endif
-    </ul>
-</nav>
+        </ul>
+    </nav>
+@endif
