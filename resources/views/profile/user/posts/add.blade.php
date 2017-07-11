@@ -22,12 +22,13 @@
                 @endforeach
                 <div class="clear"></div>
             </div>
-            <div id="wrap-d">
+            <div id="wrap-racourse">
                 <div class="wrap-dwnld-photo">
                     <span class="add-photo-ico racurs-margin-ico uk-icon-justify uk-icon-camera"></span>
                     <span class="add-photo-text racurs-margin-text">Добавить ракурсы</span>
-                    <input id="files" class="input-dwnld-view-photo" type="file">
+                    <input id="files" class="input-dwnld-view-photo" type="file" name="views[]">
                 </div>
+                <ul class="uk-list angles-list uk-grid uk-grid-width-1-3 uk-margin-remove"></ul>
             </div>
             <div class="clear"></div>
             <div class="wrap-add-tag">
@@ -37,6 +38,7 @@
                 <button class="btn-add-tag uk-icon-justify uk-icon-plus" type="button"></button>
                 <div class="clear"></div>
                 <hr>
+                <div class="pole-tag uk-clearfix"></div>
             </div>
             <button class="btn-dwnld" type="submit" name="button" onclick="this.parentNode.submit();">
                 <span class="save-text">Сохранить изменения</span>

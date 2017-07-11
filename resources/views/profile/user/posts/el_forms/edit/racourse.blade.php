@@ -2,17 +2,23 @@
     <div class="wrap-dwnld-photo">
         <span class="add-photo-ico racurs-margin-ico uk-icon-justify uk-icon-camera"></span>
         <span class="add-photo-text racurs-margin-text">Добавить ракурсы</span>
-        <input id="files" class="input-dwnld-view-photo" type="file">
+        <input id="files" class="input-dwnld-view-photo" type="file" name="views">
     </div>
     @if(!empty($post->view))
-        @foreach ($post->view as $view)
-            <span class="deleteSome delete-view-edit">
-                <input type="hidden" name="id" value="{{ $view->id }}">
-                <img class="thumb" src="{{ $view->img_middle }}">
-                <span class="b-hover-add-view">
-                    <span class="uk-icon-justify uk-icon-remove vertical-align"></span>
-                </span>
-            </span>
-        @endforeach
+        <ul class="uk-list angles-list uk-grid uk-grid-width-1-3 uk-margin-remove">
+            @foreach ($post->view as $view)
+                <li class="racurs-list-item uk-margin-bottom uk-margin-top uk-padding-remove">
+                    <div class="uk-overlay uk-width-1-1">
+                        <input type="hidden" name="id" value="{{ $view->id }}">
+                        <img src="{{ Storage::url($view->img_middle) }}">
+                        <div class="uk-overlay-area">
+                            <div class="uk-overlay-area-content">
+                                <span class="fz-big">×</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            @endforeach
+        </ul>
     @endif
 </div>

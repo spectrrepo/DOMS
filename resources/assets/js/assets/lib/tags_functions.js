@@ -6,14 +6,17 @@
  * @function addTag - функция для добавления тега
  */
 export function addTag() {
-    $('input[name=data-tags]').val($('input[name=data-tags]').val() + $('.input-tag-name').val() + ';');
-    $('<span class="item-tag-show">' + $('.input-tag-name').val() + '</span>').appendTo('.wrap-add-tag');
-    $('.input-tag-name').val("");
-    $('.item-tag-show').click(function() {
-        var replaceString = $('input[name=data-tags]').val();
-        $('input[name=data-tags]').val(replaceString.replace($(this).text() + ';', ''));
-        $(this).remove();
-    });
+    let elTag = '.input-tag-name';
+    let newTag = $(elTag).val();
+    let appendToEl = '.pole-tag';
+    //language=HTML
+    let whatAppend = `
+                    <div class="tag-item">
+                        <input type="hidden" name="tags[]" value="${newTag}">
+                        ${newTag}
+                    </div>`;
+    $(appendToEl).append(whatAppend);
+    $(elTag).val('');
     return false;
 }
 
