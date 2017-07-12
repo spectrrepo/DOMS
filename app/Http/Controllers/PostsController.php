@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Favorite;
 use App\Models\ModerateHistory;
 use Illuminate\Http\Request;
@@ -218,7 +219,7 @@ class PostsController extends BasePhotoController
                       })
                       ->take(6)
                       ->get();
-//        dd($posts);
+
         $numPosts = $this->queryForPosts($json)->count();
         $likes = LikesController::loadLikeWhomThree($id);
         $numLikes = Like::all()->count();
@@ -228,7 +229,6 @@ class PostsController extends BasePhotoController
         $colorFavorite = $this->activeColor('liked', $id);
 
         $posts->first()->views += 1;
-//        dd($posts->count(), array_keys($posts->toArray(), $posts->where('id', '=', $id)->toArray()[0]));
         $posts->first()->save();
 
         return view('site.slider.index', ['posts' => $posts,

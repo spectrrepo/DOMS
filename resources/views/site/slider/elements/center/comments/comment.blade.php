@@ -17,7 +17,7 @@
         @endif
     </div>
 @endif
-@foreach ( $posts->first()->comments as $comment )
+@foreach ( $posts->first()->comments->reverse()->take(3)->reverse() as $comment )
     <div class="b-comment-wrap uk-clearfix">
         @if (Auth::check())
             {!! Auth::user()->id === $comment->user_id ? HTML::decode('<span class="remove-comment uk-icon-justify uk-icon-remove"><span class="delete_comment_id" data-id="'.$comment->id.'"></span></span>') : ''!!}

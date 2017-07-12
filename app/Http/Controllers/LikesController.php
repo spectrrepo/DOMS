@@ -8,6 +8,7 @@ use Input;
 
 use App\Models\Like;
 use App\Models\User;
+use Auth;
 
 class LikesController extends Controller
 {
@@ -17,10 +18,11 @@ class LikesController extends Controller
     public function add ()
     {
 
-        $like = new Like();
-        $like->post_id = Input::get('post_id');
-        $like->user_id = Auth()->user()->id;
-        $like->save();
+        Like::create([
+            'post_id' => Input::get('post_id'),
+            'user_id' => Auth::user()->id,
+        ]);
+        dd('[eq');
 
         $countLike = count( Like::find($_POST['post_id']) );
 
@@ -66,14 +68,12 @@ class LikesController extends Controller
      */
     public static function loadLikeWhomThree ($id)
     {
-
         $likes = Like::where('post_id', '=', $id)->take(3)->get();
-
+        $like = new Like();
         $likeWhom = array();
         foreach ($likes as $like) {
-            $user = User::select('id', 'name', 'img_square')
-                ->where('id', '=', $like->user_id)
-                ->get();
+            dd($likes->first());
+            $user = $like->user;
             array_push( $likeWhom, $user);
         }
 

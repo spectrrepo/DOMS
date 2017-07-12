@@ -14,7 +14,6 @@ class User extends Authenticatable {
 	use SoftDeletes;
 
 	protected $table = 'users';
-	protected $dates = ['updated_at', 'created_at', 'deleted_at'];
 	protected $hidden = ['password', 'remember_token'];
 	public $timestamps = true;
     public $rules = [

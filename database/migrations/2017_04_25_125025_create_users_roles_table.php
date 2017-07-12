@@ -15,15 +15,13 @@ class CreateUsersRolesTable extends Migration
     {
         Schema::create('users_roles', function (Blueprint $table) {
             $table->integer('user_id')
-                  ->unsigned()
-                  ->nullable();
+                  ->unsigned();
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users');
 
             $table->integer('role_id')
-                  ->unsigned()
-                  ->nullable();
+                  ->unsigned();
             $table->foreign('role_id')
                   ->references('id')
                   ->on('roles');

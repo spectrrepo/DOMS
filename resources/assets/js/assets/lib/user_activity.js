@@ -12,25 +12,27 @@ import { LOAD_LIKES } from './constant';
  */
 export function  like () {
   let url = $('input[name=url-like]').val();
-  $.ajax({
+  let csrf = $('input[name=csrf]').val();
+  let post_id = $('input[name=post_id]').val();
+
+    $.ajax({
       type:'POST',
       data: {
-                '_token'  : csrftoken,
-                'post_id' : photoID,
-                'user_id' : user_id
+                '_token'  : csrf,
+                'post_id' : post_id
       },
       url:url,
 
       success: function  (data) {
-            if ( url === '/like') {
+            if ( url === '/likes/delete') {
               $('.uk-icon-heart').addClass('active-like');
               $('#value-like').text(data);
               $('input[name=url-like]').val();
-              $('input[name=url-like]').val('/delete_like');
+              $('input[name=url-like]').val('/likes/delete');
             }else {
               $('.uk-icon-heart').removeClass('active-like');
               $('#value-like').text( $('#value-like').text() - 1) ;
-              $('input[name=url-like]').val('/like');
+              $('input[name=url-like]').val('/likes/add');
             }
       }
   });

@@ -36,6 +36,16 @@ import { form } from './lib/tags_functions';
 
 import { mainSliderPhoto } from './lib/main_slider';
 
+import { commentAdd } from './lib/functions';
+import { deleteComment } from './lib/functions';
+import { getAllComments } from './lib/functions';
+
+(function(){
+    $('.comment-add-form').on('submit', commentAdd);
+    $('.remove-comment').on('click', deleteComment);
+    $('.btn-all-comments-news').on('click', getAllComments);
+})();
+
 // инициализация главного слайдера
 (function() {
 

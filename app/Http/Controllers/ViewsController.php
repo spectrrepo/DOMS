@@ -34,7 +34,7 @@ class ViewsController extends BasePhotoController
         $view->post_id = $post_id;
         $view->img_mini = $this->saveFileWithWatermark('claims', 'default', $file,'600');
         $view->img_middle = $this->saveFileWithWatermark('claims', 'default', $file,'600');
-        $view->img_large = $this->saveFileWithWatermark('claims', 'default', $file,'600');
+        $view->img_large = $this->saveFileWithWatermark('claims', 'default', $file,'1024');
         $view->img_square = $this->saveFileWithWatermark('claims', 'default', $file,'600');
         $view->alt = 'изображение';
         $view->save();

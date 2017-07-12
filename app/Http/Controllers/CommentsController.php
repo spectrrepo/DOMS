@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Input;
 use DB;
+use Auth;
+use Storage;
 
 use App\Models\Comment;
 
@@ -40,20 +43,29 @@ class CommentsController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return Comment
+     * @return array
      */
-    public function add (Request $request)
+    public function add ()
     {
         $comment = new Comment();
-        $this->validate($request, $comment->rules);
-
         $comment->post_id = Input::get('post_id');
-        $comment->user_id = Input::get('user_id');
+        $comment->user_id = Auth::user()->id;
         $comment->comment = Input::get('comment');
         $comment->save();
 
-        return $comment;
+        $user = Auth::user()->first()->toArray();
+
+        setlocale(LC_ALL, 'ru_RU.utf8');
+        $commentWithUser = [
+            'id' => $comment->id,
+            'user_id' => $user['id'],
+            'user_name' => $user['name'],
+            'user_img' => Storage::url($user['img_middle']),
+            'comment' => $comment->comment,
+            'date' => Carbon::now()->formatLocalized('%d %B %Y г. %H:%M')
+        ];
+
+        return $commentWithUser;
     }
 
     /**
@@ -112,23 +124,24 @@ class CommentsController extends Controller
     {
         $id = Input::get('id');
 
-        $comments = DB::table('comments')
-            ->select('comments.id',
-                'users.id AS user_id',
-                'post.id AS image_id',
-                'users.name AS user_name',
-                'users.quadro_ava AS user_quadro_ava',
-                'comments.text_comment AS text_comment',
-                'comments.rus_date AS rus_date' )
-            ->join('users', 'comments.user_id', '=', 'users.id')
-            ->join('posts', 'posts.id', '=', 'comments.post_id')
-            ->where('posts.id', '=', $id)
-            ->andWhere('comments.status', '=', 'true')
-            ->skip(3)
-            ->get();
+        $commentsAll = Post::find($id)->comments;
+        $numComments = $commentsAll->count();
+        $comments = $commentsAll->take($numComments-3);
+        $commentWithUser = [];
 
-        return $comments;
+        foreach ($comments as $item) {
+            $itemArray = [
+                'id' => $item->id,
+                'user_id' => $item->user->id,
+                'user_name' => $item->user->name,
+                'user_img' => Storage::url($item->user->img_middle),
+                'comment' => $item->comment,
+                'date' => $item->date //->formatLocalized('%d %B %Y г. %H:%M')
+            ];
+            array_push($commentWithUser, $itemArray);
+        }
 
+        return $commentWithUser;
     }
 
 

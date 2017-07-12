@@ -9,18 +9,12 @@ class Comment extends Model {
 	use SoftDeletes;
 
 	protected $table = 'comments';
-	protected $dates = ['date', 'deleted_at'];
     public $timestamps = false;
     public $rules = [
         'comment' => 'required|string',
         'post_id' => 'required|integer',
         'status' => 'required|boolean',
     ];
-
-    public function getDates ()
-    {
-        return ['date'];
-    }
 
 	public function user ()
     {

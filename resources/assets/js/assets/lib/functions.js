@@ -241,6 +241,100 @@ export function handleFileSelect(evt) {
         reader.readAsDataURL(f);
     }
 }
+/**
+ *
+ * @returns {boolean}
+ */
+export function commentAdd () {
+    let comment = $('.input-comment').val();
+    let postId = $('input[name=post_id]').val();
+    let csrf = $('input[name=csrf]').val();
+
+    $.ajax({
+        type:'POST',
+        data: {
+            '_token'  : csrf,
+            'comment' : comment,
+            'post_id' : postId
+        },
+        url: '/comments/add',
+        success: function (data) {
+            let newComment =   `<div class="b-comment-wrap uk-clearfix">
+                                    <div class="remove-comment uk-icon-justify uk-icon-remove">
+                                        <span class="delete_comment_id" data-id="${data.id}"></span>
+                                    </div>
+                                    <a href="/user/${data.user_id}" class="b-photo-comment">
+                                        <img src="${data.user_img}">
+                                    </a>
+                                    <div class="b-comment">
+                                        <a href="/user/${data.user_id}" class="b-name-comment">
+                                            ${data.user_name}
+                                        </a>
+                                        <div class="b-text-comment">
+                                            ${data.comment}
+                                        </div>
+                                        <div class="b-date-comment">
+                                            ${data.date}
+                                        </div>
+                                    </div>
+                                </div>`;
+            $(newComment).appendTo('#insertComment');
+            $('.input-comment').val('');
+        }
+    });
+
+    return false;
+}
+
+export function deleteComment() {
+    let csrf = $('input[name=csrf]').val();
+    let id = $(this).children('.delete_comment_id').data('id');
+    $.ajax({
+        type:'GET',
+        url: '/comments/delete/'+id,
+    });
+    $(this).closest('.b-comment-wrap').remove();
+}
+
+export function getAllComments() {
+    let csrf = $('input[name=csrf]').val();
+    let postId = $('input[name=post_id]').val();
+
+    $.ajax({
+        type:'POST',
+        data: {
+            '_token'  : csrf,
+            'id' : postId
+        },
+        url: '/comments/allCommentsLoad',
+        success: function (data) {
+            for (let i = 0; i < data.length; i++) {
+                let newComment =   `<div class="b-comment-wrap uk-clearfix">
+                                        <div class="remove-comment uk-icon-justify uk-icon-remove">
+                                            <span class="delete_comment_id" data-id="${data[i].id}"></span>
+                                        </div>
+                                        <a href="/user/${data[i].user_id}" class="b-photo-comment">
+                                            <img src="${data[i].user_img}">
+                                        </a>
+                                        <div class="b-comment">
+                                            <a href="/user/${data[i].user_id}" class="b-name-comment">
+                                                ${data[i].user_name}
+                                            </a>
+                                            <div class="b-text-comment">
+                                                ${data[i].comment}
+                                            </div>
+                                            <div class="b-date-comment">
+                                                ${data[i].date}
+                                            </div>
+                                        </div>
+                                    </div>`;
+                $(newComment).prependTo('#insertComment');
+                $('span[data-id='+data[i].id+']').parent().on('click', deleteComment);
+            }
+        }
+    });
+    $(this).remove();
+}
 
 /**
  * @function confirmModal
