@@ -1,2 +1,0 @@
-# DOMS
-design platform

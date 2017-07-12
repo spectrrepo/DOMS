@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -22,11 +22,10 @@ return [
     | This value determines the "environment" your application is currently
     | running in. This may determine how you prefer to configure various
     | services your application utilizes. Set this in your ".env" file.
-i
     |
     */
 
-    'env' => env('APP_ENV', 'debug'),
+    'env' => env('APP_ENV', 'develop'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +51,7 @@ i
     |
     */
 
-    'url' => env('APP_URL', 'http://188.225.72.64/'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -162,10 +161,22 @@ i
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
+        Illuminate\View\ViewServiceProvider::class,
 
         /*
          * Package Service Providers...
          */
+        Laravel\Tinker\TinkerServiceProvider::class,
+
+        /*
+         * Application Service Providers...
+         */
+        App\Providers\AppServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
+        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
+        App\Providers\RouteServiceProvider::class,
+	    Laravel\Tinker\TinkerServiceProvider::class,
 
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
@@ -174,21 +185,10 @@ i
         /*
          * Application Service Providers...
          */
-
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         JeroenNoten\LaravelCkEditor\ServiceProvider::class,
-        Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
         Laravelrus\LocalizedCarbon\LocalizedCarbonServiceProvider::class,
-
-
-
-
-
 
     ],
 
@@ -209,6 +209,7 @@ i
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,
+        'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
         'Bus' => Illuminate\Support\Facades\Bus::class,
         'Cache' => Illuminate\Support\Facades\Cache::class,
         'Config' => Illuminate\Support\Facades\Config::class,
@@ -237,13 +238,16 @@ i
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Html' => Illuminate\Html\HtmlFacade::class,
+    /*
+    |--------------------------------------------------------------------------
+    | Application Aliases
+    |--------------------------------------------------------------------------
+    */
         'Form' => Collective\Html\FormFacade::class,
         'HTML' => Collective\Html\HtmlFacade::class,
         'Input'  => Illuminate\Support\Facades\Input::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Socialize' => Laravel\Socialite\Facades\Socialite::class,
-        'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
         'LocalizedCarbon'   => Laravelrus\LocalizedCarbon\LocalizedCarbon::class,
         'DiffFormatter'     => Laravelrus\LocalizedCarbon\DiffFactoryFacade::class,
 

@@ -30,12 +30,9 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $e)
+    public function report(Exception $exception)
     {
-        if ($this->shouldReport($e)) {
-            app('sentry')->captureException($e);
-        }
-        parent::report($e);
+        parent::report($exception);
     }
 
     /**
@@ -47,9 +44,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
-             return view('error.404');
-        }
         return parent::render($request, $exception);
     }
 
@@ -66,6 +60,6 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        return redirect()->guest('login');
+        return redirect()->guest(route('login'));
     }
 }
