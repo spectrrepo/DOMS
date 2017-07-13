@@ -334,14 +334,17 @@
 
 
 //new
+.delete-racourse,
 .racurs-list-item {
   padding-right: 24px !important;
   cursor: pointer;
 }
+.delete-racourse:nth-child(3n+3),
 .racurs-list-item:nth-child(3n+3) {
   padding-right: 0 !important;
   padding-left: 24px !important;
 }
+.delete-racourse:nth-child(3n+2),
 .racurs-list-item:nth-child(3n+2) {
   padding-right: 12px !important;
   padding-left: 12px !important;

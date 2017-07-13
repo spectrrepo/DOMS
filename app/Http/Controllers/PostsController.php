@@ -35,7 +35,7 @@ class PostsController extends BasePhotoController
             $activeThisUser = Like::where('user_id', '=', Auth::id())
                                         ->where('post_id', '=', $id)
                                         ->get()
-                                        ->toArray();
+                                        ->count();
         }
 
         !empty($activeThisUser) ? $colorActive = true : $colorActive = false;
@@ -225,8 +225,8 @@ class PostsController extends BasePhotoController
         $numLikes = Like::all()->count();
         $tags = TagsController::loadTagsForPost($id);
         $views = View::where('post_id', '=', $id)->get();
-        $colorLike = $this->activeColor('like', $id);
-        $colorFavorite = $this->activeColor('liked', $id);
+        $colorLike = $this->activeColor(false, $id);
+        $colorFavorite = $this->activeColor(true, $id);
 
         $posts->first()->views += 1;
         $posts->first()->save();

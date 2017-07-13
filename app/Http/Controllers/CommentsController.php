@@ -53,7 +53,7 @@ class CommentsController extends Controller
         $comment->comment = Input::get('comment');
         $comment->save();
 
-        $user = Auth::user()->first()->toArray();
+        $user = Auth::user()->toArray();
 
         setlocale(LC_ALL, 'ru_RU.utf8');
         $commentWithUser = [
@@ -64,7 +64,7 @@ class CommentsController extends Controller
             'comment' => $comment->comment,
             'date' => Carbon::now()->formatLocalized('%d %B %Y г. %H:%M')
         ];
-
+//        dd(Auth::user()->toArray());
         return $commentWithUser;
     }
 
@@ -129,7 +129,7 @@ class CommentsController extends Controller
         $comments = $commentsAll->take($numComments-3);
         $commentWithUser = [];
 
-        foreach ($comments as $item) {
+        foreach ($comments->reverse() as $item) {
             $itemArray = [
                 'id' => $item->id,
                 'user_id' => $item->user->id,

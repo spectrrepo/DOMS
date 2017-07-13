@@ -11,6 +11,6 @@
         <date>
             @php setlocale(LC_ALL, 'ru_RU.utf8') @endphp
             {{ $article->date->formatLocalized('%d %B %Y')}}</date>
-        <a href="/news">Просмотреть все новости</a>
+        <a href="/articles">Просмотреть все новости</a>
     </div>
 </div>

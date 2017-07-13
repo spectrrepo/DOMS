@@ -21,13 +21,25 @@
                     <a href="{{ URL::route('listArticlePage') }}"> Новости</a>
                 </li>
                 <li class="menu-item-profile {{ route('listCommentsPage') === URL::current() ? 'menu-item-profile-active' : '' }}">
-                    <a href="{{ URL::route('listCommentsPage') }}">Комментарии <span class="indicators">+1</span></a>
+                    <a href="{{ URL::route('listCommentsPage') }}"> Комментарии
+                        @if($numComments > 0)
+                            <span class="indicators">+ {{ $numComments }}</span>
+                        @endif
+                    </a>
                 </li>
                 <li class="menu-item-profile {{ route('listFeedbackPage') === URL::current() ? 'menu-item-profile-active' : '' }}">
-                    <a href="{{ URL::route('listFeedbackPage') }}">Сообщения <span class="indicators">+1</span></a>
+                    <a href="{{ URL::route('listFeedbackPage') }}">Сообщения
+                        @if($numFeedbacks > 0)
+                            <span class="indicators">+ {{ $numFeedbacks }}</span>
+                        @endif
+                    </a>
                 </li>
                 <li class="menu-item-profile {{ route('listClaimsPage') === URL::current() ? 'menu-item-profile-active' : '' }}">
-                    <a href="{{ URL::route('listClaimsPage') }}">Претензии <span class="indicators">+1</span></a>
+                    <a href="{{ URL::route('listClaimsPage') }}">Претензии
+                        @if($numClaims > 0)
+                            <span class="indicators">+ {{ $numClaims }}</span>
+                        @endif
+                    </a>
                 </li>
                 <li class="menu-item-profile {{ route('allPostSitePage') === URL::current() ? 'menu-item-profile-active' : '' }}">
                     <a href="{{ URL::route('allPostSitePage') }}">Все фото</a>

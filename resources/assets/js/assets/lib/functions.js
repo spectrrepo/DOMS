@@ -280,6 +280,7 @@ export function commentAdd () {
                                 </div>`;
             $(newComment).appendTo('#insertComment');
             $('.input-comment').val('');
+            $('span[data-id='+data.id+']').parent().on('click', deleteComment);
         }
     });
 
@@ -349,17 +350,30 @@ export function confirmModal() {
  * @function deleteView - функция для удаления ракурса фотографии
  */
 export function deleteView () {
-  var id = $('input[name=id]').val();
+  let id = $(this).data('id');
+  let _token = $('meta[name=_token]').attr('content');
+
   $.ajax({
     type:'POST',
     data: {
-      '_token'  : csrftoken,
+      '_token'  : _token,
       'id'      : id
     },
-    url: URL_DELETE_VIEWS,
-
+    url: '/views/delete',
   });
-  $(this).empty().remove();
+
+  $(this).remove();
+}
+
+export function deleteTag () {
+    let id = $(this).data('id');
+
+    $.ajax({
+        type:'GET',
+        url: '/tags/delete/'+id,
+    });
+
+    $(this).remove();
 }
 
 /**

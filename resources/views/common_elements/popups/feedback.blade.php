@@ -14,10 +14,20 @@
         <span class="uk-icon-justify uk-icon-vk round-vk"></span>
       </div>
       <div class="clear"></div>
-      {{ Form::open(array('id'=>'feedback','url' => '/send_mail' ) ) }}
+      {{ Form::open(array('id'=>'feedback','route' => 'addFeedback' ) ) }}
+        @if ($errors->any())
+          <div class="uk-alert uk-alert-danger uk-width-1-1" data-uk-alert=""style="display: block;">
+            <a href="" class="uk-alert-close uk-close"></a>
+            @foreach ($errors->all() as $error)
+              <ul style="margin-left: 12px;" class="uk-list">
+                <li>{{ $error }}</li>
+              </ul>
+            @endforeach
+          </div>
+        @endif
         <input class="input-feedback left" type="text" name="name" required placeholder="Имя">
-        <input class="input-feedback right" type="text" name="e_mail" required placeholder="E-mail">
-        <textarea class="textarea-feedback" name="text" required></textarea>
+        <input class="input-feedback right" type="text" name="email" required placeholder="E-mail">
+        <textarea class="textarea-feedback" name="message" required></textarea>
         <input class="feedback-submit" type="submit" value="Отправить сообщение">
       {{ Form::close() }}
       <div class="clear"></div>

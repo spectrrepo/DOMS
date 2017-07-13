@@ -9,6 +9,7 @@ use Input;
 use App\Models\Like;
 use App\Models\User;
 use Auth;
+use function spec\Laracasts\Generators\Migrations\getStub;
 
 class LikesController extends Controller
 {
@@ -17,15 +18,8 @@ class LikesController extends Controller
      */
     public function add ()
     {
-
-        Like::create([
-            'post_id' => Input::get('post_id'),
-            'user_id' => Auth::user()->id,
-        ]);
-        dd('[eq');
-
-        $countLike = count( Like::find($_POST['post_id']) );
-
+        Auth::user()->likes()->create(['post_id' => Input::get('post_id')]);
+        $countLike = count( Like::where('post_id', '=', Input::get('post_id'))->get());
         return $countLike;
     }
 
@@ -34,12 +28,14 @@ class LikesController extends Controller
      */
     public function delete ()
     {
-
-        Like::where('post_id', '=', Input::get('id'))
-            ->where('user_id', '=', Auth()->user()->id)
+        Auth::user()
+            ->likes()
+            ->where('post_id', '=', Input::get('post_id'))
             ->delete();
 
-        return 'true';
+        $countLike = count( Like::find($_POST['post_id']) );
+
+        return $countLike;
     }
 
     /**
@@ -72,7 +68,6 @@ class LikesController extends Controller
         $like = new Like();
         $likeWhom = array();
         foreach ($likes as $like) {
-            dd($likes->first());
             $user = $like->user;
             array_push( $likeWhom, $user);
         }

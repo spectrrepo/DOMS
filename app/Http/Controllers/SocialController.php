@@ -84,10 +84,10 @@ class SocialController extends Controller
     public function add (Request $request)
     {
         $userSocial = new UserSocial();
-        $this->validate($request, $userSocial->rules);
 
         $userSocial->link = Input::get('link');
-        $userSocial->user = Auth::user()->id;
+        $userSocial->user_id = Auth::user()->id;
+
         $userSocial->save();
 
         return $userSocial->id;
@@ -100,8 +100,8 @@ class SocialController extends Controller
 
         $link = Input::get('link');
         UserSocial::where('link', '=', $link)
-                  ->where('user', '=', Auth::user()->id)
-                  ->softDelete();
+                  ->where('user_id', '=', Auth::user()->id)
+                  ->delete();
 
         return 'true';
     }
@@ -112,8 +112,9 @@ class SocialController extends Controller
      */
     public function edit (Request $request)
     {
-        $userSocial = UserSocial::find(Input::get('id'));
-        $this->validate($request, $userSocial->rules);
+        $userSocial = UserSocial::where('user_id', '=', Auth::user()->id)
+                                ->where('link', '=', Input::get('old_link'))
+                                ->get()[0];
 
         $userSocial->link = Input::get('link');
         $userSocial->update();

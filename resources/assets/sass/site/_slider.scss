@@ -38,7 +38,11 @@
   margin: 0;
   padding: 0;
   text-align: center;
-  height: 94%;
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  bottom: 39px;
+  right: 7px;
 }
 .info-text-message {
   position: fixed;

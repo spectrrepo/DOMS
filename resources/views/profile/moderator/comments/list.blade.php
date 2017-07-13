@@ -24,7 +24,8 @@
                 </td>
                 <td>
                   @php setlocale(LC_TIME, 'ru_RU.utf8') @endphp
-                  {{ $comment->date->formatLocalized('%A %d %B %Y') }}
+                    {{--{{dd($comment->date)}}--}}
+                  {{ \Carbon\Carbon::createFromFormat('U', str_replace(['-',':',' '],'',$comment->date)) }}
                 </td>
                 <td>
                   <a class="uk-button uk-border-circle uk-button-success" href="{{ route('changeStatusComment', ['id' => $comment->id] )}}" title="проверено" >

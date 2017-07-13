@@ -13,9 +13,6 @@ class UserSocial extends Model {
 	protected $primaryKey = 'user_id';
 	protected $dates = ['deleted_at'];
 	public $timestamps = false;
-    public $rules = [
-        'link' => 'required|active_url',
-    ];
 
 	public function user ()
     {

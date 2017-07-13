@@ -25,8 +25,8 @@ function HTML (text) {
  */
 function HTMLlink (data, link) {
   return `<li class="item-links uk-icon-external-link
-          open-modal-link" data-action="editLinks"data-id="${data.id}">
-          <input class="contact-item-value soc-set-edit" name="soc_net${data.id}"
+          open-modal-link" data-action="editLinks" data-id="${data}">
+          <input class="contact-item-value soc-set-edit" name="soc_net${data}"
            value="${link}" type="hidden"></li>`;
 }
 
@@ -34,9 +34,9 @@ function HTMLlink (data, link) {
  * @functiontextPopupLink - хтмл - шаблон для шапки мродального окна
  * @return string
  */
-function textPopupLink() {
+function textPopupLink(value) {
   return `Изменить ссылку для
-          ${$(this).children('input.soc-set-edit').val()} или 
+          ${value} или 
           <span id="delete-btn" class="remove-this-links">
             удалить
           </span>`;
@@ -48,7 +48,7 @@ function textPopupLink() {
 export function addLink () {
   $('#add-link-form').submit(function(e) {
       e.preventDefault();
-      var link = $('input[name=link]').val();
+      let link = $('input[name=link]').val();
       $.ajax({
           type: 'POST',
           data: {
@@ -56,14 +56,15 @@ export function addLink () {
               'link': link,
               'user_id': user_id
           },
-          url: ADD_LINK,
+          url: '/social/add',
           success: function(data) {
               $('input[name=link]').val('');
               $('#dialogLinkAdd').fadeOut();
               $('.open-di-link').before();
               $('.uk-alert').remove();
-              $('#editUser').prepend();
+              $('#editUser').prepend(HTML(link+' добавлена'));
               save();
+              $('.uk-clearfix.list-links').prepend(HTMLlink(data, link));
               openModalLink();
               setTimeout(function() { $('.uk-alert').css({'height': '0'}).remove()
               }, 10000);
@@ -79,7 +80,7 @@ export function addLink () {
 export function save() {
   $('#save-link-form').submit(function(e) {
   e.preventDefault();
-  var link = $('input[name=link]').val(),
+  let link = $('input[name=link]').val(),
       old_link = $('input[name=old_link]').val();
 
       $.ajax({
@@ -90,12 +91,13 @@ export function save() {
               'old_link': old_link,
               'user_id': user_id
         },
-        url: EDIT_LINK,
+        url: '/social/edit',
         success: function() {
           $('input[name=link]').val('');
           $('#dialogLinkAdd').fadeOut();
           $('.uk-alert').remove();
-          $('#editUser').prepend(HTML());
+
+          $('#editUser').prepend(HTML(link+' сохранена'));
           $('li.item-links[data-id=' + $('#save-link-form').data('id') + ']')
                         .children('input.soc-set-edit').val(link);
           setTimeout(function() {
@@ -119,31 +121,33 @@ export function deleteLink() {
                 'link': link,
                 'user_id': user_id
           },
-          url: DEL_LINK,
+          url: '/social/delete',
           success: function() {
               $('input[name=link]').val('');
               $('#dialogLinkAdd').fadeOut();
-              $('#editUser').prepend();
+              $('#editUser').prepend(HTML(link+' удалена'));
               $('li[data-id=' + $('#save-link-form').data('id') + ']').remove();
-              setTimeout(function() {$('.uk-alert').css({'height': '0'}).remove()
-                    }, 10000)
-                }
-            });
-        });
+              setTimeout(function() {
+                  $('.uk-alert').css({'height': '0'}).remove()
+              }, 10000)
+          }
+      });
+  });
 }
 
 /**
  * @functionopenModalLink - функция для открытия модального окна
  */
 export function openModalLink() {
-  $('.open-modal-link').on('click', function() {
-    $('.links-control').removeAttr('id').attr('id', 'save-link-form');
-    $('input[name=old_link]').val($(this).children('input.soc-set-edit').val());
-    $('input[name=link]').val($(this).children('input.soc-set-edit').val());
-    $('#save-link-form').attr('data-id', $(this).data('id'));
-    $('h3.title-form').empty().append();
-    $('.mini-modal-submit').removeClass('uk-icon-plus').addClass('uk-icon-save')
-    $('#dialogLinkAdd').fadeIn();
+    $('.open-modal-link').on('click', function() {
+
+        $('.links-control').removeAttr('id').attr('id', 'save-link-form');
+        $('input[name=old_link]').val($(this).children('input.soc-set-edit').val());
+        $('input[name=link]').val($(this).children('input.soc-set-edit').val());
+        $('#save-link-form').attr('data-id', $(this).data('id'));
+        $('.mini-modal-submit').removeClass('uk-icon-plus').addClass('uk-icon-save')
+        $('#dialogLinkAdd').fadeIn();
+
         deleteLink();
     });
 }
@@ -154,21 +158,22 @@ export function openModalLink() {
 
 $('.open-modal-link').on('click', function() {
   if ($(this).data('action') === 'addLinks') {
-    $('h3.title-form').empty().text('Добавить ссылку');
-    $('.mini-modal-submit').removeClass('uk-icon-save').addClass('uk-icon-plus');
-    $('.links-control').removeAttr('id').attr('id', 'add-link-form');
-    addLink ();
-  } else {
-    $('.links-control').removeAttr('id').attr('id', 'save-link-form');
-    $('input[name=old_link]').val($(this).children('input.soc-set-edit').val());
-    $('input[name=link]').val($(this).children('input.soc-set-edit').val())
-    $('#save-link-form').attr('data-id', $(this).data('id'));
-    $('h3.title-form').empty().append();
-    $('.mini-modal-submit').removeClass('uk-icon-plus').addClass('uk-icon-save')
+        $('h3.title-form').empty().text('Добавить ссылку');
+        $('.mini-modal-submit').removeClass('uk-icon-save').addClass('uk-icon-plus');
+        $('.links-control').removeAttr('id').attr('id', 'add-link-form');
+        addLink ();
+  }
+  else if ($(this).data('action') === 'editLinks'){
+        $('.links-control').removeAttr('id').attr('id', 'save-link-form');
+        $('input[name=old_link]').val($(this).children('input.soc-set-edit').val());
+        $('input[name=link]').val($(this).children('input.soc-set-edit').val())
+        $('#save-link-form').attr('data-id', $(this).data('id'));
+        $('h3.title-form').empty().append(textPopupLink($(this).children().val()));
+        $('.mini-modal-submit').removeClass('uk-icon-plus').addClass('uk-icon-save')
 
-    deleteLink();
-    save();
-    openModalLink();
+        deleteLink();
+        save();
+        openModalLink();
   }
   $('#dialogLinkAdd').fadeIn();
 });

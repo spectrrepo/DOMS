@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Claim;
 use App\Models\Color;
+use App\Models\Comment;
+use App\Models\Feedback;
 use App\Models\Placement;
 use App\Models\Role;
 use App\Models\Slide;
@@ -25,7 +28,9 @@ class AppServiceProvider extends ServiceProvider
         $article = Article::orderBy('id', 'desc')->first();
         $slides = Slide::all();
         $roles = Role::all();
-
+        $numComments = Comment::where('status', '=', 0)->get()->count();
+        $numClaims = Claim::where('status', '=', 1)->get()->count();
+        $numFeedbacks = Feedback::where('answer', '=', null)->get()->count();
         view()->share([
             'colors' => $colors,
             'styles' => $styles,
@@ -33,6 +38,9 @@ class AppServiceProvider extends ServiceProvider
             'article' => $article,
             'slides' => $slides,
             'roles' => $roles,
+            'numComments' => $numComments,
+            'numClaims' => $numClaims,
+            'numFeedbacks' => $numFeedbacks,
         ]);
     }
 

@@ -13,14 +13,11 @@ use App\Models\Favorite;
 class FavoritesController extends Controller
 {
     /**
-     * @return string
+     * @return mixed
      */
     public function add ()
     {
-        $liked = new Favorite();
-        $liked->post_id = Input::get('post_id');
-        $liked->user_id = Auth()->user()->id;
-        $liked->save();
+        Auth::user()->favorites()->create(['post_id' => Input::get('post_id')]);
 
         return 'true';
     }
@@ -30,11 +27,12 @@ class FavoritesController extends Controller
      */
     public function delete ()
     {
-        Favorite::where('post_id', '=', Input::get('post_id'))
-                ->where('user_id', '=', Auth()->user()->id)
-                ->delete();
+        Auth::user()
+            ->favorites()
+            ->where('post_id', '=', Input::get('post_id'))
+            ->delete();
 
-        return 'liked';
+        return 'true';
     }
 
     /**

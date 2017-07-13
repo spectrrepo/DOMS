@@ -260,8 +260,8 @@ class UserController extends BasePhotoController
           }
 
           if (Input::file('img')) {
-              $user->img_mini = $this->saveFile('user','mini', Input::file('img'),20,20);
-              $user->img_middle = $this->saveFile('user','mini', Input::file('img'),32,32);
+              $user->img_mini = $this->saveFile('user','mini', Input::file('img'),32,32);
+              $user->img_middle = $this->saveFile('user','mini', Input::file('img'),106,106);
               $user->img_large = $this->saveFile('user','mini', Input::file('img'),180,180);
           }
 

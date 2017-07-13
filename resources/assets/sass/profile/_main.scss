@@ -307,7 +307,7 @@
     margin-right: 10px;
 }
 .b-item-stat {
-    float: left;
+    display: inline-block;
     cursor: pointer;
     font-size: 0.86rem;
     margin-left: 1px;
@@ -327,6 +327,7 @@
 .b-item-stat> .tooltip-stat {
     position: absolute;
     opacity: 0;
+    visibility: hidden;
     margin: auto;
     bottom: 25px;
     transition: all 0.3s ease;
@@ -335,8 +336,9 @@
     right: 0;
     font-size: 12px;
 }
-.b-item-stat:hover> .tooltip-stat {
-    position: absolute;
+
+.b-item-stat:hover > .tooltip-stat {
+    visibility: visible;
     opacity: 1;
 }
 .b-item-stat > .margin-like-tooltip {

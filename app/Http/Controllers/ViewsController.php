@@ -17,9 +17,9 @@ class ViewsController extends BasePhotoController
      * @param $id
      * @return string
      */
-    public function delete ($id)
+    public function delete ()
     {
-        View::find($id)->softDelete();
+        View::where('id', '=', Input::get('id'))->delete();
 
         return 'true';
     }

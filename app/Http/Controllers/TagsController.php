@@ -30,6 +30,7 @@ class TagsController extends Controller
      */
     public function delete ($tagID)
     {
+        DB::table('posts_tags')->where('tag_id', '=', $tagID)->delete();
         Tag::find($tagID)->delete();
 
         return redirect()->back()->with('message', 'тег успешно удален');

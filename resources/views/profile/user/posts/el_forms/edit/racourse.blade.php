@@ -7,9 +7,8 @@
     @if(!empty($post->view))
         <ul class="uk-list angles-list uk-grid uk-grid-width-1-3 uk-margin-remove">
             @foreach ($post->view as $view)
-                <li class="racurs-list-item uk-margin-bottom uk-margin-top uk-padding-remove">
+                <li class="delete-racourse uk-margin-bottom uk-margin-top uk-padding-remove" data-id="{{ $view->id }}">
                     <div class="uk-overlay uk-width-1-1">
-                        <input type="hidden" name="id" value="{{ $view->id }}">
                         <img src="{{ Storage::url($view->img_middle) }}">
                         <div class="uk-overlay-area">
                             <div class="uk-overlay-area-content">

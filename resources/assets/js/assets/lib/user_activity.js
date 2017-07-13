@@ -25,14 +25,13 @@ export function  like () {
 
       success: function  (data) {
             if ( url === '/likes/delete') {
-              $('.uk-icon-heart').addClass('active-like');
-              $('#value-like').text(data);
-              $('input[name=url-like]').val();
-              $('input[name=url-like]').val('/likes/delete');
-            }else {
               $('.uk-icon-heart').removeClass('active-like');
-              $('#value-like').text( $('#value-like').text() - 1) ;
+              $('#num_liked').text(data);
               $('input[name=url-like]').val('/likes/add');
+            }else {
+              $('.uk-icon-heart').addClass('active-like');
+              $('#num_liked').text(data) ;
+              $('input[name=url-like]').val('/likes/delete');
             }
       }
   });
@@ -42,23 +41,25 @@ export function  like () {
  * @function liked - функция для добавление в избранное
  */
 export function  liked () {
-  let url = $('input[name=url-liked]').val();
+    let url = $('input[name=url-liked]').val();
+    let csrf = $('input[name=csrf]').val();
+    let post_id = $('input[name=post_id]').val();
+
   $.ajax({
       type:'POST',
       data: {
-                '_token'  : csrftoken,
-                'post_id' : photoID,
-                'user_id' : user_id
+          '_token'  : csrf,
+          'post_id' : post_id
       },
       url:url,
 
       success: function  (data) {
-        if ( data === 'liked') {
-          $('#num_liked').removeClass('active-favorite');
-          $('input[name=url-liked]').val('/liked');
+        if ( url === '/favorites/delete') {
+          $('.uk-icon-star').removeClass('active-favorite');
+          $('input[name=url-liked]').val('/favorites/add');
         }else{
-          $('#num_liked').addClass('active-favorite');
-          $('input[name=url-liked]').val('/delete_liked');
+          $('.uk-icon-star').addClass('active-favorite');
+          $('input[name=url-liked]').val('/favorites/delete');
         }
 
       }

@@ -7,12 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Like extends Model {
 
 	protected $table = 'likes';
-	protected $primaryKey = ['post_id', 'user_id'];
-	protected $dates = ['date'];
+    protected $dates = ['date'];
+    protected $fillable = ['post_id', 'user_id'];
     public $timestamps = false;
-    public $rules = [
-        'post_id' => 'required|integer',
-    ];
 
 	public function getDates ()
     {

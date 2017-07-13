@@ -10,6 +10,8 @@ import { handleFileOneSelect } from './lib/functions';
 import { handleFileSelect } from './lib/functions';
 import { confirmModal } from './lib/functions';
 import { deleteView } from './lib/functions';
+import { deleteTag } from './lib/functions';
+
 import { addArrowForMoreInfo } from './lib/functions';
 import { showUserInfoMore } from './lib/functions';
 
@@ -78,8 +80,8 @@ import { getAllComments } from './lib/functions';
 // форма добавления фото
 (function() {
 
-  $('.deleteSome').on('click', deleteView);
-  var id = 1;
+  $('.delete-racourse').on('click', deleteView);
+  $('.delete-tag').on('click', deleteTag);
 
   $('#file').on('change', handleFileOneSelect);
   $('#files').on('change', handleFileSelect);
@@ -268,9 +270,9 @@ import { getAllComments } from './lib/functions';
 (function() {
 
   $( document ).ready(function () {
-    $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.823});
+    $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.85});
     $(window).resize(function() {
-      $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.823});
+      $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.85});
     });
   });
 
