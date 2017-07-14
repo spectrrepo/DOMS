@@ -54,6 +54,36 @@
                          <span id="current-position">{{ $posts->count() }}</span>/<span id="all-photo">{{ $posts->count()}}</span>
                      </div>
                      <div class="status-photo">
+                         <div class="b-item-stat" data-uk-dropdown="{pos:'top-center'}">
+                             <div class="b-item-stat like">
+                                 @if (Auth::check())
+                                     <input type="hidden" name="post_id" value="{{ $posts->first()->id }}">
+                                     <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                                     <input type="hidden" name="url-like" value="{{ $colorLike ? '/'.$type.'s/delete' : '/'.$type.'s/add' }}">
+                                 @endif
+                                 <button class="{{ $colorLike ? 'active-like': ''}} ico-slider uk-icon-justify uk-icon-heart"></button>
+                                 <span {{ Auth::check() ?  'id=num_liked' : ''}} >{{ $posts->first()->likes->count() }}</span>
+                             </div>
+
+                             <div class="uk-dropdown">
+                                 <div class="tooltip-stat margin-like-tooltip">
+                                     <div class="text-tooltip-stat">
+                                         Понравилось
+                                         <div id="like-whom-pole">
+                                             @php $i = 0; @endphp
+                                             @foreach ($posts->first()->likes as $like)
+                                                 @php if ($i >3) { return;} @endphp
+                                                 <a class="mini-avatar" href="/user/{{ $like->user_id }}" title="{{ $like->user->name }}">
+                                                     <img src="{{ Storage::url($like->user->img_mini) }}">
+                                                 </a>
+                                                 @php $i++; @endphp
+                                             @endforeach
+                                         </div>
+                                     </div>
+                                     <span class="triangle-tooltip-stat"></span>
+                                 </div>
+                             </div>
+                         </div>
                          @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'back-to-main','link' => 'href='.URL::route('index'),'icon' => 'th-large','id' => ' ','data' => false,'margin' => 'margin-callback-tooltip','text' => 'Плитка','triangle'=>'triangle-callback'])
                          @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'full-scrn','link' => ' ','icon' => 'arrows-alt','id' => ' ','data' => false,'margin' => 'margin-full-scr-tooltip','text' => 'На весь экран','triangle'=>'triangle-full-scr'])
                          @include('site.slider.elements.center.action_tooltip', ['type' => 'liked', 'icon' => 'star', 'margin' => 'liked', 'text' => 'Избранное', 'active' => 'favorite'])
