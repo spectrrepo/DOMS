@@ -16,6 +16,7 @@
             </textarea>
             @include('profile.user.posts.el_forms.edit.colors', ['colors' => $colors, 'post' => $post])
             @include('profile.user.posts.el_forms.edit.racourse', ['post' => $post])
+            <hr>
             @include('profile.user.posts.el_forms.edit.tags')
             <button class="btn-dwnld" type="submit" name="button">
                 <span class="save-text">Сохранить изменения</span>

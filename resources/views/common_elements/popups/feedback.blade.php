@@ -1,4 +1,4 @@
-<div class="overlay" id="popup-feedback">
+<div class="overlay" id="popup-feedback" {{Session::has('feedback') ? 'style=display:block;' : ''}}>
   <div class="modal modal-feedback">
     <span class="popup-close close uk-icon-justify uk-icon-remove"></span>
     <div class="modal-feedback-center">
@@ -31,6 +31,6 @@
         <input class="feedback-submit" type="submit" value="Отправить сообщение">
       {{ Form::close() }}
       <div class="clear"></div>
-     </div>
+    </div>
   </div>
 </div>

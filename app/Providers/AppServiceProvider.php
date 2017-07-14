@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         $placements = Placement::all();
         $article = Article::orderBy('id', 'desc')->first();
         $slides = Slide::all();
-        $roles = Role::all();
+        $roles = Role::all()->slice(2)->take(4);
         $numComments = Comment::where('status', '=', 0)->get()->count();
         $numClaims = Claim::where('status', '=', 1)->get()->count();
         $numFeedbacks = Feedback::where('answer', '=', null)->get()->count();

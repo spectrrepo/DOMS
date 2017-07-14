@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Dotenv\Validator;
 use Illuminate\Http\Request;
 
 use Input;
@@ -127,10 +128,23 @@ class UserController extends BasePhotoController
      }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-     public function login ()
+     public function login (Request $request)
      {
+         $v = \Illuminate\Support\Facades\Validator::make($request->all(),
+             [
+             'email' => 'required|string',
+             'password' => 'required|string',
+             ]
+         );
+
+         if ($v->fails())
+         {
+             return redirect()->back()->with('login', true)->withErrors($v->errors());
+         }
+
          $email = Input::get('email');
          $password = Input::get('password');
 
@@ -138,7 +152,7 @@ class UserController extends BasePhotoController
          {
             return redirect()->intended();
          }else {
-            return redirect('/');
+            return redirect()->back()->with('login', true);
          }
      }
 
@@ -149,10 +163,22 @@ class UserController extends BasePhotoController
      public function registration (Request $request)
      {
          $user = new User();
-         $this->validate($request, $user->rules);
+
+         $v = \Illuminate\Support\Facades\Validator::make($request->all(), $user->rules);
+
+         if ($v->fails())
+         {
+             return redirect()->back()->with('reg', true)->withErrors($v->errors());
+         }
+
 
          $user->name = Input::get('name');
-         $user->email = Input::get('email');
+
+         $users = User::where('email', '=', Input::get('email'))->get()->count();
+         if ($users === 0) {
+             $user->email = Input::get('email');
+         }
+
          $user->phone = Input::get('phone');
          $user->password = Hash::make(Input::get('password'));
          $user->sex = 'man';
@@ -175,8 +201,8 @@ class UserController extends BasePhotoController
                ]);
          Auth::attempt(['email' => $user->email, 'password' => Input::get('password')]);
          Mail::send('emails.welcome', ['name' => $user->name,
-                                            'e_mail' => $user->email,
-                                            'password' => Input::get('password')],
+                                       'e_mail' => $user->email,
+                                       'password' => Input::get('password')],
          function($message)
          {
              $message->to(Input::get('email'), Input::get('name'))

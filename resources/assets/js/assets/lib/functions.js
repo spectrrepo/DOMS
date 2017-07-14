@@ -164,7 +164,6 @@ export function readComment () {
   });
 }
 
-//TODO:refactor
 export function handleFileOneSelect(evt) {
     $('#main-wrap-photo span img').parent('span').remove();
     var files = evt.target.files; // FileList object
@@ -199,6 +198,26 @@ export function handleFileOneSelect(evt) {
     }
     $('#main-wrap-photo').children('.add-photo-ico').css({'display': 'none'});
     $('#main-wrap-photo').children('.add-photo-text').css({'display': 'none'});
+}
+
+export function userAvaChange(evt) {
+    let files = evt.target.files;
+
+    for (var i = 0, f; f = files[i]; i++) {
+
+        if (!f.type.match('image.*')) {
+            continue;
+        }
+
+        let reader = new FileReader();
+
+        reader.onload = (function(theFile) {
+            return function(e) {
+                $('#photo-person img').attr('src', e.target.result);
+            };
+        })(f);
+        reader.readAsDataURL(f);
+    }
 }
 
 //TODO:refactor
@@ -402,23 +421,3 @@ export function showUserInfoMore () {
            .addClass('uk-icon-chevron-down');
   }
 }
-
-
-//               count = data.length;
-//               if ((count > 3) && (comment_last_id != '')) {
-//                   if (count + 1 === 4) {
-//                       ending = 'я';
-//                   } else {
-//                       ending = 'ев';
-//                   }
-//                   btnTwo = '<div class="btn-all-comments">Показать все ' + count + ' комментари' + ending + '</div>';
-//               } else {
-//                   btnTwo = '';
-//               }
-//               $(btnTwo).appendTo('.b-all-comment');
-//
-//                   if ((i <= count - 3) && (count > 3)) {
-//                       style = 'style="display:none"';
-//                   } else {
-//                       style = '';
-//                   }

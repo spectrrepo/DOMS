@@ -24,7 +24,7 @@
               </div>
           </a>
       @else
-           <a class="login logining-item">Вход</a>
+           <a class="login logining-item logining-item-top">Вход</a>
            <a id="registration" class="logining-item">Регистрация</a>
       @endif
     </div>

@@ -427,6 +427,7 @@ a.btn-prew span {
   height:auto;
   float: left;
   padding-left: 42px;
+  margin-top: -16px;
 }
 .title-tag{
   width: 100%;
@@ -594,7 +595,18 @@ a.btn-prew span {
   max-height: 305px;
   overflow: hidden;
   margin-bottom: 1px;
+  font-size: 13px;
+  line-height: 15px;
+  text-align: justify;
+  margin-top: 0;
 }
 .title-description-popup {
   color: white;
+}
+#description-pole h3 {
+  color: #993399;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 0;
 }

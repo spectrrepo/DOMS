@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Favorite;
 use App\Models\ModerateHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Input;
 use Auth;
 use DB;
@@ -195,7 +196,6 @@ class PostsController extends BasePhotoController
         $posts = $this->queryForPosts($json)
                       ->take(32)
                       ->get();
-
         return view('site.gallery.index', [
                           'posts' => $posts,
                           'json' => $json

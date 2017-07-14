@@ -7,30 +7,30 @@
             @include('profile.elements.validate')
             <input class="input-title-dwnld"type="text" name="title" placeholder="Заголовок">
             <div id="main-wrap-photo" class="wrap-main-dwnld-photo" title="Добавить изображение">
-                <span class="add-photo-ico uk-icon-justify uk-icon-camera"></span>
+                <span class="add-photo-ico uk-icon-justify uk-icon-plus"></span>
                 <span class="add-photo-text">Добавить изображение</span>
                 <input id="file" class="dwnld-file-input" type="file" name="img">
             </div>
             <textarea class="input-descreption"type="text" name="description" placeholder="Описание"></textarea>
             <div class="title-choose-color">Укажи основные цвета</div>
-            <div class="color-place">
+            <div class="color-place uk-clearfix">
                 @foreach ( $colors as $color)
                     <div class="wrap-color-input">
                         <input class="color-photo-choose" type="checkbox" name="color[]" value="{{ $color->id }}" />
                         <div class="b-color-input" style="background:{{ $color->hash }}"></div>
                     </div>
                 @endforeach
-                <div class="clear"></div>
             </div>
             <div id="wrap-racourse">
                 <div class="wrap-dwnld-photo">
-                    <span class="add-photo-ico racurs-margin-ico uk-icon-justify uk-icon-camera"></span>
+                    <span class="add-photo-ico racurs-margin-ico uk-icon-justify uk-icon-plus"></span>
                     <span class="add-photo-text racurs-margin-text">Добавить ракурсы</span>
                     <input id="files" class="input-dwnld-view-photo" type="file" name="views[]">
                 </div>
                 <ul class="uk-list angles-list uk-grid uk-grid-width-1-3 uk-margin-remove"></ul>
             </div>
             <div class="clear"></div>
+            <hr>
             <div class="wrap-add-tag">
                 <div class="label-tag-input">Теги</div>
                 <input class="input-tag-name" type="text" name="name" placeholder="Введите тег">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Mail;
 use Auth;
@@ -20,7 +21,12 @@ class FeedbacksController extends Controller
     public function add (Request $request)
     {
         $feedback = new Feedback();
-        $this->validate($request, $feedback->rules);
+        $v = \Illuminate\Support\Facades\Validator::make($request->all(), $feedback->rules);
+
+        if ($v->fails())
+        {
+            return redirect()->back()->with('feedback', true)->withErrors($v->errors());
+        }
 
         $feedback->name = Input::get('name');
         $feedback->email = Input::get('email');

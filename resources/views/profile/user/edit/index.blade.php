@@ -5,7 +5,7 @@
         <div class="b-photo-person" id="photo-person">
             <img src="{{ empty($user->img_middle) ? '/img/user.png' : Storage::url($user->img_large) }}" alt="" />
             <div class="hover-effect-person uk-icon-justify uk-icon-pencil"></div>
-            <input id="photo" type="file" name="img">
+            <input id="change-user-ava" type="file" name="img">
         </div>
         <div class="b-persobal-information edit-personal-info">
             @include('profile.elements.validate')

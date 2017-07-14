@@ -8,6 +8,8 @@ import { slider } from './lib/functions';
 import { readComment } from './lib/functions';
 import { handleFileOneSelect } from './lib/functions';
 import { handleFileSelect } from './lib/functions';
+import { userAvaChange } from './lib/functions';
+
 import { confirmModal } from './lib/functions';
 import { deleteView } from './lib/functions';
 import { deleteTag } from './lib/functions';
@@ -85,6 +87,7 @@ import { getAllComments } from './lib/functions';
 
   $('#file').on('change', handleFileOneSelect);
   $('#files').on('change', handleFileSelect);
+  $('#change-user-ava').on('change', userAvaChange);
 
 })();
 
