@@ -13,9 +13,8 @@ class Claim extends Model {
     public $timestamps = false;
     public $rules = [
         'text' => 'required|max:255',
-        'file' => 'required|image|size:10240',
+        'file' => 'required|image|max:82240',
         'post_id' => 'required|integer',
-        'status' => 'required|boolean',
     ];
 
     public function getDates ()

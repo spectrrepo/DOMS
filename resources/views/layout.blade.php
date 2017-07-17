@@ -36,7 +36,11 @@
     @include('common_elements.popups.forgetpswd')
     @include('common_elements.popups.login')
     @include('common_elements.popups.registration.index')
-    
+    @if(isset($json))
+        <script type="text/javascript">
+            var __JSON_FILTER_GALLERY = JSON.parse('{{ $json }}'.replace(/&quot;/g, '"'));
+        </script>
+    @endif
     <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/uikit.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/grid.js') }}"></script>

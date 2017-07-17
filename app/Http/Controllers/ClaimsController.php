@@ -34,7 +34,7 @@ class ClaimsController extends BasePhotoController
         $claim->file = $this->saveFile('claims', 'default', Input::file('file'),'600');
         $claim->post_id = Input::get('post_id');
         $claim->user_id = Auth::user()->id;
-        $claim->status = Input::get('status');
+        $claim->status = 0;
         $claim->text = Input::get('text');
         $claim->save();
 

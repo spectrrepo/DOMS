@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
 use App\Models\Favorite;
-use App\Models\ModerateHistory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Input;
 use Auth;
 use DB;
+use Storage;
 
 use App\Models\Post;
 use App\Models\View;
 use App\Models\Like;
 use App\Models\User;
-use App\Models\UserSocial;
-use PhpParser\Builder\Class_;
 
 class PostsController extends BasePhotoController
 {
@@ -194,7 +190,7 @@ class PostsController extends BasePhotoController
     {
 
         $posts = $this->queryForPosts($json)
-                      ->take(32)
+                      ->take(8)
                       ->get();
         return view('site.gallery.index', [
                           'posts' => $posts,
@@ -465,14 +461,20 @@ class PostsController extends BasePhotoController
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function loadGallery ($json, $action, $id)
+    public function loadGallery ()
     {
+        $json = Input::get('json');
+        $action = Input::get('action');
+        $id = Input::get('id');
+
         switch ($action) {
             case 'next':
-                $posts = $this->loadMorePosts($id, 23, $json);
+                $posts = $this->loadMorePosts($id, 8, $json)->map(function ($item, $key) {
+                    return $item->img_middle = Storage::url($item->img_middle);
+                });
                 break;
             case 'sort':
-                $posts = $this->loadSortPosts($id, 23);
+                $posts = $this->loadSortPosts($id, 8);
                 break;
             default:
                 $posts = 'error';

@@ -172,7 +172,7 @@ a.btn-prew span {
   z-index: 10;
   opacity: 1;
   bottom: 3px;
-  z-index: 100;
+  z-index: 1000000;
 }
 #like-whom-pole {
   width: 90px;
@@ -224,16 +224,6 @@ a.btn-prew span {
   width: 45%;
   position: absolute;
   right: 5%;
-}
-.back-to-main,
-.full-scrn,
-.comment,
-.liked,
-.share,
-.view,
-.like{
-  display:block;
-  float: right;
 }
 
 .b-tooltip-visible{

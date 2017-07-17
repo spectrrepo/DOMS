@@ -1263,3 +1263,15 @@
 .close-likes {
   right: 14px;
 }
+
+.bg-none {
+  background: none;
+}
+#allLikesPost {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#allLikesPost:hover {
+  color: #993399;
+}

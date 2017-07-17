@@ -43,6 +43,7 @@ import { mainSliderPhoto } from './lib/main_slider';
 import { commentAdd } from './lib/functions';
 import { deleteComment } from './lib/functions';
 import { getAllComments } from './lib/functions';
+import { loadMorePostsGallery } from './lib/functions';
 
 (function(){
     $('.comment-add-form').on('submit', commentAdd);
@@ -98,15 +99,6 @@ import { getAllComments } from './lib/functions';
 
 })();
 
-
-// Чтение комментария в админке
-(function() {
-
-  $().on('click', readComment);
-
-})();
-
-
 // инициализация слайдеров <--- !!! работает
 (function() {
 
@@ -119,9 +111,12 @@ import { getAllComments } from './lib/functions';
      });
 
      $('.nav-zoom-views').on('click', function () {
-       slider('active-slide-zoom-views', 'left-slide-zoom-views', 'right-slide-zoom-views', 'item-views-zoom')
+       slider('active-slide-zoom-views', 'left-slide-zoom-views', 'right-slide-zoom-views', 'item-views-zoom');
      });
 
+    $('.nav-zoom-views').on('click', function () {
+        slider('active-cicle', 'left-cicle', 'right-cicle', 'nav-cicle');
+    });
 })();
 
 
@@ -240,7 +235,7 @@ import { getAllComments } from './lib/functions';
   $('.liked button').on('click', liked);
   $('#pretense-file').on('change', changeIcoPretense);
   $('#formPretense').on('submit', sendPretense);
-  // $('p.asd').on('click', allPhotoLikes);
+  $('#allLikesPost').on('click', allPhotoLikes);
 
 })();
 
@@ -290,18 +285,7 @@ import { getAllComments } from './lib/functions';
 
 })();
 
-// делегирование
 
 (function() {
-
-  // var filtr = new Filtr;
-  //
-  // table.onclick = function(event) {
-  //   var target = event.target; // где был клик?
-  //
-  //   if (target.tagName != 'TD') return; // не на TD? тогда не интересует
-  //
-  //   highlight(target); // подсветить TD
-  // };
-
+    $('.b-next-page').on('click', loadMorePostsGallery);
 })();

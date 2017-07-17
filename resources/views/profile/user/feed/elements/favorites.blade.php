@@ -2,18 +2,20 @@
     <div class="uk-clearfix">
         <div class="col-news-min">
             <a href="{{ URL::route('userPage', ['id' => $post['favorites'][0]['user_id']]) }}" class="b-portret-blogger">
-                <img src="{{ Storage::url($post['img_mini']) }}"/>
+                <img src="{{ Storage::url($post['favorites'][0]['img_middle']) }}"/>
                 <span class="ico ico-news ico-news-star uk-icon-justify uk-icon-star"></span>
             </a>
         </div>
         <div class="col-news-big">
             <div class="b-name-redactor">
-                <a href="{{ URL::route('userPage', ['id' => $favorite['user_id']])  }}"></a>
+                <a href="{{ URL::route('userPage', ['id' => $post['favorites'][0]['user_id']])  }}">
+                    {{ $post['favorites'][0]['name'] }}
+                </a>
                 <div class="event-text">
-                    @if($favorite['sex'] === 'man')
+                    @if($post['favorites'][0]['sex'] === 'man')
                         добавил фотографию в избранное
                     @endif
-                    @if($favorite['sex'] === 'woman')
+                    @if($post['favorites'][0]['sex'] === 'woman')
                         добавила фотографию в избранное
                     @endif
                     @if( count($post['favorites']) > 1)

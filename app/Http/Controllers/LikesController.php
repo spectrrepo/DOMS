@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Input;
 
 use App\Models\Like;
@@ -43,19 +45,24 @@ class LikesController extends Controller
      */
     public function loadAllLikes ()
     {
-
         $id = Input::get('id');
-        $likes = Like::where('post_id', '=', $id)->get();
 
-        $likeWhom = array();
-        foreach ($likes as $like) {
-            $user = User::select('id', 'name', 'img_square')
-                        ->where('id', '=', $like->user_id)
-                        ->get();
-            array_push( $likeWhom, $user);
+        $likes = Post::find($id)->likes;
+        $likesWithUser = [];
+
+        foreach ($likes as $item) {
+            $itemArray = [
+                'id' => $item->id,
+                'user_id' => $item->user->id,
+                'user_name' => $item->user->name,
+                'user_img' => Storage::url($item->user->img_middle),
+                'comment' => $item->comment,
+                'date' => $item->date //->formatLocalized('%d %B %Y г. %H:%M')
+            ];
+            array_push($likesWithUser, $itemArray);
         }
 
-        return $likeWhom;
+        return $likesWithUser;
     }
 
     /**

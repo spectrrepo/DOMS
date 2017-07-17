@@ -11,8 +11,8 @@
                  <div class="b-photo-slider">
                  @include('site.slider.elements.popups.racourse')
                  @include('site.slider.elements.popups.description')
-                 @include('site.slider.elements.popups.law')
                  @include('site.slider.elements.popups.likes')
+                 @include('common_elements.popups.pretense')
                      <div class="wrap-slider">
                          @foreach ($posts as $image_el)
                              @if ($image_el->id === $posts[0]->id)
@@ -48,49 +48,55 @@
                              </div>
                              <span class="author-name">{{ $posts->first()->user->name}}</span>
                          </a>
-{{--                         @include('site.slider_components.b_pretense')--}}
+                         @if (Auth::check())
+                             <div class="b-item-stat pretense-tool">
+                                 <span class="b-pretense">?</span>
+                                 <div class="tooltip-stat margin-full-scr-tooltip">
+                                     <span class="text-tooltip-stat">
+                                         Заявить права
+                                     </span>
+                                     <span class="triangle-tooltip-stat triangle-full-scr"></span>
+                                 </div>
+                             </div>
+                         @endif
                      </div>
                      <div class="num-page">
                          <span id="current-position">{{ $posts->count() }}</span>/<span id="all-photo">{{ $posts->count()}}</span>
                      </div>
                      <div class="status-photo">
-                         <div class="b-item-stat" data-uk-dropdown="{pos:'top-center'}">
+                         @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'view','link' => ' ','icon' => 'eye','id' => 'num_views','data' => $posts->first()->views,'margin' => 'other-margin-tooltip1','text' => 'Количество просмотров','triangle'=>' '])
+                         <div class="uk-button-dropdown" data-uk-dropdown="{pos:'top-center'}" aria-haspopup="true" aria-expanded="false">
                              <div class="b-item-stat like">
                                  @if (Auth::check())
                                      <input type="hidden" name="post_id" value="{{ $posts->first()->id }}">
                                      <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                                     <input type="hidden" name="url-like" value="{{ $colorLike ? '/'.$type.'s/delete' : '/'.$type.'s/add' }}">
+                                     <input type="hidden" name="url-like" value="{{ $colorLike ? '/likes/delete' : '/likes/add' }}">
                                  @endif
                                  <button class="{{ $colorLike ? 'active-like': ''}} ico-slider uk-icon-justify uk-icon-heart"></button>
                                  <span {{ Auth::check() ?  'id=num_liked' : ''}} >{{ $posts->first()->likes->count() }}</span>
                              </div>
-
-                             <div class="uk-dropdown">
-                                 <div class="tooltip-stat margin-like-tooltip">
-                                     <div class="text-tooltip-stat">
-                                         Понравилось
-                                         <div id="like-whom-pole">
-                                             @php $i = 0; @endphp
-                                             @foreach ($posts->first()->likes as $like)
-                                                 @php if ($i >3) { return;} @endphp
-                                                 <a class="mini-avatar" href="/user/{{ $like->user_id }}" title="{{ $like->user->name }}">
-                                                     <img src="{{ Storage::url($like->user->img_mini) }}">
-                                                 </a>
-                                                 @php $i++; @endphp
-                                             @endforeach
-                                         </div>
+                             <div class="uk-dropdown uk-dropdown-top uk-dropdown-small bg-none" aria-hidden="true" tabindex="">
+                                 <div class="text-tooltip-stat">
+                                     <span id="allLikesPost">Понравилось</span>
+                                     <div id="like-whom-pole">
+                                         @php $i = 0; @endphp
+                                         @foreach ($posts->first()->likes as $like)
+                                             @php if ($i >3) { return;} @endphp
+                                             <a class="mini-avatar" href="/user/{{ $like->user_id }}" title="{{ $like->user->name }}">
+                                                 <img src="{{ Storage::url($like->user->img_mini) }}">
+                                             </a>
+                                             @php $i++; @endphp
+                                         @endforeach
                                      </div>
-                                     <span class="triangle-tooltip-stat"></span>
                                  </div>
+                                 <span class="triangle-tooltip-stat"></span>
                              </div>
                          </div>
-                         @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'back-to-main','link' => 'href='.URL::route('index'),'icon' => 'th-large','id' => ' ','data' => false,'margin' => 'margin-callback-tooltip','text' => 'Плитка','triangle'=>'triangle-callback'])
-                         @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'full-scrn','link' => ' ','icon' => 'arrows-alt','id' => ' ','data' => false,'margin' => 'margin-full-scr-tooltip','text' => 'На весь экран','triangle'=>'triangle-full-scr'])
-                         @include('site.slider.elements.center.action_tooltip', ['type' => 'liked', 'icon' => 'star', 'margin' => 'liked', 'text' => 'Избранное', 'active' => 'favorite'])
-                         @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'share','link' => ' ','icon' => 'share-alt','id' => ' ','data' => false,'margin' => 'margin-share-tooltip','text' => 'Поделиться','triangle'=>' '])
                          @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'comment','link' => ' ','icon' => 'comments','id' => 'num_comment','data' => $posts->first()->comments->count(),'margin' => 'margin-num-comment-tooltip','text' => 'Количество коментариев','triangle'=>' '])
-                         @include('site.slider.elements.center.action_tooltip', ['type' => 'like', 'icon' => 'heart', 'margin' => 'like', 'text' => 'Понравилось', 'active' => 'like'])
-                         @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'view','link' => ' ','icon' => 'eye','id' => 'num_views','data' => $posts->first()->views,'margin' => 'other-margin-tooltip1','text' => 'Количество просмотров','triangle'=>' '])
+                         @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'share','link' => ' ','icon' => 'share-alt','id' => ' ','data' => false,'margin' => 'margin-share-tooltip','text' => 'Поделиться','triangle'=>' '])
+                         @include('site.slider.elements.center.action_tooltip', ['type' => 'liked', 'icon' => 'star', 'margin' => 'liked', 'text' => 'Избранное', 'active' => 'favorite'])
+                         @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'full-scrn','link' => ' ','icon' => 'arrows-alt','id' => ' ','data' => false,'margin' => 'margin-full-scr-tooltip','text' => 'На весь экран','triangle'=>'triangle-full-scr'])
+                         @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'back-to-main','link' => 'href='.URL::route('index'),'icon' => 'th-large','id' => ' ','data' => false,'margin' => 'margin-callback-tooltip','text' => 'Плитка','triangle'=>'triangle-callback'])
                      </div>
                  </div>
              </div>

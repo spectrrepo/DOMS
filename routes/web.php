@@ -39,7 +39,7 @@ Route::group(['prefix' => '/articles'], function () {
 
 Route::group(['prefix' => 'claims'], function () {
     Route::post('add', 'ClaimsController@add')->name('addClaims')
-         ->middleware('role:user, moderator, admin');
+         ->middleware('role:user,moderator,admin');
 
     Route::group(['middleware' => 'role:0,moderator,admin'], function (){
         Route::get('index', 'ClaimsController@index')->name('listClaimsPage');
@@ -139,11 +139,8 @@ Route::group(['prefix' => 'posts'], function () {
          ->where('id', '[0-9]+')
          ->where('action', '[A-Za-z]+')
          ->where('json', '[A-Za-z]+');
-    Route::post('loadGallery/{json}/{action}/{id}', 'PostsController@loadGallery')
-         ->name('loadGallery')
-         ->where('id', '[0-9]+')
-         ->where('action', '[A-Za-z]+')
-         ->where('json', '[A-Za-z]+');
+    Route::post('loadGallery/', 'PostsController@loadGallery')
+         ->name('loadGallery');
 
     Route::group(['middleware' => 'role:0,moderator,admin'], function () {
         Route::get('confirmationList', 'PostsController@confirmationsPage')

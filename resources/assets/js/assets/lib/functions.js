@@ -122,24 +122,24 @@ export function closeModal (el) {
 export function slider (activeEl, leftEl, rightEl, el) {
     if ($(this).data('direction') === 'prev') {
         if ($('.'+el+':first').hasClass(activeEl)) {
-              $('.'+el+':not(.'+el+':last)').addClass(leftEl).removeClass(activeEl)
-                                                        .removeClass(rightEl);
-              $('.'+el+':last').addClass(activeEl).removeClass(rightEl);
-          } else {
-              $('.'+activeEl).prev().addClass(activeEl).removeClass(leftEl);
-              $('.'+activeEl+':last').removeClass(activeEl).addClass(rightEl);
-          }
-      } else {
-          if ($('.'+el+':last').hasClass(activeEl)) {
-              $('.'+el+':not(.'+el+':first)').addClass(rightEl).removeClass(activeEl)
+            $('.'+el+':not(.'+el+':last)').addClass(leftEl).removeClass(activeEl).removeClass(rightEl);
+            $('.'+el+':last').addClass(activeEl).removeClass(rightEl);
+        } else {
+            $('.'+activeEl).prev().addClass(activeEl).removeClass(leftEl);
+            $('.'+activeEl+':last').removeClass(activeEl).addClass(rightEl);
+        }
+    } else {
+        if ($('.'+el+':last').hasClass(activeEl)) {
+            $('.'+el+':not(.'+el+':first)').addClass(rightEl).removeClass(activeEl)
                                                          .removeClass(leftEl);
-              $('.'+el+':first').addClass(activeEl).removeClass(leftEl);
-          } else {
-              $('.'+activeEl).next().addClass(activeEl).removeClass(rightEl);
-              $('.'+activeEl+':first').removeClass(activeEl).addClass(leftEl);
-          }
-      }
+            $('.'+el+':first').addClass(activeEl).removeClass(leftEl);
+        } else {
+            $('.'+activeEl).next().addClass(activeEl).removeClass(rightEl);
+            $('.'+activeEl+':first').removeClass(activeEl).addClass(leftEl);
+        }
+    }
 }
+
 // ============================================================================
 // ============================================================================
 // ============================================================================
@@ -330,9 +330,6 @@ export function getAllComments() {
         success: function (data) {
             for (let i = 0; i < data.length; i++) {
                 let newComment =   `<div class="b-comment-wrap uk-clearfix">
-                                        <div class="remove-comment uk-icon-justify uk-icon-remove">
-                                            <span class="delete_comment_id" data-id="${data[i].id}"></span>
-                                        </div>
                                         <a href="/user/${data[i].user_id}" class="b-photo-comment">
                                             <img src="${data[i].user_img}">
                                         </a>
@@ -348,13 +345,53 @@ export function getAllComments() {
                                             </div>
                                         </div>
                                     </div>`;
+                // $(this).next().children().prepend(newComment);
                 $(newComment).prependTo('#insertComment');
-                $('span[data-id='+data[i].id+']').parent().on('click', deleteComment);
             }
         }
     });
+
     $(this).remove();
 }
+
+export function getAllCommentsForNews() {
+    let csrf = $('input[name=csrf]').val();
+    let postId = $('input[name=post_id]').val();
+
+    $.ajax({
+        type:'POST',
+        data: {
+            '_token'  : csrf,
+            'id' : postId
+        },
+        url: '/comments/allCommentsLoad',
+        success: function (data) {
+            for (let i = 0; i < data.length; i++) {
+                let newComment =   `<div class="b-comment-wrap uk-clearfix">
+                                        <a href="/user/${data[i].user_id}" class="b-photo-comment">
+                                            <img src="${data[i].user_img}">
+                                        </a>
+                                        <div class="b-comment">
+                                            <a href="/user/${data[i].user_id}" class="b-name-comment">
+                                                ${data[i].user_name}
+                                            </a>
+                                            <div class="b-text-comment">
+                                                ${data[i].comment}
+                                            </div>
+                                            <div class="b-date-comment">
+                                                ${data[i].date}
+                                            </div>
+                                        </div>
+                                    </div>`;
+                $(this).next().children().prepend(newComment);
+            }
+        }
+    });
+
+    $(this).remove();
+}
+
+
 
 /**
  * @function confirmModal
@@ -421,3 +458,31 @@ export function showUserInfoMore () {
            .addClass('uk-icon-chevron-down');
   }
 }
+
+export function loadMorePostsGallery () {
+    let action = 'next',
+        id = $('a.item-gallery').length;
+
+    $.ajax({
+        type: 'POST',
+        data: {
+          'json' :  JSON.stringify(__JSON_FILTER_GALLERY),
+          'action' : action,
+          'id' : id,
+          '_token' : $('meta[name=_token]').attr('content')
+        },
+        url: '/posts/loadGallery',
+
+        success: function (data) {
+            for (let i = 0; i < data.length; i++) {
+                let newElement = `<a data-id="${data[i]}" href="/gallery/6/rule=" class="item-gallery" data-grid-prepared="true" style="position: absolute;">
+                                       <div class="uk-panel-box">
+                                           <img src="${data[i]}">
+                                       </div>
+                                  </a>`;
+                $('#pole').append(newElement);
+            }
+        }
+    });
+}
+

@@ -59,8 +59,7 @@ class User extends Authenticatable {
         if ($check === "0") {
             return false;
         }
-
-        $needRole = Role::where('name', '=', $check)->first()->name;
+        $needRole = Role::where('nickname', '=', $check)->first()->name;
 
         return $userRole === $needRole;
 	}
