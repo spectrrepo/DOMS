@@ -26,7 +26,7 @@
   <body>
     @include('common_elements.header')
 
-    @section('common-content')
+    @section('common.js')
     @show
 
     @include('common_elements.footer')

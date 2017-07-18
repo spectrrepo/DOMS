@@ -3,7 +3,7 @@
  * @param string - text - текст, который появляется при пустых полях
  * @param string - where - перед каким элементом вставить текст
  */
-export function  commonValid(text, where) {
+export function commonValid(text, where) {
     $('#p-info').remove();
     if (($('.modal-login-inp').val() === '')) {
         e.preventDefault();
@@ -16,7 +16,7 @@ export function  commonValid(text, where) {
 /**
  * @function validateBack - функция для валидации обратной связи
  */
-export function  validateBack() {
+export function validateBack() {
     if (($('.input-feedback').val() === '') || $('.textarea-feddback').val() === '') {
         e.preventDefault();
         $(this).children().addClass('error');

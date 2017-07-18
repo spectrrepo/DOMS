@@ -456,9 +456,6 @@ class PostsController extends BasePhotoController
     }
 
     /**
-     * @param $json
-     * @param $action
-     * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function loadGallery ()

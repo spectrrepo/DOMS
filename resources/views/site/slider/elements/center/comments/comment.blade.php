@@ -1,5 +1,5 @@
 @if (count($posts->first()->comments) > 3)
-    <div class="btn-all-comments-news">Показать все {{ count($posts->first()->comments) }}
+    <div class="btn-all-comments-news" id="postCommentUpload">Показать все {{ count($posts->first()->comments) }}
         @if (count($posts->first()->comments) % 10 === 1 && count($posts->first()->comments) !== 11)
             комментарий
         @endif

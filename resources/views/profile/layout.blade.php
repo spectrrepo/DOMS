@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('common-content')
+@section('common.js')
   <div class="site-wrapper">
       <div class="conteiner">
             @include('profile.elements.sidebar_profile')

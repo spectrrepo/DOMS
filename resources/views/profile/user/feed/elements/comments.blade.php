@@ -1,7 +1,5 @@
-{{--{{dd($posts)}}--}}
-
 @if ($post['numComments'] > 3)
-    <div class="btn-all-comments-news">Показать все {{ ($post['numComments']) }}
+    <div class="btn-all-comments-news news-upload-comments">Показать все {{ ($post['numComments']) }}
         @if ($post['numComments'] % 10 === 1 && $post['numComments'] !== 11)
             комментарий
         @endif

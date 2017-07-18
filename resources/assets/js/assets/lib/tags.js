@@ -215,3 +215,17 @@ export function form() {
         }
     });
 }
+
+/**
+ * @function - deleteTag
+ */
+export function deleteTag () {
+    let id = $(this).data('id');
+
+    $.ajax({
+        type:'GET',
+        url: '/tags/delete/'+id,
+    });
+
+    $(this).remove();
+}

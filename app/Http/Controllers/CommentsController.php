@@ -168,11 +168,13 @@ class CommentsController extends Controller
             ->addHours(23);
 
         if ($bool === false) {
-            return Comment::join('users', 'users.id', '=', 'comments.user_id')
+            $all = Comment::join('users', 'users.id', '=', 'comments.user_id')
                 ->where('comments.post_id', '=', $id)
                 ->whereBetween('comments.date', [$dateBegin, $dateEnd])
-                ->take(3)
                 ->get();
+            $allNum = $all->count();
+            return $all->slice($allNum - 4);
+
         } else {
             return Comment::join('users', 'users.id', '=', 'comments.user_id')
                 ->where('comments.post_id', '=', $id)

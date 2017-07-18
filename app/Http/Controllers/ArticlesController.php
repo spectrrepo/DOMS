@@ -32,9 +32,10 @@ class ArticlesController extends BasePhotoController
         } else {
             $article->status = 0;
         }
-        $article->img_middle = $this->saveFile('article','middle', Input::file('img'), 300, 400);
-        $article->img_large = $this->saveFile('article','large', Input::file('img'), 300, 400);
-        $article->img_square = $this->saveFile('article', 'square', Input::file('img'), 300);
+
+        $article->img_middle = $this->saveFileWithWatermark('article','middle', Input::file('img'), 350);
+        $article->img_large = $this->saveFileWithWatermark('article','large', Input::file('img'), 400);
+        $article->img_square = $this->saveFileWithWatermark('article', 'square', Input::file('img'), 800);
 
         if (Input::has('alt')) {
             $article->alt = Input::get('alt');
@@ -86,9 +87,9 @@ class ArticlesController extends BasePhotoController
         $article->status = Input::get('status');
 
         if (Input::file('img')) {
-            $article->img_middle = $this->saveFile('article','middle', Input::file('img'), 300, 400);
-            $article->img_large = $this->saveFile('article','large', Input::file('img'), 300, 400);
-            $article->img_square = $this->saveFile('article', 'square', Input::file('img'), 300);
+            $article->img_middle = $this->saveFileWithWatermark('article','middle', Input::file('img'), 350);
+            $article->img_large = $this->saveFileWithWatermark('article','large', Input::file('img'), 400);
+            $article->img_square = $this->saveFileWithWatermark('article', 'square', Input::file('img'), 800);
         }
 
         if (Input::has('alt')) {

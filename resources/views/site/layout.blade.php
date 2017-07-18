@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('common-content')
+@section('common.js')
 <div class="site-wrapper">
 <div class="conteiner">
   @if (!(preg_match('[/news]', URL::current())))

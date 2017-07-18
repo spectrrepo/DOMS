@@ -65,7 +65,7 @@
                      </div>
                      <div class="status-photo">
                          @include('site.slider.elements.center.post.elements.footer.tooltip.tooltip', ['class' => 'view','link' => ' ','icon' => 'eye','id' => 'num_views','data' => $posts->first()->views,'margin' => 'other-margin-tooltip1','text' => 'Количество просмотров','triangle'=>' '])
-                         <div class="uk-button-dropdown" data-uk-dropdown="{pos:'top-center'}" aria-haspopup="true" aria-expanded="false">
+                         <div class="uk-button-dropdown" data-uk-dropdown="{pos:'top-center'}" aria-haspopup="true" aria-expanded="false" style="vertical-align: inherit;">
                              <div class="b-item-stat like">
                                  @if (Auth::check())
                                      <input type="hidden" name="post_id" value="{{ $posts->first()->id }}">

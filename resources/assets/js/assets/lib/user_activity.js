@@ -1,9 +1,9 @@
 // ============================================================================
 // =================== file with export function  for user action =============
 // ============================================================================
-import { photoID } from './functions';
-import { csrftoken } from './functions';
-import { user_id } from './functions';
+import { photoID } from '../posts/functions';
+import { csrftoken } from '../posts/functions';
+import { user_id } from '../posts/functions';
 import { ADD_COPY } from './constant';
 import { LOAD_LIKES } from './constant';
 

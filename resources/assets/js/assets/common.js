@@ -1,21 +1,13 @@
-import { Filtr } from './filtres/Filtr';
+import { openModal } from './lib/common';
+import { closeModal } from './lib/common';
+import { slider } from './lib/common';
+import { addArrowForMoreInfo } from './lib/common';
+import { showUserInfoMore } from './lib/common';
+import { deleteView } from './lib/common';
 
-import { dwnldIndexPhoto } from './lib/functions';
-import { loadAllComments } from './lib/functions';
-import { openModal } from './lib/functions';
-import { closeModal } from './lib/functions';
-import { slider } from './lib/functions';
-import { readComment } from './lib/functions';
-import { handleFileOneSelect } from './lib/functions';
-import { handleFileSelect } from './lib/functions';
-import { userAvaChange } from './lib/functions';
-
-import { confirmModal } from './lib/functions';
-import { deleteView } from './lib/functions';
-import { deleteTag } from './lib/functions';
-
-import { addArrowForMoreInfo } from './lib/functions';
-import { showUserInfoMore } from './lib/functions';
+import { handleFileOneSelect } from './lib/image';
+import { handleFileSelect } from './lib/image';
+import { userAvaChange } from './lib/image';
 
 import { deleteLink } from './lib/link';
 import { save } from './lib/link';
@@ -29,26 +21,30 @@ import { allPhotoLikes } from './lib/user_activity';
 import { commonValid } from './lib/validation';
 import { validateBack } from './lib/validation';
 
-import { addTag } from './lib/tags_functions';
-import { hiddenTagMask } from './lib/tags_functions';
-import { renderPhoto } from './lib/tags_functions';
-import { esc } from './lib/tags_functions';
-import { moveTagMask } from './lib/tags_functions';
-import { enter } from './lib/tags_functions';
-import { renderTagsMask } from './lib/tags_functions';
-import { form } from './lib/tags_functions';
+import { addTag } from './lib/tags';
+import { deleteTag } from './lib/tags';
+import { hiddenTagMask } from './lib/tags';
+import { renderPhoto } from './lib/tags';
+import { esc } from './lib/tags';
+import { moveTagMask } from './lib/tags';
+import { enter } from './lib/tags';
+import { renderTagsMask } from './lib/tags';
+import { form } from './lib/tags';
 
-import { mainSliderPhoto } from './lib/main_slider';
+import { mainSliderPhoto } from './main_slider';
 
-import { commentAdd } from './lib/functions';
-import { deleteComment } from './lib/functions';
-import { getAllComments } from './lib/functions';
-import { loadMorePostsGallery } from './lib/functions';
+import { commentAdd } from './lib/comments';
+import { deleteComment } from './lib/comments';
+import { getAllComments } from './lib/comments';
+import { getAllCommentsForNews } from './lib/comments';
+
+import { loadMorePostsGallery } from './posts/functions';
 
 (function(){
     $('.comment-add-form').on('submit', commentAdd);
     $('.remove-comment').on('click', deleteComment);
-    $('.btn-all-comments-news').on('click', getAllComments);
+    $('#postCommentUpload').on('click', getAllComments);
+    $('.news-upload-comments').on('click', getAllCommentsForNews);
 })();
 
 // инициализация главного слайдера
@@ -197,18 +193,11 @@ import { loadMorePostsGallery } from './lib/functions';
   $('#description-pole h3').on('click', function () {
     openModal('#modalDescriptionFull');
   });
-})();
 
-
-// Подгрузить все комментарии <--- !!! работает
-(function() {
-
-  $('.btn-all-comments').on('click', function () {
-    loadAllComments(this);
+  $('.item-news-title').on('click', function(){
+    $('.'+$(this).attr('rel')).fadeIn();
   });
-
 })();
-
 
 // Инициализация кнопки для показа полной информации о пользователе <----! Работает
 (function() {
@@ -217,16 +206,6 @@ import { loadMorePostsGallery } from './lib/functions';
   $('.to-bottom').on('click', showUserInfoMore);
 
 })();
-
-// попапы новостей <--- !!! работает
-(function() {
-
-  $('.item-news-title').on('click', function(){
-    $('.'+$(this).attr('rel')).fadeIn();
-  });
-
-})();
-
 
 // активность пользователя
 (function() {
@@ -255,37 +234,49 @@ import { loadMorePostsGallery } from './lib/functions';
 
 })();
 
-
+// <--- !!! работает
 (function() {
-
   $('#feedback').children().on('click', function () {
     $(this).removeClass('error');
   });
 
-})();
-
-// <--- !!! работает
-(function() {
+  $('#current-position, #current-position-zoom').text($('.active-slide').index() + 1);
 
   $( document ).ready(function () {
     $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.85});
+    $('.news-main-page').height(document.body.scrollHeight*0.83);
     $(window).resize(function() {
       $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.85});
+      $('.news-main-page').height(document.body.scrollHeight*0.83);
     });
   });
 
 })();
 
-
-
-// <--- !!! работает
-(function() {
-
-  $('#current-position, #current-position-zoom').text($('.active-slide').index() + 1);
-
-})();
-
-
 (function() {
     $('.b-next-page').on('click', loadMorePostsGallery);
+})();
+
+(function() {
+    $('.open-modal-link').on('click', function() {
+        if ($(this).data('action') === 'addLinks') {
+            $('h3.title-form').empty().text('Добавить ссылку');
+            $('.mini-modal-submit').removeClass('uk-icon-save').addClass('uk-icon-plus');
+            $('.links-control').removeAttr('id').attr('id', 'add-link-form');
+            addLink ();
+        }
+        else if ($(this).data('action') === 'editLinks'){
+            $('.links-control').removeAttr('id').attr('id', 'save-link-form');
+            $('input[name=old_link]').val($(this).children('input.soc-set-edit').val());
+            $('input[name=link]').val($(this).children('input.soc-set-edit').val())
+            $('#save-link-form').attr('data-id', $(this).data('id'));
+            $('h3.title-form').empty().append(textPopupLink($(this).children().val()));
+            $('.mini-modal-submit').removeClass('uk-icon-plus').addClass('uk-icon-save')
+
+            deleteLink();
+            save();
+            openModalLink();
+        }
+        $('#dialogLinkAdd').fadeIn();
+    });
 })();

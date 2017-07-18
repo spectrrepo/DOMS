@@ -5,8 +5,8 @@ import { LOAD_AUTHOR_PHOTO } from './constant';
 import { LOAD_LIKE_PHOTO } from './constant';
 import { LOAD_MORE_PHOTO } from './constant';
 
-import { photoID } from './functions';
-import { csrftoken } from './functions';
+import { photoID } from './posts/functions';
+import { csrftoken } from './posts/functions';
 
 /**
  * @function commentDownload

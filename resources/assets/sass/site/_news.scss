@@ -44,13 +44,15 @@
 }
 .scroll-place-modal-news {
   overflow-y: scroll;
-  height: 80%;
   margin: 0 auto;
-  margin-top: 20px;
   width: 92%;
-  padding: 0 5%;
+  padding: 0 20%;
   box-sizing: border-box;
-
+  position: absolute;
+  top: 20px;
+  bottom: 47px;
+  left: 0;
+  right: 0;
 }
 .date-and-all-news{
   width: 80%;

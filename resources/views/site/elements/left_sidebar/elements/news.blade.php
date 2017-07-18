@@ -12,7 +12,6 @@
              <div class="b-descreption-news">
                {{ $article->description }}
              </div>
-             {{--format('j F o')--}}
              <div class="b-date-news">
                 @php setlocale(LC_ALL, 'ru_RU.utf8') @endphp
                 {{ $article->date->formatLocalized('%d %B %Y')}}
