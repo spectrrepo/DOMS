@@ -71,7 +71,6 @@ class FavoritesController extends Controller
         return Favorite::join('users', 'users.id', '=', 'favorites.user_id')
                         ->whereBetween('favorites.date', [$dateBegin, $dateEnd])
                         ->where('favorites.post_id', '=', $id)
-                        ->where('favorites.date', '=', $date)
                         ->get();
     }
 

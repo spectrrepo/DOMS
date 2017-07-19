@@ -1,8 +1,7 @@
 <div class="b-iformation">
     <div class="b-date">
         @php setlocale(LC_ALL, 'ru_RU.utf8') @endphp
-            {{--TODO: time format--}}
-        {{ $post['dateEvent']}}</div>
+        {{ $post['dateEvent']->formatLocalized('%d %B %Y г.')}}</div>
     <div class="b-statistics">
         <div class="b-item-stat">
             <span class="ico uk-icon-justify uk-icon-eye"></span>

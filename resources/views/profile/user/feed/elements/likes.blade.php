@@ -21,15 +21,17 @@
                         @if( count($post['likes']) > 1)
                             и ещё {{ count($post['likes']) }} человек оценилии фотографию
                         @endif
-                        @foreach($post['likes']->toArray() as $like )
-                            <a href=" {{ URL::route('userPage', ['id' => $like['user_id']])}}" style="display:inline-block;width:50px;">
-                                <img src="" alt="" />
-                            </a>
-                        @endforeach
+                        @if(count($post['likes']) > 1)
+                            @foreach($post['likes']->toArray() as $like )
+                                <a href=" {{ URL::route('userPage', ['id' => $like['user_id']])}}" style="display:inline-block;width:50px;">
+                                    <img src="" alt="" />
+                                </a>
+                            @endforeach
+                        @endif
                     </div>
                     @php setlocale(LC_ALL, 'ru_RU.utf8') @endphp
                     <p class="date-event-text">
-                        {{ $post['likes'][0]['date']->formatLocalized('%d %B %Y г. %H:%M') }}
+                        {{ $post['likes'][0]['date']->formatLocalized('%d %B %Y г.') }}
                     </p>
                 </div>
             </div>

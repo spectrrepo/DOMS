@@ -19,10 +19,10 @@ class Favorite extends Model {
         return ['date'];
 	}
 
-	public function post ()
+    public function post ()
     {
-		return $this->belongsTo('App\Models\Post', 'id', 'post_id');
-	}
+        return $this->belongsTo('App\Models\Post', 'post_id', 'id');
+    }
 
 	public function user ()
     {

@@ -1,16 +1,18 @@
-@if ($post['numComments'] > 3)
+@if (count($post["comments"]) > 3)
     <div class="btn-all-comments-news news-upload-comments">Показать все {{ ($post['numComments']) }}
         @if ($post['numComments'] % 10 === 1 && $post['numComments'] !== 11)
             комментарий
         @endif
-        @if (($post['numComments'] % 10) > 1 ||
+        @if (($post['numComments'] % 10) > 1 &&
              ($post['numComments'] % 10) < 5 &&
-             ($post['numComments'] % 10 !== 12) &&
-             ($post['numComments'] % 10 !== 13) &&
-             ($post['numComments'] % 10 !== 14))
+             ($post['numComments'] !== 12) &&
+             ($post['numComments'] !== 13) &&
+             ($post['numComments'] !== 14))
             комментария
         @endif
-        @if (($post['numComments'] % 10 === 0 || $post['numComments'] % 10) >= 5 || ($post['numComments'] % 10) <= 9)
+        @if (($post['numComments'] % 10) === 0 ||
+              ($post['numComments'] % 10) >= 5 &&
+              ($post['numComments'] % 10) <= 9)
             комментариев
         @endif
         <input type="hidden" name="csrf" value="{{ csrf_token() }}">
