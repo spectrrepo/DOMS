@@ -25,31 +25,48 @@ class UserController extends BasePhotoController
      */
     private function formPosts ($rawPosts)
     {
-        $posts = [];
-
-        foreach ( $rawPosts as $item){
-            $newPost = [
-                "id" => $item->postId,
-                "image" => $item->image,
-                "idAuthor" => $item->idAuthor,
-                "nameAuthor" => $item->idAuthor,
-                "avaAuthor" => $item->idAuthor,
-                "sexAuthor" => $item->idAuthor,
-                "numViews" => $item->idAuthor,
-                "numLikes" => LikesController::numLikes($item->postId),
-                "numFavorites" => FavoritesController::numFavorites($item->postId),
-                "dateEvent" => $item->dateEvent,
-                "comments" => CommentsController::newsCommentLoad($item->postId, $item->dateEvent),
-                "numComments" => count(CommentsController::newsCommentLoad($item->postId, $item->dateEvent, true)),
-                "likes" => LikesController::newsLikesLoad($item->postId, $item->dateEvent),
-                "favorites" => FavoritesController::newsFavoritesLoad($item->postId, $item->dateEvent),
+        $posts = $rawPosts->map(function ($item) {
+            return  [
+                "id" => $item['img']->id,
+                "image" => $item['img']->img_middle,
+                "idAuthor" => $item['img']->author_id,
+                "nameAuthor" => $item['img']->user->name,
+                "avaAuthor" => $item['img']->user->img_middle,
+                "sexAuthor" => $item['img']->user->sex,
+                "numViews" => $item['img']->views,
+                "numLikes" => count($item['img']->likes),
+                "numFavorites" => count($item['img']->favorites),
+                "dateEvent" => $item['date'],
+                "comments" => CommentsController::newsCommentLoad($item['img']->id, $item['date']),
+                "numComments" => count($item['img']->comments),
+                "likes" => LikesController::newsLikesLoad($item['img']->id, $item['date']),
+                "favorites" => FavoritesController::newsFavoritesLoad($item['img']->id, $item['date']),
             ];
+        });
 
-            array_push($posts, $newPost);
-        }
         return $posts;
     }
+    private function findPartEvent ($item, $dates, $nameEvent) {
+        if ($item->$nameEvent->count()) {
+            $dateEventBegin = Carbon::parse($item->$nameEvent->first()->date)
+                ->addSeconds(-Carbon::parse($item->$nameEvent->first()->date)->second)
+                ->addMinutes(-Carbon::parse($item->$nameEvent->first()->date)->minute)
+                ->addHours(-Carbon::parse($item->$nameEvent->first()->date)->hour);
+            $dateEventEnd = Carbon::parse($dateEventBegin)->addSeconds(59)->addMinutes(59)->addHours(23);
+            $dates->push([$dateEventBegin, $item->id]);
+            foreach ($item->$nameEvent as $item) {
+                if (!($item->date > $dateEventBegin) && ($item->date <= $dateEventEnd)) {
+                    $dates->push([$item->date, $item->post_id]);
 
+                    $dateEventBegin = Carbon::parse($item->date)
+                        ->addSeconds(-Carbon::parse($item->date)->second)
+                        ->addMinutes(-Carbon::parse($item->date)->minute)
+                        ->addHours(-Carbon::parse($item->date)->hour);
+                    $dateEventEnd = Carbon::parse($dateEventBegin)->addSeconds(59)->addMinutes(59)->addHours(23);
+                }
+            }
+        }
+    }
     /**
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
@@ -74,98 +91,28 @@ class UserController extends BasePhotoController
          $rawData = $likePosts->union($favoritePosts)->union($commentPosts);
          $rawData = $rawData->map( function ($item) {
 
-                 $datesLike = collect();
-                 if ($item->likes->count()) {
-                     $dateLikeBegin = Carbon::parse($item->likes->first()->date)
-                         ->addSeconds(-Carbon::parse($item->likes->first()->date)->second)
-                         ->addMinutes(-Carbon::parse($item->likes->first()->date)->minute)
-                         ->addHours(-Carbon::parse($item->likes->first()->date)->hour);
-                     $dateLikeEnd = Carbon::parse($dateLikeBegin)->addSeconds(59)->addMinutes(59)->addHours(23);
-                     $datesLike->push([$dateLikeBegin, $item->id]);
-                     foreach ($item->likes as $like) {
-                         if (!($like->date > $dateLikeBegin) && ($like->date <= $dateLikeEnd)) {
-                             $datesLike->push([$like->date, $like->post_id]);
+             $datesLike = collect();
+             $this->findPartEvent($item, $datesLike, 'likes');
 
-                             $dateLikeBegin = Carbon::parse($like->date)
-                                 ->addSeconds(-Carbon::parse($like->date)->second)
-                                 ->addMinutes(-Carbon::parse($like->date)->minute)
-                                 ->addHours(-Carbon::parse($like->date)->hour);
-                             $dateLikeEnd = Carbon::parse($dateLikeBegin)->addSeconds(59)->addMinutes(59)->addHours(23);
-                         }
-                     }
-                 }
+             $datesFavorite = collect();
+             $this->findPartEvent($item, $datesFavorite, 'favorites');
 
-                 $datesFavorite = collect();
-                 if ($item->favorites->count() !== 0) {
-                     $dateFavoriteBegin = Carbon::parse($item->favorites->first()->date)
-                         ->addSeconds(-Carbon::parse($item->favorites->first()->date)->second)
-                         ->addMinutes(-Carbon::parse($item->favorites->first()->date)->minute)
-                         ->addHours(-Carbon::parse($item->favorites->first()->date)->hour);
-                     $dateFavoriteEnd = Carbon::parse($dateFavoriteBegin)->addSeconds(59)->addMinutes(59)->addHours(23);
-                     $datesFavorite->push([$dateFavoriteBegin, $item->id]);
-                     foreach ($item->favorites as $favorite) {
-                         if (!($favorite->date > $dateFavoriteBegin) && ($favorite->date <= $dateFavoriteEnd)) {
-                             $datesFavorite->push([$favorite->date, $favorite->post_id]);
+             $datesComment = collect();
+             $this->findPartEvent($item, $datesComment, 'comments');
 
-                             $dateFavoriteBegin = Carbon::parse($favorite->date)
-                                 ->addSeconds(-Carbon::parse($favorite->date)->second)
-                                 ->addMinutes(-Carbon::parse($favorite->date)->minute)
-                                 ->addHours(-Carbon::parse($favorite->date)->hour);
-                             $dateFavoriteEnd = Carbon::parse($dateFavoriteBegin)->addSeconds(59)->addMinutes(59)->addHours(23);
-                         }
-                     }
-                 }
+             $datesEvent = $datesLike->merge($datesFavorite)->merge($datesComment)->unique();
 
-                 $datesComment = collect();
-                 if ($item->comments->count()) {
-                     $dateCommentBegin = Carbon::parse($item->comments->first()->date)
-                         ->addSeconds(-Carbon::parse($item->comments->first()->date)->second)
-                         ->addMinutes(-Carbon::parse($item->comments->first()->date)->minute)
-                         ->addHours(-Carbon::parse($item->comments->first()->date)->hour);
-                     $dateCommentEnd = Carbon::parse($dateCommentBegin)->addSeconds(59)->addMinutes(59)->addHours(23);
-                     $datesComment->push([$dateCommentBegin, $item->id]);
-                     foreach ($item->comments as $comment) {
-                         if (!($comment->date > $dateCommentBegin) && ($comment->date <= $dateCommentEnd)) {
-                             $datesComment->push([$comment->date, $comment->post_id]);
+             $collect = collect();
+             foreach ($datesEvent as $date) {
+                 $collect->push(['img' => $item, 'date' => $date[0]]);
+             }
 
-                             $dateCommentBegin = Carbon::parse($comment->date)
-                                 ->addSeconds(-Carbon::parse($comment->date)->second)
-                                 ->addMinutes(-Carbon::parse($comment->date)->minute)
-                                 ->addHours(-Carbon::parse($comment->date)->hour);
-                             $dateCommentEnd = Carbon::parse($dateCommentBegin)->addSeconds(59)->addMinutes(59)->addHours(23);
-                         }
-                     }
-                 }
-
-                 $datesEvent = $datesLike->merge($datesFavorite)->merge($datesComment)->unique();
-
-                 $collect = collect();
-                 foreach ($datesEvent as $date) {
-                     $collect->push(['img' => $item, 'date' => $date[0]]);
-                 }
-
-                 return $collect;
-         })->sortBy('date')->values();
-         dd($rawData);
-         $rawData = $rawData->unique()->flatten(1)->take(10);
-         $posts = $rawData->map(function ($item) {
-                         return  [
-                             "id" => $item['img']->id,
-                             "image" => $item['img']->img_middle,
-                             "idAuthor" => $item['img']->author_id,
-                             "nameAuthor" => $item['img']->user->name,
-                             "avaAuthor" => $item['img']->user->img_middle,
-                             "sexAuthor" => $item['img']->user->sex,
-                             "numViews" => $item['img']->views,
-                             "numLikes" => count($item['img']->likes),
-                             "numFavorites" => count($item['img']->favorites),
-                             "dateEvent" => $item['date'],
-                             "comments" => CommentsController::newsCommentLoad($item['img']->id, $item['date']),
-                             "numComments" => count($item['img']->comments),
-                             "likes" => LikesController::newsLikesLoad($item['img']->id, $item['date']),
-                             "favorites" => FavoritesController::newsFavoritesLoad($item['img']->id, $item['date']),
-                             ];
+             return $collect;
          });
+
+         $rawData = $rawData->unique()->flatten(1)->sortBy('date')->reverse()->values()->take(10);
+
+         $posts = $this->formPosts($rawData);
 
          return view('profile.user.feed.index', [
                            'user' => $user,
@@ -179,10 +126,45 @@ class UserController extends BasePhotoController
      */
      public function ajaxLoadNews ()
      {
-         $id = Input::get('id');
-         $rawPosts = $this->getPartPosts($id, 10);
+         $user = User::find(Input::get('userId'));
 
-         $posts = $this->formPosts($rawPosts);
+         $likePosts = $user->likes->map(function ($item) {
+             return $item->post;
+         });
+
+         $favoritePosts = $user->favorites->map(function ($item) {
+             return $item->post;
+         });
+
+         $commentPosts = $user->comments->map(function ($item) {
+             return $item->post;
+         });
+
+         $rawData = $likePosts->union($favoritePosts)->union($commentPosts);
+         $rawData = $rawData->map( function ($item) {
+
+             $datesLike = collect();
+             $this->findPartEvent($item, $datesLike, 'likes');
+
+             $datesFavorite = collect();
+             $this->findPartEvent($item, $datesFavorite, 'favorites');
+
+             $datesComment = collect();
+             $this->findPartEvent($item, $datesComment, 'comments');
+
+             $datesEvent = $datesLike->merge($datesFavorite)->merge($datesComment)->unique();
+
+             $collect = collect();
+             foreach ($datesEvent as $date) {
+                 $collect->push(['img' => $item, 'date' => $date[0]]);
+             }
+
+             return $collect;
+         });
+
+         $rawData = $rawData->unique()->flatten(1)->sortBy('date')->reverse()->values()->slice(Input::get('last'), 10);
+
+         $posts = $this->formPosts($rawData);
 
          return $posts;
      }
