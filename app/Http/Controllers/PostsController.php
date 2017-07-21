@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Favorite;
+use App\Models\UserSocial;
 use Illuminate\Http\Request;
 use Input;
 use Auth;
@@ -391,11 +392,13 @@ class PostsController extends BasePhotoController
     public function userPosts ($id)
     {
         $user = User::find($id);
+        $socials = UserSocial::where('user_id', '=', $id )->get();
         $posts = Post::where('author_id', '=', $id)->get();
 
         return View('profile.user.posts.list.index', [
                                                   'user' => $user,
-                                                  'posts' => $posts
+                                                  'posts' => $posts,
+                                                  'socials' => $socials
                                                 ]);
     }
 

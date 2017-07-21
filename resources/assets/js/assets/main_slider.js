@@ -1,12 +1,12 @@
-import { LOAD_INFO_PHOTO } from './constant';
-import { LOAD_ACTIVE_LIKE_PHOTO } from './constant';
-import { LOAD_ACTIVE_FAVORITE_PHOTO } from './constant';
-import { LOAD_AUTHOR_PHOTO } from './constant';
-import { LOAD_LIKE_PHOTO } from './constant';
-import { LOAD_MORE_PHOTO } from './constant';
+import { LOAD_INFO_PHOTO } from './lib/constant';
+import { LOAD_ACTIVE_LIKE_PHOTO } from './lib/constant';
+import { LOAD_ACTIVE_FAVORITE_PHOTO } from './lib/constant';
+import { LOAD_AUTHOR_PHOTO } from './lib/constant';
+import { LOAD_LIKE_PHOTO } from './lib/constant';
+import { LOAD_MORE_PHOTO } from './lib/constant';
 
-import { photoID } from './posts/functions';
-import { csrftoken } from './posts/functions';
+import { photoID } from './lib/helpers';
+import { csrftoken } from './lib/helpers';
 
 /**
  * @function commentDownload

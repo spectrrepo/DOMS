@@ -100,7 +100,7 @@ class User extends Authenticatable {
 
 	public function userSocials ()
     {
-		return $this->hasMany('App\Models\UserSocial', 'id', 'user_id');
+		return $this->hasMany('App\Models\UserSocial', 'user_id', 'id');
 	}
 
 	public function claims ()

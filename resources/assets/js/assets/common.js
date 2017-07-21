@@ -39,6 +39,8 @@ import { getAllComments } from './lib/comments';
 import { getAllCommentsForNews } from './lib/comments';
 
 import { loadMorePostsGallery } from './posts/functions';
+import { confirmModal } from './lib/common';
+import { uploadMoreNews } from './lib/tpl';
 
 (function(){
     $('.comment-add-form').on('submit', commentAdd);
@@ -279,4 +281,8 @@ import { loadMorePostsGallery } from './posts/functions';
         }
         $('#dialogLinkAdd').fadeIn();
     });
+})();
+
+(function() {
+   $('.btn-dwnld-new').on('click', uploadMoreNews);
 })();

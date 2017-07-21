@@ -24,7 +24,7 @@
         @foreach ( $post['comments'] as $comment)
             <div class="b-comment-wrap uk-clearfix">
                 <a href="{{ $comment->id }}" class="b-photo-comment">
-                    <img src="{{ Storage::url($comment->img_middle) }}" alt="">
+                    <img src="{{ $comment->img_middle }}" alt="">
                 </a>
                 <div class="b-comment">
                     <a href="" class="b-name-comment">

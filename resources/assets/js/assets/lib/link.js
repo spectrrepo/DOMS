@@ -4,8 +4,8 @@
 import { ADD_LINK } from './constant';
 import { EDIT_LINK } from './constant';
 import { DEL_LINK } from './constant';
-import { csrftoken } from './functions';
-import { user_id } from './functions';
+import { csrftoken } from './helpers';
+import { user_id } from './helpers';
 
 /**
  * @functionHTML - хтмл шаблон всплывающей подсказки

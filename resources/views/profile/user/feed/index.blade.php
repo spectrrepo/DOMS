@@ -6,13 +6,14 @@
             Лента
         </div>
         <div class="wrap-personal-news">
+            <input type="hidden" id="userId" value="{{ $id }}">
             @include('profile.user.elements.tabs')
             <div class="b-personal-news">
                 @foreach($posts as $post)
                     <div class="b-person-post uk-clearfix">
                         <div class="col-news-min">
                             <a href="{{ URL::route('userPage', ['id' => $post['idAuthor']]) }}" class="b-portret-blogger">
-                                <img src="{{ Storage::url($post['avaAuthor']) }}"/>
+                                <img src="{{ $post['avaAuthor'] }}"/>
                             </a>
                         </div>
                         <div class="col-news-big">
@@ -20,8 +21,8 @@
                                 <a href="{{ URL::route('userPage', ['id' => $post['idAuthor']]) }}">{{ $post['nameAuthor'] }}</a>
                             </div>
                             <div class="b-post-body">
-                                <a href="{{ $post['id'] }}" class="b-photo-post">
-                                    <img src="{{ Storage::url($post['image']) }}" class="img-post" alt="" />
+                                <a href='/gallery/{{ $post['id'] }}/rule={"color":0,"placements":[0],"style":[0],"tag":"0"}' class="b-photo-post">
+                                    <img src="{{ $post['image'] }}" class="img-post" alt="" />
                                 </a>
                                 @include('profile.user.feed.elements.info')
                             </div>

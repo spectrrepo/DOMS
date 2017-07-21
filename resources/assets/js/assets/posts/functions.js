@@ -1,9 +1,9 @@
 // ============================================================================
 // =============== file with functions, which use in app ======================
 // ============================================================================
-import { DWNLD_MAIN_PHOTO } from './constant';
-import { URL_READ_COM } from './constant';
-import { URL_DELETE_VIEWS } from './constant';
+import { DWNLD_MAIN_PHOTO } from '../lib/constant';
+import { URL_READ_COM } from '../lib/constant';
+import { URL_DELETE_VIEWS } from '../lib/constant';
 
 export function loadMorePostsGallery () {
     let action = 'next',

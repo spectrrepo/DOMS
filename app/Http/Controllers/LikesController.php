@@ -118,6 +118,15 @@ class LikesController extends Controller
         return Like::join('users', 'users.id', '=', 'likes.user_id')
                     ->whereBetween('likes.date', [$dateBegin, $dateEnd])
                     ->where('likes.post_id', '=', $id)
-                    ->get();
+                    ->get()->map(function ($item){
+                        return [
+                            "id" => $item->id,
+                            "user_id" => $item->user_id,
+                            "date" => $item->date,
+                            "name" => $item->name,
+                            "sex" => $item->sex,
+                            "img_middle" => Storage::url($item->img_middle),
+                        ];
+            });
     }
 }

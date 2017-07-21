@@ -2,7 +2,7 @@
     <div class="uk-clearfix">
         <div class="col-news-min">
             <a href="{{ URL::route('userPage', ['id' => $post['favorites'][0]['user_id']]) }}" class="b-portret-blogger">
-                <img src="{{ Storage::url($post['favorites'][0]['img_middle']) }}"/>
+                <img src="{{ $post['favorites'][0]['img_middle'] }}"/>
                 <span class="ico ico-news ico-news-star uk-icon-justify uk-icon-star"></span>
             </a>
         </div>

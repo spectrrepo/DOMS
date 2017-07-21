@@ -1,4 +1,4 @@
-import { viewComment } from 'tpl.js'
+import { viewComment } from './tpl';
 /**
  *
  * @returns {boolean}

@@ -1,7 +1,7 @@
 // ============================================================================
 // ========================== comments export  constants ======================
 // ============================================================================
-export let URL_DELETE_COM(id) => '/comments/delete/'+id;
+// export let URL_DELETE_COM(id) => {'/comments/delete/'+id};
 export const URL_ADD_COM = '/comments/add';
 export const URL_DWNLD_COM_POST = '/comments/allCommentsLoad';
 

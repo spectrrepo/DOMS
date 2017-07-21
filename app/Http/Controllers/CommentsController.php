@@ -173,7 +173,16 @@ class CommentsController extends Controller
                 ->whereBetween('comments.date', [$dateBegin, $dateEnd])
                 ->get();
             $allNum = $all->count();
-            return $all->slice($allNum - 4);
+            return $all->slice($allNum - 4)->map(function ($item) {
+                return     ["id" => $item->id,
+                            "user_id" => $item->user_id,
+                            "comment" => $item->comment,
+                            "date" => $item->date,
+                            "name" => $item->name,
+                            "sex" => $item->sex,
+                            "img_middle" => Storage::url($item->img_middle)
+              ];
+            })->values();
 
         } else {
             return Comment::join('users', 'users.id', '=', 'comments.user_id')

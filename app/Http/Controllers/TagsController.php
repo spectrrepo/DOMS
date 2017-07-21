@@ -99,7 +99,7 @@ class TagsController extends Controller
         if ($isTag->isEmpty())
         {
             $tag = new Tag();
-            $tag->value = Input::get('title');
+            $tag->value = $tag;
             $tag->lang = 'ru';
             $tag->value_en = 0;
             $tag->save();

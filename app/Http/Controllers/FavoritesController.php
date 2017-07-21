@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
 use Input;
+use Storage;
 
 use App\Models\Post;
 use App\Models\Favorite;
@@ -71,7 +72,16 @@ class FavoritesController extends Controller
         return Favorite::join('users', 'users.id', '=', 'favorites.user_id')
                         ->whereBetween('favorites.date', [$dateBegin, $dateEnd])
                         ->where('favorites.post_id', '=', $id)
-                        ->get();
+                        ->get()->map(function ($item){
+                            return [
+                                "id" => $item->id,
+                                "user_id" => $item->user_id,
+                                "date" => $item->date,
+                                "name" => $item->name,
+                                "sex" => $item->sex,
+                                "img_middle" => Storage::url($item->img_middle)
+                            ];
+            });
     }
 
     /**

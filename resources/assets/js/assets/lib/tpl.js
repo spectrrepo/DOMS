@@ -51,33 +51,33 @@ export function viewTag (tag) {
 }
 
 export function viewPost (post) {
-    `<div class="b-person-post uk-clearfix">
+   return `<div class="b-person-post uk-clearfix" data-new-id="${post['id']}">
         <div class="col-news-min">
-            <a href="${post.idAuthor}" class="b-portret-blogger">
-                <img src="${post.avaAuthor}">
+            <a href="${post['idAuthor']}" class="b-portret-blogger">
+                <img src="${post['avaAuthor']}">
             </a>
         </div>
         <div class="col-news-big">
             <div class="b-name-redactor">
-                <a href="${post.idAuthor}">Георгий</a>
+                <a href="${post['idAuthor']}">${post['nameAuthor']}</a>
             </div>
             <div class="b-post-body">
-                <a href="${post.id}" class="b-photo-post">
-                    <img src="${post.image}" class="img-post" alt="">
+                <a href='/gallery/${post['id']}/rule={"color":0,"placements":[0],"style":[0],"tag":"0"}' class="b-photo-post">
+                    <img src="${post['image']}" class="img-post" alt="">
                 </a>
                 <div class="b-iformation">
                     <div class="b-date">
-                        ${post.date}
+                        ${new Date(post['dateEvent'].date).toLocaleString('ru', { year: 'numeric', month: 'long', day: 'numeric',})}
                     </div>
                     <div class="b-statistics">
-                       ${newsViewsView(post.numViews)} 
-                       ${newsLikesView(post.numLikes)} 
-                       ${newsFavoritesView(post.numFavorites)}
+                       ${newsViewsView(post['numViews'])} 
+                       ${newsLikesView(post['numLikes'])} 
+                       ${newsFavoritesView(post['numFavorites'])}
                     </div>
                 </div> 
             </div>
             <div id="rubberSquare" class="uk-clearfix">
-                <div id="insertComment"></div>
+                <div class="insertComment"></div>
             </div>
         </div>
         <div class="insertLikes"></div>
@@ -142,21 +142,21 @@ function newsFavoritesView (favorites) {
 function newsFavoritesEventView (favorite) {
     return `<div class="uk-clearfix">
             <div class="col-news-min">
-                <a href="http://localhost:8000/user/2" class="b-portret-blogger">
-                    <img src="/storage/user/mini/2a/53/2a538e54b334127eb35f9bac586d0fbd.jpg">
+                <a href="/user/${favorite.user_id}" class="b-portret-blogger">
+                    <img src="${favorite.img_middle}">
                     <span class="ico ico-news ico-news-star uk-icon-justify uk-icon-star"></span>
                 </a>
             </div>
             <div class="col-news-big">
                 <div class="b-name-redactor">
-                    <a href="http://localhost:8000/user/2">
-                        Георгий
+                    <a href="/user/${favorite.user_id}">
+                        ${favorite.name}
                     </a>
                     <div class="event-text">
                         добавил фотографию в избранное
                     </div>
                     <p class="date-event-text">
-                        19 Июль 2017 г.
+                        ${new Date(favorite.date.date).toLocaleString('ru', { year: 'numeric', month: 'long', day: 'numeric',})}
                     </p>
                 </div>
             </div>
@@ -166,21 +166,21 @@ function newsFavoritesEventView (favorite) {
 function newsLikesEventView (like) {
     return `<div class="uk-clearfix">
                 <div class="col-news-min">
-                    <a href="${like.user_link}" class="b-portret-blogger">
-                        <img src="${like.user_name}">
+                    <a href="/user/${like.user_id}" class="b-portret-blogger">
+                        <img src="${like.img_middle}">
                         <span class="ico ico-news ico-news-hearth uk-icon-justify uk-icon-heart"></span>
                     </a>
                 </div>
                 <div class="col-news-big">
                     <div class="b-name-redactor">
-                        <a href="http://localhost:8000/user/2">
-                            ${like.user_name}
+                        <a href="/user/${like.user_id}">
+                            ${like.name}
                         </a>
                         <div class="event-text">
                             оценил фотографию
                         </div>
                         <p class="date-event-text">
-                            ${like.date}
+                            ${new Date(like.date.date).toLocaleString('ru', { year: 'numeric', month: 'long', day: 'numeric',})}
                         </p>
                     </div>
                 </div>
@@ -189,49 +189,55 @@ function newsLikesEventView (like) {
 
 function newsCommentsView (comment) {
     return `<div class="b-comment-wrap uk-clearfix">
-                <a href="${like.user_link}" class="b-photo-comment">
-                    <img src="${comment.user_img}" alt="">
+                <a href="/user/${comment.user_id}" class="b-photo-comment">
+                    <img src="${comment.img_middle}" alt="">
                 </a>
                 <div class="b-comment">
-                    <a href="" class="b-name-comment">
-                        ${comment.user_name}
+                    <a href="/user/${comment.user_id}" class="b-name-comment">
+                        ${comment.name}
                     </a>
                     <div class="b-text-comment">
-                        ${comment.text}
+                        ${comment.comment}
                     </div>
                     <div class="b-date-comment">
-                        ${comment.date} 
+                        ${new Date(comment.date).toLocaleString('ru', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',})}   
                     </div>
                 </div>
             </div>`;
 }
 
 export function uploadMoreNews () {
-    let last  = '';
-    let currentUser = '';
+    let last  = $('.b-person-post').length;
+    let user = $('#userId').val();
+    let token = $('meta[name=_token]').attr('content');
     $.ajax({
-        url:s,
-        type: POST,
-        url: url,
+        type: 'POST',
+        data: {
+            '_token' : token,
+            'userId': user,
+            'last' : last
+        },
+        url: '/user/ajaxLoadNews',
         success: function (data) {
             for (let i = 0; i < data.length; ++i) {
-                $().appendTo(viewPost(data[i]));
-                if (data['comments'].length !== 0) {
+                $('.b-personal-news').append(viewPost(data[i]));
+                if (data[i]['comments'].length > 0) {
                     //comments
-                    for (let i = 0; i < data['comments'].length; ++i) {
-                        $().appendTo(newsCommentsView(data['comments'][i]));
+                    for (let j = 0; j < data[i]['comments'].length; ++j) {
+                        $(`[data-new-id=${data[i]['id']}]`).find('.insertComment').append(newsCommentsView(data[i]['comments'][j]));
                     }
                 }
-                if (data['likes'].length !== 0) {
+                if (data[i]['likes'].length > 0) {
                     //likes
-                    for (let i = 0; i < data['likes'].length; ++i) {
-                        $().appendTo(newsLikesEventView(data['likes'][i]));
+                    for (let j = 0; j < data[i]['likes'].length; ++j) {
+                        $(`[data-new-id=${data[i]['id']}]`).find('.insertLikes').append(newsLikesEventView(data[i]['likes'][j]));
                     }
                 }
-                if (data['favorites'].length !== 0) {
+                // alert(data[i]['favorites'].length);
+                if (data[i]['favorites'].length > 0) {
                     //favorites
-                    for (let i = 0; i < data['favorites'].length; ++i) {
-                        $().appendTo(newsFavoritesEventView(data['favorites'][i]));
+                    for (let j = 0; j < data[i]['favorites'].length; ++j) {
+                        $(`[data-new-id=${data[i]['id']}]`).find('.insertFavorites').append(newsFavoritesEventView(data[i]['favorites'][j]));
                     }
                 }
             }

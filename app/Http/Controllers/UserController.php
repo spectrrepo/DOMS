@@ -7,6 +7,7 @@ use Dotenv\Validator;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Input;
 use Auth;
 use Hash;
@@ -28,10 +29,10 @@ class UserController extends BasePhotoController
         $posts = $rawPosts->map(function ($item) {
             return  [
                 "id" => $item['img']->id,
-                "image" => $item['img']->img_middle,
+                "image" => Storage::url($item['img']->img_middle),
                 "idAuthor" => $item['img']->author_id,
                 "nameAuthor" => $item['img']->user->name,
-                "avaAuthor" => $item['img']->user->img_middle,
+                "avaAuthor" => Storage::url($item['img']->user->img_middle),
                 "sexAuthor" => $item['img']->user->sex,
                 "numViews" => $item['img']->views,
                 "numLikes" => count($item['img']->likes),
@@ -46,6 +47,12 @@ class UserController extends BasePhotoController
 
         return $posts;
     }
+
+    /**
+     * @param $item
+     * @param $dates
+     * @param $nameEvent
+     */
     private function findPartEvent ($item, $dates, $nameEvent) {
         if ($item->$nameEvent->count()) {
             $dateEventBegin = Carbon::parse($item->$nameEvent->first()->date)
@@ -110,14 +117,15 @@ class UserController extends BasePhotoController
              return $collect;
          });
 
-         $rawData = $rawData->unique()->flatten(1)->sortBy('date')->reverse()->values()->take(10);
+         $rawData = $rawData->unique()->flatten(1)->sortBy('date')->reverse()->values()->take(5);
 
          $posts = $this->formPosts($rawData);
 
          return view('profile.user.feed.index', [
                            'user' => $user,
                            'socials' => $socials,
-                           'posts' => $posts
+                           'posts' => $posts,
+                           'id' => $id,
          ]);
      }
 
@@ -162,10 +170,9 @@ class UserController extends BasePhotoController
              return $collect;
          });
 
-         $rawData = $rawData->unique()->flatten(1)->sortBy('date')->reverse()->values()->slice(Input::get('last'), 10);
+         $rawData = $rawData->unique()->flatten(1)->sortBy('date')->reverse()->values()->slice(Input::get('last'), Input::get('last')+5)->values();
 
          $posts = $this->formPosts($rawData);
-
          return $posts;
      }
 

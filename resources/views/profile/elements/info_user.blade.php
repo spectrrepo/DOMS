@@ -37,7 +37,7 @@
           <div class="contact-item">
               <span class="contact-item-name">соц.<br>сети</span>
               <span class="contact-item-value">
-                  @if (!empty($user->userSocials[0]))
+                  @if (count($user->userSocials) > 0)
                       @foreach ($user->userSocials as $link)
                          <a href="http://{{ $link->link }}" class="item-links uk-icon-external-link"></a>
                       @endforeach

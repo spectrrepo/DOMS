@@ -4,7 +4,7 @@
        <img src="{{  Storage::url($article->img_square) }} " />
        <span class="item-news-title-modal">{{  $article->title }} </span>
        <div class="popup-text-news">
-          {{ $article->description_full }}
+          {!! $article->description_full !!}
        </div>
     </div>
     <div class="date-and-all-news">
