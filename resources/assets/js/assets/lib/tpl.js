@@ -49,7 +49,11 @@ export function viewRacourse (img, variant = 'active-view-min') {
 export function viewTag (tag) {
     return `<div class="tag-item">${tag}</div>`;
 }
-
+/**
+ * 
+ * @param post
+ * @returns {string}
+ */
 export function viewPost (post) {
    return `<div class="b-person-post uk-clearfix" data-new-id="${post['id']}">
         <div class="col-news-min">
