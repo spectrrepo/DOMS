@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Color;
 use App\Models\Favorite;
+use App\Models\Placement;
+use App\Models\Style;
+use App\Models\Tag;
 use App\Models\UserSocial;
 use Illuminate\Http\Request;
 use Input;
@@ -183,6 +187,55 @@ class PostsController extends BasePhotoController
                       });
         return $posts;
     }
+
+    /**
+     * @param $json
+     * @return \Illuminate\Support\Collection
+     */
+    private function jsonDecode ($json) {
+        $dump_filter = json_decode($json);
+        $filter = collect();
+
+        if ($dump_filter->color !== 0 ) {
+            $filter->put('color', Color::find($dump_filter->color));
+        } else {
+            $filter->put('color', 0);
+        }
+        if ($dump_filter->placements[0] !== 0) {
+            $places = collect();
+            foreach ($dump_filter->placements as $placement) {
+                $places->push(Placement::find($placement));
+            }
+            $filter->put('placements', $places);
+        } else {
+            $filter->put('placements', 0);
+        }
+
+        if ($dump_filter->style[0] !== 0) {
+            $styles = collect();
+            foreach ($dump_filter->style as $style) {
+                $styles->push(Style::find($style));
+            }
+            $filter->put('style', $styles);
+        } else {
+            $filter->put('style', 0);
+        }
+
+        if ($dump_filter->tag !== "0" ) {
+            $filter->put('tag', Tag::where('value', '=', $dump_filter->tag)->take(1)->get());
+        } else {
+            $filter->put('tag', 0);
+        }
+
+        if ($dump_filter->sort !== "0" ) {
+            $filter->put('sort', $dump_filter->sort);
+        } else {
+            $filter->put('sort', "0");
+        }
+
+        return $filter;
+    }
+
     /**
      * @param $json
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -193,8 +246,11 @@ class PostsController extends BasePhotoController
         $posts = $this->queryForPosts($json)
                       ->take(8)
                       ->get();
+        $filter = $this->jsonDecode($json);
+
         return view('site.gallery.index', [
                           'posts' => $posts,
+                          'filter' => $filter,
                           'json' => $json
         ]);
     }
@@ -232,6 +288,7 @@ class PostsController extends BasePhotoController
                                           'tags' => $tags,
                                           'likes' => $likes,
                                           'views' => $views,
+                                          'json' => $json,
                                           'numPosts' => $numPosts,
                                           'numLike' => $numLikes,
                                           'colorLike' => $colorLike,

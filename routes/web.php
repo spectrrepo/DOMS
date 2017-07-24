@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 */
 Route::get('/', function(){
-   return redirect(url('/rule={"color":0,"placements":[0],"style":[0],"tag":"0"}'));
+   return redirect(url('/rule={"color":0,"placements":[0],"style":[0],"sort":"0","tag":"0"}'));
 })->name('index');
 Route::get('/rule={json}', 'PostsController@indexPage')->name('postsGalleryPage');
 Route::get('/gallery/{id}/rule={json}', 'PostsController@itemPage')

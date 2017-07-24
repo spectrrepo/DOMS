@@ -17,7 +17,7 @@ ul {
 
 .search-submit {
     height: 32px;
-    width: 16%;
+    width: 15%;
     border: 1px solid #cccccc;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -28,6 +28,8 @@ ul {
     background: white;
     cursor: pointer;
     font-size: 13px;
+    box-sizing: border-box;
+    color: #666666;
 }
 .menu-item:hover >.ungle-item {
     color: white;
@@ -41,6 +43,11 @@ ul {
 .menu-item:hover > span {
     // color: white;
 }
+.subcat-list {
+    padding-left: 10px;
+    width: 96%;
+    padding-right: 20px;
+}
 .ungle-item {
     float: right;
     font-size: 17px;
@@ -49,10 +56,10 @@ ul {
     position: absolute;
     right: 5px;
     z-index: 19;
+    width: 7px;
 }
 .input-search {
     background: white;
-    width: 81%;
     height: 32px;
     border: 1px solid #cccccc;
     border-top-left-radius: 5px;
@@ -91,7 +98,7 @@ ul {
 }
 .news {
     border: 1px solid #cccccc;
-    width: 93.4%;
+    width: 97%;
     margin-top: 10px;
     border-radius: 5px;
     overflow: hidden;
@@ -107,10 +114,10 @@ ul {
 }
 .news-title {
     border-bottom: 1px solid #cccccc;
-    margin-top: 60px;
+    margin-top: 15px;
     padding-bottom: 5px;
     font-size: 15px;
-    width: 94%;
+    width: 97%;
     padding-left: 6px;
     box-sizing: border-box;
     cursor: pointer;
@@ -124,23 +131,24 @@ ul {
     color: white;
     border-radius: 3px;
 }
-.b-text-news {
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-}
 .b-title-news {
     color: #993399;
     cursor: pointer;
+    padding-top: 5px;
 }
 .b-descreption-news {
     font-size: 11px;
-    padding-top: 7px;
-    padding-bottom: 7px;
+    padding-top: 6px;
     line-height: 13px;
 }
 .b-date-news {
     font-size: 11px;
+    margin-top: 18px;
+    margin-bottom: 3px;
+}
+.normal-list {
+    margin-left: 0;
+    padding-left: 0;
 }
 
 /*###########################popup sort list##################################*/

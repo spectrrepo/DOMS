@@ -1,6 +1,6 @@
 @if(URL::route('indexArticlePage') !== URL::current())
-    <nav class="sidebar">
-        <ul>
+    <nav class="sidebar uk-clearfix">
+        <ul class="normal-list">
             @include('site.elements.left_sidebar.elements.menu_items.placements')
             @include('site.elements.left_sidebar.elements.menu_items.styles')
             @include('site.elements.left_sidebar.elements.menu_items.colors')

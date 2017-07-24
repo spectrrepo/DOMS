@@ -523,12 +523,11 @@
 }
 .click-ready {
   display: block;
-  float: left;
   width: 103%;//////
   position: relative;
   box-sizing: border-box;
   border-radius: 5px;
-  padding-left: 16px;
+  padding-left: 10px;
   padding-right: 10px;
   font-size: 15px;
 }
@@ -561,6 +560,10 @@
   color: white;
 }
 .click-ready:hover {
+  background: #333333;
+  color: white;
+}
+.click-ready-active {
   background: #333333;
   color: white;
 }
@@ -609,21 +612,21 @@
   cursor: pointer;
   font-size: 10px;
   border: 1px solid #cccccc;
-  margin: 5px 0;
   position: relative;
   overflow: hidden;
   background-color: #ffffff;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
   border-radius: 5px;
   width: 100%;
+  margin: 0 auto;
+  margin-top: 5px;
+  height: 22px;
 }
 .choose-sort-item-color {
   width: 40px;
+  margin-left: 15px;
 }
 .name-sort-item {
   margin: 0;
-  padding: 0;
   display: inline-block;
   float: left;
   padding: 5px 0;
@@ -643,7 +646,7 @@
 }
 .close-sort-item {
   font-size: 18px;
-  line-height: 18px;
+  line-height: 21px;
   display: block;
   height: 100%;
   width: 20px;

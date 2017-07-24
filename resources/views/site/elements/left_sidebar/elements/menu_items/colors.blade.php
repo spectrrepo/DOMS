@@ -1,4 +1,4 @@
-<li id="colors{{ preg_match('[/photo/]', URL::current()) ? '-slider' : ''}}" class="menu-item">
+<li id="colors" class="menu-item uk-clearfix">
     <div class="click-ready">
         Цвета
         <span class="ungle-item uk-icon-justify uk-icon-angle-right"></span>
@@ -13,7 +13,12 @@
             @endforeach
         </ul>
     </div>
-    <div class="selected">
-
-    </div>
+    <ul id="selected-colors" class="subcat-list">
+        @if($filter["color"] !== 0)
+            <li class="choose-sort-item choose-sort-item-color">
+                <span class="name-sort-item color-sort-item" style="{{$filter["color"]}}"></span>
+                <i class="close-sort-item">×</i>
+            </li>
+        @endif
+    </ul>
 </li>

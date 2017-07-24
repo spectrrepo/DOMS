@@ -1,32 +1,5 @@
-import { LOAD_INFO_PHOTO } from './lib/constant';
-import { LOAD_ACTIVE_LIKE_PHOTO } from './lib/constant';
-import { LOAD_ACTIVE_FAVORITE_PHOTO } from './lib/constant';
-import { LOAD_AUTHOR_PHOTO } from './lib/constant';
-import { LOAD_LIKE_PHOTO } from './lib/constant';
-import { LOAD_MORE_PHOTO } from './lib/constant';
-
 import { photoID } from './lib/helpers';
 import { csrftoken } from './lib/helpers';
-
-/**
- * @function commentDownload
- */
-function commentDownload() {
-    new Comment;
-}
-/**
- * @function tagsDownload
- */
-function tagsDownload() {
-    new Tag();
-}
-
-/**
- * @function viewsDownload
- */
-function viewsDownload() {
-    new View;
-}
 
 /**
  * @function infoPhotoDownload
@@ -285,63 +258,44 @@ export function mainSliderPhoto() {
     let ret,direction = $(this).data('direction');
 
     if (direction === 'right') {
-      if ($('.active-slide').index() + 1 === $('.photo-item:last').index()) {
-        newPhotoDownload(direction);
-
-        rightSliderChange();
-
-        commentDownload();
-        likeWhom();
-        tagsDownload();
-        viewsDownload();
-        infoPhotoDownload();
-        userInfoDownload();
-        activeLike();
-        activeLiked();
-      } else if ($('.active-slide').index() === $('.photo-item:last').index()) {
-
-        $('#popup-error-slider').fadeIn();
-
-      } else {
-        rightSliderChange();
-
-        commentDownload();
-        tagsDownload();
-        likeWhom();
-        viewsDownload();
-        infoPhotoDownload();
-        userInfoDownload();
-        activeLike();
-        activeLiked();
+        if ($('.active-slide').index() + 1 === $('.photo-item:last').index()) {
+            newPhotoDownload(direction);
+            rightSliderChange();
+            likeWhom();
+            infoPhotoDownload();
+            userInfoDownload();
+            activeLike();
+            activeLiked();
+        } else if ($('.active-slide').index() === $('.photo-item:last').index()) {
+            $('#popup-error-slider').fadeIn();
+        } else {
+            rightSliderChange();
+            likeWhom();
+            infoPhotoDownload();
+            userInfoDownload();
+            activeLike();
+            activeLiked();
       }
     } else if (direction === 'left') {
-      if ($('.active-slide').index() === $('.photo-item:first').index()) {
-        newPhotoDownload(direction, ret);
+        if ($('.active-slide').index() === $('.photo-item:first').index()) {
+            newPhotoDownload(direction, ret);
         if ($('.active-slide').index() === $('.photo-item:first').index()) {
             $('#popup-error-slider').fadeIn();
         } else {
             leftSliderChange();
-
-            commentDownload();
-            tagsDownload();
-            viewsDownload();
             infoPhotoDownload();
             userInfoDownload();
             likeWhom();
             activeLike();
             activeLiked();
         }
-      } else {
-        leftSliderChange();
-
-        commentDownload();
-        likeWhom();
-        viewsDownload();
-        tagsDownload();
-        infoPhotoDownload();
-        userInfoDownload();
-        activeLike();
-        activeLiked();
-      }
+        } else {
+            leftSliderChange();
+            likeWhom();
+            infoPhotoDownload();
+            userInfoDownload();
+            activeLike();
+            activeLiked();
+        }
     }
 }

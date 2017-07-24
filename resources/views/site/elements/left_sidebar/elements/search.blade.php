@@ -1,4 +1,4 @@
-<div class="search">
+<div class="search uk-clearfix">
     <div class="popup-search-tag"></div>
     <form class="ajax-search {{ preg_match('[/photo/]', URL::current()) ? 'ajax-search-slider' : ''}}">
         <input class="popup-tag input-search {{ preg_match('[/photo/]', URL::current()) ? 'ajax-input-search-slider' : 'ajax-input-search'}}"
