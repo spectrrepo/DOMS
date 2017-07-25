@@ -432,6 +432,7 @@ a.btn-prew span {
   border-bottom: 1px solid #cccccc;
   font-size: 16px;
   padding-bottom: 8px;
+  margin-bottom: 10px;
 }
 .active-tag-right {
   background: #444444;
@@ -439,9 +440,12 @@ a.btn-prew span {
 }
 .title-slider-tag {
   line-height: 28px;
+  font-size: 14px;
+  float: left;
 }
 .margin-title-tag {
   margin-top: 20px;
+  margin-bottom: 0;
 }
 .pole-tag{
   background: white;

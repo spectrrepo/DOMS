@@ -42,6 +42,18 @@ import { loadMorePostsGallery } from './posts/functions';
 import { confirmModal } from './lib/common';
 import { uploadMoreNews } from './lib/tpl';
 
+import { openPopupSubCat } from './posts/slider/common';
+import { addChooseIco } from './posts/slider/common';
+import { closePopupSubCat } from './posts/slider/common';
+import { subCatRemoveCurrent } from './posts/slider/common';
+
+(function(){
+    $('.click-ready').on('click', openPopupSubCat);
+    $('.item-moodal-sidebar').on('click', addChooseIco);
+    $('.sidebar-modal .close').on('click', closePopupSubCat);
+    $('.choose-sort-item').on('click', subCatRemoveCurrent);
+})();
+
 (function(){
     $('.comment-add-form').on('submit', commentAdd);
     $('.remove-comment').on('click', deleteComment);

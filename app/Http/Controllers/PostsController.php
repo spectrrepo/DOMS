@@ -75,17 +75,21 @@ class PostsController extends BasePhotoController
         {
             return null;
         }
-        $request = ' ';
+        $request = ' ='.$array[0];
         foreach ($array as $item) {
-            if ($item != 0) {
-                $request .= $item.' or ';
+            if ($item === $array[0]) {
+                continue;
+            }
+            if ($item !== 0) {
+                $request .= ' and '.$item;
             }
         }
-        if ($request = ' ')
+//        dd($request);
+        if (($request === ' ') || ((int)$request === 0))
         {
             return null;
         }
-        $request .=' 0 ';
+        $request .=' ';
 
         return $request;
     }
@@ -97,7 +101,6 @@ class PostsController extends BasePhotoController
     private function decodeURL ($json)
     {
         $filterArray = json_decode($json, true);
-
         if ($filterArray == null) {
             $placements = null;
             $styles = null;
@@ -107,7 +110,7 @@ class PostsController extends BasePhotoController
         }
 
         array_key_exists('placements', $filterArray) ? $placements = $filterArray['placements'] : $placements = null;
-        array_key_exists('styles', $filterArray) ? $styles = $filterArray['styles'] : $styles = null;
+        array_key_exists('style', $filterArray) ? $styles = $filterArray['style'] : $styles = null;
         array_key_exists('color', $filterArray) ? $color = $filterArray['color'] : $color = null;
         array_key_exists('sort', $filterArray) ? $sort = $filterArray['sort'] : $sort = null;
         array_key_exists('tag', $filterArray) ? $tag = $filterArray['tag'] : $tag = null;
@@ -284,10 +287,13 @@ class PostsController extends BasePhotoController
         $posts->first()->views += 1;
         $posts->first()->save();
 
+        $filter = $this->jsonDecode($json);
+
         return view('site.slider.index', ['posts' => $posts,
                                           'tags' => $tags,
                                           'likes' => $likes,
                                           'views' => $views,
+                                          'filter' => $filter,
                                           'json' => $json,
                                           'numPosts' => $numPosts,
                                           'numLike' => $numLikes,
@@ -522,7 +528,9 @@ class PostsController extends BasePhotoController
     {
         $json = Input::get('json');
         $action = Input::get('action');
-        $id = Input::get('id');
+        if (Input::has('id')) {
+            $id = Input::get('id');
+        }
 
         switch ($action) {
             case 'next':
@@ -531,7 +539,7 @@ class PostsController extends BasePhotoController
                 });
                 break;
             case 'sort':
-                $posts = $this->loadSortPosts($id, 8);
+                $posts = $this->loadSortPosts($json,8);
                 break;
             default:
                 $posts = 'error';
@@ -600,7 +608,9 @@ class PostsController extends BasePhotoController
         $posts = $this->queryForPosts($json)
                       ->take($num)
                       ->get();
-
+        $posts = $posts->map(function ($item, $key) {
+            return ['id' => $item->id, 'img_middle' => Storage::url($item->img_middle)];
+        });
         return $posts;
 
     }

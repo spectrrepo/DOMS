@@ -7,7 +7,7 @@
         <span class="close white-close uk-icon-justify uk-icon-remove"></span>
         <ul class="styles-space">
             @foreach ( $styles as $style )
-                @include('site.elements.left_sidebar.elements.menu_items.item_menu', ['name' => $style->title ])
+                @include('site.elements.left_sidebar.elements.menu_items.item_menu', ['name' => $style, 'nameCat' => 'style'])
             @endforeach
         </ul>
         <div class="b-preview-style">
@@ -22,7 +22,7 @@
     <ul id="selected-styles" class="subcat-list">
         @if($filter["style"] !== 0)
             @foreach($filter["style"] as $style)
-                <li class="choose-sort-item">
+                <li class="choose-sort-item" data-id="{{ $style->id }}">
                     <span class="name-sort-item">{{$style->title}}</span>
                     <i class="close-sort-item">×</i>
                 </li>

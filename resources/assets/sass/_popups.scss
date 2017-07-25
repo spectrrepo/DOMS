@@ -511,12 +511,10 @@
   position: absolute;
   background-color: rgba(51, 51, 51, 0.8);
   border-radius: 4px;
-  z-index: 1000;
-  left: 20%;
   display: none;
   z-index: 1000000000000000000;
   top: 0;
-  left: 108%;
+  left: 110%;
 }
 .block-view {
   display: block;
@@ -649,7 +647,7 @@
   line-height: 21px;
   display: block;
   height: 100%;
-  width: 20px;
+  width: 18px;
   text-align: center;
   position: absolute;
   font-style: normal;

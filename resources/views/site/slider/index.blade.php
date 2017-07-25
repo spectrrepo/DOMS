@@ -2,10 +2,12 @@
     @section('site-content')
      <div class="content  uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights">
          <div class="col-slider-comment">
-             <div id="hide-pole-tag" class="title-tag" style="margin-bottom:10px;">
-                 <span class="title-slider-tag" style="float:left;">Поиск по тегам:</span>
-                 <div class="tag-item">Привет</div>
-             </div>
+             @if (isset($filter) && ($filter['tag'] !== 0))
+                 <div id="hide-pole-tag" class="title-tag uk-clearfix" style="margin-bottom:10px;">
+                     <span class="title-slider-tag">Поиск по тегам:</span>
+                     <div class="tag-item">{{ $filter['tag'] }}</div>
+                 </div>
+             @endif
              <div class="one-picture-place">
                  @include('site.elements.left_sidebar.elements.popup')
                  <div class="b-photo-slider">

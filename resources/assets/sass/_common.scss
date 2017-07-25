@@ -229,3 +229,11 @@ html {
     padding-top: 75px;
     padding-bottom: 60px;
 }
+
+#hide-pole-tag .tag-item {
+    background: #333333;
+    color: white;
+    padding-bottom: 0px;
+    border: none;
+    overflow: hidden;
+}
