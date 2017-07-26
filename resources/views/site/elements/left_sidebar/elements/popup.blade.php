@@ -1,4 +1,4 @@
-<div class="modal-news {{ isset($json)? 'news-main-page' : '' }} article{{ $article->id }}">
+<div class="modal-news {{ !preg_match('/gallery/', URL::current())? 'news-main-page' : '' }} article{{ $article->id }}">
     <span class="close white-close uk-icon-justify uk-icon-remove popup-close-news"></span>
     <div class="scroll-place-modal-news">
        <img src="{{  Storage::url($article->img_square) }} " />

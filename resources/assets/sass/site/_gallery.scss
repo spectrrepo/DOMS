@@ -54,7 +54,7 @@ ul {
     font-weight: bold;
     line-height: 28px;
     position: absolute;
-    right: 5px;
+    right: 10px;
     z-index: 19;
     width: 7px;
 }
@@ -138,14 +138,16 @@ ul {
     padding-top: 5px;
 }
 .b-descreption-news {
-    font-size: 11px;
+    font-size: 13px;
     padding-top: 6px;
     line-height: 13px;
+    font-family: MainFontNarrow;
 }
 .b-date-news {
-    font-size: 11px;
+    font-size: 13px;
     margin-top: 18px;
     margin-bottom: 3px;
+    font-family: MainFontNarrow;
 }
 .normal-list {
     margin-left: 0;

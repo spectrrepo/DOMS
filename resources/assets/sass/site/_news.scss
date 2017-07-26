@@ -16,18 +16,21 @@
   display: block;
   margin-top: 0px;
   font-size: 17px;
+  font-family: MainFontNarrow;
 }
 .item-news-title-modal {
-  font-size: 18px;
+  font-size: 15pt;
   margin: 10px 0;
   color: white;
   display: block;
+  font-family: MainFontNarrow;
 }
 .item-news-date {
   font-size: 14px;
 }
 .popup-text-news {
-  font-size: 14px;
+  font-size: 11pt;
+  font-family: MainFontNarrow;
 }
 .modal-news {
   width: 100%;
@@ -55,12 +58,14 @@
   right: 0;
 }
 .date-and-all-news{
-  width: 80%;
+  width: 52%;
   margin: auto;
   position: absolute;
   bottom: 12px;
   left: 0;
   right: 0;
+  font-family: MainFontNarrow;
+  font-size: 11pt;
 
 }
 .date-and-all-news a {

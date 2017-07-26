@@ -359,15 +359,14 @@
 .not-wor-text {
   float: left;
   height: 50px;
-  float: left;
-  height: 50px;
   width: 140px;
-  font-size: 12px;
   line-height: 14px;
   padding-left: 4px;
   box-sizing: border-box;
   font-weight: normal;
   padding-top: 2px;
+  font-size: 13px;
+  font-family: MainFontNarrow;
 }
 .b-form-inputs {
   float: right;
@@ -474,9 +473,10 @@
 .description-status {
   text-align: justify;
   width: 100%;
-  font-size: 13px;
   margin-top: 0;
   margin-bottom: 0px;
+  font-size: 14px;
+  font-family: MainFontNarrow;
 }
 .registr-submit {
   color: #ffffff !important;
@@ -617,7 +617,7 @@
   width: 100%;
   margin: 0 auto;
   margin-top: 5px;
-  height: 22px;
+  height: 20px;
 }
 .choose-sort-item-color {
   width: 40px;
@@ -630,7 +630,7 @@
   padding: 5px 0;
   width: 80%;
   margin-left: 5px;
-  line-height: 10px;
+  line-height: 11px;
   font-size: 11px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -644,7 +644,7 @@
 }
 .close-sort-item {
   font-size: 18px;
-  line-height: 21px;
+  line-height: 20px;
   display: block;
   height: 100%;
   width: 18px;
@@ -1171,6 +1171,10 @@
   margin-top: 2%;
   overflow-y: scroll;
   text-align: left;
+  font-family: MainFontNarrow;
+}
+.description-scroll-place h3 {
+  font-family: MainFontNarrow;
 }
 // about
 
@@ -1275,4 +1279,13 @@
 
 #allLikesPost:hover {
   color: #993399;
+}
+
+.news-page {
+  width: auto !important;
+  top: 75px !important;
+  left: 21% !important;
+  right: 1.9% !important;
+  position: fixed !important;
+  height: 85% !important;
 }

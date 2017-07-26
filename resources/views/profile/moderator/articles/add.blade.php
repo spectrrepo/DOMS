@@ -4,8 +4,8 @@
     @include('profile.elements.validate')
     {{ Form::open(['class' => 'uk-form', 'method' => 'post', 'route' => 'addArticle', 'files' => true]) }}
         <fieldset data-uk-margin>
-            <div class="uk-grid">
-                <div class="uk-width-1-2">
+            <div class="uk-margin uk-width-1-2">
+                <div class="uk-width-1-1">
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="">Заголовок</label>
                         <div class="uk-form-controls">
@@ -19,7 +19,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="uk-width-1-2">
+                <div class="uk-width-1-1 uk-margin">
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="">Изображение</label>
                         <div class="uk-form-controls">
@@ -31,26 +31,32 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="uk-form-row">
-                <label class="uk-form-label" for="">Полный текст</label>
-                <div class="uk-form-controls">
-                    <textarea id="ful_description" name="description_full"></textarea>
-                    @ckeditor('ful_description')
+                <div class="uk-width-1-1 uk-margin">
+                    <div class="uk-form-row">
+                        <label class="uk-form-label" for="">Полный текст</label>
+                        <div class="uk-form-controls">
+                            <textarea id="ful_description" name="description_full"></textarea>
+                            @ckeditor('ful_description')
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="uk-form-row">
-                <div class="uk-form-controls">
-                    <input type="checkbox" id="form-s-c" name="status" value="yes">
-                    <label for="form-s-c">Опубликовать?</label>
+                <div class="uk-width-1-1 uk-margin">
+                    <div class="uk-form-row">
+                        <div class="uk-form-controls">
+                            <input type="checkbox" id="form-s-c" name="status" value="yes">
+                            <label for="form-s-c">Опубликовать?</label>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="uk-form-row">
-                <button class="uk-button uk-button-success">
-                    Сохранить
-                </button>
+
+                <div class="uk-width-1-1">
+                    <div class="uk-form-row uk-width-1-1">
+                        <button class="uk-button uk-button-success uk-width-1-1">
+                            Сохранить
+                        </button>
+                    </div>
+                </div>
             </div>
         </fieldset>
     {{ Form::close() }}

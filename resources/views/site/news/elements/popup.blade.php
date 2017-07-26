@@ -1,4 +1,4 @@
-<div class="modal-news article{{ $article->id }}">
+<div class="modal-news news-page article{{ $article->id }}">
     <span class="close uk-icon-justify uk-icon-remove popup-close-news"></span>
     <div class="scroll-place-modal-news">
         <img src="{{ Storage::url($article->img_square) }}" />

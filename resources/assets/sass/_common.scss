@@ -2,6 +2,10 @@
     font-family: 'MainFont';
     src: url("../fonts/pt-sans.ttf");
 }
+@font-face {
+    font-family: 'MainFontNarrow';
+    src: url("../fonts/PTSansNarrow.ttf");
+}
 
 body {
     //background: url("../img/fon.jpg");
@@ -143,6 +147,7 @@ nav ul li a:hover {
     transition: all 0.3s ease;
     font-size: 14px;
     height: 15px;
+    font-family: MainFontNarrow;
 }
 
 .logining-item-top {

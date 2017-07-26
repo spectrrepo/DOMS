@@ -69,28 +69,20 @@ class PostsController extends BasePhotoController
      * @param array $array
      * @return string
      */
-    private function getPartRequestDB ($array)
+    private function getPartRequestDB ($array, $nameColumn)
     {
-        if ($array === null)
-        {
-            return null;
-        }
-        $request = ' ='.$array[0];
-        foreach ($array as $item) {
-            if ($item === $array[0]) {
-                continue;
-            }
-            if ($item !== 0) {
-                $request .= ' and '.$item;
-            }
-        }
-//        dd($request);
-        if (($request === ' ') || ((int)$request === 0))
-        {
-            return null;
-        }
-        $request .=' ';
+        if ($array === null || $array[0] === 0) return null;
 
+        $request = ' ';
+        foreach ($array as $item) {
+            if ($item === $array[0]) continue;
+
+            if ($item !== 0) {
+                $request .= ' and '.$nameColumn.' = '.$item;
+            }
+        }
+
+        $request .=' ';
         return $request;
     }
 
@@ -108,15 +100,14 @@ class PostsController extends BasePhotoController
             $sort = null;
             $tag = null;
         }
-
         array_key_exists('placements', $filterArray) ? $placements = $filterArray['placements'] : $placements = null;
         array_key_exists('style', $filterArray) ? $styles = $filterArray['style'] : $styles = null;
         array_key_exists('color', $filterArray) ? $color = $filterArray['color'] : $color = null;
         array_key_exists('sort', $filterArray) ? $sort = $filterArray['sort'] : $sort = null;
         array_key_exists('tag', $filterArray) ? $tag = $filterArray['tag'] : $tag = null;
 
-        $placements = $this->getPartRequestDB($placements);
-        $styles = $this->getPartRequestDB($styles);
+        $placements = $this->getPartRequestDB($placements, 'posts_placements.placement_id');
+        $styles = $this->getPartRequestDB($styles, 'posts_styles.style_id');
 
         if ($color === 0)
         {
@@ -149,6 +140,8 @@ class PostsController extends BasePhotoController
         $color = $filterArray['color'];
         $sort = $filterArray['sort'];
         $tag = $filterArray['tag'];
+//        dd($filterArray);
+
         $posts = Post::select('*', 'posts.id AS id' ,
                               'posts.img_middle AS img')
                       ->when($placements != null, function ($query) use ($placements){
@@ -165,10 +158,10 @@ class PostsController extends BasePhotoController
                                        ->join('tags', 'tags.id', '=', 'posts_tags.tag_id');
                       })
                       ->when($placements != null, function ($query) use ($placements){
-                          return $query->where(DB::raw($placements));
+                          return $query->whereRaw('posts_placements.placement_id '.$placements);
                       })
                       ->when($styles != null, function ($query) use ($styles){
-                          return $query->where(DB::raw($styles));
+                          return $query->whereRaw('posts_styles.style_id '.$styles);
                       })
                       ->when($color != null, function ($query) use ($color){
                           return $query->where('posts_colors.color_id', '=', $color);

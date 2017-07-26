@@ -22,18 +22,29 @@ export function addChooseIco () {
     if ($(this).hasClass('colors-space-item')){
         colorView = true;
     }
-    $(this).children('.choose-ico').toggleClass('active-choose-ico');
 
     if (checkMaxNumSubCat(nameCat, self)) {
-        addSubCat(nameCat, dataId, dataVal, colorView);
-        $('.subcat-list').children('[data-id='+dataId+']').on('click', function (){subCatRemove(dataId);});
+        console.log($(this).children('.choose-ico').hasClass('active-choose-ico'));
+        if ($(this).children('.choose-ico').hasClass('active-choose-ico')) {
+            $('.subcat-list').find('[data-id='+dataId+']').remove();
+        } else {
+            addSubCat(nameCat, dataId, dataVal, colorView);
+            $('.subcat-list').children('[data-id='+dataId+']').on('click', function (){subCatRemove(dataId);});
+        }
     } else {
-        let deleteId = $('#'+nameCat).children('.subcat-list').children().last().data('id');
-        $('#'+nameCat).children('.subcat-list').children().last().remove();
-        $('#'+nameCat).children('.sidebar-modal').find('[data-id='+deleteId+']').children('.choose-ico').removeClass('active-choose-ico');
-        addSubCat(nameCat, dataId, dataVal, colorView);
-        $('.subcat-list').children('[data-id='+dataId+']').on('click', function (){subCatRemove(dataId);});
+        if ($(this).children('.choose-ico').hasClass('active-choose-ico')) {
+            $('.subcat-list').find('[data-id='+dataId+']').remove();
+        } else {
+            let deleteId = $('#'+nameCat).children('.subcat-list').children().last().data('id');
+            $('#'+nameCat).children('.subcat-list').children().last().remove();
+            $('#'+nameCat).children('.sidebar-modal').find('[data-id='+deleteId+']').children('.choose-ico').removeClass('active-choose-ico');
+            addSubCat(nameCat, dataId, dataVal, colorView);
+            $('.subcat-list').children('[data-id='+dataId+']').on('click', function (){subCatRemove(dataId);});
+        }
     }
+
+    $(this).children('.choose-ico').toggleClass('active-choose-ico');
+
     if (currentId === undefined) {
         currentId = null;
     }

@@ -259,8 +259,10 @@ import { subCatRemoveCurrent } from './posts/slider/common';
   $( document ).ready(function () {
     $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.85});
     $('.news-main-page').height(document.body.scrollHeight*0.83);
+    $('.news-page').height(document.body.scrollHeight*0.8);
     $(window).resize(function() {
       $('.one-picture-place').css({'height': document.documentElement.clientHeight*0.85});
+      $('.news-page').height(document.body.scrollHeight*0.7);
       $('.news-main-page').height(document.body.scrollHeight*0.83);
     });
   });

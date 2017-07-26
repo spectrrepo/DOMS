@@ -6,7 +6,7 @@
  */
 export function viewComment (comment, currentUserId = false){
     let removeBtn = '';
-    if ((delBtn !== false) && (currentUserId === comment.user_id)) {
+    if (Number(currentUserId) === Number(comment.user_id)) {
         removeBtn = `<div class="remove-comment uk-icon-justify uk-icon-remove"> 
                         <span class="delete_comment_id" data-id="${comment.id}"></span>
                     </div>`;

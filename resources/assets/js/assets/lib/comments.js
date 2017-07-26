@@ -8,6 +8,7 @@ export function commentAdd () {
     let postId = $('input[name=post_id]').val();
     let csrf = $('input[name=csrf]').val();
     let currentUserId = $('meta[name=authID]').attr('content');
+    alert(currentUserId);
     $.ajax({
         type:'POST',
         data: {
@@ -19,7 +20,7 @@ export function commentAdd () {
         success: function (data) {
             $(viewComment(data, currentUserId)).appendTo('#insertComment');
             $('.input-comment').val('');
-            $(`span[data-id=${data.id}]`).parent().on('click', deleteComment);
+            $(`[data-id=${data.id}]`).parent('.remove-comment').on('click', deleteComment);
         }
     });
 
