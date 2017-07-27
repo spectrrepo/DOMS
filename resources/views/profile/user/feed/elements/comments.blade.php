@@ -23,19 +23,23 @@
     <div id="insertComment">
         @foreach ( $post['comments'] as $comment)
             <div class="b-comment-wrap uk-clearfix">
-                <a href="{{ $comment->id }}" class="b-photo-comment">
-                    <img src="{{ $comment->img_middle }}" alt="">
+                <a href="{{ $comment['id'] }}" class="b-photo-comment">
+                    <img src="{{ $comment['img_middle'] }}" alt="">
                 </a>
                 <div class="b-comment">
                     <a href="" class="b-name-comment">
-                        {{ $comment->name }}
+                        {{ $comment['name'] }}
                     </a>
                     <div class="b-text-comment">
-                        {{ $comment->comment }}
+                        {{ $comment['comment'] }}
                     </div>
                     <div class="b-date-comment">
                         @php setlocale(LC_ALL, 'ru_RU.utf8') @endphp
-                        {{ $comment->date}} {{--//->formatLocalized('%d %B %Y г. %H:%M')--}}
+
+                        <script> var d = document.getElementsByClassName('.b-date-comment');
+                        var a = new Date('{!!  $comment['date'] !!}')
+                            .toLocaleString('ru', { year: 'numeric', month: 'long', day: 'numeric'});
+                        d[0].innerHTML(a) </script>
                     </div>
                 </div>
             </div>
